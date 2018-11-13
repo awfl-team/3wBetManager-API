@@ -10,7 +10,10 @@ namespace _3wBetManager_API
         {
             // Configure Web API for self-host. 
             HttpConfiguration config = new HttpConfiguration();
-            config.EnableSwagger(c => c.SingleApiVersion("v1", "TP")).EnableSwaggerUi();
+            config.EnableSwagger(c =>
+            {
+                c.SingleApiVersion("v1", "3wBetManager-API");
+            }).EnableSwaggerUi();
             config.Routes.MapHttpRoute(
                 name: "3wBetManager-API",
                 routeTemplate: "api/{controller}/{id}",
