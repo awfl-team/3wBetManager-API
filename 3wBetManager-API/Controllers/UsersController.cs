@@ -7,7 +7,7 @@ using System.Web.Http;
 
 namespace _3wBetManager_API.Controllers
 {
-    public class UserController : ApiController
+    public class UsersController : ApiController
     {
     }
 }
