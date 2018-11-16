@@ -1,40 +1,45 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
 using DAO;
+using DAO.Interfaces;
 using Models;
 using MongoDB.Bson;
+using _3wBetManager_API.Manager;
 
 namespace _3wBetManager_API.Controllers
 {
     [Route("api/users")]
     public class UsersController : ApiController
     {
-        // GET api/values
+        [HttpGet]
         public async Task<IHttpActionResult> Get(string uid)
         {
-            var id = ObjectId.Parse(uid);
-            using (UserDao UserDao = new UserDao())
-            {
-                return Ok(await UserDao.GetUser(id));
-            }
-
+            return Ok(await getUserDao().GetUser(uid));
         }
 
-        // POST api/values 
-        public async Task<IHttpActionResult> Post ([FromBody] User user)
+        /*[HttpPost]
+        public async Task<IHttpActionResult> Post([FromBody] User user)
         {
-            using (UserDao UserDao = new UserDao())
-            {
-               UserDao.AddUser(user);
-            }
-
+            getUserDao().AddUser(user);
             return Ok();
+        }
+        */
 
+        [HttpPost]
+        public IHttpActionResult Login()
+        {
+            return Ok(TokenManager.GenerateToken("lucas", "admin"));
         }
 
+
+        private IUserDao getUserDao()
+        {
+            return Singleton.Instance.SetUserDao(new UserDao());
+        }
     }
 }
