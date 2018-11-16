@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using DAO.Interfaces;
 using Models;
 using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace DAO
 {
-    public class UserDao: IDisposable
+    public class UserDao : IUserDao
     {
         private IMongoCollection<User> _collection;
 
@@ -18,37 +19,37 @@ namespace DAO
             _collection = collection ?? database.GetCollection<User>("user");
         }
 
-        public void Dispose()
-        {
-            _collection = null;
-        }
 
         public async Task<List<User>> GetAllUser()
         {
             return await _collection.Find(new BsonDocument()).ToListAsync();
         }
 
-        public async Task<User> GetUser(ObjectId uid)
+        public async Task<User> GetUser(string id)
         {
-            return await _collection.Find(user => user.UId == uid).SingleAsync();
+            var uid = ObjectId.Parse(id);
+            return await _collection.Find(user => user.Id == uid).SingleAsync();
         }
 
         public async void AddUser(User user)
         {
+            var passwordHash = BCrypt.Net.BCrypt.HashPassword(user.Password);
+            user.Password = passwordHash;
             await _collection.InsertOneAsync(user);
         }
 
-        public async void DeleteUser(ObjectId uId)
+        public async void DeleteUser(string id)
         {
-            await _collection.DeleteOneAsync(user => user.UId == uId);
+            var uid = ObjectId.Parse(id);
+            await _collection.DeleteOneAsync(user => user.Id == uid);
         }
 
-        public void UpdateBook(ObjectId uId, User userParam)
+        public void UpdateBook(string id, User userParam)
         {
+            var uid = ObjectId.Parse(id);
             _collection.FindOneAndUpdateAsync(
-                Builders<User>.Filter.Eq(user => user.UId, uId),
+                Builders<User>.Filter.Eq(user => user.Id, uid),
                 Builders<User>.Update.Set(user => user.Point, userParam.Point));
         }
-
     }
 }
