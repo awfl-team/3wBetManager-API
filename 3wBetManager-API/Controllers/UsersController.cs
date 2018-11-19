@@ -22,18 +22,17 @@ namespace _3wBetManager_API.Controllers
             return Ok(await getUserDao().GetUser(uid));
         }
 
-        /*[HttpPost]
-        public async Task<IHttpActionResult> Post([FromBody] User user)
+        [HttpPost]
+        public async Task<IHttpActionResult> Register([FromBody] User user)
         {
             getUserDao().AddUser(user);
             return Ok();
         }
-        */
 
         [HttpPost]
         public IHttpActionResult Login()
         {
-            return Ok(TokenManager.GenerateToken("lucas", "admin"));
+            return Ok(TokenManager.GenerateToken("mail", "admin", "pseudo"));
         }
 
 
