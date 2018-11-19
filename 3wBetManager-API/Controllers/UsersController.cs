@@ -29,11 +29,12 @@ namespace _3wBetManager_API.Controllers
             return Ok();
         }
 
-        [HttpPost]
+        /*[HttpPost]
         public IHttpActionResult Login()
         {
             return Ok(TokenManager.GenerateToken("mail", "admin", "pseudo"));
         }
+        */
 
 
         private IUserDao getUserDao()
