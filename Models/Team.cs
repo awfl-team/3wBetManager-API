@@ -6,8 +6,7 @@ namespace Models
 {
     public class Team
     {
-        public ObjectId UId { get; set; }
-        public int Id { get; set; }
+        public ObjectId Id { get; set; }
         public int ApiId { get; set; }
         public string Name { get; set; }
         public string ShortName { get; set; }

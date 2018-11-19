@@ -4,8 +4,7 @@ namespace Models
 {
     public class Competition
     {
-        public ObjectId UId { get; set; }
-        public int Id { get; set; }
+        public ObjectId Id { get; set; }
         public int ApiId { get; set; }
         public string Name { get; set; }
         public string Code { get; set; }

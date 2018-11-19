@@ -5,8 +5,8 @@ namespace Models
 {
     public class Match
     {
-        public ObjectId UId { get; set; }
-        public int Id { get; set; }
+        public ObjectId Id { get; set; }
+        public int ApiId { get; set; }
         public float Cote { get; set; }
         public string Status { get; set; }
         public DateTime LastUpdated { get; set; }

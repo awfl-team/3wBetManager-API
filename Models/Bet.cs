@@ -5,8 +5,7 @@ namespace Models
 {
     public class Bet
     {
-        public ObjectId UId { get; set; }
-        public int Id { get; set; }
+        public ObjectId Id { get; set; }
         public DateTime Date { get; set; }
         public int HomeValue { get; set; }
         public int AwayValue { get; set; }
