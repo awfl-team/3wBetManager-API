@@ -9,10 +9,12 @@ namespace DAO.Interfaces
 {
     public interface IUserDao
     {
-        Task<List<User>> GetAllUser();
-        Task<User> GetUser(string uid);
+        Task<List<User>> FindAllUser();
+        Task<User> FindUser(string uid);
+        Task<User> FindUserByEmail(string email);
+        Task<User> FindUserByPseudo(string pseudo);
         void AddUser(User user);
         void DeleteUser(string uId);
-        void UpdateBook(string uId, User userParam);
+        void UpdateUser(string uId, User userParam);
     }
 }

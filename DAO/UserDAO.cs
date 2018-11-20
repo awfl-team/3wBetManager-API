@@ -20,15 +20,25 @@ namespace DAO
         }
 
 
-        public async Task<List<User>> GetAllUser()
+        public async Task<List<User>> FindAllUser()
         {
             return await _collection.Find(new BsonDocument()).ToListAsync();
         }
 
-        public async Task<User> GetUser(string id)
+        public async Task<User> FindUser(string id)
         {
             var uid = ObjectId.Parse(id);
             return await _collection.Find(user => user.Id == uid).SingleAsync();
+        }
+
+        public async Task<User> FindUserByEmail(string email)
+        {
+            return await _collection.Find(user => user.Email == email).SingleAsync();
+        }
+
+        public async Task<User> FindUserByPseudo(string pseudo)
+        {
+            return await _collection.Find(user => user.Pseudo == pseudo).SingleAsync();
         }
 
         public async void AddUser(User user)
@@ -44,7 +54,7 @@ namespace DAO
             await _collection.DeleteOneAsync(user => user.Id == uid);
         }
 
-        public void UpdateBook(string id, User userParam)
+        public void UpdateUser(string id, User userParam)
         {
             var uid = ObjectId.Parse(id);
             _collection.FindOneAndUpdateAsync(

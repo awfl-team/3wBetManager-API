@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.Eventing.Reader;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -13,29 +14,63 @@ using _3wBetManager_API.Manager;
 
 namespace _3wBetManager_API.Controllers
 {
-    [Route("api/users")]
     public class UsersController : ApiController
     {
         [HttpGet]
-        public async Task<IHttpActionResult> Get(string uid)
+        [Route("/users")]
+        public async Task<IHttpActionResult> GetAll()
         {
-            return Ok(await getUserDao().GetUser(uid));
+            return Ok(await getUserDao().FindAllUser());
         }
 
-        [HttpPost]
-        public async Task<IHttpActionResult> Register([FromBody] User user)
+        [HttpGet]
+        [Route("/users/{userId}")]
+        public async Task<IHttpActionResult> Get(string id)
         {
-            getUserDao().AddUser(user);
-            return Ok();
+            return Ok(await getUserDao().FindUser(id));
         }
 
         /*[HttpPost]
-        public IHttpActionResult Login()
+        [Route("/register")]
+        public IHttpActionResult Register([FromBody] User user)
         {
-            return Ok(TokenManager.GenerateToken("mail", "admin", "pseudo"));
-        }
-        */
+            var fullUserEmail = getUserDao().FindUserByEmail(user.Email);
+            var fullUserPseudo = getUserDao().FindUserByPseudo(user.Pseudo);
 
+            if (fullUserEmail == null && fullUserPseudo == null)
+            {
+                getUserDao().AddUser(user);
+                return Ok();
+            }
+            else
+            {
+                return Content(HttpStatusCode.BadRequest, "MDR le c#");
+            }
+        }*/
+
+        [HttpPost]
+        [Route("/login")]
+        public IHttpActionResult Post([FromBody] User user)
+        {
+            try
+            {
+                var fullUser = getUserDao().FindUserByEmail(user.Email);
+                if (BCrypt.Net.BCrypt.Verify(user.Password, fullUser.Result.Password))
+                {
+                    return Ok(TokenManager.GenerateToken(fullUser.Result.Email, fullUser.Result.Role,
+                        fullUser.Result.Pseudo));
+                }
+                else
+                {
+                    return Content(HttpStatusCode.BadRequest, "Wrong login password");
+                }
+            }
+            catch (Exception e)
+            {
+                return Content(HttpStatusCode.BadRequest, "email not found");
+            }
+
+        }
 
         private IUserDao getUserDao()
         {
