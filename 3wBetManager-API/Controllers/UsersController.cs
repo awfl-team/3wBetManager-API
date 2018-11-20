@@ -65,7 +65,7 @@ namespace _3wBetManager_API.Controllers
                     return Content(HttpStatusCode.BadRequest, "Wrong login password");
                 }
             }
-            catch (Exception e)
+            catch (AggregateException)
             {
                 return Content(HttpStatusCode.BadRequest, "email not found");
             }
