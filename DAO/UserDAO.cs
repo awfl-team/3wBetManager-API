@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using DAO.Interfaces;
 using Models;
@@ -28,17 +29,20 @@ namespace DAO
         public async Task<User> FindUser(string id)
         {
             var uid = ObjectId.Parse(id);
-            return await _collection.Find(user => user.Id == uid).SingleAsync();
+            var result = await _collection.Find(user => user.Id == uid).ToListAsync();
+            return result.FirstOrDefault();
         }
 
         public async Task<User> FindUserByEmail(string email)
         {
-            return await _collection.Find(user => user.Email == email).SingleAsync();
+            var result = await _collection.Find(user => user.Email == email).ToListAsync();
+            return result.FirstOrDefault();
         }
 
-        public async Task<User> FindUserByPseudo(string pseudo)
+        public async Task<User> FindUserByUsername(string username)
         {
-            return await _collection.Find(user => user.Pseudo == pseudo).SingleAsync();
+            var result = await _collection.Find(user => user.Username == username).ToListAsync();
+            return result.FirstOrDefault();
         }
 
         public async void AddUser(User user)

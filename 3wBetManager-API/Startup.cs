@@ -16,7 +16,7 @@ namespace _3wBetManager_API
             }).EnableSwaggerUi();
             config.Routes.MapHttpRoute(
                 name: "3wBetManager-API",
-                routeTemplate: "api/{controller}/{id}",
+                routeTemplate: "api/{controller}/{action}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
 

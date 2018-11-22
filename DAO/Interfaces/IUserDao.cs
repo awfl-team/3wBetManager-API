@@ -12,7 +12,7 @@ namespace DAO.Interfaces
         Task<List<User>> FindAllUser();
         Task<User> FindUser(string uid);
         Task<User> FindUserByEmail(string email);
-        Task<User> FindUserByPseudo(string pseudo);
+        Task<User> FindUserByUsername(string username);
         void AddUser(User user);
         void DeleteUser(string uId);
         void UpdateUser(string uId, User userParam);
