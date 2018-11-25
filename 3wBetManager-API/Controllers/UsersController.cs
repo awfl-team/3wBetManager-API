@@ -35,6 +35,7 @@ namespace _3wBetManager_API.Controllers
             var userByUsername = getUserDao().FindUserByUsername(user.Username);
             if (userByEmail.Result == null && userByUsername.Result == null)
             {
+                user.Role = "User";
                 getUserDao().AddUser(user);
                 return Ok();
             }
