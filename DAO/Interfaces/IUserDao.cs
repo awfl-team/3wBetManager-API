@@ -11,7 +11,8 @@ namespace DAO.Interfaces
     {
         Task<List<User>> FindAllUser();
         Task<User> FindUser(string uid);
-        Task<User> FindUserByEmail(string email);
+        Task<User> FindUserByEmailSingle(string email);
+        Task<User> FindUserByEmailToList(string email);
         Task<User> FindUserByUsername(string username);
         void AddUser(User user);
         void DeleteUser(string uId);

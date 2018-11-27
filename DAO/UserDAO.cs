@@ -33,7 +33,12 @@ namespace DAO
             return result.FirstOrDefault();
         }
 
-        public async Task<User> FindUserByEmail(string email)
+        public async Task<User> FindUserByEmailSingle(string email)
+        {
+            return await _collection.Find(user => user.Email == email).SingleAsync();
+        }
+
+        public async Task<User> FindUserByEmailToList(string email)
         {
             var result = await _collection.Find(user => user.Email == email).ToListAsync();
             return result.FirstOrDefault();

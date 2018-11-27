@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.Eventing.Reader;
-using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
 using DAO;
 using DAO.Interfaces;
 using Models;
-using MongoDB.Bson;
 using _3wBetManager_API.Manager;
 
 namespace _3wBetManager_API.Controllers
@@ -31,7 +26,7 @@ namespace _3wBetManager_API.Controllers
         [HttpPost]
         public IHttpActionResult Register([FromBody] User user)
         {
-            var userByEmail = getUserDao().FindUserByEmail(user.Email);
+            var userByEmail = getUserDao().FindUserByEmailToList(user.Email);
             var userByUsername = getUserDao().FindUserByUsername(user.Username);
             if (userByEmail.Result == null && userByUsername.Result == null)
             {
@@ -53,15 +48,16 @@ namespace _3wBetManager_API.Controllers
 
                 return Content(HttpStatusCode.BadRequest, "username and email already taken");
             }
-
         }
 
         [HttpPost]
         public IHttpActionResult Login([FromBody] User user)
         {
-            var fullUser = getUserDao().FindUserByEmail(user.Email);
-            if (fullUser.Result != null)
+            const string errorMessage = "Wrong login password";
+            try
             {
+                var fullUser = getUserDao().FindUserByEmailSingle(user.Email);
+
                 if (BCrypt.Net.BCrypt.Verify(user.Password, fullUser.Result.Password))
                 {
                     return Ok(TokenManager.GenerateToken(fullUser.Result.Email, fullUser.Result.Role,
@@ -69,12 +65,12 @@ namespace _3wBetManager_API.Controllers
                 }
                 else
                 {
-                    return Content(HttpStatusCode.BadRequest, "Wrong login password");
+                    return Content(HttpStatusCode.BadRequest, errorMessage);
                 }
             }
-            else
+            catch (AggregateException)
             {
-                return Content(HttpStatusCode.BadRequest, "email not found");
+                return Content(HttpStatusCode.BadRequest, errorMessage);
             }
         }
 

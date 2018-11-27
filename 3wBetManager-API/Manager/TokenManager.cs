@@ -57,7 +57,7 @@ namespace _3wBetManager_API.Manager
                     parameters, out securityToken);
                 return principal;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }
