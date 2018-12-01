@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "Models\Models.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAO", "DAO\DAO.csproj", "{3AFEF470-6C20-4CE1-B92E-8C410BCA8A22}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{A6BF2CD0-52FA-429E-A185-C1E02576BDCC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{522E9A36-4BA9-46FE-8F5E-B0CD2AAA3597}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{3AFEF470-6C20-4CE1-B92E-8C410BCA8A22}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3AFEF470-6C20-4CE1-B92E-8C410BCA8A22}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3AFEF470-6C20-4CE1-B92E-8C410BCA8A22}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A6BF2CD0-52FA-429E-A185-C1E02576BDCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A6BF2CD0-52FA-429E-A185-C1E02576BDCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A6BF2CD0-52FA-429E-A185-C1E02576BDCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A6BF2CD0-52FA-429E-A185-C1E02576BDCC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{522E9A36-4BA9-46FE-8F5E-B0CD2AAA3597}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{522E9A36-4BA9-46FE-8F5E-B0CD2AAA3597}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{522E9A36-4BA9-46FE-8F5E-B0CD2AAA3597}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{522E9A36-4BA9-46FE-8F5E-B0CD2AAA3597}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
