@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Net.Http;
 using System.Runtime.InteropServices;
+using DAO;
 using Microsoft.Owin.Hosting;
 
 namespace _3wBetManager_API
@@ -20,6 +21,7 @@ namespace _3wBetManager_API
         static void Main(string[] args)
         {
             const string baseAddress = "http://localhost:9000/";
+            Singleton.Instance.SetUserDao(new UserDao());
 
             var handle = GetConsoleWindow();
             ShowWindow(handle, SW_HIDE);

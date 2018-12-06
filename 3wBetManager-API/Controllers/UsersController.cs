@@ -26,27 +26,34 @@ namespace _3wBetManager_API.Controllers
         [HttpPost]
         public IHttpActionResult Register([FromBody] User user)
         {
-            var userByEmail = getUserDao().FindUserByEmailToList(user.Email);
-            var userByUsername = getUserDao().FindUserByUsername(user.Username);
-            if (userByEmail.Result == null && userByUsername.Result == null)
+            try
             {
-                user.Role = "User";
-                getUserDao().AddUser(user);
-                return Ok();
+                var userByEmail = getUserDao().FindUserByEmailToList(user.Email);
+                var userByUsername = getUserDao().FindUserByUsername(user.Username);
+                if (userByEmail.Result == null && userByUsername.Result == null)
+                {
+                    user.Role = "User";
+                    getUserDao().AddUser(user);
+                    return Ok();
+                }
+                else
+                {
+                    if (userByEmail.Result != null && userByUsername.Result == null)
+                    {
+                        return Content(HttpStatusCode.BadRequest, "email already taken");
+                    }
+
+                    if (userByUsername.Result != null && userByEmail.Result == null)
+                    {
+                        return Content(HttpStatusCode.BadRequest, "username already taken");
+                    }
+
+                    return Content(HttpStatusCode.BadRequest, "username and email already taken");
+                }
             }
-            else
+            catch (Exception e)
             {
-                if (userByEmail.Result != null && userByUsername.Result == null)
-                {
-                    return Content(HttpStatusCode.BadRequest, "email already taken");
-                }
-
-                if (userByUsername.Result != null && userByEmail.Result == null)
-                {
-                    return Content(HttpStatusCode.BadRequest, "username already taken");
-                }
-
-                return Content(HttpStatusCode.BadRequest, "username and email already taken");
+                return InternalServerError(e);
             }
         }
 
@@ -76,7 +83,7 @@ namespace _3wBetManager_API.Controllers
 
         private IUserDao getUserDao()
         {
-            return Singleton.Instance.SetUserDao(new UserDao());
+            return Singleton.Instance.UserDao;
         }
     }
 }

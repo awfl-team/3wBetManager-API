@@ -11,8 +11,7 @@ namespace _3wBetManager_API.Manager
 {
     public class TokenManager
     {
-        private static string Secret =
-            "XCAP05H6LoKvbRRa/QkqLNMI7cOHguaRyHzyg7n5qEkGjQmtBhz4SzYh4Fqwjyi3KJHlSXKPwVu2+bXr6CtpgQ==";
+        private const string Secret = "XCAP05H6LoKvbRRa/QkqLNMI7cOHguaRyHzyg7n5qEkGjQmtBhz4SzYh4Fqwjyi3KJHlSXKPwVu2+bXr6CtpgQ==";
 
         public static string GenerateToken(string email, string role, string pseudo)
         {
