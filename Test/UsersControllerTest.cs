@@ -20,7 +20,7 @@ namespace Test
         private UsersController _usersController;
         private IUserDao _userDao;
         private User _user;
-        private TokenManager _tokenManager;
+        private static TokenManager _tokenManager;
 
 
         [SetUp]
@@ -39,11 +39,10 @@ namespace Test
         {
             _userDao.ClearReceivedCalls();
             _tokenManager.ClearReceivedCalls();
-            //_bCrypt.ClearReceivedCalls();
         }
 
         [Test]
-        public void Login()
+        public void GetAllTest()
         {
             _usersController.GetAll();
              _userDao.Received().FindAllUser();
@@ -51,11 +50,29 @@ namespace Test
         }
 
         [Test]
-        public void Register()
+        public void GetTest()
         {
             _usersController.Get("test");
             _userDao.Received().FindUser(Arg.Any<string>());
             Assert.IsInstanceOf<Task<IHttpActionResult>>(_usersController.Get(Arg.Any<string>()));
+        }
+
+        [Test]
+        public void LoginTest()
+        {
+            _usersController.Login(_user);
+            _userDao.Received().FindUserByEmailSingle(Arg.Any<string>());
+            //_tokenManager.Received().GenerateToken(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>());
+            //Assert.IsInstanceOf<Task<IHttpActionResult>>(_usersController.Login(_user));
+        }
+
+        [Test]
+        public void RegisterTest()
+        {
+            _usersController.Register(_user);
+            _userDao.Received().FindUserByEmailToList(Arg.Any<string>());
+            _userDao.Received().FindUserByUsername(Arg.Any<string>());
+            //Assert.IsInstanceOf<Task<IHttpActionResult>>(_usersController.Register(Arg.Any<User>()));
         }
 
     
