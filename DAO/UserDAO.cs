@@ -67,7 +67,10 @@ namespace DAO
             var uid = ObjectId.Parse(id);
             await _collection.UpdateOneAsync(
                 user => user.Id == uid,
-                Builders<User>.Update.Set(user => user.Point, userParam.Point));
+                Builders<User>.Update.Set(user => user.Username, userParam.Username)
+                    .Set(user => user.Email, userParam.Email)
+                    .Set(user => user.Password, BCrypt.Net.BCrypt.HashPassword(userParam.Password))
+            );
         }
     }
 }

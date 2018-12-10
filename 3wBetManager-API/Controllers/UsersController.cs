@@ -22,7 +22,6 @@ namespace _3wBetManager_API.Controllers
             {
                 return InternalServerError(e);
             }
-            
         }
 
         [HttpGet]
@@ -38,9 +37,59 @@ namespace _3wBetManager_API.Controllers
             }
         }
 
+        [HttpGet]
+        public async Task<IHttpActionResult> GetByEmail(string email)
+        {
+            try
+            {
+                return Ok(await getUserDao().FindUserByEmailToList(email));
+            }
+            catch (AggregateException)
+            {
+                return Content(HttpStatusCode.BadRequest, "email not found");
+            }
+            catch (Exception e)
+            {
+                return InternalServerError(e);
+            }
+        }
+
+        [HttpPut]
+        public IHttpActionResult Put(string id, [FromBody] User user)
+        {
+            // TODO refactor this in a function 
+            try
+            {
+                var userByEmail = getUserDao().FindUserByEmailToList(user.Email);
+                var userByUsername = getUserDao().FindUserByUsername(user.Username);
+                if (userByEmail.Result == null && userByUsername.Result == null)
+                {
+                    getUserDao().UpdateUser(id, user);
+                    return Ok();
+                }
+
+                if (userByEmail.Result != null && userByUsername.Result == null)
+                {
+                    return Content(HttpStatusCode.BadRequest, "email already taken");
+                }
+
+                if (userByUsername.Result != null && userByEmail.Result == null)
+                {
+                    return Content(HttpStatusCode.BadRequest, "username already taken");
+                }
+
+                return Content(HttpStatusCode.BadRequest, "username and email already taken");
+            }
+            catch (Exception e)
+            {
+                return InternalServerError(e);
+            }
+        }
+
         [HttpPost]
         public IHttpActionResult Register([FromBody] User user)
         {
+            // TODO refactor this in a function 
             try
             {
                 var userByEmail = getUserDao().FindUserByEmailToList(user.Email);
@@ -51,20 +100,18 @@ namespace _3wBetManager_API.Controllers
                     getUserDao().AddUser(user);
                     return Created("", user);
                 }
-                else
+
+                if (userByEmail.Result != null && userByUsername.Result == null)
                 {
-                    if (userByEmail.Result != null && userByUsername.Result == null)
-                    {
-                        return Content(HttpStatusCode.BadRequest, "email already taken");
-                    }
-
-                    if (userByUsername.Result != null && userByEmail.Result == null)
-                    {
-                        return Content(HttpStatusCode.BadRequest, "username already taken");
-                    }
-
-                    return Content(HttpStatusCode.BadRequest, "username and email already taken");
+                    return Content(HttpStatusCode.BadRequest, "email already taken");
                 }
+
+                if (userByUsername.Result != null && userByEmail.Result == null)
+                {
+                    return Content(HttpStatusCode.BadRequest, "username already taken");
+                }
+
+                return Content(HttpStatusCode.BadRequest, "username and email already taken");
             }
             catch (Exception e)
             {
@@ -104,5 +151,6 @@ namespace _3wBetManager_API.Controllers
         {
             return Singleton.Instance.UserDao;
         }
+
     }
 }
