@@ -25,18 +25,11 @@ namespace _3wBetManager_API
 
             var handle = GetConsoleWindow();
             ShowWindow(handle, SW_HIDE);
+            //Process.Start(baseAddress + "swagger");
 
             // Start OWIN host 
             using (WebApp.Start<Startup>(url: baseAddress))
             {
-                // Create HttpCient and make a request to api/values 
-                HttpClient client = new HttpClient();
-                Process.Start(baseAddress + "swagger");
-
-                var response = client.GetAsync(baseAddress + "api/values").Result;
-
-                Console.WriteLine(response);
-                Console.WriteLine(response.Content.ReadAsStringAsync().Result);
                 Console.ReadLine();
             }
         }

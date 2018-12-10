@@ -129,11 +129,11 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DAO\DAO.csproj">
-      <Project>{3AFEF470-6C20-4CE1-B92E-8C410BCA8A22}</Project>
+      <Project>{D68ACE5E-9A8F-42D2-84B8-59BB12511B92}</Project>
       <Name>DAO</Name>
     </ProjectReference>
     <ProjectReference Include="..\Models\Models.csproj">
-      <Project>{B11ADB81-1608-4CB6-8D0C-B66A202D8088}</Project>
+      <Project>{057423D6-1327-47F7-B455-D281935FA5A5}</Project>
       <Name>Models</Name>
     </ProjectReference>
   </ItemGroup>

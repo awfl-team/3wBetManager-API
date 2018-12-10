@@ -14,13 +14,28 @@ namespace _3wBetManager_API.Controllers
         [HttpGet]
         public async Task<IHttpActionResult> GetAll()
         {
-            return Ok(await getUserDao().FindAllUser());
+            try
+            {
+                return Ok(await getUserDao().FindAllUser());
+            }
+            catch (Exception e)
+            {
+                return InternalServerError(e);
+            }
+            
         }
 
         [HttpGet]
         public async Task<IHttpActionResult> Get(string id)
         {
-            return Ok(await getUserDao().FindUser(id));
+            try
+            {
+                return Ok(await getUserDao().FindUser(id));
+            }
+            catch (Exception e)
+            {
+                return InternalServerError(e);
+            }
         }
 
         [HttpPost]
@@ -34,7 +49,7 @@ namespace _3wBetManager_API.Controllers
                 {
                     user.Role = "User";
                     getUserDao().AddUser(user);
-                    return Ok();
+                    return Created("", user);
                 }
                 else
                 {
@@ -78,6 +93,10 @@ namespace _3wBetManager_API.Controllers
             catch (AggregateException)
             {
                 return Content(HttpStatusCode.BadRequest, errorMessage);
+            }
+            catch (Exception e)
+            {
+                return InternalServerError(e);
             }
         }
 

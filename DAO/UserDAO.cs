@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DAO.Interfaces;
@@ -11,7 +10,7 @@ namespace DAO
 {
     public class UserDao : IUserDao
     {
-        private IMongoCollection<User> _collection;
+        private readonly IMongoCollection<User> _collection;
 
         public UserDao(IMongoCollection<User> collection = null)
         {
@@ -63,11 +62,11 @@ namespace DAO
             await _collection.DeleteOneAsync(user => user.Id == uid);
         }
 
-        public void UpdateUser(string id, User userParam)
+        public async void UpdateUser(string id, User userParam)
         {
             var uid = ObjectId.Parse(id);
-            _collection.FindOneAndUpdateAsync(
-                Builders<User>.Filter.Eq(user => user.Id, uid),
+            await _collection.UpdateOneAsync(
+                user => user.Id == uid,
                 Builders<User>.Update.Set(user => user.Point, userParam.Point));
         }
     }
