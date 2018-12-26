@@ -37,6 +37,31 @@ namespace DAO
             return await _collection.Find(user => user.Email == email).SingleAsync();
         }
 
+        public bool UsernameAndEmailExist (User user, out string errorMessage)
+        {
+            var userByEmail = FindUserByEmailToList(user.Email);
+            var userByUsername = FindUserByUsername(user.Username);
+            if (userByEmail.Result == null && userByUsername.Result == null)
+            {
+                errorMessage = "";
+                return true;
+            }
+
+            if (userByEmail.Result != null && userByUsername.Result == null)
+            {
+                errorMessage = "email already taken";
+                return false;
+            }
+
+            if (userByUsername.Result != null && userByEmail.Result == null)
+            {
+                errorMessage = "username already taken";
+                return false;
+            }
+            errorMessage = "username and email already taken";
+            return false;
+        }
+
         public async Task<User> FindUserByEmailToList(string email)
         {
             var result = await _collection.Find(user => user.Email == email).ToListAsync();

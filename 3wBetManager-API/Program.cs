@@ -24,7 +24,7 @@ namespace _3wBetManager_API
             Singleton.Instance.SetUserDao(new UserDao());
 
             var handle = GetConsoleWindow();
-            ShowWindow(handle, SW_HIDE);
+            //ShowWindow(handle, SW_HIDE);
             //Process.Start(baseAddress + "swagger");
 
             // Start OWIN host 

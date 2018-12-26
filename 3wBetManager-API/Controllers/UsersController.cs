@@ -57,89 +57,15 @@ namespace _3wBetManager_API.Controllers
         [HttpPut]
         public IHttpActionResult Put(string id, [FromBody] User user)
         {
-            // TODO refactor this in a function 
             try
             {
-                var userByEmail = getUserDao().FindUserByEmailToList(user.Email);
-                var userByUsername = getUserDao().FindUserByUsername(user.Username);
-                if (userByEmail.Result == null && userByUsername.Result == null)
-                {
-                    getUserDao().UpdateUser(id, user);
-                    return Ok();
-                }
-
-                if (userByEmail.Result != null && userByUsername.Result == null)
-                {
-                    return Content(HttpStatusCode.BadRequest, "email already taken");
-                }
-
-                if (userByUsername.Result != null && userByEmail.Result == null)
-                {
-                    return Content(HttpStatusCode.BadRequest, "username already taken");
-                }
-
-                return Content(HttpStatusCode.BadRequest, "username and email already taken");
-            }
-            catch (Exception e)
-            {
-                return InternalServerError(e);
-            }
-        }
-
-        [HttpPost]
-        public IHttpActionResult Register([FromBody] User user)
-        {
-            // TODO refactor this in a function 
-            try
-            {
-                var userByEmail = getUserDao().FindUserByEmailToList(user.Email);
-                var userByUsername = getUserDao().FindUserByUsername(user.Username);
-                if (userByEmail.Result == null && userByUsername.Result == null)
-                {
-                    user.Role = "User";
-                    getUserDao().AddUser(user);
-                    return Created("", user);
-                }
-
-                if (userByEmail.Result != null && userByUsername.Result == null)
-                {
-                    return Content(HttpStatusCode.BadRequest, "email already taken");
-                }
-
-                if (userByUsername.Result != null && userByEmail.Result == null)
-                {
-                    return Content(HttpStatusCode.BadRequest, "username already taken");
-                }
-
-                return Content(HttpStatusCode.BadRequest, "username and email already taken");
-            }
-            catch (Exception e)
-            {
-                return InternalServerError(e);
-            }
-        }
-
-        [HttpPost]
-        public IHttpActionResult Login([FromBody] User user)
-        {
-            const string errorMessage = "Wrong login password";
-            try
-            {
-                var fullUser = getUserDao().FindUserByEmailSingle(user.Email);
-
-                if (BCrypt.Net.BCrypt.Verify(user.Password, fullUser.Result.Password))
-                {
-                    return Ok(TokenManager.GenerateToken(fullUser.Result.Email, fullUser.Result.Role,
-                        fullUser.Result.Username));
-                }
-                else
+                var isExist = getUserDao().UsernameAndEmailExist(user, out var errorMessage);
+                if (isExist == false)
                 {
                     return Content(HttpStatusCode.BadRequest, errorMessage);
                 }
-            }
-            catch (AggregateException)
-            {
-                return Content(HttpStatusCode.BadRequest, errorMessage);
+                getUserDao().UpdateUser(id, user);
+                return Ok();
             }
             catch (Exception e)
             {

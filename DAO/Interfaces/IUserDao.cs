@@ -14,6 +14,7 @@ namespace DAO.Interfaces
         Task<User> FindUserByEmailSingle(string email);
         Task<User> FindUserByEmailToList(string email);
         Task<User> FindUserByUsername(string username);
+        bool UsernameAndEmailExist(User user, out string errorMessage);
         void AddUser(User user);
         void DeleteUser(string uId);
         void UpdateUser(string uId, User userParam);
