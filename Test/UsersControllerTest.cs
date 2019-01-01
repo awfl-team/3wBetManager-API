@@ -56,28 +56,5 @@ namespace Test
             _userDao.Received().FindUser(Arg.Any<string>());
             Assert.IsInstanceOf<Task<IHttpActionResult>>(_usersController.Get(Arg.Any<string>()));
         }
-
-        [Test]
-        public void LoginTest()
-        {
-            _usersController.Login(_user);
-            _userDao.Received().FindUserByEmailSingle(Arg.Any<string>());
-            //_tokenManager.Received().GenerateToken(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>());
-            //Assert.IsInstanceOf<Task<IHttpActionResult>>(_usersController.Login(_user));
-        }
-
-        [Test]
-        public void RegisterTest()
-        {
-            _usersController.Register(_user);
-            _userDao.Received().FindUserByEmailToList(Arg.Any<string>());
-            _userDao.Received().FindUserByUsername(Arg.Any<string>());
-            //Assert.IsInstanceOf<Task<IHttpActionResult>>(_usersController.Register(Arg.Any<User>()));
-        }
-
-    
-
-
-
     }
 }

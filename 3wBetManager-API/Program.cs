@@ -22,9 +22,10 @@ namespace _3wBetManager_API
         {
             const string baseAddress = "http://localhost:9000/";
             Singleton.Instance.SetUserDao(new UserDao());
+            Singleton.Instance.SetCompetitionDao(new CompetitionDao());
 
             var handle = GetConsoleWindow();
-            //ShowWindow(handle, SW_HIDE);
+            ShowWindow(handle, SW_HIDE);
             //Process.Start(baseAddress + "swagger");
 
             // Start OWIN host 
