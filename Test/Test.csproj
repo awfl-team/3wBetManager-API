@@ -92,6 +92,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CompetitionDaoTest.cs" />
+    <Compile Include="MatchDaoTest.cs" />
+    <Compile Include="TeamDaoTest.cs" />
     <Compile Include="UserDaoTest.cs" />
     <Compile Include="UsersControllerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
