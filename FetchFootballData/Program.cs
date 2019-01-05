@@ -19,7 +19,7 @@ namespace FetchFootballData
             System.Threading.Thread.Sleep(60000);
             footballDataManager.GetAllTeams();
             System.Threading.Thread.Sleep(60000);
-            footballDataManager.GetAllMatchForTheWeek();
+            footballDataManager.GetAllMatchForAWeek();
             
             Console.ReadLine();
             

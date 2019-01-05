@@ -95,7 +95,7 @@ namespace FetchFootballData
             
         }
 
-        public async void GetAllMatchForTheWeek()
+        public async void GetAllMatchForAWeek()
         {
             try
             {
