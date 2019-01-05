@@ -22,6 +22,8 @@ namespace _3wBetManager_API.Controllers
                     return Content(HttpStatusCode.BadRequest, errorMessage);
                 }
 
+                // TODO create a constant in MODEL.USER
+                user.Role = "USER";
                 getUserDao().AddUser(user);
                 return Ok();
             }
