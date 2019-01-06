@@ -65,7 +65,7 @@ namespace Test
         {
             _matchDao.ReplaceMatch(1, _match);
             _collection.Received().ReplaceOneAsync(Arg.Any<ExpressionFilterDefinition<Match>>(),
-                Arg.Any<Match>()
+                Arg.Any<Match>(), Arg.Any<UpdateOptions>(), Arg.Any<CancellationToken>()
             );
         }
     }

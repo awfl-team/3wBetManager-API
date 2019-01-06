@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using DAO;
 using DAO.Interfaces;
@@ -21,8 +22,11 @@ namespace Test
         {
             _collection = Substitute.For<IMongoCollection<Team>>();
             _teamDao = new TeamDao(_collection);
-            _team = new Team { Name = "test" , Email = "test", ShortName = "test", Tla = "test", CrestUrl = "test",
-                Address = "test", Phone = "test", Colors = "test", Venue = "test"};
+            _team = new Team
+            {
+                Name = "test", Email = "test", ShortName = "test", Tla = "test", CrestUrl = "test",
+                Address = "test", Phone = "test", Colors = "test", Venue = "test"
+            };
         }
 
         [TearDown]
@@ -30,14 +34,14 @@ namespace Test
         {
             _collection.ClearReceivedCalls();
         }
-        
+
         [Test]
         public void AddTeamTest()
         {
             _teamDao.AddTeam(_team);
             _collection.Received().InsertOneAsync(Arg.Any<Team>());
         }
-        
+
         [Test]
         public void FindTeamTest()
         {
@@ -50,9 +54,9 @@ namespace Test
         public void ReplaceTeamTest()
         {
             _teamDao.ReplaceTeam(1, _team);
-            _collection.Received().ReplaceOneAsync(teamFilter => teamFilter.Id == Arg.Any<int>(),
-                Arg.Any<Team>(), Arg.Any<UpdateOptions>()
-                );
+            _collection.Received().ReplaceOneAsync(Arg.Any<ExpressionFilterDefinition<Team>>(),
+                Arg.Any<Team>(), Arg.Any<UpdateOptions>(), Arg.Any<CancellationToken>()
+            );
         }
     }
 }

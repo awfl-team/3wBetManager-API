@@ -1,5 +1,5 @@
-using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using DAO;
 using DAO.Interfaces;
@@ -61,9 +61,9 @@ namespace Test
         [Test]
         public void ReplaceMatchTest()
         {
-            _competitionDao.ReplaceCompetition(1, Arg.Any<Competition>());
-            _collection.Received().ReplaceOneAsync(competitionFilter => competitionFilter.Id == Arg.Any<int>(),
-                Arg.Any<Competition>(), Arg.Any<UpdateOptions>()
+            _competitionDao.ReplaceCompetition(1, _competition);
+            _collection.Received().ReplaceOneAsync(Arg.Any<ExpressionFilterDefinition<Competition>>(),
+                Arg.Any<Competition>(), Arg.Any<UpdateOptions>(), Arg.Any<CancellationToken>()
             );
         }
     }
