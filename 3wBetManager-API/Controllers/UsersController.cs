@@ -73,6 +73,20 @@ namespace _3wBetManager_API.Controllers
             }
         }
 
+        [HttpDelete]
+        public IHttpActionResult Delete(string id)
+        {
+            try
+            {
+                getUserDao().DeleteUser(id);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return InternalServerError(e);
+            }
+        }
+
         private IUserDao getUserDao()
         {
             return Singleton.Instance.UserDao;

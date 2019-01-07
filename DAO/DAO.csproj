@@ -64,7 +64,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BetDao.cs" />
     <Compile Include="CompetitionDao.cs" />
+    <Compile Include="Interfaces\IBetDao.cs" />
     <Compile Include="Interfaces\ICompetitionDao.cs" />
     <Compile Include="Interfaces\IMatchDao.cs" />
     <Compile Include="Interfaces\ITeamDao.cs" />

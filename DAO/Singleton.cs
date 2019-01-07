@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using DAO.Interfaces;
+﻿using DAO.Interfaces;
 
 namespace DAO
 {
@@ -9,15 +6,13 @@ namespace DAO
     {
         private static Singleton _instance = null;
 
-        public static Singleton Instance
-        {
-            get { return _instance ?? (_instance = new Singleton()); }
-        }
+        public static Singleton Instance => _instance ?? (_instance = new Singleton());
 
         public IUserDao UserDao { get; private set; }
         public ICompetitionDao CompetitionDao { get; private set; }
         public ITeamDao TeamDao { get; private set; }
         public IMatchDao MatchDao { get; private set; }
+        public IBetDao BetDao { get; private set; }
 
         public IUserDao SetUserDao(IUserDao userDao)
         {
@@ -37,6 +32,11 @@ namespace DAO
         public IMatchDao SeMatchDao(IMatchDao matchDao)
         {
             return MatchDao = matchDao;
+        }
+
+        public IBetDao SetBetDao(IBetDao betDao)
+        {
+            return BetDao = betDao;
         }
 
     }

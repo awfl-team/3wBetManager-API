@@ -12,5 +12,6 @@ namespace DAO.Interfaces
         void AddMatch(Match match);
         void ReplaceMatch(int id, Match match);
         Task<Match> FindMatch(int id);
+        Task<List<Match>> FindAll();
     }
 }

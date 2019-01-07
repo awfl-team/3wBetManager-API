@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DAO.Interfaces;
 using Models;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace DAO
@@ -37,6 +38,16 @@ namespace DAO
         {
             var result = await _collection.Find(match => match.Id == id).ToListAsync();
             return result.FirstOrDefault();
+        }
+
+        public async Task<List<Match>> FindAll()
+        {
+            return await _collection.Find(new BsonDocument()).ToListAsync();
+        }
+
+        public async Task<List<Match>> FindByStatus(string status)
+        {
+            return await _collection.Find(match => match.Status == status).ToListAsync();
         }
     }
 }

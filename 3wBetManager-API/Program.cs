@@ -22,8 +22,8 @@ namespace _3wBetManager_API
         {
             const string baseAddress = "http://localhost:9000/";
             Singleton.Instance.SetUserDao(new UserDao());
-            Singleton.Instance.SetCompetitionDao(new CompetitionDao());
-
+            Singleton.Instance.SetBetDao(new BetDao());
+            Singleton.Instance.SeMatchDao(new MatchDao());
             var handle = GetConsoleWindow();
             ShowWindow(handle, SW_HIDE);
             //Process.Start(baseAddress + "swagger");
