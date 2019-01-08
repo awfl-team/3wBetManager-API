@@ -62,6 +62,34 @@ namespace DAO
             return false;
         }
 
+        public bool CanUpdate(string id, User userParam, out string errorMessage)
+        {
+
+            var users = FindAllUser();
+            users.Result.Remove(users.Result.Single(user => user.Id == ObjectId.Parse(id)));
+            var userByEmail = users.Result.Find(user => user.Email == userParam.Email);
+            var userByUsername = users.Result.Find(user => user.Username == userParam.Username);
+            if (userByEmail == null && userByUsername == null)
+            {
+                errorMessage = "";
+                return true;
+            }
+
+            if (userByEmail != null && userByUsername == null)
+            {
+                errorMessage = "email already taken";
+                return false;
+            }
+
+            if (userByUsername != null && userByEmail == null)
+            {
+                errorMessage = "username already taken";
+                return false;
+            }
+            errorMessage = "username and email already taken";
+            return false;
+        }
+
         public async Task<User> FindUserByEmailToList(string email)
         {
             var result = await _collection.Find(user => user.Email == email).ToListAsync();

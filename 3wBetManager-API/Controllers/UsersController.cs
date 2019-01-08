@@ -59,8 +59,8 @@ namespace _3wBetManager_API.Controllers
         {
             try
             {
-                var isExist = getUserDao().UsernameAndEmailExist(user, out var errorMessage);
-                if (isExist == false)
+                var canUpdate  = getUserDao().CanUpdate(id, user, out var errorMessage);
+                if (canUpdate == false)
                 {
                     return Content(HttpStatusCode.BadRequest, errorMessage);
                 }
