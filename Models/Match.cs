@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using MongoDB.Bson;
 
 namespace Models
@@ -12,6 +13,8 @@ namespace Models
         public Team HomeTeam { get; set; }
         public Team AwayTeam { get; set; }
         public Score Score { get; set; }
+        public Competition Competition { get; set; }
+        public List<Bet> Bets { get; set; }
   
     }
 }

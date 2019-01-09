@@ -12,8 +12,6 @@ namespace FetchFootballData
     {
         private readonly HttpClient _http = new HttpClient();
 
-        private readonly int[] _availableCompetitions = new int[]
-            {2000, 2001, 2002, 2003, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2021};
 
         public FootballDataManager()
         {
@@ -27,15 +25,13 @@ namespace FetchFootballData
             {
                 Console.WriteLine("----- Begin Fetch football data ----- ");
                 Console.WriteLine("     ----- Begin Fetch competitions ----- ");
-                var response = await _http.GetAsync("competitions");
-                var responseContent = await response.Content.ReadAsStringAsync();
-                var json = JObject.Parse(responseContent);
-                var jsonCompetitions = json["competitions"];
-                var competitions =
-                    JsonConvert.DeserializeObject<List<Competition>>(JsonConvert.SerializeObject(jsonCompetitions));
-
-                foreach (var competition in competitions)
+                foreach (var availableCompetition in Competition.AvailableCompetitions)
                 {
+                    var response = await _http.GetAsync("competitions/" + availableCompetition);
+                    var responseContent = await response.Content.ReadAsStringAsync();
+                    var competition =
+                        JsonConvert.DeserializeObject<Competition>(responseContent);
+
                     var findCompetition = Singleton.Instance.CompetitionDao.FindCompetition(competition.Id).Result;
                     if (findCompetition == null)
                     {
@@ -48,6 +44,7 @@ namespace FetchFootballData
                         Singleton.Instance.CompetitionDao.ReplaceCompetition(findCompetition.Id, competition);
                     }
                 }
+
                 Console.WriteLine("     ----- End Fetch competitions ----- ");
             }
             catch (Exception e)
@@ -62,7 +59,8 @@ namespace FetchFootballData
             try
             {
                 Console.WriteLine("     ----- Begin Fetch teams ----- ");
-                foreach (var availableCompetition in _availableCompetitions)
+                var availableCompetitions = Competition.AvailableCompetitions;
+                foreach (var availableCompetition in availableCompetitions)
                 {
                     var response = await _http.GetAsync("competitions/" + availableCompetition + "/teams");
                     var responseContent = await response.Content.ReadAsStringAsync();
@@ -85,6 +83,7 @@ namespace FetchFootballData
                         }
                     }
                 }
+
                 Console.WriteLine("     ----- End Fetch teams ----- ");
             }
             catch (Exception e)
@@ -92,7 +91,6 @@ namespace FetchFootballData
                 Console.WriteLine(e);
                 throw;
             }
-            
         }
 
         public async void GetAllMatchForAWeek()
@@ -120,10 +118,11 @@ namespace FetchFootballData
                     }
                     else
                     {
-                        Console.WriteLine("Replace match " + match.Id);
-                        Singleton.Instance.MatchDao.ReplaceMatch(findMatch.Id, match);
+                        Console.WriteLine("Update match " + match.Id);
+                        Singleton.Instance.MatchDao.UpdateMatch(findMatch.Id, match);
                     }
                 }
+
                 Console.WriteLine("     ----- End Fetch matches ----- ");
                 Console.WriteLine("----- End Fetch football data ----- ");
             }
@@ -132,7 +131,6 @@ namespace FetchFootballData
                 Console.WriteLine(e);
                 throw;
             }
-            
         }
     }
 }

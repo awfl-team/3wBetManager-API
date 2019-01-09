@@ -118,6 +118,7 @@
   <ItemGroup>
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\BetController.cs" />
+    <Compile Include="Controllers\CompetitionController.cs" />
     <Compile Include="Controllers\MatchController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Manager\TokenManager.cs" />
