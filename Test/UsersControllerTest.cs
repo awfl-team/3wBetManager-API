@@ -49,6 +49,7 @@ namespace Test
             Assert.IsInstanceOf<Task<IHttpActionResult>>(_usersController.GetAll());
         }
 
+        // Issue when running all tests 
         [Test]
         public void GetTest()
         {

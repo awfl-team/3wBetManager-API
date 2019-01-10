@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -47,6 +49,23 @@ namespace _3wBetManager_API.Controllers
             catch (AggregateException)
             {
                 return Content(HttpStatusCode.BadRequest, "email not found");
+            }
+            catch (Exception e)
+            {
+                return InternalServerError(e);
+            }
+        }
+
+        [HttpGet]
+        public async Task<IHttpActionResult> GetAllByOrder(int order)
+        {
+            try
+            {
+                if(order != 1 && order != -1)
+                {
+                    order = 1;
+                }
+                return Ok(await getUserDao().FindAllUserByOrder(order));
             }
             catch (Exception e)
             {
