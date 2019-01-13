@@ -43,6 +43,8 @@ namespace FetchFootballData
                         Console.WriteLine("Replace competition " + competition.Id + " " + competition.Name);
                         Singleton.Instance.CompetitionDao.ReplaceCompetition(findCompetition.Id, competition);
                     }
+
+                    System.Threading.Thread.Sleep(15000);
                 }
 
                 Console.WriteLine("     ----- End Fetch competitions ----- ");
@@ -82,6 +84,8 @@ namespace FetchFootballData
                             Singleton.Instance.TeamDao.ReplaceTeam(findTeam.Id, team);
                         }
                     }
+
+                    System.Threading.Thread.Sleep(15000);
                 }
 
                 Console.WriteLine("     ----- End Fetch teams ----- ");
