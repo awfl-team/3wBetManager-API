@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net.Http;
 using System.Security.Claims;
 
 namespace _3wBetManager_API.Manager
@@ -88,5 +87,18 @@ namespace _3wBetManager_API.Manager
 
             return tokenDictionary;
         }
+
+        public static string GetTokenFromRequest(HttpRequestMessage request)
+        {
+            if (!request.Headers.TryGetValues("Authorization", out var authHeaders) || authHeaders.Count() > 1)
+            {
+                return null;
+            }
+            var bearerToken = authHeaders.ElementAt(0);
+            var token = bearerToken.StartsWith("Bearer ") ? bearerToken.Substring(7) : bearerToken;
+            return token;
+        }
+
+
     }
 }

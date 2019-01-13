@@ -10,6 +10,7 @@ namespace _3wBetManager_API.Controllers
 {
     public class AuthController: ApiController
     {
+        [Route("register")]
         [HttpPost]
         public IHttpActionResult Register([FromBody] User user)
         {
@@ -33,6 +34,7 @@ namespace _3wBetManager_API.Controllers
             }
         }
 
+        [Route("login")]
         [HttpPost]
         public IHttpActionResult Login([FromBody] User user)
         {

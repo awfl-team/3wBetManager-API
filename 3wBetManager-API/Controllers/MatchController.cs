@@ -9,8 +9,10 @@ using DAO.Interfaces;
 
 namespace _3wBetManager_API.Controllers
 {
+    [RoutePrefix("matches")]
     public class MatchController: ApiController
     {
+        [Route("")]
         public async Task<IHttpActionResult> GetAll()
         {
             try
@@ -21,6 +23,12 @@ namespace _3wBetManager_API.Controllers
             {
                 return InternalServerError(e);
             }
+        }
+
+        [Route("{id:int}")]
+        public async Task<IHttpActionResult> Get(int id)
+        {
+            return Ok(await GetMatchDao().FindMatch(id));
         }
        
         private IMatchDao GetMatchDao()

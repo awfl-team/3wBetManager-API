@@ -17,13 +17,14 @@ namespace _3wBetManager_API
             {
                 c.SingleApiVersion("v1", "3wBetManager-API");
             }).EnableSwaggerUi();
+            config.MapHttpAttributeRoutes();
             config.Routes.MapHttpRoute(
                 name: "3wBetManager-API",
-                routeTemplate: "api/{controller}/{action}/{id}",
+                routeTemplate: "{controller}/{action}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
-
             appBuilder.UseWebApi(config);
         }
     }
+
 }

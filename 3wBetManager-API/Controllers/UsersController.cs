@@ -9,8 +9,10 @@ using _3wBetManager_API.Manager;
 
 namespace _3wBetManager_API.Controllers
 {
+    [RoutePrefix("users")]
     public class UsersController : ApiController
     {
+        [Route("")]
         [HttpGet]
         public async Task<IHttpActionResult> GetAll()
         {
@@ -24,6 +26,7 @@ namespace _3wBetManager_API.Controllers
             }
         }
 
+        [Route("{id}")]
         [HttpGet]
         public async Task<IHttpActionResult> Get(string id)
         {
@@ -37,16 +40,15 @@ namespace _3wBetManager_API.Controllers
             }
         }
 
+        [Route("token")]
         [HttpGet]
-        public async Task<IHttpActionResult> GetByEmail(string email)
+        public async Task<IHttpActionResult> GetUserFromToken()
         {
             try
             {
-                return Ok(await getUserDao().FindUserByEmailToList(email));
-            }
-            catch (AggregateException)
-            {
-                return Content(HttpStatusCode.BadRequest, "email not found");
+                var token = TokenManager.GetTokenFromRequest(Request);
+                var user = TokenManager.ValidateToken(token);
+                return Ok(await getUserDao().FindUserByEmailToList(user["email"]));
             }
             catch (Exception e)
             {
@@ -54,6 +56,7 @@ namespace _3wBetManager_API.Controllers
             }
         }
 
+        [Route("{id}")]
         [HttpPut]
         public IHttpActionResult Put(string id, [FromBody] User user)
         {
@@ -73,6 +76,7 @@ namespace _3wBetManager_API.Controllers
             }
         }
 
+        [Route("{id}")]
         [HttpDelete]
         public IHttpActionResult Delete(string id)
         {
