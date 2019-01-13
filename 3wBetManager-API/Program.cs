@@ -24,6 +24,7 @@ namespace _3wBetManager_API
             Singleton.Instance.SetUserDao(new UserDao());
             Singleton.Instance.SetBetDao(new BetDao());
             Singleton.Instance.SeMatchDao(new MatchDao());
+            Singleton.Instance.SetCompetitionDao(new CompetitionDao());
             var handle = GetConsoleWindow();
             ShowWindow(handle, SW_HIDE);
             //Process.Start(baseAddress + "swagger");
