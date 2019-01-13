@@ -59,7 +59,7 @@ namespace Test
         }
         
         [Test]
-        public void ReplaceMatchTest()
+        public void CompetitionMatchTest()
         {
             _competitionDao.ReplaceCompetition(1, _competition);
             _collection.Received().ReplaceOneAsync(Arg.Any<ExpressionFilterDefinition<Competition>>(),
