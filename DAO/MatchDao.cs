@@ -45,11 +45,6 @@ namespace DAO
             return await _collection.Find(new BsonDocument()).ToListAsync();
         }
 
-        public async Task<List<Match>> FindByStatus(string status)
-        {
-            return await _collection.Find(match => match.Status == status).ToListAsync();
-        }
-
         public async void UpdateMatch(int id, Match matchParam)
         {
             await _collection.UpdateOneAsync(

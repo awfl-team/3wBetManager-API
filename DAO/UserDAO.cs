@@ -25,6 +25,11 @@ namespace DAO
             return await _collection.Find(new BsonDocument()).ToListAsync();
         }
 
+        public async Task<List<User>> FindAllUserByOrder(int order)
+        {
+            return await _collection.Find(new BsonDocument()).Sort("{Point:" + order + "}").ToListAsync();
+        }
+
         public async Task<User> FindUser(string id)
         {
             var uid = ObjectId.Parse(id);
