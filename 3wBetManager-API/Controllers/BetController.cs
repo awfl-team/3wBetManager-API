@@ -42,7 +42,7 @@ namespace _3wBetManager_API.Controllers
             }
         }
 
-        [Route("{competitionId:int}/result")]
+        [Route("{competitionId:int}")]
         [HttpGet]
         public IHttpActionResult GetBetsResult(int competitionId)
         {
