@@ -28,6 +28,21 @@ namespace _3wBetManager_API.Controllers
         }
 
         [Route("list")]
+        [HttpPut]
+        public IHttpActionResult PutList([FromBody] List<Bet> bets)
+        {
+            try
+            {
+                GetBetDao().UpdateListBet(bets);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return InternalServerError(e);
+            }
+        }
+
+        [Route("list")]
         [HttpPost]
         public IHttpActionResult PostList([FromBody] List<Bet> bets)
         {
@@ -44,14 +59,14 @@ namespace _3wBetManager_API.Controllers
 
         [Route("{competitionId:int}")]
         [HttpGet]
-        public IHttpActionResult GetBetsResult(int competitionId)
+        public async Task<IHttpActionResult> GetBetsResult(int competitionId)
         {
             try
             {
                 var token = TokenManager.GetTokenFromRequest(Request);
                 var user = TokenManager.ValidateToken(token);
                 var fullUser = Singleton.Instance.UserDao.FindUserByEmailSingle(user["email"]);
-                return Ok(GetBetDao().FindFinishBets(fullUser.Result, competitionId));
+                return Ok(await GetBetDao().FindFinishBets(fullUser.Result, competitionId));
             }
             catch (Exception e)
             {
