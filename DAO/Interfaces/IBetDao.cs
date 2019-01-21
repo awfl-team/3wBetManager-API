@@ -9,5 +9,6 @@ namespace DAO.Interfaces
         void AddBet(Bet bet);
         void AddListBet(List<Bet> bets);
         Task<List<Bet>> FindFinishBets(User user, int competitionId);
+        void UpdateListBet(List<Bet> bets);
     }
 }

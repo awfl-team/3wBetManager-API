@@ -25,7 +25,12 @@ namespace DAO
             {
                 var matchInformation = await Singleton.Instance.MatchDao.FindMatch(bet.Match.Id);
                 bet.Match = matchInformation;
+                var awayTeamInformation = await Singleton.Instance.TeamDao.FindTeam(bet.Match.AwayTeam.Id);
+                bet.Match.AwayTeam = awayTeamInformation;
+                var homeTeamInformation = await Singleton.Instance.TeamDao.FindTeam(bet.Match.HomeTeam.Id);
+                bet.Match.HomeTeam = homeTeamInformation;
             }
+
             var betsByCompetition = betsByUser.FindAll(bet => bet.Match.Competition.Id == competitionId);
             var betsByMatchStatus = betsByCompetition.FindAll(bet => bet.Match.Status == "FINISHED");
 
@@ -40,6 +45,16 @@ namespace DAO
         public async void AddListBet(List<Bet> bets)
         {
             await _collection.InsertManyAsync(bets);
+        }
+
+        public async void UpdateListBet(List<Bet> bets)
+        {
+            foreach (var bet in bets)
+            {
+                await _collection.UpdateOneAsync(b => b.Id == bet.Id,
+                    Builders<Bet>.Update.Set(b => b.HomeTeamScore, bet.HomeTeamScore)
+                        .Set(b => b.AwayTeamScore, bet.AwayTeamScore));
+            }
         }
     }
 }
