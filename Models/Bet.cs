@@ -10,6 +10,8 @@ namespace Models
         public int PointsWon { get; set; }
         public string Status { get; set; }
         public User User { get; set; }
+        public int HomeTeamScore { get; set; }
+        public int AwayTeamScore { get; set; }
         public Match Match { get; set; }
     }
 }

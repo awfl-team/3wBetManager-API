@@ -14,6 +14,7 @@ namespace Models
         public Team AwayTeam { get; set; }
         public Score Score { get; set; }
         public Competition Competition { get; set; }
-  
+        public int UtcDate { get; set; }
+
     }
 }

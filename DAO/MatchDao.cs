@@ -55,6 +55,7 @@ namespace DAO
                     .Set(match => match.Score, matchParam.Score)
                     .Set(match => match.AwayTeam, matchParam.AwayTeam)
                     .Set(match => match.Competition, matchParam.Competition)
+                    .Set(match => match.UtcDate, matchParam.UtcDate)
             );
         }
     }
