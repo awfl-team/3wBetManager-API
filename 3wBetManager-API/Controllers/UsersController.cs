@@ -78,7 +78,7 @@ namespace _3wBetManager_API.Controllers
         
         [Route("{id}")]
         [HttpPut]
-        public IHttpActionResult Put(string id, [FromBody] User user)
+        public async Task<IHttpActionResult> Put(string id, [FromBody] User user)
         {
             try
             {
@@ -88,7 +88,8 @@ namespace _3wBetManager_API.Controllers
                     return Content(HttpStatusCode.BadRequest, errorMessage);
                 }
                 getUserDao().UpdateUser(id, user);
-                return Ok();
+                var fullUser = await Singleton.Instance.UserDao.FindUser(id);
+                return Ok(TokenManager.GenerateToken(fullUser.Email, fullUser.Role, fullUser.Username));
             }
             catch (Exception e)
             {
