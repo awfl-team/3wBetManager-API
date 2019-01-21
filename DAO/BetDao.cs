@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using DAO.Interfaces;
 using Models;
@@ -17,10 +18,15 @@ namespace DAO
             var database = client.GetDatabase("3wBetManager");
             _collection = collection ?? database.GetCollection<Bet>("bet");
         }
+        
+        public async Task<List<Bet>> FindAll()
+        {
+            return await _collection.Find(new BsonDocument()).ToListAsync();
+        }
 
         public async Task<List<Bet>> FindFinishBets(User user, int competitionId)
         {
-            var betsByUser = await _collection.Find(bet => bet.User.Id == user.Id).ToListAsync();
+            var betsByUser = await FindBetsByUser(user);
             foreach (var bet in betsByUser)
             {
                 var matchInformation = await Singleton.Instance.MatchDao.FindMatch(bet.Match.Id);
@@ -36,7 +42,27 @@ namespace DAO
 
             return betsByMatchStatus;
         }
+        
+        public async Task<List<Bet>> FindBetsByUser(User user)
+        {
+            return await _collection.Find(bet => bet.User.Id == user.Id).ToListAsync();
+        }
+        
+        public async Task<List<Bet>> FindBetsByUserBetCriteria(User user, string criteria)
+        {
+            switch (criteria)
+            {
+                case "Perfect":
+                    return await _collection.Find(bet => bet.User.Id == user.Id && bet.Status == "Perfect").ToListAsync();
+                case "Ok":
+                    return await _collection.Find(bet => bet.User.Id == user.Id && bet.Status == "Ok").ToListAsync();
+                case "Wrong":
+                    return await _collection.Find(bet => bet.User.Id == user.Id && bet.Status == "Wrong").ToListAsync();
+            }
 
+            return null;
+        }
+        
         public async void AddBet(Bet bet)
         {
             await _collection.InsertOneAsync(bet);

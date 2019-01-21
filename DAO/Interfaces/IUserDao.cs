@@ -16,6 +16,7 @@ namespace DAO.Interfaces
         Task<User> FindUserByEmailToList(string email);
         Task<User> FindUserByUsername(string username);
         Task<List<User>> FindAllUserByOrder(int order);
+        Task<List<Bet>> FindBestBetters();
         bool UsernameAndEmailExist(User user, out string errorMessage);
         bool CanUpdate(string id, User userParam, out string errorMessage);
         void AddUser(User user);
