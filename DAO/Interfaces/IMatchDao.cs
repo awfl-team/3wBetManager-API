@@ -14,5 +14,6 @@ namespace DAO.Interfaces
         Task<Match> FindMatch(int id);
         Task<List<Match>> FindAll();
         void UpdateMatch(int id, Match matchParam);
+        Task<List<Match>> FindByStatus(string status);
     }
 }
