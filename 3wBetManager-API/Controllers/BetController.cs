@@ -65,8 +65,8 @@ namespace _3wBetManager_API.Controllers
             {
                 var token = TokenManager.GetTokenFromRequest(Request);
                 var user = TokenManager.ValidateToken(token);
-                var fullUser = Singleton.Instance.UserDao.FindUserByEmailSingle(user["email"]);
-                return Ok(await GetBetDao().FindFinishBets(fullUser.Result, competitionId));
+                var fullUser = await Singleton.Instance.UserDao.FindUserByEmailSingle(user["email"]);
+                return Ok(await GetBetDao().FindFinishBets(fullUser, competitionId));
             }
             catch (Exception e)
             {
@@ -74,6 +74,22 @@ namespace _3wBetManager_API.Controllers
             }
         }
 
+        [Route("{competitionId:int}/test")]
+        [HttpGet]
+        public async Task<IHttpActionResult> GetBetsAndMatches(int competitionId)
+        {
+            try
+            {
+                var token = TokenManager.GetTokenFromRequest(Request);
+                var user = TokenManager.ValidateToken(token);
+                var fullUser = await Singleton.Instance.UserDao.FindUserByEmailSingle(user["email"]);
+                return Ok(await GetBetDao().FindCurrentBetsAndScheduledMatches(fullUser, competitionId));
+            }
+            catch (Exception e)
+            {
+                return InternalServerError(e);
+            }
+        }
         private IBetDao GetBetDao()
         {
             return Singleton.Instance.BetDao;

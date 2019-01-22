@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Dynamic;
 using System.Threading.Tasks;
 using DAO.Interfaces;
 using Models;
-using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace DAO
@@ -40,6 +40,47 @@ namespace DAO
         public async void AddBet(Bet bet)
         {
             await _collection.InsertOneAsync(bet);
+        }
+
+        public async Task<ExpandoObject> FindCurrentBetsAndScheduledMatches(User user, int competitionId)
+        {
+            var betsByUser = await _collection.Find(bet => bet.User.Id == user.Id).ToListAsync();
+            foreach (var bet in betsByUser)
+            {
+                var matchInformation = await Singleton.Instance.MatchDao.FindMatch(bet.Match.Id);
+                bet.Match = matchInformation;
+                var awayTeamInformation = await Singleton.Instance.TeamDao.FindTeam(bet.Match.AwayTeam.Id);
+                bet.Match.AwayTeam = awayTeamInformation;
+                var homeTeamInformation = await Singleton.Instance.TeamDao.FindTeam(bet.Match.HomeTeam.Id);
+                bet.Match.HomeTeam = homeTeamInformation;
+            }
+
+            var betsByCompetition = betsByUser.FindAll(bet => bet.Match.Competition.Id == competitionId);
+            var betsByMatchStatus = betsByCompetition.FindAll(bet => bet.Match.Status == "SCHEDULED");
+
+            var matchByStatus = await Singleton.Instance.MatchDao.FindByStatus("SCHEDULED");
+
+            foreach (var bet in betsByMatchStatus)
+            {
+                var findMatch = matchByStatus.Find(m => m.Id == bet.Match.Id);
+                if (findMatch != null)
+                {
+                    matchByStatus.Remove(findMatch);
+                }
+            }
+
+            foreach (var match in matchByStatus)
+            {
+                var awayTeamInformation = await Singleton.Instance.TeamDao.FindTeam(match.AwayTeam.Id);
+                match.AwayTeam = awayTeamInformation;
+                var homeTeamInformation = await Singleton.Instance.TeamDao.FindTeam(match.HomeTeam.Id);
+                match.HomeTeam = homeTeamInformation;
+            }
+
+            dynamic betsAndMatches = new ExpandoObject();
+            betsAndMatches.Bets = betsByMatchStatus;
+            betsAndMatches.Matches = matchByStatus;
+            return betsAndMatches;
         }
 
         public async void AddListBet(List<Bet> bets)
