@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -35,6 +33,21 @@ namespace _3wBetManager_API.Controllers
             try
             {
                 return Ok(await getUserDao().FindUser(id));
+            }
+            catch (Exception e)
+            {
+                return InternalServerError(e);
+            }
+        }
+
+
+        [Route("best")]
+        [HttpGet]
+        public async Task<IHttpActionResult> Get()
+        {
+            try
+            {
+                return Ok(await getUserDao().FindBestBetters());
             }
             catch (Exception e)
             {

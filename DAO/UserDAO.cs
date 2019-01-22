@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Threading.Tasks;
 using DAO.Interfaces;
@@ -97,20 +98,27 @@ namespace DAO
         }
         
         
-        public async Task<List<Bet>> FindBestBetters()
+        public async Task<List<ExpandoObject>> FindBestBetters()
         {
-            dynamic oUsers = new Object();
-            oUsers.betsUser = await _collection.Find(new BsonDocument()).Limit(50).Sort("{Point: 1}").ToListAsync();
+            var users = new List<ExpandoObject>();
+            var betsUser = await _collection.Find(new BsonDocument()).Limit(50).Sort("{Point: 1}").ToListAsync();
 
-            foreach (var user in oUsers.betUsers)
+            foreach (var user in betsUser)
             {
-                user.NbBet = await Singleton.Instance.BetDao.FindBetsByUser(user);
-                user.nbPerfectBets = await Singleton.Instance.BetDao.FindBetsByUserBetCriteria(user, "Perfect");
-                user.nbOkBets = await Singleton.Instance.BetDao.FindBetsByUserBetCriteria(user, "Ok");
-                user.nbWrongBets = await Singleton.Instance.BetDao.FindBetsByUserBetCriteria(user, "Wrong");
+                dynamic obj = new ExpandoObject();
+                var betsByUser = await Singleton.Instance.BetDao.FindBetsByUser(user);
+                obj.Id = user.Id;
+                obj.Point = user.Point;
+                obj.Username = user.Username;
+                obj.Visible = user.Visible;
+                obj.NbBets = betsByUser.Count;
+                obj.NbPerfectBets = betsByUser.FindAll(b => b.Status == "Perfect").Count;
+                obj.NbOkBets = betsByUser.FindAll(b => b.Status == "Ok").Count;
+                obj.NbWrongBets = betsByUser.FindAll(b => b.Status == "Wrong").Count;
+                users.Add(obj);
             }
 
-            return oUsers;
+            return users;
         }
 
         public async Task<User> FindUserByEmailToList(string email)
