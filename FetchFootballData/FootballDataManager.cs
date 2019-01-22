@@ -44,7 +44,7 @@ namespace FetchFootballData
                         Singleton.Instance.CompetitionDao.ReplaceCompetition(findCompetition.Id, competition);
                     }
 
-                    System.Threading.Thread.Sleep(15000);
+                    System.Threading.Thread.Sleep(10000);
                 }
 
                 Console.WriteLine("     ----- End Fetch competitions ----- ");
@@ -85,7 +85,7 @@ namespace FetchFootballData
                         }
                     }
 
-                    System.Threading.Thread.Sleep(15000);
+                    System.Threading.Thread.Sleep(10000);
                 }
 
                 Console.WriteLine("     ----- End Fetch teams ----- ");
