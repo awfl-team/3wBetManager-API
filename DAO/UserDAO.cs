@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Threading.Tasks;
 using DAO.Interfaces;
@@ -93,6 +95,30 @@ namespace DAO
             }
             errorMessage = "username and email already taken";
             return false;
+        }
+        
+        
+        public async Task<List<ExpandoObject>> FindBestBetters()
+        {
+            var users = new List<ExpandoObject>();
+            var betsUser = await _collection.Find(new BsonDocument()).Limit(50).Sort("{Point: 1}").ToListAsync();
+
+            foreach (var user in betsUser)
+            {
+                dynamic obj = new ExpandoObject();
+                var betsByUser = await Singleton.Instance.BetDao.FindBetsByUser(user);
+                obj.Id = user.Id;
+                obj.Point = user.Point;
+                obj.Username = user.Username;
+                obj.Visible = user.Visible;
+                obj.NbBets = betsByUser.Count;
+                obj.NbPerfectBets = betsByUser.FindAll(b => b.Status == "Perfect").Count;
+                obj.NbOkBets = betsByUser.FindAll(b => b.Status == "Ok").Count;
+                obj.NbWrongBets = betsByUser.FindAll(b => b.Status == "Wrong").Count;
+                users.Add(obj);
+            }
+
+            return users;
         }
 
         public async Task<User> FindUserByEmailToList(string email)

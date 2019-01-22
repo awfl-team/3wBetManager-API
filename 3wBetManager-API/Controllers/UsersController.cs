@@ -40,6 +40,21 @@ namespace _3wBetManager_API.Controllers
             }
         }
 
+
+        [Route("best")]
+        [HttpGet]
+        public async Task<IHttpActionResult> Get()
+        {
+            try
+            {
+                return Ok(await getUserDao().FindBestBetters());
+            }
+            catch (Exception e)
+            {
+                return InternalServerError(e);
+            }
+        }
+
         [Route("token")]
         [HttpGet]
         public async Task<IHttpActionResult> GetUserFromToken()

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +17,7 @@ namespace DAO.Interfaces
         Task<User> FindUserByEmailToList(string email);
         Task<User> FindUserByUsername(string username);
         Task<List<User>> FindAllUserByOrder(int order);
+        Task<List<ExpandoObject>> FindBestBetters();
         bool UsernameAndEmailExist(User user, out string errorMessage);
         bool CanUpdate(string id, User userParam, out string errorMessage);
         void AddUser(User user);
