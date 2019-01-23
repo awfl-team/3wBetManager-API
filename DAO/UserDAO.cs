@@ -156,5 +156,15 @@ namespace DAO
                     .Set(user => user.Password, BCrypt.Net.BCrypt.HashPassword(userParam.Password))
             );
         }
+
+        public async void UpdateUserVisible(string id, bool visible)
+        {
+            var uid = ObjectId.Parse(id);
+            await _collection.UpdateOneAsync(
+                user => user.Id == uid,
+                Builders<User>.Update.Set(user => user.Visible, visible)
+    
+            );
+        }
     }
 }

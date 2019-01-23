@@ -110,6 +110,21 @@ namespace _3wBetManager_API.Controllers
             }
         }
 
+        [Route("{id}/visible")]
+        [HttpPut]
+        public IHttpActionResult PutVisible(string id, [FromBody] bool visible)
+        {
+            try
+            {
+                Singleton.Instance.UserDao.UpdateUserVisible(id, visible);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return InternalServerError(e);
+            }
+        }
+
         [Route("{id}")]
         [HttpDelete]
         public IHttpActionResult Delete(string id)

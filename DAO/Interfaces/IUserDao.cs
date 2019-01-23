@@ -23,5 +23,6 @@ namespace DAO.Interfaces
         void AddUser(User user);
         void DeleteUser(string id);
         void UpdateUser(string id, User userParam);
+        void UpdateUserVisible(string id, bool visible);
     }
 }
