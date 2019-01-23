@@ -96,7 +96,7 @@ namespace DAO
 
             dynamic betsAndMatches = new ExpandoObject();
             betsAndMatches.Bets = betsByMatchStatus;
-            betsAndMatches.Matches = matchByStatus;
+            betsAndMatches.Matches = matchesByCompetition;
             return betsAndMatches;
         }
 
