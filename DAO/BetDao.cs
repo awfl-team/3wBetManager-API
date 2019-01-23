@@ -3,8 +3,8 @@ using System.Dynamic;
 using System.Threading.Tasks;
 using DAO.Interfaces;
 using Models;
- using MongoDB.Bson;
- using MongoDB.Driver;
+using MongoDB.Bson;
+using MongoDB.Driver;
 
 namespace DAO
 {
@@ -18,7 +18,7 @@ namespace DAO
             var database = client.GetDatabase("3wBetManager");
             _collection = collection ?? database.GetCollection<Bet>("bet");
         }
-        
+
         public async Task<List<Bet>> FindAll()
         {
             return await _collection.Find(new BsonDocument()).ToListAsync();
@@ -42,27 +42,17 @@ namespace DAO
 
             return betsByMatchStatus;
         }
-        
+
         public async Task<List<Bet>> FindBetsByUser(User user)
         {
             return await _collection.Find(bet => bet.User.Id == user.Id).ToListAsync();
         }
-        
+
         public async Task<List<Bet>> FindBetsByUserBetCriteria(User user, string criteria)
         {
-            switch (criteria)
-            {
-                case "Perfect":
-                    return await _collection.Find(bet => bet.User.Id == user.Id && bet.Status == "Perfect").ToListAsync();
-                case "Ok":
-                    return await _collection.Find(bet => bet.User.Id == user.Id && bet.Status == "Ok").ToListAsync();
-                case "Wrong":
-                    return await _collection.Find(bet => bet.User.Id == user.Id && bet.Status == "Wrong").ToListAsync();
-            }
-
-            return null;
+            return await _collection.Find(bet => bet.User.Id == user.Id && bet.Status == criteria).ToListAsync();
         }
-        
+
         public async void AddBet(Bet bet)
         {
             await _collection.InsertOneAsync(bet);
@@ -85,17 +75,18 @@ namespace DAO
             var betsByMatchStatus = betsByCompetition.FindAll(bet => bet.Match.Status == "SCHEDULED");
 
             var matchByStatus = await Singleton.Instance.MatchDao.FindByStatus("SCHEDULED");
+            var matchesByCompetition = matchByStatus.FindAll(m => m.Competition.Id == competitionId);
 
             foreach (var bet in betsByMatchStatus)
             {
-                var findMatch = matchByStatus.Find(m => m.Id == bet.Match.Id);
+                var findMatch = matchesByCompetition.Find(m => m.Id == bet.Match.Id);
                 if (findMatch != null)
                 {
-                    matchByStatus.Remove(findMatch);
+                    matchesByCompetition.Remove(findMatch);
                 }
             }
 
-            foreach (var match in matchByStatus)
+            foreach (var match in matchesByCompetition)
             {
                 var awayTeamInformation = await Singleton.Instance.TeamDao.FindTeam(match.AwayTeam.Id);
                 match.AwayTeam = awayTeamInformation;
