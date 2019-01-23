@@ -57,7 +57,7 @@ namespace _3wBetManager_API.Controllers
             }
         }
 
-        [Route("{competitionId:int}")]
+        [Route("{competitionId:int}/result")]
         [HttpGet]
         public async Task<IHttpActionResult> GetBetsResult(int competitionId)
         {
@@ -74,7 +74,7 @@ namespace _3wBetManager_API.Controllers
             }
         }
 
-        [Route("{competitionId:int}/test")]
+        [Route("{competitionId:int}/current")]
         [HttpGet]
         public async Task<IHttpActionResult> GetBetsAndMatches(int competitionId)
         {

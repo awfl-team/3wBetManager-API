@@ -41,7 +41,7 @@ namespace _3wBetManager_API.Controllers
         }
 
 
-        [Route("best")]
+        [Route("top50")]
         [HttpGet]
         public async Task<IHttpActionResult> Get()
         {
@@ -71,7 +71,7 @@ namespace _3wBetManager_API.Controllers
             }
         }
 
-        [Route("order/{order:int}")]
+        /*[Route("order/{order:int}")]
         [HttpGet]
         public async Task<IHttpActionResult> GetAllByOrder(int order)
         {
@@ -87,7 +87,7 @@ namespace _3wBetManager_API.Controllers
             {
                 return InternalServerError(e);
             }
-        }
+        }*/
         
         [Route("{id}")]
         [HttpPut]
