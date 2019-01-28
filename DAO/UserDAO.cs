@@ -140,6 +140,13 @@ namespace DAO
             await _collection.InsertOneAsync(user);
         }
 
+        public async void ResetUser(string id)
+        {
+            var user = await FindUser(id);
+            UpdateUserPoints(id);
+            Singleton.Instance.BetDao.DeleteBetsByUser(user);
+        }
+        
         public async void DeleteUser(string id)
         {
             var uid = ObjectId.Parse(id);
@@ -163,6 +170,16 @@ namespace DAO
             await _collection.UpdateOneAsync(
                 user => user.Id == uid,
                 Builders<User>.Update.Set(user => user.Visible, visible)
+    
+            );
+        }
+
+        public async void UpdateUserPoints(string id)
+        {
+            var uid = ObjectId.Parse(id);
+            await _collection.UpdateOneAsync(
+                user => user.Id == uid,
+                Builders<User>.Update.Set(user => user.Point, 500)
     
             );
         }

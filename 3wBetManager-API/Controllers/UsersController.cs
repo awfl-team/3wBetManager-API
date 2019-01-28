@@ -139,11 +139,25 @@ namespace _3wBetManager_API.Controllers
                 return InternalServerError(e);
             }
         }
+        
+        [Route("{id}/reset")]
+        [HttpPut]
+        public IHttpActionResult Put(string id)
+        {
+            try
+            {
+                getUserDao().ResetUser(id);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return InternalServerError(e);
+            }
+        }
 
         private IUserDao getUserDao()
         {
             return Singleton.Instance.UserDao;
         }
-
     }
 }
