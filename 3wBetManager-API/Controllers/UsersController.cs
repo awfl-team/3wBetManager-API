@@ -110,13 +110,13 @@ namespace _3wBetManager_API.Controllers
             }
         }
 
-        [Route("{id}/visible")]
+        [Route("{id}/visibility")]
         [HttpPut]
-        public IHttpActionResult PutVisible(string id, [FromBody] bool visible)
+        public IHttpActionResult PutIsPrivate(string id, [FromBody] bool isPrivate)
         {
             try
             {
-                Singleton.Instance.UserDao.UpdateUserVisible(id, visible);
+                Singleton.Instance.UserDao.UpdateUserIsPrivate(id, isPrivate);
                 return Ok();
             }
             catch (Exception e)
