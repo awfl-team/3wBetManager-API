@@ -110,7 +110,7 @@ namespace _3wBetManager_API.Controllers
             }
         }
 
-        [Route("isPrivate")]
+        [Route("visibility")]
         [HttpPut]
         public async Task<IHttpActionResult> PutIsPrivate([FromBody] User userParam)
         {

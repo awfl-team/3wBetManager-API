@@ -137,7 +137,7 @@ namespace DAO
         {
             var passwordHash = BCrypt.Net.BCrypt.HashPassword(user.Password);
             user.Password = passwordHash;
-            user.IsPrivate = true;
+            user.IsPrivate = false;
             user.Point = 500;
             await _collection.InsertOneAsync(user);
         }
