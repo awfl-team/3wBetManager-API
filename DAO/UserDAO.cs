@@ -110,7 +110,7 @@ namespace DAO
                 obj.Id = user.Id;
                 obj.Point = user.Point;
                 obj.Username = user.Username;
-                obj.Visible = user.IsPrivate;
+                obj.IsPrivate = user.IsPrivate;
                 obj.NbBets = betsByUser.Count;
                 obj.NbPerfectBets = betsByUser.FindAll(b => b.Status == "Perfect").Count;
                 obj.NbOkBets = betsByUser.FindAll(b => b.Status == "Ok").Count;
@@ -137,7 +137,7 @@ namespace DAO
         {
             var passwordHash = BCrypt.Net.BCrypt.HashPassword(user.Password);
             user.Password = passwordHash;
-            user.IsPrivate = true;
+            user.IsPrivate = false;
             user.Point = 500;
             await _collection.InsertOneAsync(user);
         }
@@ -166,11 +166,10 @@ namespace DAO
             );
         }
 
-        public async void UpdateUserIsPrivate(string id, bool isPrivate)
+        public async void UpdateUserIsPrivate(ObjectId id, bool isPrivate)
         {
-            var uid = ObjectId.Parse(id);
             await _collection.UpdateOneAsync(
-                user => user.Id == uid,
+                user => user.Id == id,
                 Builders<User>.Update.Set(user => user.IsPrivate, isPrivate)
     
             );
