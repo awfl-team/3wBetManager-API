@@ -20,7 +20,7 @@ namespace _3wBetManager_API
 
         static void Main(string[] args)
         {
-            const string baseAddress = "http://localhost:9000/";
+            const string baseAddress = "151.80.136.92:9000/";
             Singleton.Instance.SetUserDao(new UserDao());
             Singleton.Instance.SetBetDao(new BetDao());
             Singleton.Instance.SeMatchDao(new MatchDao());
