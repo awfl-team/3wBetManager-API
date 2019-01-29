@@ -24,6 +24,6 @@ namespace DAO.Interfaces
         void DeleteUser(string id);
         void ResetUser(string id);
         void UpdateUser(string id, User userParam);
-        void UpdateUserIsPrivate(string id, bool isPrivate);
+        void UpdateUserIsPrivate(ObjectId id, bool isPrivate);
     }
 }

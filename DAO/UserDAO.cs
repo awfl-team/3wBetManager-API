@@ -166,11 +166,10 @@ namespace DAO
             );
         }
 
-        public async void UpdateUserIsPrivate(string id, bool isPrivate)
+        public async void UpdateUserIsPrivate(ObjectId id, bool isPrivate)
         {
-            var uid = ObjectId.Parse(id);
             await _collection.UpdateOneAsync(
-                user => user.Id == uid,
+                user => user.Id == id,
                 Builders<User>.Update.Set(user => user.IsPrivate, isPrivate)
     
             );
