@@ -110,7 +110,7 @@ namespace DAO
                 obj.Id = user.Id;
                 obj.Point = user.Point;
                 obj.Username = user.Username;
-                obj.Visible = user.IsPrivate;
+                obj.IsPrivate = user.IsPrivate;
                 obj.NbBets = betsByUser.Count;
                 obj.NbPerfectBets = betsByUser.FindAll(b => b.Status == "Perfect").Count;
                 obj.NbOkBets = betsByUser.FindAll(b => b.Status == "Ok").Count;

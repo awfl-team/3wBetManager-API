@@ -107,7 +107,7 @@ namespace DAO
         
         public async void DeleteBetsByUser(User user)
         {
-            await _collection.DeleteOneAsync(bet => bet.User.Id == user.Id);
+            await _collection.DeleteManyAsync(bet => bet.User.Id == user.Id);
         }
 
         public async void UpdateListBet(List<Bet> bets)
