@@ -163,7 +163,7 @@ namespace DAO
             await _collection.UpdateOneAsync(
                 user => user.Id == uid,
                 Builders<User>.Update.Set(user => user.Visible, visible)
-    
+   
             );
         }
     }

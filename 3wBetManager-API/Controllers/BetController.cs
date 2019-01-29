@@ -27,28 +27,13 @@ namespace _3wBetManager_API.Controllers
             }
         }
 
-        [Route("list")]
-        [HttpPut]
-        public IHttpActionResult PutList([FromBody] List<Bet> bets)
-        {
-            try
-            {
-                GetBetDao().UpdateListBet(bets);
-                return Ok();
-            }
-            catch (Exception e)
-            {
-                return InternalServerError(e);
-            }
-        }
-
-        [Route("list")]
+        [Route("")]
         [HttpPost]
-        public IHttpActionResult PostList([FromBody] List<Bet> bets)
+        public IHttpActionResult Post([FromBody] List<Bet> bets)
         {
             try
             {
-                GetBetDao().AddListBet(bets);
+                GetBetDao().AddOrUpdateBet(bets);
                 return Ok();
             }
             catch (Exception e)

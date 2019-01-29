@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Dynamic;
+using System.Linq;
 using System.Threading.Tasks;
 using DAO.Interfaces;
 using Models;
@@ -22,6 +23,12 @@ namespace DAO
         public async Task<List<Bet>> FindAll()
         {
             return await _collection.Find(new BsonDocument()).ToListAsync();
+        }
+
+        public async Task<Bet> Find(Bet bet)
+        {
+            var result = await _collection.Find(b => b.Id == bet.Id).ToListAsync();
+            return result.FirstOrDefault();
         }
 
         public async Task<List<Bet>> FindFinishBets(User user, int competitionId)
@@ -100,18 +107,26 @@ namespace DAO
             return betsAndMatches;
         }
 
-        public async void AddListBet(List<Bet> bets)
+        public async void UpdateBet(Bet bet)
         {
-            await _collection.InsertManyAsync(bets);
+            await _collection.UpdateOneAsync(b => b.Id == bet.Id,
+                Builders<Bet>.Update.Set(b => b.HomeTeamScore, bet.HomeTeamScore)
+                    .Set(b => b.AwayTeamScore, bet.AwayTeamScore));
         }
 
-        public async void UpdateListBet(List<Bet> bets)
+        public async void AddOrUpdateBet(List<Bet> bets)
         {
             foreach (var bet in bets)
             {
-                await _collection.UpdateOneAsync(b => b.Id == bet.Id,
-                    Builders<Bet>.Update.Set(b => b.HomeTeamScore, bet.HomeTeamScore)
-                        .Set(b => b.AwayTeamScore, bet.AwayTeamScore));
+                var findBet = await Find(bet);
+                if (findBet == null)
+                {
+                    AddBet(bet);
+                }
+                else
+                {
+                    UpdateBet(bet);
+                }
             }
         }
     }
