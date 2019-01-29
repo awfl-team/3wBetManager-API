@@ -14,6 +14,7 @@ namespace DAO.Interfaces
         Task<List<Bet>> FindBetsByUserBetCriteria(User user, string criteria);
         Task<List<Bet>> FindFinishBets(User user, int competitionId);
         void UpdateListBet(List<Bet> bets);
+        void DeleteBetsByUser(User user);
         Task<ExpandoObject> FindCurrentBetsAndScheduledMatches(User user, int competitionId);
     }
 }
