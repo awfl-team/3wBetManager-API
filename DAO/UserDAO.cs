@@ -101,7 +101,7 @@ namespace DAO
         public async Task<List<ExpandoObject>> FindBestBetters()
         {
             var users = new List<ExpandoObject>();
-            var betsUser = await _collection.Find(new BsonDocument()).Limit(50).Sort("{Point: 1}").ToListAsync();
+            var betsUser = await _collection.Find(new BsonDocument()).Limit(50).Sort("{Point: -1}").ToListAsync();
 
             foreach (var user in betsUser)
             {
