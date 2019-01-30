@@ -126,8 +126,6 @@ namespace _3wBetManager_API.Controllers
             {
                 return InternalServerError(e);
             }
-              
-            
         }
 
         [Route("{id}")]
