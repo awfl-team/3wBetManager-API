@@ -7,10 +7,11 @@ namespace Models
     {
         public ObjectId Id { get; set; }
         public DateTime Date { get; set; }
-        public int HomeValue { get; set; }
-        public int AwayValue { get; set; }
         public int PointsWon { get; set; }
+        public string Status { get; set; }
         public User User { get; set; }
+        public int HomeTeamScore { get; set; }
+        public int AwayTeamScore { get; set; }
         public Match Match { get; set; }
     }
 }

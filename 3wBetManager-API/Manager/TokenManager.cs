@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net.Http;
 using System.Security.Claims;
 
 namespace _3wBetManager_API.Manager
 {
     public class TokenManager
     {
-        private static string Secret =
-            "XCAP05H6LoKvbRRa/QkqLNMI7cOHguaRyHzyg7n5qEkGjQmtBhz4SzYh4Fqwjyi3KJHlSXKPwVu2+bXr6CtpgQ==";
+        private const string Secret = "XCAP05H6LoKvbRRa/QkqLNMI7cOHguaRyHzyg7n5qEkGjQmtBhz4SzYh4Fqwjyi3KJHlSXKPwVu2+bXr6CtpgQ==";
 
         public static string GenerateToken(string email, string role, string pseudo)
         {
@@ -57,7 +55,7 @@ namespace _3wBetManager_API.Manager
                     parameters, out securityToken);
                 return principal;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }
@@ -89,5 +87,18 @@ namespace _3wBetManager_API.Manager
 
             return tokenDictionary;
         }
+
+        public static string GetTokenFromRequest(HttpRequestMessage request)
+        {
+            if (!request.Headers.TryGetValues("Authorization", out var authHeaders) || authHeaders.Count() > 1)
+            {
+                return null;
+            }
+            var bearerToken = authHeaders.ElementAt(0);
+            var token = bearerToken.StartsWith("Bearer ") ? bearerToken.Substring(7) : bearerToken;
+            return token;
+        }
+
+
     }
 }

@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Net.Http;
 using System.Runtime.InteropServices;
+using DAO;
 using Microsoft.Owin.Hosting;
 
 namespace _3wBetManager_API
@@ -19,22 +20,26 @@ namespace _3wBetManager_API
 
         static void Main(string[] args)
         {
+            #if (!DEBUG)
+            const string baseAddress = "http://151.80.136.92:9000/";
+            #endif
+            
+            #if DEBUG
             const string baseAddress = "http://localhost:9000/";
-
+            #endif
+            
+            Singleton.Instance.SetUserDao(new UserDao());
+            Singleton.Instance.SetBetDao(new BetDao());
+            Singleton.Instance.SeMatchDao(new MatchDao());
+            Singleton.Instance.SetCompetitionDao(new CompetitionDao());
+            Singleton.Instance.SetTeamDao(new TeamDao());
             var handle = GetConsoleWindow();
             ShowWindow(handle, SW_HIDE);
+            //Process.Start(baseAddress + "swagger");
 
             // Start OWIN host 
             using (WebApp.Start<Startup>(url: baseAddress))
             {
-                // Create HttpCient and make a request to api/values 
-                HttpClient client = new HttpClient();
-                Process.Start(baseAddress + "swagger");
-
-                var response = client.GetAsync(baseAddress + "api/values").Result;
-
-                Console.WriteLine(response);
-                Console.WriteLine(response.Content.ReadAsStringAsync().Result);
                 Console.ReadLine();
             }
         }

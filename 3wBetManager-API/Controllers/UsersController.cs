@@ -1,45 +1,164 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.Eventing.Reader;
-using System.Linq;
-using System.Text;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
 using DAO;
 using DAO.Interfaces;
 using Models;
-using MongoDB.Bson;
 using _3wBetManager_API.Manager;
 
 namespace _3wBetManager_API.Controllers
 {
-    [Route("api/users")]
+    [RoutePrefix("users")]
     public class UsersController : ApiController
     {
+        [Route("")]
         [HttpGet]
-        public async Task<IHttpActionResult> Get(string uid)
+        public async Task<IHttpActionResult> GetAll()
         {
-            return Ok(await getUserDao().GetUser(uid));
+            try
+            {
+                return Ok(await getUserDao().FindAllUser());
+            }
+            catch (Exception e)
+            {
+                return InternalServerError(e);
+            }
         }
 
-        [HttpPost]
-        public async Task<IHttpActionResult> Register([FromBody] User user)
+        [Route("{id}")]
+        [HttpGet]
+        public async Task<IHttpActionResult> Get(string id)
         {
-            getUserDao().AddUser(user);
-            return Ok();
+            try
+            {
+                return Ok(await getUserDao().FindUser(id));
+            }
+            catch (Exception e)
+            {
+                return InternalServerError(e);
+            }
         }
 
-        /*[HttpPost]
-        public IHttpActionResult Login()
-        {
-            return Ok(TokenManager.GenerateToken("mail", "admin", "pseudo"));
-        }
-        */
 
+        [Route("top50")]
+        [HttpGet]
+        public async Task<IHttpActionResult> Get()
+        {
+            try
+            {
+                return Ok(await getUserDao().FindBestBetters());
+            }
+            catch (Exception e)
+            {
+                return InternalServerError(e);
+            }
+        }
+
+        [Route("token")]
+        [HttpGet]
+        public async Task<IHttpActionResult> GetUserFromToken()
+        {
+            try
+            {
+                var token = TokenManager.GetTokenFromRequest(Request);
+                var user = TokenManager.ValidateToken(token);
+                return Ok(await getUserDao().FindUserByEmailToList(user["email"]));
+            }
+            catch (Exception e)
+            {
+                return InternalServerError(e);
+            }
+        }
+
+        /*[Route("order/{order:int}")]
+        [HttpGet]
+        public async Task<IHttpActionResult> GetAllByOrder(int order)
+        {
+            try
+            {
+                if(order != 1 && order != -1)
+                {
+                    order = 1;
+                }
+                return Ok(await getUserDao().FindAllUserByOrder(order));
+            }
+            catch (Exception e)
+            {
+                return InternalServerError(e);
+            }
+        }*/
+        
+        [Route("{id}")]
+        [HttpPut]
+        public async Task<IHttpActionResult> Put(string id, [FromBody] User user)
+        {
+            try
+            {
+                var canUpdate  = getUserDao().CanUpdate(id, user, out var errorMessage);
+                if (canUpdate == false)
+                {
+                    return Content(HttpStatusCode.BadRequest, errorMessage);
+                }
+                getUserDao().UpdateUser(id, user);
+                var fullUser = await Singleton.Instance.UserDao.FindUser(id);
+                return Ok(TokenManager.GenerateToken(fullUser.Email, fullUser.Role, fullUser.Username));
+            }
+            catch (Exception e)
+            {
+                return InternalServerError(e);
+            }
+        }
+
+        [Route("visibility")]
+        [HttpPut]
+        public async Task<IHttpActionResult> PutIsPrivate([FromBody] User userParam)
+        {
+            try
+            {
+                var token = TokenManager.GetTokenFromRequest(Request);
+                var user = TokenManager.ValidateToken(token);
+                var fullUser = await Singleton.Instance.UserDao.FindUserByEmailSingle(user["email"]);
+                Singleton.Instance.UserDao.UpdateUserIsPrivate(fullUser.Id, userParam.IsPrivate);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return InternalServerError(e);
+            }
+        }
+
+        [Route("{id}")]
+        [HttpDelete]
+        public IHttpActionResult Delete(string id)
+        {
+            try
+            {
+                getUserDao().DeleteUser(id);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return InternalServerError(e);
+            }
+        }
+        
+        [Route("reset")]
+        [HttpPut]
+        public async Task<IHttpActionResult> Put()
+        {
+         
+                var token = TokenManager.GetTokenFromRequest(Request);
+                var user = TokenManager.ValidateToken(token);
+                var fullUser = await Singleton.Instance.UserDao.FindUserByEmailSingle(user["email"]);
+                getUserDao().ResetUser(fullUser.Id);
+                return Ok();
+       
+        }
 
         private IUserDao getUserDao()
         {
-            return Singleton.Instance.SetUserDao(new UserDao());
+            return Singleton.Instance.UserDao;
         }
     }
 }
