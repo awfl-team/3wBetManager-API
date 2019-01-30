@@ -113,12 +113,18 @@ namespace DAO
                 Builders<Bet>.Update.Set(b => b.HomeTeamScore, bet.HomeTeamScore)
                     .Set(b => b.AwayTeamScore, bet.AwayTeamScore));
         }
+        
+        public async void DeleteBetsByUser(ObjectId id)
+        {
+            await _collection.DeleteManyAsync(bet => bet.User.Id == id);
+        }
 
-        public async void AddOrUpdateBet(List<Bet> bets)
+        public async void AddOrUpdateBet(User user, List<Bet> bets)
         {
             foreach (var bet in bets)
             {
                 var findBet = await Find(bet);
+                bet.User = user;
                 if (findBet == null)
                 {
                     AddBet(bet);
@@ -128,6 +134,9 @@ namespace DAO
                     UpdateBet(bet);
                 }
             }
+
+            Singleton.Instance.UserDao.UpdateUserPoints(user.Id,user.Point -(bets.Count*10));
+
         }
     }
 }
