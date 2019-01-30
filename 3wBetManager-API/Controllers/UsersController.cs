@@ -114,12 +114,18 @@ namespace _3wBetManager_API.Controllers
         [HttpPut]
         public async Task<IHttpActionResult> PutIsPrivate([FromBody] User userParam)
         {
+            try
+            {
                 var token = TokenManager.GetTokenFromRequest(Request);
                 var user = TokenManager.ValidateToken(token);
                 var fullUser = await Singleton.Instance.UserDao.FindUserByEmailSingle(user["email"]);
                 Singleton.Instance.UserDao.UpdateUserIsPrivate(fullUser.Id, userParam.IsPrivate);
-                return Ok();
-            
+                return Ok();   
+            }
+            catch (Exception e)
+            {
+                return InternalServerError(e);
+            }
         }
 
         [Route("{id}")]
