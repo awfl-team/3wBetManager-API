@@ -12,7 +12,7 @@ namespace _3wBetManager_API.Controllers
     [RoutePrefix("bets")]
     public class BetController : ApiController
     {
-        [Route("")]
+        /*[Route("")]
         [HttpPost]
         public IHttpActionResult Post([FromBody] Bet bet)
         {
@@ -25,15 +25,18 @@ namespace _3wBetManager_API.Controllers
             {
                 return InternalServerError(e);
             }
-        }
+        }*/
 
         [Route("")]
         [HttpPost]
-        public IHttpActionResult Post([FromBody] List<Bet> bets)
+        public async Task<IHttpActionResult> Post([FromBody] List<Bet> bets)
         {
             try
             {
-                GetBetDao().AddOrUpdateBet(bets);
+                var token = TokenManager.GetTokenFromRequest(Request);
+                var user = TokenManager.ValidateToken(token);
+                var fullUser = await Singleton.Instance.UserDao.FindUserByEmailSingle(user["email"]);
+                GetBetDao().AddOrUpdateBet(fullUser, bets);
                 return Ok();
             }
             catch (Exception e)

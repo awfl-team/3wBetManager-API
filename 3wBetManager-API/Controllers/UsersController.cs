@@ -110,19 +110,16 @@ namespace _3wBetManager_API.Controllers
             }
         }
 
-        [Route("{id}/visible")]
+        [Route("visibility")]
         [HttpPut]
-        public IHttpActionResult PutVisible(string id, [FromBody] bool visible)
+        public async Task<IHttpActionResult> PutIsPrivate([FromBody] User userParam)
         {
-            try
-            {
-                Singleton.Instance.UserDao.UpdateUserVisible(id, visible);
+                var token = TokenManager.GetTokenFromRequest(Request);
+                var user = TokenManager.ValidateToken(token);
+                var fullUser = await Singleton.Instance.UserDao.FindUserByEmailSingle(user["email"]);
+                Singleton.Instance.UserDao.UpdateUserIsPrivate(fullUser.Id, userParam.IsPrivate);
                 return Ok();
-            }
-            catch (Exception e)
-            {
-                return InternalServerError(e);
-            }
+            
         }
 
         [Route("{id}")]
@@ -139,11 +136,28 @@ namespace _3wBetManager_API.Controllers
                 return InternalServerError(e);
             }
         }
+        
+        [Route("reset")]
+        [HttpPut]
+        public async Task<IHttpActionResult> Put(string id)
+        {
+            try
+            {
+                var token = TokenManager.GetTokenFromRequest(Request);
+                var user = TokenManager.ValidateToken(token);
+                var fullUser = await Singleton.Instance.UserDao.FindUserByEmailSingle(user["email"]);
+                getUserDao().ResetUser(fullUser.Id);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return InternalServerError(e);
+            }
+        }
 
         private IUserDao getUserDao()
         {
             return Singleton.Instance.UserDao;
         }
-
     }
 }
