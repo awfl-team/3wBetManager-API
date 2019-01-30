@@ -110,7 +110,7 @@ namespace DAO
                 obj.Id = user.Id;
                 obj.Point = user.Point;
                 obj.Username = user.Username;
-                obj.Visible = user.Visible;
+                obj.IsPrivate = user.IsPrivate;
                 obj.NbBets = betsByUser.Count;
                 obj.NbPerfectBets = betsByUser.FindAll(b => b.Status == "Perfect").Count;
                 obj.NbOkBets = betsByUser.FindAll(b => b.Status == "Ok").Count;
@@ -137,9 +137,17 @@ namespace DAO
         {
             var passwordHash = BCrypt.Net.BCrypt.HashPassword(user.Password);
             user.Password = passwordHash;
+            user.IsPrivate = false;
+            user.Point = 500;
             await _collection.InsertOneAsync(user);
         }
 
+        public void ResetUser(ObjectId id)
+        {
+            UpdateUserPoints(id, 500);
+            Singleton.Instance.BetDao.DeleteBetsByUser(id);
+        }
+        
         public async void DeleteUser(string id)
         {
             var uid = ObjectId.Parse(id);
@@ -157,13 +165,20 @@ namespace DAO
             );
         }
 
-        public async void UpdateUserVisible(string id, bool visible)
+        public async void UpdateUserIsPrivate(ObjectId id, bool isPrivate)
         {
-            var uid = ObjectId.Parse(id);
             await _collection.UpdateOneAsync(
-                user => user.Id == uid,
-                Builders<User>.Update.Set(user => user.Visible, visible)
-   
+                user => user.Id == id,
+                Builders<User>.Update.Set(user => user.IsPrivate, isPrivate)
+    
+            );
+        }
+
+        public async void UpdateUserPoints(ObjectId id, int point)
+        {
+            await _collection.UpdateOneAsync(
+                user => user.Id == id,
+                Builders<User>.Update.Set(user => user.Point, point)
             );
         }
     }

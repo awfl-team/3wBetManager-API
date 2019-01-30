@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Dynamic;
-using System.Reflection.Emit;
-using System.Text;
 using System.Threading.Tasks;
 using Models;
 using MongoDB.Bson;
@@ -22,7 +19,9 @@ namespace DAO.Interfaces
         bool CanUpdate(string id, User userParam, out string errorMessage);
         void AddUser(User user);
         void DeleteUser(string id);
+        void ResetUser(ObjectId id);
         void UpdateUser(string id, User userParam);
-        void UpdateUserVisible(string id, bool visible);
+        void UpdateUserIsPrivate(ObjectId id, bool isPrivate);
+        void UpdateUserPoints(ObjectId id, int point);
     }
 }
