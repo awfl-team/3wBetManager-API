@@ -19,7 +19,7 @@ namespace DAO.Interfaces
         bool CanUpdate(string id, User userParam, out string errorMessage);
         void AddUser(User user);
         void DeleteUser(string id);
-        void ResetUser(ObjectId id);
+        void ResetUser(User user);
         void UpdateUser(string id, User userParam);
         void UpdateUserIsPrivate(ObjectId id, bool isPrivate);
         void UpdateUserPoints(ObjectId id, int point);

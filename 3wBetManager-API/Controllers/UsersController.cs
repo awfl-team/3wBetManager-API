@@ -147,12 +147,24 @@ namespace _3wBetManager_API.Controllers
         [HttpPut]
         public async Task<IHttpActionResult> Put()
         {
-         
+            try
+            {
                 var token = TokenManager.GetTokenFromRequest(Request);
                 var user = TokenManager.ValidateToken(token);
                 var fullUser = await Singleton.Instance.UserDao.FindUserByEmailSingle(user["email"]);
-                getUserDao().ResetUser(fullUser.Id);
+                if (fullUser.Life == 0)
+                {
+                    return Content(HttpStatusCode.BadRequest, "You already used all your lives");
+                }
+                getUserDao().ResetUser(fullUser);
                 return Ok();
+                
+            }
+            catch (Exception e)
+            {
+                return InternalServerError(e);
+            }
+               
        
         }
 
