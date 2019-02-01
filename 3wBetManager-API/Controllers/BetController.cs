@@ -33,10 +33,8 @@ namespace _3wBetManager_API.Controllers
         {
             try
             {
-                var token = TokenManager.GetTokenFromRequest(Request);
-                var user = TokenManager.ValidateToken(token);
-                var fullUser = await Singleton.Instance.UserDao.FindUserByEmailSingle(user["email"]);
-                GetBetDao().AddOrUpdateBet(fullUser, bets);
+                var user = await TokenManager.GetUserByToken(Request);
+                GetBetDao().AddOrUpdateBet(user, bets);
                 return Ok();
             }
             catch (Exception e)
@@ -51,10 +49,8 @@ namespace _3wBetManager_API.Controllers
         {
             try
             {
-                var token = TokenManager.GetTokenFromRequest(Request);
-                var user = TokenManager.ValidateToken(token);
-                var fullUser = await Singleton.Instance.UserDao.FindUserByEmailSingle(user["email"]);
-                return Ok(await GetBetDao().FindFinishBets(fullUser, competitionId));
+                var user = await TokenManager.GetUserByToken(Request);
+                return Ok(await GetBetDao().FindFinishBets(user, competitionId));
             }
             catch (Exception e)
             {
@@ -68,10 +64,8 @@ namespace _3wBetManager_API.Controllers
         {
             try
             {
-                var token = TokenManager.GetTokenFromRequest(Request);
-                var user = TokenManager.ValidateToken(token);
-                var fullUser = await Singleton.Instance.UserDao.FindUserByEmailSingle(user["email"]);
-                return Ok(await GetBetDao().FindCurrentBetsAndScheduledMatches(fullUser, competitionId));
+                var user = await TokenManager.GetUserByToken(Request);
+                return Ok(await GetBetDao().FindCurrentBetsAndScheduledMatches(user, competitionId));
             }
             catch (Exception e)
             {
