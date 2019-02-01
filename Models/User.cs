@@ -7,6 +7,7 @@ namespace Models
     {
         public ObjectId Id { get; set; } 
         public int Point { get; set; }
+        public int Life { get; set; }
         public string Role { get; set; }
         public string Password { get; set; }
         public string Email { get; set; }

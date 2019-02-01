@@ -109,6 +109,7 @@ namespace DAO
                 var betsByUser = await Singleton.Instance.BetDao.FindBetsByUser(user);
                 obj.Id = user.Id;
                 obj.Point = user.Point;
+                obj.Life = user.Life;
                 obj.Username = user.Username;
                 obj.IsPrivate = user.IsPrivate;
                 obj.NbBets = betsByUser.Count;
@@ -139,13 +140,15 @@ namespace DAO
             user.Password = passwordHash;
             user.IsPrivate = false;
             user.Point = 500;
+            user.Life = 3;
             await _collection.InsertOneAsync(user);
         }
 
-        public void ResetUser(ObjectId id)
+        public void ResetUser(User user)
         {
-            UpdateUserPoints(id, 500);
-            Singleton.Instance.BetDao.DeleteBetsByUser(id);
+            UpdateUserPoints(user.Id, 500);
+            UpdateUserLifes(user);
+            Singleton.Instance.BetDao.DeleteBetsByUser(user.Id);
         }
         
         public async void DeleteUser(string id)
@@ -179,6 +182,14 @@ namespace DAO
             await _collection.UpdateOneAsync(
                 user => user.Id == id,
                 Builders<User>.Update.Set(user => user.Point, point)
+            );
+        }
+        
+        public async void UpdateUserLifes(User user)
+        {
+            await _collection.UpdateOneAsync(
+                u => u.Id == user.Id,
+                Builders<User>.Update.Set(u => u.Life, user.Life - 1)
             );
         }
     }
