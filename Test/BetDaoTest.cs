@@ -64,8 +64,7 @@ namespace Test
         [Test]
         public void AddTestList()
         {
-            _betDao.AddListBet(_bets);
-            _collection.Received().InsertManyAsync(Arg.Any<List<Bet>>());
+            // TODO à remplacer
         }
     }
 }

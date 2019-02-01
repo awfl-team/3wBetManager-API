@@ -95,5 +95,22 @@ namespace Test
             );
         }
 
+        [Test]
+        public void UpdateIsPrivate()
+        {
+            _userDao.UpdateUserIsPrivate(_user.Id, _user.IsPrivate);
+            _collection.Received().UpdateOneAsync(Arg.Any<ExpressionFilterDefinition<User>>(),
+                Arg.Any<UpdateDefinition<User>>()
+            );
+        }
+
+        [Test]
+        public void UpdatePoints()
+        {
+            _userDao.UpdateUserPoints(_user.Id, _user.Point);
+            _collection.Received().UpdateOneAsync(Arg.Any<ExpressionFilterDefinition<User>>(),
+                Arg.Any<UpdateDefinition<User>>()
+            );
+        }
     }
 }

@@ -43,8 +43,8 @@ namespace Test
 
             _match = new Match
             {
-                Cote = 123, Status = "test", LastUpdated = DateTime.Now, HomeTeam = _team1, AwayTeam = _team2,
-                Score = _score
+                Status = "test", LastUpdated = DateTime.Now, HomeTeam = _team1, AwayTeam = _team2,
+                Score = _score, Cote = 123
 
             };
         }
