@@ -5,6 +5,10 @@ namespace Models
 {
     public class Bet
     {
+        public const string WrongStatus = "Wrong";
+        public const string OkStatus = "Ok";
+        public const string PerfectStatus = "Perfect";
+
         public ObjectId Id { get; set; }
         public DateTime Date { get; set; }
         public int PointsWon { get; set; }

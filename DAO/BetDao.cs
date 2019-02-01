@@ -45,7 +45,7 @@ namespace DAO
             }
 
             var betsByCompetition = betsByUser.FindAll(bet => bet.Match.Competition.Id == competitionId);
-            var betsByMatchStatus = betsByCompetition.FindAll(bet => bet.Match.Status == "FINISHED");
+            var betsByMatchStatus = betsByCompetition.FindAll(bet => bet.Match.Status == Match.FinishedStatus);
 
             return betsByMatchStatus;
         }
@@ -79,9 +79,9 @@ namespace DAO
             }
 
             var betsByCompetition = betsByUser.FindAll(bet => bet.Match.Competition.Id == competitionId);
-            var betsByMatchStatus = betsByCompetition.FindAll(bet => bet.Match.Status == "SCHEDULED");
+            var betsByMatchStatus = betsByCompetition.FindAll(bet => bet.Match.Status == Match.ScheduledStatus);
 
-            var matchByStatus = await Singleton.Instance.MatchDao.FindByStatus("SCHEDULED");
+            var matchByStatus = await Singleton.Instance.MatchDao.FindByStatus(Match.ScheduledStatus);
             var matchesByCompetition = matchByStatus.FindAll(m => m.Competition.Id == competitionId);
 
             foreach (var bet in betsByMatchStatus)

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -113,9 +112,9 @@ namespace DAO
                 obj.Username = user.Username;
                 obj.IsPrivate = user.IsPrivate;
                 obj.NbBets = betsByUser.Count;
-                obj.NbPerfectBets = betsByUser.FindAll(b => b.Status == "Perfect").Count;
-                obj.NbOkBets = betsByUser.FindAll(b => b.Status == "Ok").Count;
-                obj.NbWrongBets = betsByUser.FindAll(b => b.Status == "Wrong").Count;
+                obj.NbPerfectBets = betsByUser.FindAll(b => b.Status == Bet.PerfectStatus).Count;
+                obj.NbOkBets = betsByUser.FindAll(b => b.Status == Bet.OkStatus).Count;
+                obj.NbWrongBets = betsByUser.FindAll(b => b.Status == Bet.WrongStatus).Count;
                 users.Add(obj);
             }
 
@@ -136,17 +135,17 @@ namespace DAO
 
         public async void AddUser(User user)
         {
-            var passwordHash = BCrypt.Net.BCrypt.HashPassword(user.Password);
-            user.Password = passwordHash;
-            user.IsPrivate = false;
-            user.Point = 500;
-            user.Life = 3;
+            user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
+            user.IsPrivate = User.DefaultIsPrivate;
+            user.Point = User.DefaultPoint;
+            user.Life = User.DefaultLife;
+            user.Role = User.UserRole;
             await _collection.InsertOneAsync(user);
         }
 
         public void ResetUser(User user)
         {
-            UpdateUserPoints(user.Id, 500);
+            UpdateUserPoints(user.Id, User.DefaultPoint);
             UpdateUserLifes(user);
             Singleton.Instance.BetDao.DeleteBetsByUser(user.Id);
         }

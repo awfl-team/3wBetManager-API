@@ -6,6 +6,9 @@ namespace Models
 {
     public class Match
     {
+        public const string FinishedStatus = "FINISHED";
+        public const string ScheduledStatus = "SCHEDULED";
+
         public int Id { get; set; }
         public string Status { get; set; }
         public DateTime LastUpdated { get; set; }
