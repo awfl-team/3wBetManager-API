@@ -34,16 +34,6 @@ namespace DAO
         public async Task<List<Bet>> FindFinishBets(User user, int competitionId)
         {
             var betsByUser = await FindBetsByUser(user);
-            foreach (var bet in betsByUser)
-            {
-                var matchInformation = await Singleton.Instance.MatchDao.FindMatch(bet.Match.Id);
-                bet.Match = matchInformation;
-                var awayTeamInformation = await Singleton.Instance.TeamDao.FindTeam(bet.Match.AwayTeam.Id);
-                bet.Match.AwayTeam = awayTeamInformation;
-                var homeTeamInformation = await Singleton.Instance.TeamDao.FindTeam(bet.Match.HomeTeam.Id);
-                bet.Match.HomeTeam = homeTeamInformation;
-            }
-
             var betsByCompetition = betsByUser.FindAll(bet => bet.Match.Competition.Id == competitionId);
             var betsByMatchStatus = betsByCompetition.FindAll(bet => bet.Match.Status == Match.FinishedStatus);
 
@@ -107,6 +97,31 @@ namespace DAO
             return betsAndMatches;
         }
 
+        public async Task<ExpandoObject> NumberCurrentMatchAndBet(User user, int competitionId)
+        {
+            dynamic currentBetsAndMatches = await FindCurrentBetsAndScheduledMatches(user, competitionId);
+            if (currentBetsAndMatches.Bets.Count == 0 && currentBetsAndMatches.Matches.Count == 0)
+            {
+                return null;
+            }
+            dynamic numberCurrentMatchAndBet = new ExpandoObject();
+            numberCurrentMatchAndBet.NbBet = currentBetsAndMatches.Bets.Count;
+            numberCurrentMatchAndBet.NbMatch = currentBetsAndMatches.Matches.Count;
+            return numberCurrentMatchAndBet;
+        }
+
+        public async Task<ExpandoObject> NumberFinishMatchAndBet(User user, int competitionId)
+        {
+            var finishBetsAndMatches = await FindFinishBets(user, competitionId);
+            if (finishBetsAndMatches.Count == 0)
+            {
+                return null;
+            }
+            dynamic numberFinishBetsAndMatches = new ExpandoObject();
+            numberFinishBetsAndMatches.NbBet = finishBetsAndMatches.Count;
+            return numberFinishBetsAndMatches;
+        }
+
         public async void UpdateBet(Bet bet)
         {
             await _collection.UpdateOneAsync(b => b.Id == bet.Id,
@@ -117,6 +132,18 @@ namespace DAO
         public async void DeleteBetsByUser(ObjectId id)
         {
             await _collection.DeleteManyAsync(bet => bet.User.Id == id);
+        }
+
+        public async Task<List<Bet>> FindBetsByMatch(Match match)
+        {
+            var result = await _collection.Find(b => b.Match.Id == match.Id).ToListAsync();
+            return result;
+        }
+
+        public async void UpdateBetPointsWon(Bet bet, int point)
+        {
+            await _collection.UpdateOneAsync(b => b.Id == bet.Id,
+                Builders<Bet>.Update.Set(b => b.PointsWon, point));
         }
 
         public async void AddOrUpdateBet(User user, List<Bet> bets)
@@ -134,9 +161,7 @@ namespace DAO
                     UpdateBet(bet);
                 }
             }
-
             Singleton.Instance.UserDao.UpdateUserPoints(user.Id,user.Point -(bets.Count*10));
-
         }
     }
 }

@@ -12,21 +12,6 @@ namespace _3wBetManager_API.Controllers
     [RoutePrefix("bets")]
     public class BetController : ApiController
     {
-        /*[Route("")]
-        [HttpPost]
-        public IHttpActionResult Post([FromBody] Bet bet)
-        {
-            try
-            {
-                GetBetDao().AddBet(bet);
-                return Ok();
-            }
-            catch (Exception e)
-            {
-                return InternalServerError(e);
-            }
-        }*/
-
         [Route("")]
         [HttpPost]
         public async Task<IHttpActionResult> Post([FromBody] List<Bet> bets)
@@ -66,6 +51,36 @@ namespace _3wBetManager_API.Controllers
             {
                 var user = await TokenManager.GetUserByToken(Request);
                 return Ok(await GetBetDao().FindCurrentBetsAndScheduledMatches(user, competitionId));
+            }
+            catch (Exception e)
+            {
+                return InternalServerError(e);
+            }
+        }
+
+        [Route("{competitionId:int}/current/number")]
+        [HttpGet]
+        public async Task<IHttpActionResult> GetCurrentNumberMatchAndBet(int competitionId)
+        {
+            try
+            {
+                var user = await TokenManager.GetUserByToken(Request);
+                return Ok(await GetBetDao().NumberCurrentMatchAndBet(user, competitionId));
+            }
+            catch (Exception e)
+            {
+                return InternalServerError(e);
+            }
+        }
+
+        [Route("{competitionId:int}/result/number")]
+        [HttpGet]
+        public async Task<IHttpActionResult> GetFinishNumberMatchAndBet(int competitionId)
+        {
+            try
+            {
+                var user = await TokenManager.GetUserByToken(Request);
+                return Ok(await GetBetDao().NumberFinishMatchAndBet(user, competitionId));
             }
             catch (Exception e)
             {
