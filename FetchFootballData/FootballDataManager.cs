@@ -104,6 +104,7 @@ namespace FetchFootballData
                 Console.WriteLine("     ----- Begin Fetch matches ----- ");
                 var dateFrom = DateTime.Now;
                 var dateTo = dateFrom.AddDays(7);
+                dateFrom = dateTo.AddDays(-2);
 
                 var response = await _http.GetAsync("matches?dateFrom=" + dateFrom.ToString("yyyy-MM-dd") + "&dateTo=" +
                                                     dateTo.ToString("yyyy-MM-dd"));
@@ -124,11 +125,18 @@ namespace FetchFootballData
                     {
                         Console.WriteLine("Update match " + match.Id);
                         Singleton.Instance.MatchDao.UpdateMatch(findMatch.Id, match);
+                        if (findMatch.Status == Match.ScheduledStatus && match.Status == Match.FinishedStatus)
+                        {
+                            AssignmentPoint.AddPointToBet(match);
+                        }
                     }
                 }
 
                 Console.WriteLine("     ----- End Fetch matches ----- ");
                 Console.WriteLine("----- End Fetch football data ----- ");
+                System.Threading.Thread.Sleep(10000);
+                Environment.Exit(0);
+
             }
             catch (Exception e)
             {
