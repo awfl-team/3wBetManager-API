@@ -176,6 +176,15 @@ namespace DAO
             );
         }
 
+        public async void UpdateUserRole(ObjectId id, string role)
+        {
+            await _collection.UpdateOneAsync(
+                user => user.Id == id,
+                Builders<User>.Update.Set(user => user.Role, role)
+
+            );
+        }
+
         public async void UpdateUserPoints(ObjectId id, int point)
         {
             await _collection.UpdateOneAsync(

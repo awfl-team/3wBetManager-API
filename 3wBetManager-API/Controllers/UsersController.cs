@@ -68,24 +68,6 @@ namespace _3wBetManager_API.Controllers
                 return InternalServerError(e);
             }
         }
-
-        /*[Route("order/{order:int}")]
-        [HttpGet]
-        public async Task<IHttpActionResult> GetAllByOrder(int order)
-        {
-            try
-            {
-                if(order != 1 && order != -1)
-                {
-                    order = 1;
-                }
-                return Ok(await getUserDao().FindAllUserByOrder(order));
-            }
-            catch (Exception e)
-            {
-                return InternalServerError(e);
-            }
-        }*/
         
         [Route("{id}")]
         [HttpPut]
@@ -116,6 +98,22 @@ namespace _3wBetManager_API.Controllers
             {
                 var user = await TokenManager.GetUserByToken(Request);
                 Singleton.Instance.UserDao.UpdateUserIsPrivate(user.Id, userParam.IsPrivate);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return InternalServerError(e);
+            }
+        }
+
+        [Route("role")]
+        [HttpPut]
+        public async Task<IHttpActionResult> PutRole([FromBody] User userParam)
+        {
+            try
+            {
+                var user = await TokenManager.GetUserByToken(Request);
+                Singleton.Instance.UserDao.UpdateUserRole(user.Id, userParam.Role);
                 return Ok();
             }
             catch (Exception e)
