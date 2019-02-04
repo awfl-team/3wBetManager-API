@@ -10,6 +10,7 @@ namespace _3wBetManager_API.Controllers
     public class CompetitionController : ApiController
     {
         [Route("")]
+        [HttpGet]
         public async Task<IHttpActionResult> GetAll()
         {
             try
