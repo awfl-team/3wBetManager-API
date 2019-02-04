@@ -106,14 +106,13 @@ namespace _3wBetManager_API.Controllers
             }
         }
 
-        [Route("role")]
+        [Route("{id}/role")]
         [HttpPut]
-        public async Task<IHttpActionResult> PutRole([FromBody] User userParam)
+        public IHttpActionResult PutRole(string id, [FromBody] User userParam)
         {
             try
             {
-                var user = await TokenManager.GetUserByToken(Request);
-                Singleton.Instance.UserDao.UpdateUserRole(user.Id, userParam.Role);
+                Singleton.Instance.UserDao.UpdateUserRole(id, userParam.Role);
                 return Ok();
             }
             catch (Exception e)
