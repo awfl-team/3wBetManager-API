@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Threading.Tasks;
 using DAO;
 using Models;
 using Newtonsoft.Json;
@@ -19,11 +20,10 @@ namespace FetchFootballData
             _http.DefaultRequestHeaders.Add("X-Auth-Token", "f74e0beb5501485895a1ebb03ba925db");
         }
 
-        public async void GetAllCompetitions()
+        public async Task GetAllCompetitions()
         {
             try
             {
-                Console.WriteLine("----- Begin Fetch football data ----- ");
                 Console.WriteLine("     ----- Begin Fetch competitions ----- ");
                 foreach (var availableCompetition in Competition.AvailableCompetitions)
                 {
@@ -56,7 +56,7 @@ namespace FetchFootballData
             }
         }
 
-        public async void GetAllTeams()
+        public async Task GetAllTeams()
         {
             try
             {
@@ -97,7 +97,7 @@ namespace FetchFootballData
             }
         }
 
-        public async void GetAllMatchForAWeek()
+        public async Task GetAllMatchForAWeek()
         {
             try
             {
@@ -133,10 +133,6 @@ namespace FetchFootballData
                 }
 
                 Console.WriteLine("     ----- End Fetch matches ----- ");
-                Console.WriteLine("----- End Fetch football data ----- ");
-                System.Threading.Thread.Sleep(10000);
-                Environment.Exit(0);
-
             }
             catch (Exception e)
             {
