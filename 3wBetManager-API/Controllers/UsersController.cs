@@ -61,33 +61,13 @@ namespace _3wBetManager_API.Controllers
         {
             try
             {
-                var token = TokenManager.GetTokenFromRequest(Request);
-                var user = TokenManager.ValidateToken(token);
-                return Ok(await getUserDao().FindUserByEmailToList(user["email"]));
+                return Ok(await TokenManager.GetUserByToken(Request));
             }
             catch (Exception e)
             {
                 return InternalServerError(e);
             }
         }
-
-        /*[Route("order/{order:int}")]
-        [HttpGet]
-        public async Task<IHttpActionResult> GetAllByOrder(int order)
-        {
-            try
-            {
-                if(order != 1 && order != -1)
-                {
-                    order = 1;
-                }
-                return Ok(await getUserDao().FindAllUserByOrder(order));
-            }
-            catch (Exception e)
-            {
-                return InternalServerError(e);
-            }
-        }*/
         
         [Route("{id}")]
         [HttpPut]
@@ -116,10 +96,23 @@ namespace _3wBetManager_API.Controllers
         {
             try
             {
-                var token = TokenManager.GetTokenFromRequest(Request);
-                var user = TokenManager.ValidateToken(token);
-                var fullUser = await Singleton.Instance.UserDao.FindUserByEmailSingle(user["email"]);
-                Singleton.Instance.UserDao.UpdateUserIsPrivate(fullUser.Id, userParam.IsPrivate);
+                var user = await TokenManager.GetUserByToken(Request);
+                Singleton.Instance.UserDao.UpdateUserIsPrivate(user.Id, userParam.IsPrivate);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return InternalServerError(e);
+            }
+        }
+
+        [Route("{id}/role")]
+        [HttpPut]
+        public IHttpActionResult PutRole(string id, [FromBody] User userParam)
+        {
+            try
+            {
+                Singleton.Instance.UserDao.UpdateUserRole(id, userParam.Role);
                 return Ok();
             }
             catch (Exception e)
@@ -149,14 +142,12 @@ namespace _3wBetManager_API.Controllers
         {
             try
             {
-                var token = TokenManager.GetTokenFromRequest(Request);
-                var user = TokenManager.ValidateToken(token);
-                var fullUser = await Singleton.Instance.UserDao.FindUserByEmailSingle(user["email"]);
-                if (fullUser.Life == 0)
+                var user = await TokenManager.GetUserByToken(Request);
+                if (user.Life == 0)
                 {
                     return Content(HttpStatusCode.BadRequest, "You already used all your lives");
                 }
-                getUserDao().ResetUser(fullUser);
+                getUserDao().ResetUser(user);
                 return Ok();
                 
             }
@@ -164,8 +155,6 @@ namespace _3wBetManager_API.Controllers
             {
                 return InternalServerError(e);
             }
-               
-       
         }
 
         private IUserDao getUserDao()

@@ -14,6 +14,15 @@ namespace DAO
         public IMatchDao MatchDao { get; private set; }
         public IBetDao BetDao { get; private set; }
 
+        public void SetAll()
+        {
+            SetTeamDao(new TeamDao());
+            SeMatchDao(new MatchDao());
+            SetBetDao(new BetDao());
+            SetCompetitionDao(new CompetitionDao());
+            SetUserDao(new UserDao());
+        }
+
         public IUserDao SetUserDao(IUserDao userDao)
         {
             return UserDao = userDao;
@@ -38,6 +47,7 @@ namespace DAO
         {
             return BetDao = betDao;
         }
+
 
     }
 }

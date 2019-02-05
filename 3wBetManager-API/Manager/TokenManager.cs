@@ -5,6 +5,9 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net.Http;
 using System.Security.Claims;
+using System.Threading.Tasks;
+using DAO;
+using Models;
 
 namespace _3wBetManager_API.Manager
 {
@@ -97,6 +100,13 @@ namespace _3wBetManager_API.Manager
             var bearerToken = authHeaders.ElementAt(0);
             var token = bearerToken.StartsWith("Bearer ") ? bearerToken.Substring(7) : bearerToken;
             return token;
+        }
+
+        public static async Task<User> GetUserByToken(HttpRequestMessage request)
+        {
+            var token = GetTokenFromRequest(request);
+            var user = ValidateToken(token);
+            return await Singleton.Instance.UserDao.FindUserByEmailSingle(user["email"]);
         }
 
 
