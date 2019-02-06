@@ -1,4 +1,5 @@
 using System;
+using System.Security.Policy;
 using MongoDB.Bson;
 
 namespace Models
@@ -6,6 +7,7 @@ namespace Models
     public class Bet
     {
         public ObjectId Id { get; set; }
+        public string Guid { get; set; }
         public DateTime Date { get; set; }
         public int PointsWon { get; set; }
         public string Status { get; set; }

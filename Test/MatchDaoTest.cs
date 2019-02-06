@@ -44,7 +44,7 @@ namespace Test
             _match = new Match
             {
                 Status = "test", LastUpdated = DateTime.Now, HomeTeam = _team1, AwayTeam = _team2,
-                Score = _score, Cote = 123
+                Score = _score
 
             };
         }

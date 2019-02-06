@@ -31,7 +31,6 @@ namespace Test
             _user = new User { Email = "test", Password = "test", Username = "test" };
             _match = new Match
             {
-                Cote = 123,
                 Status = "test",
                 LastUpdated = DateTime.Now,
                 HomeTeam = null,

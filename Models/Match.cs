@@ -14,6 +14,5 @@ namespace Models
         public Score Score { get; set; }
         public Competition Competition { get; set; }
         public string UtcDate { get; set; }
-        public int Cote { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -27,7 +28,7 @@ namespace DAO
 
         public async Task<Bet> Find(Bet bet)
         {
-            var result = await _collection.Find(b => b.Id == bet.Id).ToListAsync();
+            var result = await _collection.Find(b => b.Guid == bet.Guid).ToListAsync();
             return result.FirstOrDefault();
         }
 
@@ -109,7 +110,7 @@ namespace DAO
 
         public async void UpdateBet(Bet bet)
         {
-            await _collection.UpdateOneAsync(b => b.Id == bet.Id,
+            await _collection.UpdateOneAsync(b => b.Guid == bet.Guid,
                 Builders<Bet>.Update.Set(b => b.HomeTeamScore, bet.HomeTeamScore)
                     .Set(b => b.AwayTeamScore, bet.AwayTeamScore));
         }
@@ -127,6 +128,7 @@ namespace DAO
                 bet.User = user;
                 if (findBet == null)
                 {
+                    bet.Guid = Guid.NewGuid().ToString();
                     AddBet(bet);
                 }
                 else
