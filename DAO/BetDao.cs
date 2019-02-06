@@ -35,6 +35,16 @@ namespace DAO
         public async Task<List<Bet>> FindFinishBets(User user, int competitionId)
         {
             var betsByUser = await FindBetsByUser(user);
+            foreach (var bet in betsByUser)
+            {
+                var matchInformation = await Singleton.Instance.MatchDao.FindMatch(bet.Match.Id);
+                bet.Match = matchInformation;
+                var awayTeamInformation = await Singleton.Instance.TeamDao.FindTeam(bet.Match.AwayTeam.Id);
+                bet.Match.AwayTeam = awayTeamInformation;
+                var homeTeamInformation = await Singleton.Instance.TeamDao.FindTeam(bet.Match.HomeTeam.Id);
+                bet.Match.HomeTeam = homeTeamInformation;
+            }
+
             var betsByCompetition = betsByUser.FindAll(bet => bet.Match.Competition.Id == competitionId);
             var betsByMatchStatus = betsByCompetition.FindAll(bet => bet.Match.Status == Match.FinishedStatus);
 
