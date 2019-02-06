@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Threading.Tasks;
 using DAO;
 using Models;
 using Newtonsoft.Json;
@@ -19,11 +20,10 @@ namespace FetchFootballData
             _http.DefaultRequestHeaders.Add("X-Auth-Token", "f74e0beb5501485895a1ebb03ba925db");
         }
 
-        public async void GetAllCompetitions()
+        public async Task GetAllCompetitions()
         {
             try
             {
-                Console.WriteLine("----- Begin Fetch football data ----- ");
                 Console.WriteLine("     ----- Begin Fetch competitions ----- ");
                 foreach (var availableCompetition in Competition.AvailableCompetitions)
                 {
@@ -56,7 +56,7 @@ namespace FetchFootballData
             }
         }
 
-        public async void GetAllTeams()
+        public async Task GetAllTeams()
         {
             try
             {
@@ -97,13 +97,14 @@ namespace FetchFootballData
             }
         }
 
-        public async void GetAllMatchForAWeek()
+        public async Task GetAllMatchForAWeek()
         {
             try
             {
                 Console.WriteLine("     ----- Begin Fetch matches ----- ");
                 var dateFrom = DateTime.Now;
                 var dateTo = dateFrom.AddDays(7);
+                dateFrom = dateTo.AddDays(-2);
 
                 var response = await _http.GetAsync("matches?dateFrom=" + dateFrom.ToString("yyyy-MM-dd") + "&dateTo=" +
                                                     dateTo.ToString("yyyy-MM-dd"));
@@ -124,11 +125,14 @@ namespace FetchFootballData
                     {
                         Console.WriteLine("Update match " + match.Id);
                         Singleton.Instance.MatchDao.UpdateMatch(findMatch.Id, match);
+                        if (findMatch.Status == Match.ScheduledStatus && match.Status == Match.FinishedStatus)
+                        {
+                            AssignmentPoint.AddPointToBet(match);
+                        }
                     }
                 }
 
                 Console.WriteLine("     ----- End Fetch matches ----- ");
-                Console.WriteLine("----- End Fetch football data ----- ");
             }
             catch (Exception e)
             {

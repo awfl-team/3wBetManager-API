@@ -1,10 +1,16 @@
-﻿using System.Collections.Generic;
-using MongoDB.Bson;
+﻿using MongoDB.Bson;
 
 namespace Models
 {
     public class User
     {
+        public const int DefaultLife = 3;
+        public const string UserRole = "USER";
+        public const string AdminRole = "ADMIN";
+        public const int DefaultPoint = 500;
+        public const bool DefaultIsPrivate = false;
+
+
         public ObjectId Id { get; set; } 
         public int Point { get; set; }
         public int Life { get; set; }

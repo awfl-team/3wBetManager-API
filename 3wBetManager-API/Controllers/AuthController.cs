@@ -14,7 +14,6 @@ namespace _3wBetManager_API.Controllers
         [HttpPost]
         public IHttpActionResult Register([FromBody] User user)
         {
-         
             try
             {
                 var isExist = getUserDao().UsernameAndEmailExist(user, out var errorMessage);
@@ -22,9 +21,6 @@ namespace _3wBetManager_API.Controllers
                 {
                     return Content(HttpStatusCode.BadRequest, errorMessage);
                 }
-
-                // TODO create a constant in MODEL.USER
-                user.Role = "USER";
                 getUserDao().AddUser(user);
                 return Ok();
             }
