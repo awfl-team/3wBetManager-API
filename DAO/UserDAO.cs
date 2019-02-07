@@ -106,16 +106,19 @@ namespace DAO
             {
                 dynamic obj = new ExpandoObject();
                 var betsByUser = await Singleton.Instance.BetDao.FindBetsByUser(user);
-                obj.Id = user.Id;
-                obj.Point = user.Point;
-                obj.Life = user.Life;
-                obj.Username = user.Username;
-                obj.IsPrivate = user.IsPrivate;
-                obj.NbBets = betsByUser.Count;
-                obj.NbPerfectBets = betsByUser.FindAll(b => b.Status == Bet.PerfectStatus).Count;
-                obj.NbOkBets = betsByUser.FindAll(b => b.Status == Bet.OkStatus).Count;
-                obj.NbWrongBets = betsByUser.FindAll(b => b.Status == Bet.WrongStatus).Count;
-                users.Add(obj);
+                if (betsByUser.Count > 0)
+                {
+                    obj.Id = user.Id;
+                    obj.Point = user.Point;
+                    obj.Life = user.Life;
+                    obj.Username = user.Username;
+                    obj.IsPrivate = user.IsPrivate;
+                    obj.NbBets = betsByUser.Count;
+                    obj.NbPerfectBets = betsByUser.FindAll(b => b.Status == Bet.PerfectStatus).Count;
+                    obj.NbOkBets = betsByUser.FindAll(b => b.Status == Bet.OkStatus).Count;
+                    obj.NbWrongBets = betsByUser.FindAll(b => b.Status == Bet.WrongStatus).Count;
+                    users.Add(obj);
+                }
             }
 
             return users;
