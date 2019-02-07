@@ -58,5 +58,23 @@ namespace _3wBetManager_API.Controllers
                 return InternalServerError(e);
             }
         }
+
+        [Route("all")]
+        [HttpGet]
+        public async Task<IHttpActionResult> RefreshAll()
+        {
+            try
+            {
+                var footballDataManager = new FootballDataManager();
+                await footballDataManager.GetAllCompetitions();
+                await footballDataManager.GetAllTeams();
+                await footballDataManager.GetAllMatchForAWeek();
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return InternalServerError(e);
+            }
+        }
     }
 }
