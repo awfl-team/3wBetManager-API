@@ -15,6 +15,7 @@ namespace FetchFootballData
             await footballDataManager.GetAllTeams();
             await footballDataManager.GetAllMatchForAWeek();
             Console.WriteLine("----- End Fetch football data ----- ");
+            Singleton.Instance.UserDao.RecalculateUserPoints();
             System.Threading.Thread.Sleep(10000);
             Environment.Exit(0);
         }

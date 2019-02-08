@@ -192,7 +192,20 @@ namespace DAO
                 Builders<User>.Update.Set(user => user.Point, point)
             );
         }
-        
+
+        public async void RecalculateUserPoints()
+        {
+            var users = await FindAllUser();
+            foreach (var user in users)
+            {
+                var bets = await Singleton.Instance.BetDao.FindBetsByUser(user);
+                foreach (var bet in bets)
+                {
+                   UpdateUserPoints(user.Id,user.Point + bet.PointsWon);
+                }
+            }
+        }
+
         public async void UpdateUserLifes(User user)
         {
             await _collection.UpdateOneAsync(

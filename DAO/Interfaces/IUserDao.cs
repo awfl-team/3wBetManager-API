@@ -24,5 +24,6 @@ namespace DAO.Interfaces
         void UpdateUserIsPrivate(ObjectId id, bool isPrivate);
         void UpdateUserPoints(ObjectId id, int point);
         void UpdateUserRole(string id, string role);
+        void RecalculateUserPoints();
     }
 }
