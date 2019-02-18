@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens;
 using System.Linq;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -18,8 +19,8 @@ namespace _3wBetManager_API.Manager
         public static string GenerateToken(string email, string role, string pseudo)
         {
             var key = Convert.FromBase64String(Secret);
-            SymmetricSecurityKey securityKey = new SymmetricSecurityKey(key);
-            SecurityTokenDescriptor descriptor = new SecurityTokenDescriptor
+            var securityKey = new SymmetricSecurityKey(key);
+            var descriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new[]
                 {
@@ -32,8 +33,8 @@ namespace _3wBetManager_API.Manager
                     SecurityAlgorithms.HmacSha256Signature)
             };
 
-            JwtSecurityTokenHandler handler = new JwtSecurityTokenHandler();
-            JwtSecurityToken token = handler.CreateJwtSecurityToken(descriptor);
+            var handler = new JwtSecurityTokenHandler();
+            var token = handler.CreateJwtSecurityToken(descriptor);
             return handler.WriteToken(token);
         }
 
@@ -41,21 +42,20 @@ namespace _3wBetManager_API.Manager
         {
             try
             {
-                JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
-                JwtSecurityToken jwtToken = (JwtSecurityToken)tokenHandler.ReadToken(token);
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var jwtToken = (JwtSecurityToken)tokenHandler.ReadToken(token);
                 if (jwtToken == null)
                     return null;
-                byte[] key = Convert.FromBase64String(Secret);
-                TokenValidationParameters parameters = new TokenValidationParameters()
+                var key = Convert.FromBase64String(Secret);
+                var parameters = new TokenValidationParameters()
                 {
                     RequireExpirationTime = true,
                     ValidateIssuer = false,
                     ValidateAudience = false,
                     IssuerSigningKey = new SymmetricSecurityKey(key)
                 };
-                SecurityToken securityToken;
-                ClaimsPrincipal principal = tokenHandler.ValidateToken(token,
-                    parameters, out securityToken);
+                var principal = tokenHandler.ValidateToken(token,
+                    parameters, out var securityToken);
                 return principal;
             }
             catch (Exception)
@@ -66,7 +66,7 @@ namespace _3wBetManager_API.Manager
 
         public static IDictionary<string,string> ValidateToken(string token)
         {
-            ClaimsPrincipal principal = GetPrincipal(token);
+            var principal = GetPrincipal(token);
             if (principal == null)
                 return null;
             ClaimsIdentity identity = null;
@@ -79,9 +79,9 @@ namespace _3wBetManager_API.Manager
                 return null;
             }
 
-            Claim emailClaim = identity.FindFirst(ClaimTypes.Email);
-            Claim roleClaim = identity.FindFirst(ClaimTypes.Role);
-            Claim pseudoClaim = identity.FindFirst(ClaimTypes.Name);
+            var emailClaim = identity.FindFirst(ClaimTypes.Email);
+            var roleClaim = identity.FindFirst(ClaimTypes.Role);
+            var pseudoClaim = identity.FindFirst(ClaimTypes.Name);
  
             IDictionary<string, string> tokenDictionary = new Dictionary<string, string>();
             tokenDictionary["pseudo"] = pseudoClaim.Value;
@@ -100,13 +100,6 @@ namespace _3wBetManager_API.Manager
             var bearerToken = authHeaders.ElementAt(0);
             var token = bearerToken.StartsWith("Bearer ") ? bearerToken.Substring(7) : bearerToken;
             return token;
-        }
-
-        public static async Task<User> GetUserByToken(HttpRequestMessage request)
-        {
-            var token = GetTokenFromRequest(request);
-            var user = ValidateToken(token);
-            return await Singleton.Instance.UserDao.FindUserByEmailSingle(user["email"]);
         }
 
 
