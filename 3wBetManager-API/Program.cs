@@ -1,34 +1,31 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Net.Http;
+using System.Configuration;
 using System.Runtime.InteropServices;
 using DAO;
 using Microsoft.Owin.Hosting;
+using MongoDB.Driver;
 
 namespace _3wBetManager_API
 {
     public class Program
     {
         [DllImport("kernel32.dll")]
-        static extern IntPtr GetConsoleWindow();
+        private static extern IntPtr GetConsoleWindow();
 
         [DllImport("user32.dll")]
-        static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+        private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
 
-        const int SW_HIDE = 0;
-        const int SW_SHOW = 5;
+        private const int SW_HIDE = 0;
+        private const int SW_SHOW = 5;
 
         static void Main(string[] args)
         {
-            #if (!DEBUG)
-            const string baseAddress = "http://151.80.136.92:9000/";
-            #endif
-            
-            #if DEBUG
-            const string baseAddress = "http://localhost:9000/";
-            #endif
-            
-            Singleton.Instance.SetAll();
+            var baseAddress = ConfigurationManager.AppSettings["baseUrl"];
+
+            var client = new MongoClient(ConfigurationManager.AppSettings["dbUrl"]);
+            var database = client.GetDatabase(ConfigurationManager.AppSettings["dbName"]);
+
+            Singleton.Instance.SetAll(database);
             var handle = GetConsoleWindow();
             ShowWindow(handle, SW_HIDE);
 
