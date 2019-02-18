@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Dynamic;
 using System.Linq;
 using System.Threading.Tasks;
 using DAO.Interfaces;
@@ -13,10 +12,8 @@ namespace DAO
     {
         private readonly IMongoCollection<User> _collection;
 
-        public UserDao(IMongoCollection<User> collection = null)
+        public UserDao(IMongoDatabase database, IMongoCollection<User> collection = null)
         {
-            var client = new MongoClient("mongodb://localhost:27017");
-            var database = client.GetDatabase("3wBetManager");
             _collection = collection ?? database.GetCollection<User>("user");
         }
 
@@ -26,11 +23,6 @@ namespace DAO
             return await _collection.Find(new BsonDocument()).ToListAsync();
         }
 
-        public async Task<List<User>> FindAllUserByOrder(int order)
-        {
-            return await _collection.Find(new BsonDocument()).Sort("{Point:" + order + "}").ToListAsync();
-        }
-
         public async Task<User> FindUser(string id)
         {
             var uid = ObjectId.Parse(id);
@@ -38,90 +30,13 @@ namespace DAO
             return result.FirstOrDefault();
         }
 
-        public async Task<User> FindUserByEmailSingle(string email)
+        public async Task<List<User>> OrderUserByPoint()
         {
-            return await _collection.Find(user => user.Email == email).SingleAsync();
+             return await _collection.Find(new BsonDocument()).Limit(50).Sort("{Point: -1}").ToListAsync();
         }
 
-        public bool UsernameAndEmailExist (User user, out string errorMessage)
-        {
-            var userByEmail = FindUserByEmailToList(user.Email);
-            var userByUsername = FindUserByUsername(user.Username);
-            if (userByEmail.Result == null && userByUsername.Result == null)
-            {
-                errorMessage = "";
-                return true;
-            }
 
-            if (userByEmail.Result != null && userByUsername.Result == null)
-            {
-                errorMessage = "email already taken";
-                return false;
-            }
-
-            if (userByUsername.Result != null && userByEmail.Result == null)
-            {
-                errorMessage = "username already taken";
-                return false;
-            }
-            errorMessage = "username and email already taken";
-            return false;
-        }
-
-        public bool CanUpdate(string id, User userParam, out string errorMessage)
-        {
-
-            var users = FindAllUser();
-            users.Result.Remove(users.Result.Single(user => user.Id == ObjectId.Parse(id)));
-            var userByEmail = users.Result.Find(user => user.Email == userParam.Email);
-            var userByUsername = users.Result.Find(user => user.Username == userParam.Username);
-            if (userByEmail == null && userByUsername == null)
-            {
-                errorMessage = "";
-                return true;
-            }
-
-            if (userByEmail != null && userByUsername == null)
-            {
-                errorMessage = "email already taken";
-                return false;
-            }
-
-            if (userByUsername != null && userByEmail == null)
-            {
-                errorMessage = "username already taken";
-                return false;
-            }
-            errorMessage = "username and email already taken";
-            return false;
-        }
-        
-        
-        public async Task<List<ExpandoObject>> FindBestBetters()
-        {
-            var users = new List<ExpandoObject>();
-            var betsUser = await _collection.Find(new BsonDocument()).Limit(50).Sort("{Point: -1}").ToListAsync();
-
-            foreach (var user in betsUser)
-            {
-                dynamic obj = new ExpandoObject();
-                var betsByUser = await Singleton.Instance.BetDao.FindBetsByUser(user);
-                obj.Id = user.Id;
-                obj.Point = user.Point;
-                obj.Life = user.Life;
-                obj.Username = user.Username;
-                obj.IsPrivate = user.IsPrivate;
-                obj.NbBets = betsByUser.Count;
-                obj.NbPerfectBets = betsByUser.FindAll(b => b.Status == Bet.PerfectStatus).Count;
-                obj.NbOkBets = betsByUser.FindAll(b => b.Status == Bet.OkStatus).Count;
-                obj.NbWrongBets = betsByUser.FindAll(b => b.Status == Bet.WrongStatus).Count;
-                users.Add(obj);
-            }
-
-            return users;
-        }
-
-        public async Task<User> FindUserByEmailToList(string email)
+        public async Task<User> FindUserByEmail(string email)
         {
             var result = await _collection.Find(user => user.Email == email).ToListAsync();
             return result.FirstOrDefault();
@@ -193,25 +108,17 @@ namespace DAO
             );
         }
 
-        public async void RecalculateUserPoints()
-        {
-            var users = await FindAllUser();
-            foreach (var user in users)
-            {
-                var bets = await Singleton.Instance.BetDao.FindBetsByUser(user);
-                foreach (var bet in bets)
-                {
-                   UpdateUserPoints(user.Id,user.Point + bet.PointsWon);
-                }
-            }
-        }
-
         public async void UpdateUserLifes(User user)
         {
             await _collection.UpdateOneAsync(
                 u => u.Id == user.Id,
                 Builders<User>.Update.Set(u => u.Life, user.Life - 1)
             );
+        }
+
+        public async Task<List<User>> SearchUser(string value)
+        {
+            return await _collection.Find(u => u.Email.Contains(value) || u.Username.Contains(value)).ToListAsync();
         }
     }
 }

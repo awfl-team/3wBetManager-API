@@ -14,10 +14,8 @@ namespace DAO
     {
         private readonly IMongoCollection<Team> _collection;
 
-        public TeamDao(IMongoCollection<Team> collection = null)
+        public TeamDao(IMongoDatabase database, IMongoCollection<Team> collection = null)
         {
-            var client = new MongoClient("mongodb://localhost:27017");
-            var database = client.GetDatabase("3wBetManager");
             _collection = collection ?? database.GetCollection<Team>("team");
         }
 
