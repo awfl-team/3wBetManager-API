@@ -3,14 +3,14 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
 using DAO;
-using DAO.Interfaces;
+using Manager;
 using Models;
 using _3wBetManager_API.Manager;
 
 namespace _3wBetManager_API.Controllers
 {
     [RoutePrefix("users")]
-    public class UsersController : ApiController
+    public class UsersController : BaseController
     {
         [Route("")]
         [HttpGet]
@@ -18,7 +18,7 @@ namespace _3wBetManager_API.Controllers
         {
             try
             {
-                return Ok(await getUserDao().FindAllUser());
+                return Ok(await GetUserDao().FindAllUser());
             }
             catch (Exception e)
             {
@@ -32,7 +32,7 @@ namespace _3wBetManager_API.Controllers
         {
             try
             {
-                return Ok(await getUserDao().FindUser(id));
+                return Ok(await GetUserDao().FindUser(id));
             }
             catch (Exception e)
             {
@@ -47,7 +47,7 @@ namespace _3wBetManager_API.Controllers
         {
             try
             {
-                return Ok(await getUserDao().FindBestBetters());
+                return Ok(await UserManager.GetBestBetters());
             }
             catch (Exception e)
             {
@@ -61,7 +61,7 @@ namespace _3wBetManager_API.Controllers
         {
             try
             {
-                return Ok(await TokenManager.GetUserByToken(Request));
+                return Ok(await GetUserByToken(Request));
             }
             catch (Exception e)
             {
@@ -75,12 +75,12 @@ namespace _3wBetManager_API.Controllers
         {
             try
             {
-                var canUpdate  = getUserDao().CanUpdate(id, user, out var errorMessage);
-                if (canUpdate == false)
+                var canUpdate  = await UserManager.CanUpdate(id, user);
+                if (canUpdate != null)
                 {
-                    return Content(HttpStatusCode.BadRequest, errorMessage);
+                    return Content(HttpStatusCode.BadRequest, canUpdate);
                 }
-                getUserDao().UpdateUser(id, user);
+                GetUserDao().UpdateUser(id, user);
                 var fullUser = await Singleton.Instance.UserDao.FindUser(id);
                 return Ok(TokenManager.GenerateToken(fullUser.Email, fullUser.Role, fullUser.Username));
             }
@@ -96,8 +96,8 @@ namespace _3wBetManager_API.Controllers
         {
             try
             {
-                var user = await TokenManager.GetUserByToken(Request);
-                Singleton.Instance.UserDao.UpdateUserIsPrivate(user.Id, userParam.IsPrivate);
+                var user = await GetUserByToken(Request);
+                GetUserDao().UpdateUserIsPrivate(user.Id, userParam.IsPrivate);
                 return Ok();
             }
             catch (Exception e)
@@ -112,7 +112,7 @@ namespace _3wBetManager_API.Controllers
         {
             try
             {
-                Singleton.Instance.UserDao.UpdateUserRole(id, userParam.Role);
+                GetUserDao().UpdateUserRole(id, userParam.Role);
                 return Ok();
             }
             catch (Exception e)
@@ -127,7 +127,7 @@ namespace _3wBetManager_API.Controllers
         {
             try
             {
-                getUserDao().DeleteUser(id);
+                GetUserDao().DeleteUser(id);
                 return Ok();
             }
             catch (Exception e)
@@ -135,19 +135,38 @@ namespace _3wBetManager_API.Controllers
                 return InternalServerError(e);
             }
         }
-        
+
+        [Route("search/{value}")]
+        [HttpGet]
+        public async Task<IHttpActionResult> Search(string value)
+        {
+            try
+            {
+                var searchValue = await GetUserDao().SearchUser(value);
+                if (searchValue.Count == 0)
+                {
+                    return NotFound();
+                }
+                return Ok(searchValue);
+            }
+            catch (Exception e)
+            {
+                return InternalServerError(e);
+            }
+        }
+
         [Route("reset")]
         [HttpPut]
         public async Task<IHttpActionResult> Put()
         {
             try
             {
-                var user = await TokenManager.GetUserByToken(Request);
+                var user = await GetUserByToken(Request);
                 if (user.Life == 0)
                 {
                     return Content(HttpStatusCode.BadRequest, "You already used all your lives");
                 }
-                getUserDao().ResetUser(user);
+                GetUserDao().ResetUser(user);
                 return Ok();
                 
             }
@@ -157,9 +176,5 @@ namespace _3wBetManager_API.Controllers
             }
         }
 
-        private IUserDao getUserDao()
-        {
-            return Singleton.Instance.UserDao;
-        }
     }
 }

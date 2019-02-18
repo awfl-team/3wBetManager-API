@@ -1,28 +1,29 @@
 ﻿using System;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web.Http;
-using DAO;
-using DAO.Interfaces;
+using Manager;
 using Models;
 using _3wBetManager_API.Manager;
 
 namespace _3wBetManager_API.Controllers
 {
-    public class AuthController: ApiController
+    public class AuthController : BaseController
     {
         [Route("register")]
         [HttpPost]
-        public IHttpActionResult Register([FromBody] User user)
+        public async Task<IHttpActionResult> Register([FromBody] User user)
         {
             try
             {
-                var isExist = getUserDao().UsernameAndEmailExist(user, out var errorMessage);
-                if (isExist == false)
+                var userExist = await UserManager.UsernameAndEmailExist(user);
+                if (userExist != null)
                 {
-                    return Content(HttpStatusCode.BadRequest, errorMessage);
+                    return Content(HttpStatusCode.BadRequest, userExist);
                 }
-                getUserDao().AddUser(user);
-                return Ok();
+
+                GetUserDao().AddUser(user);
+                return Created("", user);
             }
             catch (Exception e)
             {
@@ -32,36 +33,25 @@ namespace _3wBetManager_API.Controllers
 
         [Route("login")]
         [HttpPost]
-        public IHttpActionResult Login([FromBody] User user)
+        public async Task<IHttpActionResult> Login([FromBody] User user)
         {
             const string errorMessage = "Wrong login password";
             try
             {
-                var fullUser = getUserDao().FindUserByEmailSingle(user.Email);
+                var fullUser = await GetUserDao().FindUserByEmail(user.Email);
 
-                if (BCrypt.Net.BCrypt.Verify(user.Password, fullUser.Result.Password))
+                if (BCrypt.Net.BCrypt.Verify(user.Password, fullUser.Password))
                 {
-                    return Ok(TokenManager.GenerateToken(fullUser.Result.Email, fullUser.Result.Role,
-                        fullUser.Result.Username));
+                    return Ok(TokenManager.GenerateToken(fullUser.Email, fullUser.Role,
+                        fullUser.Username));
                 }
-                else
-                {
-                    return Content(HttpStatusCode.BadRequest, errorMessage);
-                }
-            }
-            catch (AggregateException)
-            {
+
                 return Content(HttpStatusCode.BadRequest, errorMessage);
             }
             catch (Exception e)
             {
                 return InternalServerError(e);
             }
-        }
-
-        private IUserDao getUserDao()
-        {
-            return Singleton.Instance.UserDao;
         }
     }
 }

@@ -2,14 +2,15 @@
 using System.Threading.Tasks;
 using System.Web.Http;
 using FetchFootballData;
+using Manager;
 
 namespace _3wBetManager_API.Controllers
 {
     [RoutePrefix("cron")]
-    public class CronController : ApiController
+    public class CronController : BaseController
     {
         [Route("competitions")]
-        [HttpGet]
+        [HttpPost]
         public async Task<IHttpActionResult> RefreshCompetitions()
         {
             try
@@ -25,7 +26,7 @@ namespace _3wBetManager_API.Controllers
         }
 
         [Route("teams")]
-        [HttpGet]
+        [HttpPost]
         public async Task<IHttpActionResult> RefreshTeams()
         {
             try
@@ -41,7 +42,7 @@ namespace _3wBetManager_API.Controllers
         }
 
         [Route("matches")]
-        [HttpGet]
+        [HttpPost]
         public async Task<IHttpActionResult> RefreshMatches()
         {
             try
@@ -57,7 +58,7 @@ namespace _3wBetManager_API.Controllers
         }
 
         [Route("all")]
-        [HttpGet]
+        [HttpPost]
         public async Task<IHttpActionResult> RefreshAll()
         {
             try
