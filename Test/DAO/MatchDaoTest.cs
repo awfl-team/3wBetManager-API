@@ -1,16 +1,14 @@
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using DAO;
 using DAO.Interfaces;
 using Models;
-using MongoDB.Bson;
 using MongoDB.Driver;
 using NSubstitute;
 using NUnit.Framework;
 
-namespace Test
+namespace Test.DAO
 {
     public class MatchDaoTest
     {
@@ -24,12 +22,15 @@ namespace Test
         public HalfTime _halfTime;
         public ExtraTime _extraTime;
         public Penalties _penalties;
+        private IMongoDatabase _database; 
+
 
         [SetUp]
         public void SetUp()
         {
+            _database = Substitute.For<IMongoDatabase>();
             _collection = Substitute.For<IMongoCollection<Match>>();
-            _matchDao = new MatchDao(_collection);
+            _matchDao = new MatchDao(_database, _collection);
             
             _team1 = new Team { Name = "test" , Email = "test", ShortName = "test", Tla = "test", CrestUrl = "test",
                 Address = "test", Phone = "test", Colors = "test", Venue = "test"};
@@ -66,7 +67,7 @@ namespace Test
         public void FindMatchTest()
         {
             _matchDao.FindMatch(1);
-            _collection.Received().Find(match => match.Id == Arg.Any<int>());
+            _collection.Received().Find(Arg.Any<ExpressionFilterDefinition<Match>>());
             Assert.IsInstanceOf<Task<Match>>(_matchDao.FindMatch(Arg.Any<int>()));
         }
         
