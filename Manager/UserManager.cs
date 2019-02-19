@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Threading.Tasks;
 using DAO;
@@ -20,7 +21,6 @@ namespace Manager
 
             if (userByEmail != null && userByUsername == null)
             {
-
                 return "email already taken";
             }
 
@@ -28,12 +28,12 @@ namespace Manager
             {
                 return "username already taken";
             }
+
             return "username and email already taken";
         }
 
         public static async Task<string> CanUpdate(string id, User userParam)
         {
-
             var users = await Singleton.Instance.UserDao.FindAllUser();
             users.Remove(users.Single(user => user.Id == ObjectId.Parse(id)));
             var userByEmail = users.Find(user => user.Email == userParam.Email);
@@ -53,7 +53,7 @@ namespace Manager
                 return "username already taken";
             }
 
-             return "username and email already taken";
+            return "username and email already taken";
         }
 
         public static async Task<List<dynamic>> GetBestBetters()
@@ -93,5 +93,23 @@ namespace Manager
             }
         }
 
+        public static async Task<dynamic> GetAllUsersPaginated(int page)
+        {
+            var users = await Singleton.Instance.UserDao.FindAllUser();
+            var totalUsers = users.Count();
+            var totalPages = (totalUsers / 10) + 1;
+            page = page - 1;
+
+            var usersToPass = 10 * page;
+            var usersPaginated = await Singleton.Instance.UserDao.PaginatedUsers(usersToPass);
+            dynamic obj = new ExpandoObject();
+            obj.Items = usersPaginated;
+            obj.TotalPages = totalPages;
+            obj.TotalUsers = totalUsers;
+            obj.Page = page + 1;
+
+
+            return obj;
+        }
     }
 }

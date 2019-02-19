@@ -176,5 +176,20 @@ namespace _3wBetManager_API.Controllers
             }
         }
 
+        [Route("paginated/{page}")]
+        [HttpGet]
+        public async Task<IHttpActionResult> GetAllUsersPaginated(int page)
+        {
+            try
+            {
+                return Ok(await UserManager.GetAllUsersPaginated(page));
+            }
+            catch (Exception e)
+            {
+                return InternalServerError(e);
+            }
+        }
+
+
     }
 }

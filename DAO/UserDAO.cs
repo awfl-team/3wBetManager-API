@@ -120,5 +120,10 @@ namespace DAO
         {
             return await _collection.Find(u => u.Email.Contains(value) || u.Username.Contains(value)).ToListAsync();
         }
+
+        public async Task<List<User>> PaginatedUsers(int usersToPass)
+        {
+            return await _collection.Find(new BsonDocument()).Skip(usersToPass).Limit(10).ToListAsync();
+        }
     }
 }

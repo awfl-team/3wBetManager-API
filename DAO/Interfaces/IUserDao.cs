@@ -21,5 +21,6 @@ namespace DAO.Interfaces
         void UpdateUserRole(string id, string role);
         Task<List<User>> OrderUserByPoint();
         Task<List<User>> SearchUser(string value);
+        Task<List<User>> PaginatedUsers(int usersToPass);
     }
 }
