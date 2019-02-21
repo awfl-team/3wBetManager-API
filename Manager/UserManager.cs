@@ -88,7 +88,7 @@ namespace Manager
                 var bets = await Singleton.Instance.BetDao.FindBetsByUser(user);
                 foreach (var bet in bets)
                 {
-                    Singleton.Instance.UserDao.UpdateUserPoints(user.Id, user.Point + bet.PointsWon);
+                    await Singleton.Instance.UserDao.UpdateUserPoints(user.Id, user.Point + bet.PointsWon);
                 }
             }
         }
@@ -108,8 +108,14 @@ namespace Manager
             obj.TotalUsers = totalUsers;
             obj.Page = page + 1;
 
-
             return obj;
+        }
+
+        public static async Task ResetUser(User user)
+        {
+            await Singleton.Instance.UserDao.UpdateUserPoints(user.Id, User.DefaultPoint);
+            await Singleton.Instance.UserDao.UpdateUserLifes(user);
+            Singleton.Instance.BetDao.DeleteBetsByUser(user.Id);
         }
     }
 }

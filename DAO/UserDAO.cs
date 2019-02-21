@@ -48,7 +48,7 @@ namespace DAO
             return result.FirstOrDefault();
         }
 
-        public async void AddUser(User user)
+        public async Task AddUser(User user)
         {
             user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
             user.IsPrivate = User.DefaultIsPrivate;
@@ -57,21 +57,14 @@ namespace DAO
             user.Role = User.UserRole;
             await _collection.InsertOneAsync(user);
         }
-
-        public void ResetUser(User user)
-        {
-            UpdateUserPoints(user.Id, User.DefaultPoint);
-            UpdateUserLifes(user);
-            Singleton.Instance.BetDao.DeleteBetsByUser(user.Id);
-        }
         
-        public async void DeleteUser(string id)
+        public async Task DeleteUser(string id)
         {
             var uid = ObjectId.Parse(id);
             await _collection.DeleteOneAsync(user => user.Id == uid);
         }
 
-        public async void UpdateUser(string id, User userParam)
+        public async Task UpdateUser(string id, User userParam)
         {
             var uid = ObjectId.Parse(id);
             await _collection.UpdateOneAsync(
@@ -82,7 +75,7 @@ namespace DAO
             );
         }
 
-        public async void UpdateUserIsPrivate(ObjectId id, bool isPrivate)
+        public async Task UpdateUserIsPrivate(ObjectId id, bool isPrivate)
         {
             await _collection.UpdateOneAsync(
                 user => user.Id == id,
@@ -91,7 +84,7 @@ namespace DAO
             );
         }
 
-        public async void UpdateUserRole(string id, string role)
+        public async Task UpdateUserRole(string id, string role)
         {
             await _collection.UpdateOneAsync(
                 user => user.Id == ObjectId.Parse(id),
@@ -100,7 +93,7 @@ namespace DAO
             );
         }
 
-        public async void UpdateUserPoints(ObjectId id, int point)
+        public async Task UpdateUserPoints(ObjectId id, int point)
         {
             await _collection.UpdateOneAsync(
                 user => user.Id == id,
@@ -108,7 +101,7 @@ namespace DAO
             );
         }
 
-        public async void UpdateUserLifes(User user)
+        public async Task UpdateUserLifes(User user)
         {
             await _collection.UpdateOneAsync(
                 u => u.Id == user.Id,
