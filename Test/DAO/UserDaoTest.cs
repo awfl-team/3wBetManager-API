@@ -65,11 +65,19 @@ namespace Test.DAO
         }
 
         [Test]
-        public void AddUserTest()
+        public void RegisterUserTest()
+        {
+            _userDao.RegisterUser(_user);
+            _collection.Received().InsertOneAsync(Arg.Any<User>());
+        }
+
+        [Test]
+        public void NewUserTest()
         {
             _userDao.AddUser(_user);
             _collection.Received().InsertOneAsync(Arg.Any<User>());
         }
+
 
         [Test]
         public void DeleteUserTest()

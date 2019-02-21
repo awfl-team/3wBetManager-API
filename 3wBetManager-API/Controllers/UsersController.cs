@@ -131,6 +131,23 @@ namespace _3wBetManager_API.Controllers
             return await HandleError(async () => Ok(await UserManager.GetAllUsersPaginated(page)));
         }
 
+        [Route("new")]
+        [HttpPost]
+        public async Task<IHttpActionResult> AddUser([FromBody] User user)
+        {
+            return await HandleError(async () =>
+            {
+                var userExist = await UserManager.UsernameAndEmailExist(user);
+                if (userExist != null)
+                {
+                    return Content(HttpStatusCode.BadRequest, userExist);
+                }
+
+                await GetUserDao().AddUser(user);
+                return Created("", user);
+            });
+        }
+
 
     }
 }

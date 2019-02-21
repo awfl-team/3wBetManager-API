@@ -48,7 +48,7 @@ namespace DAO
             return result.FirstOrDefault();
         }
 
-        public async Task AddUser(User user)
+        public async Task RegisterUser(User user)
         {
             user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
             user.IsPrivate = User.DefaultIsPrivate;
@@ -57,7 +57,17 @@ namespace DAO
             user.Role = User.UserRole;
             await _collection.InsertOneAsync(user);
         }
-        
+
+        public async Task AddUser(User user)
+        {
+            user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
+            user.IsPrivate = User.DefaultIsPrivate;
+            user.Point = User.DefaultPoint;
+            user.Life = User.DefaultLife;
+            user.Role = user.Role;
+            await _collection.InsertOneAsync(user);
+        }
+
         public async Task DeleteUser(string id)
         {
             var uid = ObjectId.Parse(id);
