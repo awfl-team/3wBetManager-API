@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using DAO;
@@ -20,11 +21,28 @@ namespace _3wBetManager_API.Controllers
             return Singleton.Instance.BetDao;
         }
 
+        protected ICompetitionDao GetCompetitionDao()
+        {
+            return Singleton.Instance.CompetitionDao;
+        }
+
         protected static async Task<User> GetUserByToken(HttpRequestMessage request)
         {
             var token = TokenManager.GetTokenFromRequest(request);
             var user = TokenManager.ValidateToken(token);
             return await Singleton.Instance.UserDao.FindUserByEmail(user["email"]);
+        }
+
+        protected async Task<IHttpActionResult> HandleError(Func<Task<IHttpActionResult>> getHttpActionResult)
+        {
+            try
+            {
+                return await getHttpActionResult();
+            }
+            catch (Exception e)
+            {
+                return InternalServerError(e);
+            }
         }
     }
 }

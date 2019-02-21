@@ -14,7 +14,7 @@ namespace _3wBetManager_API.Controllers
         [HttpPost]
         public async Task<IHttpActionResult> Register([FromBody] User user)
         {
-            try
+            return await HandleError(async () =>
             {
                 var userExist = await UserManager.UsernameAndEmailExist(user);
                 if (userExist != null)
@@ -24,20 +24,16 @@ namespace _3wBetManager_API.Controllers
 
                 GetUserDao().AddUser(user);
                 return Created("", user);
-            }
-            catch (Exception e)
-            {
-                return InternalServerError(e);
-            }
+            });
         }
 
         [Route("login")]
         [HttpPost]
         public async Task<IHttpActionResult> Login([FromBody] User user)
         {
-            const string errorMessage = "Wrong login password";
-            try
+            return await HandleError(async () =>
             {
+                const string errorMessage = "Wrong login password";
                 var fullUser = await GetUserDao().FindUserByEmail(user.Email);
 
                 if (BCrypt.Net.BCrypt.Verify(user.Password, fullUser.Password))
@@ -47,11 +43,7 @@ namespace _3wBetManager_API.Controllers
                 }
 
                 return Content(HttpStatusCode.BadRequest, errorMessage);
-            }
-            catch (Exception e)
-            {
-                return InternalServerError(e);
-            }
+            });
         }
     }
 }

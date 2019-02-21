@@ -119,6 +119,7 @@
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BetController.cs" />
+    <Compile Include="Controllers\CompetitionController.cs" />
     <Compile Include="Controllers\CronController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Program.cs" />
