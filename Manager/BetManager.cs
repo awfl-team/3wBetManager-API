@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -65,7 +66,7 @@ namespace Manager
                 match.HomeTeam = homeTeamInformation;
             }
 
-            dynamic betsAndMatches = new { };
+            dynamic betsAndMatches = new ExpandoObject();
             betsAndMatches.Bets = betsByMatchStatus;
             betsAndMatches.Matches = matchesByCompetition;
             return betsAndMatches;
@@ -78,7 +79,7 @@ namespace Manager
             {
                 return null;
             }
-            dynamic numberCurrentMatchAndBet = new { };
+            dynamic numberCurrentMatchAndBet = new ExpandoObject();
             numberCurrentMatchAndBet.NbBet = currentBetsAndMatches.Bets.Count;
             numberCurrentMatchAndBet.NbMatch = currentBetsAndMatches.Matches.Count;
             return numberCurrentMatchAndBet;
@@ -91,7 +92,7 @@ namespace Manager
             {
                 return null;
             }
-            dynamic numberFinishBetsAndMatches = new { };
+            dynamic numberFinishBetsAndMatches = new ExpandoObject();
             numberFinishBetsAndMatches.NbBet = finishBetsAndMatches.Count;
             return numberFinishBetsAndMatches;
         }

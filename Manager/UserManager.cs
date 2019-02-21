@@ -63,7 +63,7 @@ namespace Manager
 
             foreach (var user in betsUser)
             {
-                dynamic obj = new { };
+                dynamic obj = new ExpandoObject();
                 var betsByUser = await Singleton.Instance.BetDao.FindBetsByUser(user);
                 obj.Id = user.Id;
                 obj.Point = user.Point;
