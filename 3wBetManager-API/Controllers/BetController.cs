@@ -65,5 +65,16 @@ namespace _3wBetManager_API.Controllers
                 return Ok(await BetManager.NumberFinishMatchAndBet(user, competitionId));
             });
         }
+
+        [Route("stats/type")]
+        [HttpGet]
+        public async Task<IHttpActionResult> GetUserBetsPerType()
+        {
+            return await HandleError(async () =>
+            {
+                var user = await GetUserByToken(Request);
+                return Ok(await BetManager.GetUserBetsPerType(user));
+            });
+        }
     }
 }
