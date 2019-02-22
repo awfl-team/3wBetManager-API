@@ -55,6 +55,7 @@ namespace DAO
             user.Point = User.DefaultPoint;
             user.Life = User.DefaultLife;
             user.Role = User.UserRole;
+            user.TotalPointsUsedToBet = User.DefaultTotalPointsUsedToBet;
             await _collection.InsertOneAsync(user);
         }
 
@@ -65,6 +66,7 @@ namespace DAO
             user.Point = User.DefaultPoint;
             user.Life = User.DefaultLife;
             user.Role = user.Role;
+            user.TotalPointsUsedToBet = User.DefaultTotalPointsUsedToBet;
             await _collection.InsertOneAsync(user);
         }
 
@@ -103,11 +105,11 @@ namespace DAO
             );
         }
 
-        public async Task UpdateUserPoints(ObjectId id, int point)
+        public async Task UpdateUserPoints(User user, int point, int pointsUsedToBet)
         {
             await _collection.UpdateOneAsync(
-                user => user.Id == id,
-                Builders<User>.Update.Set(user => user.Point, point)
+               u => u.Id == user.Id,
+                Builders<User>.Update.Set(u => u.Point, point).Set(u => u.TotalPointsUsedToBet, user.TotalPointsUsedToBet + pointsUsedToBet)
             );
         }
 

@@ -88,7 +88,7 @@ namespace Manager
                 var bets = await Singleton.Instance.BetDao.FindBetsByUser(user);
                 foreach (var bet in bets)
                 {
-                    await Singleton.Instance.UserDao.UpdateUserPoints(user.Id, user.Point + bet.PointsWon);
+                    await Singleton.Instance.UserDao.UpdateUserPoints(user, user.Point + bet.PointsWon, 0);
                 }
             }
         }
@@ -113,9 +113,30 @@ namespace Manager
 
         public static async Task ResetUser(User user)
         {
-            await Singleton.Instance.UserDao.UpdateUserPoints(user.Id, User.DefaultPoint);
+            await Singleton.Instance.UserDao.UpdateUserPoints(user, User.DefaultPoint, User.DefaultTotalPointsUsedToBet);
             await Singleton.Instance.UserDao.UpdateUserLifes(user);
             Singleton.Instance.BetDao.DeleteBetsByUser(user.Id);
+        }
+
+        public static async Task<dynamic> GetUserCoinStats(User user)
+        {
+            var userBets = await Singleton.Instance.BetDao.FindBetsByUser(user);
+            var totalBetsEarnings = 0;
+            if (userBets.Count == 0)
+            {
+                return new ExpandoObject();
+            }
+
+            foreach (var userBet in userBets)
+            {
+                totalBetsEarnings += userBet.PointsWon;
+            }
+
+            dynamic obj = new ExpandoObject();
+            obj.TotalPointsUsedToBet = user.TotalPointsUsedToBet;
+            obj.TotalBetsEarnings = totalBetsEarnings;
+
+            return obj;
         }
     }
 }

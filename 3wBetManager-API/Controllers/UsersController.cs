@@ -148,6 +148,15 @@ namespace _3wBetManager_API.Controllers
             });
         }
 
-
+        [Route("stats/coins")]
+        [HttpGet]
+        public async Task<IHttpActionResult> GetUserCoinStats()
+        {
+            return await HandleError(async () =>
+            {
+                var user = await GetUserByToken(Request);
+                return Ok(await UserManager.GetUserCoinStats(user));
+            });
+        }
     }
 }

@@ -109,7 +109,7 @@ namespace Test.DAO
         [Test]
         public void UpdatePoints()
         {
-            _userDao.UpdateUserPoints(_user.Id, _user.Point);
+            _userDao.UpdateUserPoints(_user, _user.Point, 0);
             _collection.Received().UpdateOneAsync(Arg.Any<ExpressionFilterDefinition<User>>(),
                 Arg.Any<UpdateDefinition<User>>()
             );

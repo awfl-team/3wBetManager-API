@@ -79,7 +79,7 @@ namespace DAO
                     UpdateBet(bet);
                 }
             }
-            Singleton.Instance.UserDao.UpdateUserPoints(user.Id,user.Point -(bets.Count*10));
+            Singleton.Instance.UserDao.UpdateUserPoints(user,user.Point -(bets.Count*10), (bets.Count * 10));
         }
     }
 }
