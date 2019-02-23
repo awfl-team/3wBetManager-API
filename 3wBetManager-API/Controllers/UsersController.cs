@@ -28,7 +28,7 @@ namespace _3wBetManager_API.Controllers
 
         [Route("top50")]
         [HttpGet]
-        public async Task<IHttpActionResult> Get()
+        public async Task<IHttpActionResult> GetTop50()
         {
             return await HandleError(async () => Ok(await UserManager.GetBestBetters()));
       

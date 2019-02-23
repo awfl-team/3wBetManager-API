@@ -95,6 +95,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\AuthControllerTest.cs" />
+    <Compile Include="Controller\CompetitionControllerTest.cs" />
     <Compile Include="Controller\CronControllerTest.cs" />
     <Compile Include="DAO\BetDaoTest.cs" />
     <Compile Include="DAO\CompetitionDaoTest.cs" />
