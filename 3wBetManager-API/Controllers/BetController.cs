@@ -33,6 +33,28 @@ namespace _3wBetManager_API.Controllers
             });
         }
 
+        [Route("result")]
+        [HttpGet]
+        public async Task<IHttpActionResult> GetBetsResultLimit()
+        {
+            return await HandleError(async () =>
+            {
+                var user = await GetUserByToken(Request);
+                return Ok(await BetManager.GetFinishBetsLimit4(user));
+            });
+        }
+
+        [Route("current")]
+        [HttpGet]
+        public async Task<IHttpActionResult> GetBetsCurrentLimit()
+        {
+            return await HandleError(async () =>
+            {
+                var user = await GetUserByToken(Request);
+                return Ok(await BetManager.GetCurrentBetsLimit4(user));
+            });
+        }
+
         [Route("{competitionId}/current")]
         [HttpGet]
         public async Task<IHttpActionResult> GetBetsAndMatches(int competitionId)

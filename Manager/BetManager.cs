@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using DAO;
 using Models;
@@ -28,6 +26,40 @@ namespace Manager
             var betsByMatchStatus = betsByCompetition.FindAll(bet => bet.Match.Status == Match.FinishedStatus);
 
             return betsByMatchStatus;
+        }
+
+        public static async Task<List<Bet>> GetFinishBetsLimit4(User user)
+        {
+            var betsByUser = await Singleton.Instance.BetDao.FindBetsByUser(user);
+            foreach (var bet in betsByUser)
+            {
+                var matchInformation = await Singleton.Instance.MatchDao.FindMatch(bet.Match.Id);
+                bet.Match = matchInformation;
+                var awayTeamInformation = await Singleton.Instance.TeamDao.FindTeam(bet.Match.AwayTeam.Id);
+                bet.Match.AwayTeam = awayTeamInformation;
+                var homeTeamInformation = await Singleton.Instance.TeamDao.FindTeam(bet.Match.HomeTeam.Id);
+                bet.Match.HomeTeam = homeTeamInformation;
+            }
+
+            return betsByUser.FindAll(bet => bet.Match.Status == Match.FinishedStatus).Take(4).ToList();
+
+        }
+
+        public static async Task<List<Bet>> GetCurrentBetsLimit4(User user)
+        {
+            var betsByUser = await Singleton.Instance.BetDao.FindBetsByUser(user);
+            foreach (var bet in betsByUser)
+            {
+                var matchInformation = await Singleton.Instance.MatchDao.FindMatch(bet.Match.Id);
+                bet.Match = matchInformation;
+                var awayTeamInformation = await Singleton.Instance.TeamDao.FindTeam(bet.Match.AwayTeam.Id);
+                bet.Match.AwayTeam = awayTeamInformation;
+                var homeTeamInformation = await Singleton.Instance.TeamDao.FindTeam(bet.Match.HomeTeam.Id);
+                bet.Match.HomeTeam = homeTeamInformation;
+            }
+
+            return betsByUser.FindAll(bet => bet.Match.Status == Match.ScheduledStatus).Take(4).ToList();
+
         }
 
         public static async Task<dynamic> GetCurrentBetsAndScheduledMatches(User user, int competitionId)
@@ -77,7 +109,7 @@ namespace Manager
             var currentBetsAndMatches = await GetCurrentBetsAndScheduledMatches(user, competitionId);
             if (currentBetsAndMatches.Bets.Count == 0 && currentBetsAndMatches.Matches.Count == 0)
             {
-                return null;
+                return new ExpandoObject();
             }
             dynamic numberCurrentMatchAndBet = new ExpandoObject();
             numberCurrentMatchAndBet.NbBet = currentBetsAndMatches.Bets.Count;
@@ -111,7 +143,7 @@ namespace Manager
             var finishBetsAndMatches = await GetFinishBets(user, competitionId);
             if (finishBetsAndMatches.Count == 0)
             {
-                return null;
+                return new ExpandoObject();
             }
             dynamic numberFinishBetsAndMatches = new ExpandoObject();
             numberFinishBetsAndMatches.NbBet = finishBetsAndMatches.Count;
