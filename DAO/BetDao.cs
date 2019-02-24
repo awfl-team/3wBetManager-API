@@ -34,14 +34,15 @@ namespace DAO
             return await _collection.Find(bet => bet.User.Id == user.Id).ToListAsync();
         }
 
-        public async void AddBet(Bet bet)
+        public async Task AddBet(Bet bet)
         {
-            await _collection.InsertOneAsync(bet);
+          await _collection.InsertOneAsync(bet);
+            return;
         }
 
-        public async void UpdateBet(Bet bet)
+        public async Task<UpdateResult> UpdateBet(Bet bet)
         {
-            await _collection.UpdateOneAsync(b => b.Guid == bet.Guid,
+            return await _collection.UpdateOneAsync(b => b.Guid == bet.Guid,
                 Builders<Bet>.Update.Set(b => b.HomeTeamScore, bet.HomeTeamScore)
                     .Set(b => b.AwayTeamScore, bet.AwayTeamScore));
         }

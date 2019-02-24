@@ -3,14 +3,16 @@ using System.Dynamic;
 using System.Threading.Tasks;
 using Models;
 using MongoDB.Bson;
+using MongoDB.Driver;
 
 namespace DAO.Interfaces
 {
     public interface IBetDao
     {
-        void AddBet(Bet bet);
+        Task AddBet(Bet bet);
         Task<List<Bet>> FindBetsByUser(User user);
-        void UpdateBet(Bet bet);
+        Task<Bet> Find(Bet bet);
+        Task<UpdateResult> UpdateBet(Bet bet);
         void DeleteBetsByUser(ObjectId id);
         void AddOrUpdateBet(User user, List<Bet> bets);
         Task<List<Bet>> FindBetsByMatch(Match match);

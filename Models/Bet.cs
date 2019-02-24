@@ -1,6 +1,7 @@
 using System;
 using System.Security.Policy;
 using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace Models
 {
@@ -13,6 +14,7 @@ namespace Models
         public const int OkBet = 50;
         public const int WrongBet = 0;
 
+        [BsonId]
         public ObjectId Id { get; set; }
         public string Guid { get; set; }
         public DateTime Date { get; set; }
