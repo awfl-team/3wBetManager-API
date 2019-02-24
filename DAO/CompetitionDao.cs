@@ -14,10 +14,8 @@ namespace DAO
     {
         private readonly IMongoCollection<Competition> _collection;
 
-        public CompetitionDao(IMongoCollection<Competition> collection = null)
+        public CompetitionDao(IMongoDatabase database, IMongoCollection<Competition> collection = null)
         {
-            var client = new MongoClient("mongodb://localhost:27017");
-            var database = client.GetDatabase("3wBetManager");
             _collection = collection ?? database.GetCollection<Competition>("competition");
         }
 

@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
 using DAO;
 using DAO.Interfaces;
 using Models;
-using MongoDB.Bson;
 using MongoDB.Driver;
 using NSubstitute;
 using NUnit.Framework;
-using _3wBetManager_API.Controllers;
-using _3wBetManager_API.Manager;
 
-namespace Test
+namespace Test.DAO
 {
     [TestFixture]
     public class BetDaoTest
@@ -22,12 +18,15 @@ namespace Test
         private User _user;
         private Match _match;
         private List<Bet> _bets = new List<Bet>();
+        private IMongoDatabase _database;
+
 
         [SetUp]
         public void SetUp()
         {
             _collection = Substitute.For<IMongoCollection<Bet>>();
-            _betDao = new BetDao(_collection);
+            _database = Substitute.For<IMongoDatabase>();
+            _betDao = new BetDao(_database,_collection);
             _user = new User { Email = "test", Password = "test", Username = "test" };
             _match = new Match
             {

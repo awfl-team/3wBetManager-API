@@ -1,80 +1,62 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
 using FetchFootballData;
+using Manager;
 
 namespace _3wBetManager_API.Controllers
 {
     [RoutePrefix("cron")]
-    public class CronController : ApiController
+    public class CronController : BaseController
     {
         [Route("competitions")]
-        [HttpGet]
+        [HttpPost]
         public async Task<IHttpActionResult> RefreshCompetitions()
         {
-            try
+            return await HandleError(async () =>
             {
                 var footballDataManager = new FootballDataManager();
                 await footballDataManager.GetAllCompetitions();
                 return Ok();
-            }
-            catch (Exception e)
-            {
-                return InternalServerError(e);
-            }
+            });
         }
 
         [Route("teams")]
-        [HttpGet]
+        [HttpPost]
         public async Task<IHttpActionResult> RefreshTeams()
         {
-            try
+            return await HandleError(async () =>
             {
                 var footballDataManager = new FootballDataManager();
                 await footballDataManager.GetAllTeams();
                 return Ok();
-            }
-            catch (Exception e)
-            {
-                return InternalServerError(e);
-            }
+            });
         }
 
         [Route("matches")]
-        [HttpGet]
+        [HttpPost]
         public async Task<IHttpActionResult> RefreshMatches()
         {
-            try
+            return await HandleError(async () =>
             {
                 var footballDataManager = new FootballDataManager();
                 await footballDataManager.GetAllMatchForAWeek();
                 return Ok();
-            }
-            catch (Exception e)
-            {
-                return InternalServerError(e);
-            }
+            });
         }
 
         [Route("all")]
-        [HttpGet]
+        [HttpPost]
         public async Task<IHttpActionResult> RefreshAll()
         {
-            try
+            return await HandleError(async () =>
             {
                 var footballDataManager = new FootballDataManager();
                 await footballDataManager.GetAllCompetitions();
                 await footballDataManager.GetAllTeams();
                 await footballDataManager.GetAllMatchForAWeek();
                 return Ok();
-            }
-            catch (Exception e)
-            {
-                return InternalServerError(e);
-            }
+            });
         }
     }
 }

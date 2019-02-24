@@ -1,27 +1,27 @@
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using DAO;
 using DAO.Interfaces;
 using Models;
-using MongoDB.Bson;
 using MongoDB.Driver;
 using NSubstitute;
 using NUnit.Framework;
 
-namespace Test
+namespace Test.DAO
 {
     public class TeamDaoTest
     {
         private Team _team;
         private IMongoCollection<Team> _collection;
         private ITeamDao _teamDao;
+        private IMongoDatabase _database;
 
         [SetUp]
         public void SetUp()
         {
+            _database = Substitute.For<IMongoDatabase>();
             _collection = Substitute.For<IMongoCollection<Team>>();
-            _teamDao = new TeamDao(_collection);
+            _teamDao = new TeamDao(_database, _collection);
             _team = new Team
             {
                 Name = "test", Email = "test", ShortName = "test", Tla = "test", CrestUrl = "test",
@@ -46,7 +46,7 @@ namespace Test
         public void FindTeamTest()
         {
             _teamDao.FindTeam(1);
-            _collection.Received().Find(team => team.Id == Arg.Any<int>());
+            _collection.Received().Find(Arg.Any<ExpressionFilterDefinition<Team>>());
             Assert.IsInstanceOf<Task<Team>>(_teamDao.FindTeam(Arg.Any<int>()));
         }
 

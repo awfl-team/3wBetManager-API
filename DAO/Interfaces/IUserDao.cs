@@ -10,19 +10,18 @@ namespace DAO.Interfaces
     {
         Task<List<User>> FindAllUser();
         Task<User> FindUser(string uid);
-        Task<User> FindUserByEmailSingle(string email);
-        Task<User> FindUserByEmailToList(string email);
+        Task<User> FindUserByEmail(string email);
         Task<User> FindUserByUsername(string username);
-        Task<List<User>> FindAllUserByOrder(int order);
-        Task<List<ExpandoObject>> FindBestBetters();
-        bool UsernameAndEmailExist(User user, out string errorMessage);
-        bool CanUpdate(string id, User userParam, out string errorMessage);
-        void AddUser(User user);
-        void DeleteUser(string id);
-        void ResetUser(User user);
-        void UpdateUser(string id, User userParam);
-        void UpdateUserIsPrivate(ObjectId id, bool isPrivate);
-        void UpdateUserPoints(ObjectId id, int point);
-        void UpdateUserRole(string id, string role);
+        Task RegisterUser(User user);
+        Task AddUser(User user);
+        Task DeleteUser(string id);
+        Task UpdateUserLifes(User user);
+        Task UpdateUser(string id, User userParam);
+        Task UpdateUserIsPrivate(ObjectId id, bool isPrivate);
+        Task UpdateUserPoints(User user, int point, int pointsUsedToBet);
+        Task UpdateUserRole(string id, string role);
+        Task<List<User>> OrderUserByPoint();
+        Task<List<User>> SearchUser(string value);
+        Task<List<User>> PaginatedUsers(int usersToPass);
     }
 }

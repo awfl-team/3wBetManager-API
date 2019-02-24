@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Web.Http;
 using DAO;
 using DAO.Interfaces;
 using Models;
-using MongoDB.Bson;
 using NSubstitute;
 using NUnit.Framework;
 using _3wBetManager_API.Controllers;
 using _3wBetManager_API.Manager;
 
-namespace Test
+namespace Test.Controller
 {
     [TestFixture]
     public class UsersControllerTest

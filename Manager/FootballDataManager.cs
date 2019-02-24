@@ -7,7 +7,7 @@ using Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace FetchFootballData
+namespace Manager
 {
     public class FootballDataManager
     {
@@ -127,7 +127,7 @@ namespace FetchFootballData
                         Singleton.Instance.MatchDao.UpdateMatch(findMatch.Id, match);
                         if (findMatch.Status == Match.ScheduledStatus && match.Status == Match.FinishedStatus)
                         {
-                            AssignmentPoint.AddPointToBet(match);
+                            //AssignmentPoint.AddPointToBet(match);
                         }
                     }
                 }

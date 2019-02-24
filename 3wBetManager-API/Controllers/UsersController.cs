@@ -1,165 +1,162 @@
-﻿using System;
-using System.Net;
+﻿using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
 using DAO;
-using DAO.Interfaces;
+using Manager;
 using Models;
 using _3wBetManager_API.Manager;
 
 namespace _3wBetManager_API.Controllers
 {
     [RoutePrefix("users")]
-    public class UsersController : ApiController
+    public class UsersController : BaseController
     {
         [Route("")]
         [HttpGet]
         public async Task<IHttpActionResult> GetAll()
         {
-            try
-            {
-                return Ok(await getUserDao().FindAllUser());
-            }
-            catch (Exception e)
-            {
-                return InternalServerError(e);
-            }
+            return await HandleError(async () => Ok(await GetUserDao().FindAllUser()));
         }
 
         [Route("{id}")]
         [HttpGet]
         public async Task<IHttpActionResult> Get(string id)
         {
-            try
-            {
-                return Ok(await getUserDao().FindUser(id));
-            }
-            catch (Exception e)
-            {
-                return InternalServerError(e);
-            }
+            return await HandleError(async () => Ok(await GetUserDao().FindUser(id)));
         }
 
 
         [Route("top50")]
         [HttpGet]
-        public async Task<IHttpActionResult> Get()
+        public async Task<IHttpActionResult> GetTop50()
         {
-            try
-            {
-                return Ok(await getUserDao().FindBestBetters());
-            }
-            catch (Exception e)
-            {
-                return InternalServerError(e);
-            }
+            return await HandleError(async () => Ok(await UserManager.GetBestBetters()));
+      
         }
 
         [Route("token")]
         [HttpGet]
         public async Task<IHttpActionResult> GetUserFromToken()
         {
-            try
-            {
-                return Ok(await TokenManager.GetUserByToken(Request));
-            }
-            catch (Exception e)
-            {
-                return InternalServerError(e);
-            }
+            return await HandleError(async () => Ok(await GetUserByToken(Request)));
         }
         
         [Route("{id}")]
         [HttpPut]
         public async Task<IHttpActionResult> Put(string id, [FromBody] User user)
         {
-            try
+            return await HandleError(async () =>
             {
-                var canUpdate  = getUserDao().CanUpdate(id, user, out var errorMessage);
-                if (canUpdate == false)
+                var canUpdate = await UserManager.CanUpdate(id, user);
+                if (canUpdate != null)
                 {
-                    return Content(HttpStatusCode.BadRequest, errorMessage);
+                    return Content(HttpStatusCode.BadRequest, canUpdate);
                 }
-                getUserDao().UpdateUser(id, user);
+                await GetUserDao().UpdateUser(id, user);
                 var fullUser = await Singleton.Instance.UserDao.FindUser(id);
                 return Ok(TokenManager.GenerateToken(fullUser.Email, fullUser.Role, fullUser.Username));
-            }
-            catch (Exception e)
-            {
-                return InternalServerError(e);
-            }
+            });
         }
 
         [Route("visibility")]
         [HttpPut]
         public async Task<IHttpActionResult> PutIsPrivate([FromBody] User userParam)
         {
-            try
+            return await HandleError(async () =>
             {
-                var user = await TokenManager.GetUserByToken(Request);
-                Singleton.Instance.UserDao.UpdateUserIsPrivate(user.Id, userParam.IsPrivate);
+                var user = await GetUserByToken(Request);
+                await GetUserDao().UpdateUserIsPrivate(user.Id, userParam.IsPrivate);
                 return Ok();
-            }
-            catch (Exception e)
-            {
-                return InternalServerError(e);
-            }
+            });
         }
 
         [Route("{id}/role")]
         [HttpPut]
-        public IHttpActionResult PutRole(string id, [FromBody] User userParam)
+        public async Task<IHttpActionResult> PutRole(string id, [FromBody] User userParam)
         {
-            try
+            return await HandleError(async () =>
             {
-                Singleton.Instance.UserDao.UpdateUserRole(id, userParam.Role);
+                await GetUserDao().UpdateUserRole(id, userParam.Role);
                 return Ok();
-            }
-            catch (Exception e)
-            {
-                return InternalServerError(e);
-            }
+            });
+      
         }
 
         [Route("{id}")]
         [HttpDelete]
-        public IHttpActionResult Delete(string id)
+        public async Task<IHttpActionResult> Delete(string id)
         {
-            try
+            return await HandleError(async () =>
             {
-                getUserDao().DeleteUser(id);
+                await GetUserDao().DeleteUser(id);
                 return Ok();
-            }
-            catch (Exception e)
-            {
-                return InternalServerError(e);
-            }
+            });
         }
-        
+
+        [Route("search/{value}")]
+        [HttpGet]
+        public async Task<IHttpActionResult> Search(string value)
+        {
+            return await HandleError(async () =>
+            {
+                var searchValue = await GetUserDao().SearchUser(value);
+                if (searchValue.Count == 0)
+                {
+                    return NotFound();
+                }
+                return Ok(searchValue);
+            });
+        }
+
         [Route("reset")]
         [HttpPut]
         public async Task<IHttpActionResult> Put()
         {
-            try
+            return await HandleError(async () =>
             {
-                var user = await TokenManager.GetUserByToken(Request);
+                var user = await GetUserByToken(Request);
                 if (user.Life == 0)
                 {
                     return Content(HttpStatusCode.BadRequest, "You already used all your lives");
                 }
-                getUserDao().ResetUser(user);
+                await UserManager.ResetUser(user);
                 return Ok();
-                
-            }
-            catch (Exception e)
-            {
-                return InternalServerError(e);
-            }
+            });
         }
 
-        private IUserDao getUserDao()
+        [Route("paginated/{page}")]
+        [HttpGet]
+        public async Task<IHttpActionResult> GetAllUsersPaginated(int page)
         {
-            return Singleton.Instance.UserDao;
+            return await HandleError(async () => Ok(await UserManager.GetAllUsersPaginated(page)));
+        }
+
+        [Route("new")]
+        [HttpPost]
+        public async Task<IHttpActionResult> AddUser([FromBody] User user)
+        {
+            return await HandleError(async () =>
+            {
+                var userExist = await UserManager.UsernameAndEmailExist(user);
+                if (userExist != null)
+                {
+                    return Content(HttpStatusCode.BadRequest, userExist);
+                }
+
+                await GetUserDao().AddUser(user);
+                return Created("", user);
+            });
+        }
+
+        [Route("stats/coins")]
+        [HttpGet]
+        public async Task<IHttpActionResult> GetUserCoinStats()
+        {
+            return await HandleError(async () =>
+            {
+                var user = await GetUserByToken(Request);
+                return Ok(await UserManager.GetUserCoinStats(user));
+            });
         }
     }
 }

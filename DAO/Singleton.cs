@@ -1,10 +1,11 @@
 ﻿using DAO.Interfaces;
+using MongoDB.Driver;
 
 namespace DAO
 {
     public class Singleton
     {
-        private static Singleton _instance = null;
+        private static Singleton _instance;
 
         public static Singleton Instance => _instance ?? (_instance = new Singleton());
 
@@ -14,13 +15,13 @@ namespace DAO
         public IMatchDao MatchDao { get; private set; }
         public IBetDao BetDao { get; private set; }
 
-        public void SetAll()
+        public void SetAll(IMongoDatabase database)
         {
-            SetTeamDao(new TeamDao());
-            SeMatchDao(new MatchDao());
-            SetBetDao(new BetDao());
-            SetCompetitionDao(new CompetitionDao());
-            SetUserDao(new UserDao());
+            SetTeamDao(new TeamDao(database));
+            SetMatchDao(new MatchDao(database));
+            SetBetDao(new BetDao(database));
+            SetCompetitionDao(new CompetitionDao(database));
+            SetUserDao(new UserDao(database));
         }
 
         public IUserDao SetUserDao(IUserDao userDao)
@@ -38,7 +39,7 @@ namespace DAO
             return TeamDao = teamDao;
         }
 
-        public IMatchDao SeMatchDao(IMatchDao matchDao)
+        public IMatchDao SetMatchDao(IMatchDao matchDao)
         {
             return MatchDao = matchDao;
         }

@@ -12,10 +12,8 @@ namespace DAO
     {
         private readonly IMongoCollection<Match> _collection;
 
-        public MatchDao(IMongoCollection<Match> collection = null)
+        public MatchDao(IMongoDatabase database, IMongoCollection<Match> collection = null)
         {
-            var client = new MongoClient("mongodb://localhost:27017");
-            var database = client.GetDatabase("3wBetManager");
             _collection = collection ?? database.GetCollection<Match>("match");
         }
 

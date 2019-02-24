@@ -9,19 +9,21 @@ using MongoDB.Driver;
 using NSubstitute;
 using NUnit.Framework;
 
-namespace Test
+namespace Test.DAO
 {
     public class CompetitionDaoTest
     {
         private Competition _competition;
         private IMongoCollection<Competition> _collection;
         private ICompetitionDao _competitionDao;
+        private IMongoDatabase _database;
 
         [SetUp]
         public void SetUp()
         {
+            _database = Substitute.For<IMongoDatabase>();
             _collection = Substitute.For<IMongoCollection<Competition>>();
-            _competitionDao = new CompetitionDao(_collection);
+            _competitionDao = new CompetitionDao(_database,_collection);
             
             _competition = new Competition
             {
@@ -46,7 +48,7 @@ namespace Test
         public void FindCompetitionTest()
         {
             _competitionDao.FindCompetition(1);
-            _collection.Received().Find(competition => competition.Id == Arg.Any<int>());
+            _collection.Received().Find(Arg.Any<ExpressionFilterDefinition<Competition>>());
             Assert.IsInstanceOf<Task<Competition>>(_competitionDao.FindCompetition(Arg.Any<int>()));
         }
         

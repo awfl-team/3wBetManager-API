@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FetchFootballData", "FetchFootballData\FetchFootballData.csproj", "{93735D5C-BB74-47CF-918B-8F27A5E6F71F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Manager", "Manager\Manager.csproj", "{A74CDD4C-56E4-4360-A8A0-EBD0E9885117}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{93735D5C-BB74-47CF-918B-8F27A5E6F71F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{93735D5C-BB74-47CF-918B-8F27A5E6F71F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{93735D5C-BB74-47CF-918B-8F27A5E6F71F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A74CDD4C-56E4-4360-A8A0-EBD0E9885117}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A74CDD4C-56E4-4360-A8A0-EBD0E9885117}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A74CDD4C-56E4-4360-A8A0-EBD0E9885117}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A74CDD4C-56E4-4360-A8A0-EBD0E9885117}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -9,16 +9,10 @@ namespace DAO.Interfaces
     public interface IBetDao
     {
         void AddBet(Bet bet);
-        Task<List<Bet>> FindAll();
         Task<List<Bet>> FindBetsByUser(User user);
-        Task<List<Bet>> FindBetsByUserBetCriteria(User user, string criteria);
-        Task<List<Bet>> FindFinishBets(User user, int competitionId);
         void UpdateBet(Bet bet);
         void DeleteBetsByUser(ObjectId id);
-        Task<ExpandoObject> FindCurrentBetsAndScheduledMatches(User user, int competitionId);
         void AddOrUpdateBet(User user, List<Bet> bets);
-        Task<ExpandoObject> NumberCurrentMatchAndBet(User user, int competitionId);
-        Task<ExpandoObject> NumberFinishMatchAndBet(User user, int competitionId);
         Task<List<Bet>> FindBetsByMatch(Match match);
         void UpdateBetPointsWon(Bet bet, int point);
     }
