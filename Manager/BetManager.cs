@@ -29,7 +29,7 @@ namespace Manager
             return betsByMatchStatus;
         }
 
-        public static async Task<List<Bet>> GetFinishBetsLimit4(User user)
+        public static async Task<List<Bet>> GetFinishBetsLimited(User user)
         {
             var betsByUser = await Singleton.Instance.BetDao.FindBetsByUser(user);
             foreach (var bet in betsByUser)
@@ -42,11 +42,11 @@ namespace Manager
                 bet.Match.HomeTeam = homeTeamInformation;
             }
 
-            return betsByUser.FindAll(bet => bet.Match.Status == Match.FinishedStatus).Take(4).ToList();
+            return betsByUser.FindAll(bet => bet.Match.Status == Match.FinishedStatus).Take(Bet.DashboardMaxToShow).ToList();
 
         }
 
-        public static async Task<List<Bet>> GetCurrentBetsLimit4(User user)
+        public static async Task<List<Bet>> GetCurrentBetsLimited(User user)
         {
             var betsByUser = await Singleton.Instance.BetDao.FindBetsByUser(user);
             foreach (var bet in betsByUser)
@@ -59,7 +59,7 @@ namespace Manager
                 bet.Match.HomeTeam = homeTeamInformation;
             }
 
-            return betsByUser.FindAll(bet => bet.Match.Status == Match.ScheduledStatus).Take(4).ToList();
+            return betsByUser.FindAll(bet => bet.Match.Status == Match.ScheduledStatus).Take(Bet.DashboardMaxToShow).ToList();
 
         }
 

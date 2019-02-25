@@ -62,7 +62,7 @@ namespace _3wBetManager_API.Controllers
             return await HandleError(async () =>
             {
                 var user = await GetUserByToken(Request);
-                return Ok(await BetManager.GetFinishBetsLimit4(user));
+                return Ok(await BetManager.GetFinishBetsLimited(user));
             });
         }
 
@@ -73,7 +73,7 @@ namespace _3wBetManager_API.Controllers
             return await HandleError(async () =>
             {
                 var user = await GetUserByToken(Request);
-                return Ok(await BetManager.GetCurrentBetsLimit4(user));
+                return Ok(await BetManager.GetCurrentBetsLimited(user));
             });
         }
 

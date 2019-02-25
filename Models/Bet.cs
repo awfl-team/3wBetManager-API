@@ -13,6 +13,7 @@ namespace Models
         public const int PerfectBet = 100;
         public const int OkBet = 50;
         public const int WrongBet = 0;
+        public const int DashboardMaxToShow = 4;
 
         [BsonId]
         public ObjectId Id { get; set; }
