@@ -31,7 +31,7 @@ namespace DAO
 
         public async Task<List<Bet>> FindBetsByUser(User user)
         {
-            return await _collection.Find(bet => bet.User.Id == user.Id).ToListAsync();
+            return await _collection.Find(bet => bet.User.Id == user.Id && bet.Date >= DateTime.Today.AddDays(-7)).Sort("{Date: -1}").ToListAsync();
         }
 
         public async Task AddBet(Bet bet)
