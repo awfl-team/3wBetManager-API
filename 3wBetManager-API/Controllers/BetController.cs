@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
 using DAO;
@@ -18,18 +19,11 @@ namespace _3wBetManager_API.Controllers
         {
             return await HandleError(async () =>
             {
-                var response = new List<Bet>();
                 var user = await GetUserByToken(Request);
-                foreach (var bet in bets)
-                {
-                    bet.Guid = Guid.NewGuid().ToString();
-                    await GetBetDao().AddBet(bet);
-                    response.Add(await GetBetDao().Find(bet));
-
-                }
-
+                bets = BetManager.AddGuidList(user, bets);
+                await GetBetDao().AddListBet(bets);
                 await GetUserDao().UpdateUserPoints(user, user.Point - (bets.Count * 10), (bets.Count * 10));
-                return Ok(response);
+                return Created("", bets);
             });
         }
 
@@ -39,17 +33,14 @@ namespace _3wBetManager_API.Controllers
         {
             return await HandleError(async () =>
             {
-                var response = new List<Bet>();
                 var user = await GetUserByToken(Request);
                 foreach (var bet in bets)
                 {
                     await GetBetDao().UpdateBet(bet);
-                    response.Add(await GetBetDao().Find(bet));
-
                 }
 
                 await GetUserDao().UpdateUserPoints(user, user.Point - (bets.Count * 10), (bets.Count * 10));
-                return Ok(response);
+                return Content(HttpStatusCode.NoContent, "");
             });
         }
 

@@ -37,8 +37,13 @@ namespace DAO
         public async Task AddBet(Bet bet)
         {
           await _collection.InsertOneAsync(bet);
-            return;
         }
+
+        public async Task AddListBet(List<Bet> bets)
+        {
+            await _collection.InsertManyAsync(bets);
+        }
+
 
         public async Task<UpdateResult> UpdateBet(Bet bet)
         {
@@ -62,25 +67,6 @@ namespace DAO
         {
             await _collection.UpdateOneAsync(b => b.Id == bet.Id,
                 Builders<Bet>.Update.Set(b => b.PointsWon, point));
-        }
-
-        public async void AddOrUpdateBet(User user, List<Bet> bets)
-        {
-            foreach (var bet in bets)
-            {
-                var findBet = await Find(bet);
-                bet.User = user;
-                if (findBet == null)
-                {
-                    bet.Guid = Guid.NewGuid().ToString();
-                    AddBet(bet);
-                }
-                else
-                {
-                    UpdateBet(bet);
-                }
-            }
-            Singleton.Instance.UserDao.UpdateUserPoints(user,user.Point -(bets.Count*10), (bets.Count * 10));
         }
     }
 }

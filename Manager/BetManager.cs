@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -148,6 +149,17 @@ namespace Manager
             dynamic numberFinishBetsAndMatches = new ExpandoObject();
             numberFinishBetsAndMatches.NbBet = finishBetsAndMatches.Count;
             return numberFinishBetsAndMatches;
+        }
+
+        public static List<Bet> AddGuidList(User user,List<Bet> bets)
+        {
+            foreach (var bet in bets)
+            {
+                bet.Guid = Guid.NewGuid().ToString();
+                bet.User = user;
+            }
+
+            return bets;
         }
     }
 }
