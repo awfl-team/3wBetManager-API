@@ -59,9 +59,9 @@ namespace Manager
         public static async Task<List<dynamic>> GetBestBetters()
         {
             var users = new List<dynamic>();
-            var betsUser = await Singleton.Instance.UserDao.OrderUserByPoint();
+            var bestUser = await Singleton.Instance.UserDao.OrderUserByPoint();
 
-            foreach (var user in betsUser)
+            foreach (var user in bestUser)
             {
                 dynamic obj = new ExpandoObject();
                 var betsByUser = await Singleton.Instance.BetDao.FindBetsByUser(user);
@@ -74,6 +74,55 @@ namespace Manager
                 obj.NbPerfectBets = betsByUser.FindAll(b => b.Status == Bet.PerfectStatus).Count;
                 obj.NbOkBets = betsByUser.FindAll(b => b.Status == Bet.OkStatus).Count;
                 obj.NbWrongBets = betsByUser.FindAll(b => b.Status == Bet.WrongStatus).Count;
+                users.Add(obj);
+            }
+
+            return users;
+        }
+
+        public static async Task<List<dynamic>> GetUserPlace(User userParam)
+        {
+            var users = new List<dynamic>();
+            var usersByPoint = await Singleton.Instance.UserDao.FindAllUserByPoint();
+            var index = 1;
+            foreach (var user in usersByPoint)
+            {
+                
+            }
+
+            foreach (var user in usersByPoint)
+            {
+                dynamic obj = new ExpandoObject();
+                var betsByUser = await Singleton.Instance.BetDao.FindBetsByUser(user);
+                obj.Id = user.Id;
+                obj.Point = user.Point;
+                obj.Life = user.Life;
+                obj.Username = user.Username;
+                obj.IsPrivate = user.IsPrivate;
+                obj.NbBets = betsByUser.Count;
+                obj.NbPerfectBets = betsByUser.FindAll(b => b.Status == Bet.PerfectStatus).Count;
+                obj.NbOkBets = betsByUser.FindAll(b => b.Status == Bet.OkStatus).Count;
+                obj.NbWrongBets = betsByUser.FindAll(b => b.Status == Bet.WrongStatus).Count;
+                users.Add(obj);
+            }
+
+            return users;
+        }
+
+        public static async Task<List<dynamic>> GetTop3()
+        {
+            var users = new List<dynamic>();
+            var bestUser = await Singleton.Instance.UserDao.OrderUserByPoint();
+            foreach (var user in bestUser.Take(3))
+            {
+                dynamic obj = new ExpandoObject();
+                var betsByUser = await Singleton.Instance.BetDao.FindBetsByUser(user);
+                obj.Id = user.Id;
+                obj.Point = user.Point;
+                obj.Life = user.Life;
+                obj.Username = user.Username;
+                obj.IsPrivate = user.IsPrivate;
+                obj.NbBets = betsByUser.Count;
                 users.Add(obj);
             }
 

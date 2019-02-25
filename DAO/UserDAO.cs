@@ -36,6 +36,12 @@ namespace DAO
         }
 
 
+        public async Task<List<User>> FindAllUserByPoint()
+        {
+            return await _collection.Find(new BsonDocument()).Sort("{Point: -1}").ToListAsync();
+        }
+
+
         public async Task<User> FindUserByEmail(string email)
         {
             var result = await _collection.Find(user => user.Email == email).ToListAsync();

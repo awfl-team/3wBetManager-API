@@ -34,6 +34,27 @@ namespace _3wBetManager_API.Controllers
       
         }
 
+
+        [Route("place")]
+        [HttpGet]
+        public async Task<IHttpActionResult> GetUserPlace()
+        {
+            return await HandleError(async () =>
+            {
+                var user = await GetUserByToken(Request);
+                return Ok(await UserManager.GetUserPlace(user));
+            });
+
+        }
+
+        [Route("top3")]
+        [HttpGet]
+        public async Task<IHttpActionResult> GetTop3()
+        {
+            return await HandleError(async () => Ok(await UserManager.GetTop3()));
+
+        }
+
         [Route("token")]
         [HttpGet]
         public async Task<IHttpActionResult> GetUserFromToken()
