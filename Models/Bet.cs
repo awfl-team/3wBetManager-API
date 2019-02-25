@@ -12,6 +12,7 @@ namespace Models
         public const int PerfectBet = 100;
         public const int OkBet = 50;
         public const int WrongBet = 0;
+        public const int DashboardMaxToShow = 4;
 
         public ObjectId Id { get; set; }
         public string Guid { get; set; }
