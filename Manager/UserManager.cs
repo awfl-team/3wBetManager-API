@@ -84,16 +84,25 @@ namespace Manager
         {
             var users = new List<dynamic>();
             var usersByPoint = await Singleton.Instance.UserDao.FindAllUserByPoint();
-            var index = 1;
-            foreach (var user in usersByPoint)
+            var userPlace = usersByPoint.FindIndex(u => u.Id == userParam.Id);
+            var usersRange = new List<User>();
+            if (userPlace - 10 < 0 || userPlace + 10 > usersByPoint.Count)
             {
-                
+                 usersRange = usersByPoint;
+            }
+            else
+            {
+                usersRange = usersByPoint.GetRange(userPlace - 10, userPlace + 10);
             }
 
-            foreach (var user in usersByPoint)
+            foreach (var user in usersRange)
             {
                 dynamic obj = new ExpandoObject();
                 var betsByUser = await Singleton.Instance.BetDao.FindBetsByUser(user);
+                if (user.Id == userParam.Id)
+                {
+                    obj.IsCurrent = true;
+                }
                 obj.Id = user.Id;
                 obj.Point = user.Point;
                 obj.Life = user.Life;
