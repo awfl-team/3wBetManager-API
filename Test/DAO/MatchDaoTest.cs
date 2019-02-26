@@ -10,6 +10,7 @@ using NUnit.Framework;
 
 namespace Test.DAO
 {
+    [TestFixture]
     public class MatchDaoTest
     {
         private Match _match;

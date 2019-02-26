@@ -9,6 +9,7 @@ using NUnit.Framework;
 
 namespace Test.DAO
 {
+    [TestFixture]
     public class TeamDaoTest
     {
         private Team _team;

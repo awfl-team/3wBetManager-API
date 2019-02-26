@@ -10,6 +10,7 @@ using NUnit.Framework;
 
 namespace Test.DAO
 {
+    [TestFixture]
     public class UserDaoTest
     {
         private User _user;

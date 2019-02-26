@@ -11,6 +11,7 @@ using NUnit.Framework;
 
 namespace Test.DAO
 {
+    [TestFixture]
     public class CompetitionDaoTest
     {
         private Competition _competition;
