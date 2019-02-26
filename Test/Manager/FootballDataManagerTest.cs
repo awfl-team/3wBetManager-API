@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using DAO;
 using DAO.Interfaces;
 using Models;
@@ -8,6 +9,7 @@ using NSubstitute;
 using NUnit.Framework;
 using System.Net.Http;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Test.Manager
 {
@@ -31,6 +33,9 @@ namespace Test.Manager
         private HalfTime _halfTime;
         private ExtraTime _extraTime;
         private Penalties _penalties;
+        private ExpressionFilterDefinition<Competition> _filterExpressionCompetition;
+        private ExpressionFilterDefinition<Team> _filterExpressionTeam;
+        private ExpressionFilterDefinition<Match> _filterExpressionMatch;
 
         [SetUp]
         public void SetUp()
@@ -116,55 +121,95 @@ namespace Test.Manager
         }
 
         [Test]
-        public void GetAllCompetitionsTest()
+        public void GetCompetitionTest()
         {
             _competitionDao.FindCompetition(1);
-            _collectionCompetition.Received().Find(Arg.Any<ExpressionFilterDefinition<Competition>>());
+            _filterExpressionCompetition = new ExpressionFilterDefinition<Competition>(competition => competition.Id == _competition.Id);
+            _collectionCompetition.Received().Find(_filterExpressionCompetition);
+        }
 
+        [Test]
+        public void GetAllCompetitionTest()
+        {
+            _competitionDao.FindAllCompetitions();
+            _collectionCompetition.Received().Find(new BsonDocument());
+            Assert.IsInstanceOf<Task<List<Competition>>>(_competitionDao.FindAllCompetitions());
+        }
+
+        [Test]
+        public void GetCompetitionsAddTest()
+        {
             _competitionDao.AddCompetition(_competition);
             _collectionCompetition.Received().InsertOneAsync(Arg.Any<Competition>());
+        }
 
+        [Test]
+        public void GetCompetitionsReplaceTest()
+        {
             _competitionDao.ReplaceCompetition(1, _competition);
             _collectionCompetition.Received().ReplaceOneAsync(Arg.Any<ExpressionFilterDefinition<Competition>>(),
                 Arg.Any<Competition>(), Arg.Any<UpdateOptions>(), Arg.Any<CancellationToken>()
             );
+        }
 
+        [Test]
+        public void GetCompetitionsHttpTest()
+        { 
             _http.GetAsync("competitions/" + 1);
             _http.Received().GetAsync("test");
         }
 
         [Test]
-        public void GetAllTeamsTest()
+        public void GetTeamTest()
         {
             _teamDao.FindTeam(1);
-            _collectionTeam.Received().Find(Arg.Any<ExpressionFilterDefinition<Team>>());
+            _filterExpressionTeam = new ExpressionFilterDefinition<Team>(team => team.Id == _team.Id);
+            _collectionTeam.Received().Find(_filterExpressionTeam);
+        }
 
-            _teamDao.AddTeam(_team);
-            _collectionTeam.Received().InsertOneAsync(Arg.Any<Team>());
-
+        [Test]
+        public void GetAllTeamsReplaceTest()
+        {
             _teamDao.ReplaceTeam(1, _team);
             _collectionTeam.Received().ReplaceOneAsync(Arg.Any<ExpressionFilterDefinition<Team>>(),
                 Arg.Any<Team>(), Arg.Any<UpdateOptions>(), Arg.Any<CancellationToken>()
             );
+        }
 
+        [Test]
+        public void GetAllTeamsHttpTest()
+        {
             _http.GetAsync("competitions/" + 1 + "/teams");
             _http.Received().GetAsync("test");
         }
 
         [Test]
-        public void GetAllMatchForAWeek()
+        public void GetMatchTest()
         {
             _matchDao.FindMatch(1);
-            _collectionMatch.Received().Find(Arg.Any<ExpressionFilterDefinition<Match>>());
+            _filterExpressionMatch = new ExpressionFilterDefinition<Match>(m => m.Status == _match.Status);
+            _collectionMatch.Received().Find(_filterExpressionMatch);
+        }
 
+        [Test]
+        public void GetAllMatchAddTest()
+        {
             _matchDao.AddMatch(_match);
             _collectionMatch.Received().InsertOneAsync(Arg.Any<Match>());
+        }
 
+        [Test]
+        public void GetAllMatchReplaceTest()
+        {
             _matchDao.ReplaceMatch(1, _match);
             _collectionMatch.Received().ReplaceOneAsync(Arg.Any<ExpressionFilterDefinition<Match>>(),
                 Arg.Any<Match>(), Arg.Any<UpdateOptions>(), Arg.Any<CancellationToken>()
             );
+        }
 
+        [Test]
+        public void GetAllMatchHttpTest()
+        {
             _http.GetAsync("matches?dateFrom=" + DateTime.Now.AddDays(7).ToString("yyyy-MM-dd") + "&dateTo=" +
                            DateTime.Now.AddDays(-2).ToString("yyyy-MM-dd"));
             _http.Received().GetAsync("test");

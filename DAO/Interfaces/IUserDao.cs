@@ -12,10 +12,9 @@ namespace DAO.Interfaces
         Task<User> FindUser(string uid);
         Task<User> FindUserByEmail(string email);
         Task<User> FindUserByUsername(string username);
-        Task RegisterUser(User user);
         Task AddUser(User user);
         Task DeleteUser(string id);
-        Task UpdateUserLifes(User user);
+        Task UpdateUserLives(User user);
         Task<List<User>> FindAllUserByPoint();
         Task UpdateUser(string id, User userParam);
         Task UpdateUserIsPrivate(ObjectId id, bool isPrivate);

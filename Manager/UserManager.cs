@@ -179,7 +179,7 @@ namespace Manager
         public static async Task ResetUser(User user)
         {
             await Singleton.Instance.UserDao.ResetUserPoints(user);
-            await Singleton.Instance.UserDao.UpdateUserLifes(user);
+            await Singleton.Instance.UserDao.UpdateUserLives(user);
             Singleton.Instance.BetDao.DeleteBetsByUser(user.Id);
         }
 

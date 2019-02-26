@@ -18,6 +18,7 @@ namespace Test.DAO
         private IMongoCollection<Competition> _collection;
         private ICompetitionDao _competitionDao;
         private IMongoDatabase _database;
+        private ExpressionFilterDefinition<Competition> _filterExpression;
 
         [SetUp]
         public void SetUp()
@@ -48,8 +49,9 @@ namespace Test.DAO
         [Test]
         public void FindCompetitionTest()
         {
-            _competitionDao.FindCompetition(1);
-            _collection.Received().Find(Arg.Any<ExpressionFilterDefinition<Competition>>());
+            _competitionDao.FindCompetition(_competition.Id);
+            _filterExpression = new ExpressionFilterDefinition<Competition>(competition => competition.Id == _competition.Id);
+            _collection.Received().Find(_filterExpression);
             Assert.IsInstanceOf<Task<Competition>>(_competitionDao.FindCompetition(Arg.Any<int>()));
         }
         
