@@ -54,17 +54,6 @@ namespace DAO
             return result.FirstOrDefault();
         }
 
-        public async Task RegisterUser(User user)
-        {
-            user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
-            user.IsPrivate = User.DefaultIsPrivate;
-            user.Point = User.DefaultPoint;
-            user.Life = User.DefaultLife;
-            user.Role = User.UserRole;
-            user.TotalPointsUsedToBet = User.DefaultTotalPointsUsedToBet;
-            await _collection.InsertOneAsync(user);
-        }
-
         public async Task AddUser(User user)
         {
             user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
@@ -127,7 +116,7 @@ namespace DAO
             );
         }
 
-        public async Task UpdateUserLifes(User user)
+        public async Task UpdateUserLives(User user)
         {
             await _collection.UpdateOneAsync(
                 u => u.Id == user.Id,

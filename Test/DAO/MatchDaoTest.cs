@@ -1,9 +1,11 @@
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using DAO;
 using DAO.Interfaces;
 using Models;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using NSubstitute;
 using NUnit.Framework;
@@ -23,8 +25,8 @@ namespace Test.DAO
         public HalfTime _halfTime;
         public ExtraTime _extraTime;
         public Penalties _penalties;
-        private IMongoDatabase _database; 
-
+        private IMongoDatabase _database;
+        private ExpressionFilterDefinition<Match> _filterExpression;
 
         [SetUp]
         public void SetUp()
@@ -68,10 +70,28 @@ namespace Test.DAO
         public void FindMatchTest()
         {
             _matchDao.FindMatch(1);
-            _collection.Received().Find(Arg.Any<ExpressionFilterDefinition<Match>>());
+            _filterExpression = new ExpressionFilterDefinition<Match>(match => match.Id == _match.Id);
+            _collection.Received().Find(_filterExpression);
             Assert.IsInstanceOf<Task<Match>>(_matchDao.FindMatch(Arg.Any<int>()));
         }
-        
+
+        [Test]
+        public void FindAllMatchTest()
+        {
+            _matchDao.FindAll();
+            _collection.Received().Find(new BsonDocument());
+            Assert.IsInstanceOf<Task<List<Match>>>(_matchDao.FindAll());
+        }
+
+        [Test]
+        public void FindAllMatchByStatusTest()
+        {
+            _matchDao.FindByStatus(_match.Status);
+            _filterExpression = new ExpressionFilterDefinition<Match>(m => m.Status == _match.Status);
+            _collection.Received().Find(_filterExpression);
+            Assert.IsInstanceOf<Task<List<Match>>>(_matchDao.FindAll());
+        }
+
         [Test]
         public void ReplaceMatchTest()
         {
@@ -83,7 +103,7 @@ namespace Test.DAO
 
         // Need to find solution why when the name is "UpdateMatchTest" the test failed in run all 
         [Test]
-        public void A()
+        public void UpdateMatchTest()
         {
             _matchDao.UpdateMatch(1, _match);
             _collection.Received().UpdateOneAsync(Arg.Any<ExpressionFilterDefinition<Match>>(),

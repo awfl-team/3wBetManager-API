@@ -22,7 +22,7 @@ namespace _3wBetManager_API.Controllers
                     return Content(HttpStatusCode.BadRequest, userExist);
                 }
 
-                await GetUserDao().RegisterUser(user);
+                await GetUserDao().AddUser(user);
                 return Created("", user);
             });
         }

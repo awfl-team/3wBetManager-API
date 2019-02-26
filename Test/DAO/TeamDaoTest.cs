@@ -16,6 +16,7 @@ namespace Test.DAO
         private IMongoCollection<Team> _collection;
         private ITeamDao _teamDao;
         private IMongoDatabase _database;
+        private ExpressionFilterDefinition<Team> _filterExpression;
 
         [SetUp]
         public void SetUp()
@@ -47,7 +48,8 @@ namespace Test.DAO
         public void FindTeamTest()
         {
             _teamDao.FindTeam(1);
-            _collection.Received().Find(Arg.Any<ExpressionFilterDefinition<Team>>());
+            _filterExpression = new ExpressionFilterDefinition<Team>(team => team.Id == _team.Id);
+            _collection.Received().Find(_filterExpression);
             Assert.IsInstanceOf<Task<Team>>(_teamDao.FindTeam(Arg.Any<int>()));
         }
 
