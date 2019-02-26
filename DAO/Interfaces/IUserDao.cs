@@ -20,6 +20,7 @@ namespace DAO.Interfaces
         Task UpdateUser(string id, User userParam);
         Task UpdateUserIsPrivate(ObjectId id, bool isPrivate);
         Task UpdateUserPoints(User user, int point, int pointsUsedToBet);
+        Task ResetUserPoints(User user);
         Task UpdateUserRole(string id, string role);
         Task<List<User>> OrderUserByPoint();
         Task<List<User>> SearchUser(string value);

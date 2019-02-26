@@ -119,6 +119,14 @@ namespace DAO
             );
         }
 
+        public async Task ResetUserPoints(User user)
+        {
+            await _collection.UpdateOneAsync(
+               u => u.Id == user.Id,
+                Builders<User>.Update.Set(u => u.Point, User.DefaultPoint).Set(u => u.TotalPointsUsedToBet, User.DefaultTotalPointsUsedToBet)
+            );
+        }
+
         public async Task UpdateUserLifes(User user)
         {
             await _collection.UpdateOneAsync(

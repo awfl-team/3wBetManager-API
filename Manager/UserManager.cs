@@ -74,7 +74,11 @@ namespace Manager
                 obj.NbPerfectBets = betsByUser.FindAll(b => b.Status == Bet.PerfectStatus).Count;
                 obj.NbOkBets = betsByUser.FindAll(b => b.Status == Bet.OkStatus).Count;
                 obj.NbWrongBets = betsByUser.FindAll(b => b.Status == Bet.WrongStatus).Count;
-                users.Add(obj);
+                if (obj.NbBets > 0)
+                {
+                    users.Add(obj);
+                }
+                
             }
 
             return users;
@@ -132,7 +136,10 @@ namespace Manager
                 obj.Username = user.Username;
                 obj.IsPrivate = user.IsPrivate;
                 obj.NbBets = betsByUser.Count;
-                users.Add(obj);
+                if (obj.NbBets > 0)
+                {
+                    users.Add(obj);
+                }
             }
 
             return users;
@@ -171,7 +178,7 @@ namespace Manager
 
         public static async Task ResetUser(User user)
         {
-            await Singleton.Instance.UserDao.UpdateUserPoints(user, User.DefaultPoint, User.DefaultTotalPointsUsedToBet);
+            await Singleton.Instance.UserDao.ResetUserPoints(user);
             await Singleton.Instance.UserDao.UpdateUserLifes(user);
             Singleton.Instance.BetDao.DeleteBetsByUser(user.Id);
         }
