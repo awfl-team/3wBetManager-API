@@ -11,6 +11,7 @@ namespace DAO.Interfaces
     {
         Task AddBet(Bet bet);
         Task<List<Bet>> FindBetsByUser(User user);
+        Task<List<Bet>> FindBetsByUserLimited(User user);
         Task<Bet> Find(Bet bet);
         Task<List<Bet>> FindAll();
         Task<UpdateResult> UpdateBet(Bet bet);

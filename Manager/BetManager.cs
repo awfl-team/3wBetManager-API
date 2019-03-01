@@ -31,7 +31,7 @@ namespace Manager
 
         public static async Task<List<Bet>> GetFinishBetsLimited(User user)
         {
-            var betsByUser = await Singleton.Instance.BetDao.FindBetsByUser(user);
+            var betsByUser = await Singleton.Instance.BetDao.FindBetsByUserLimited(user);
             foreach (var bet in betsByUser)
             {
                 var matchInformation = await Singleton.Instance.MatchDao.FindMatch(bet.Match.Id);
@@ -48,7 +48,7 @@ namespace Manager
 
         public static async Task<List<Bet>> GetCurrentBetsLimited(User user)
         {
-            var betsByUser = await Singleton.Instance.BetDao.FindBetsByUser(user);
+            var betsByUser = await Singleton.Instance.BetDao.FindBetsByUserLimited(user);
             foreach (var bet in betsByUser)
             {
                 var matchInformation = await Singleton.Instance.MatchDao.FindMatch(bet.Match.Id);
