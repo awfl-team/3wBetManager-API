@@ -44,19 +44,5 @@ namespace _3wBetManager_API.Controllers
                 return Ok();
             });
         }
-
-        [Route("all")]
-        [HttpPost]
-        public async Task<IHttpActionResult> RefreshAll()
-        {
-            return await HandleError(async () =>
-            {
-                var footballDataManager = new FootballDataManager();
-                await footballDataManager.GetAllCompetitions();
-                await footballDataManager.GetAllTeams();
-                await footballDataManager.GetAllMatchForAWeek();
-                return Ok();
-            });
-        }
     }
 }

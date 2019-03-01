@@ -182,37 +182,5 @@ namespace Test.Manager
             _http.GetAsync("competitions/" + 1 + "/teams");
             _http.Received().GetAsync("test");
         }
-
-        [Test]
-        public void GetMatchTest()
-        {
-            _matchDao.FindMatch(1);
-            _filterExpressionMatch = new ExpressionFilterDefinition<Match>(m => m.Status == _match.Status);
-            _collectionMatch.Received().Find(_filterExpressionMatch);
-        }
-
-        [Test]
-        public void GetAllMatchAddTest()
-        {
-            _matchDao.AddMatch(_match);
-            _collectionMatch.Received().InsertOneAsync(Arg.Any<Match>());
-        }
-
-        [Test]
-        public void GetAllMatchReplaceTest()
-        {
-            _matchDao.ReplaceMatch(1, _match);
-            _collectionMatch.Received().ReplaceOneAsync(Arg.Any<ExpressionFilterDefinition<Match>>(),
-                Arg.Any<Match>(), Arg.Any<UpdateOptions>(), Arg.Any<CancellationToken>()
-            );
-        }
-
-        [Test]
-        public void GetAllMatchHttpTest()
-        {
-            _http.GetAsync("matches?dateFrom=" + DateTime.Now.AddDays(7).ToString("yyyy-MM-dd") + "&dateTo=" +
-                           DateTime.Now.AddDays(-2).ToString("yyyy-MM-dd"));
-            _http.Received().GetAsync("test");
-        }
     }
 }
