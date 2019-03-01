@@ -22,7 +22,7 @@ namespace _3wBetManager_API.Controllers
         [HttpGet]
         public async Task<IHttpActionResult> Get(string id)
         {
-            return await HandleError(async () => Ok(await GetUserDao().FindUser(id)));
+            return await HandleNotFound(async () => Ok(await GetUserDao().FindUser(id)));
         }
 
 
@@ -66,7 +66,7 @@ namespace _3wBetManager_API.Controllers
         [HttpPut]
         public async Task<IHttpActionResult> Put(string id, [FromBody] User user)
         {
-            return await HandleError(async () =>
+            return await HandleNotFound(async () =>
             {
                 var canUpdate = await UserManager.CanUpdate(id, user);
                 if (canUpdate != null)
@@ -95,7 +95,7 @@ namespace _3wBetManager_API.Controllers
         [HttpPut]
         public async Task<IHttpActionResult> PutRole(string id, [FromBody] User userParam)
         {
-            return await HandleError(async () =>
+            return await HandleNotFound(async () =>
             {
                 await GetUserDao().UpdateUserRole(id, userParam.Role);
                 return Ok();
@@ -107,7 +107,7 @@ namespace _3wBetManager_API.Controllers
         [HttpDelete]
         public async Task<IHttpActionResult> Delete(string id)
         {
-            return await HandleError(async () =>
+            return await HandleNotFound(async () =>
             {
                 await GetUserDao().DeleteUser(id);
                 return Ok();

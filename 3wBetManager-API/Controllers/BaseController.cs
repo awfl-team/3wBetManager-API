@@ -44,5 +44,21 @@ namespace _3wBetManager_API.Controllers
                 return InternalServerError(e);
             }
         }
+
+        protected async Task<IHttpActionResult> HandleNotFound(Func<Task<IHttpActionResult>> getHttpActionResult)
+        {
+            try
+            {
+                return await getHttpActionResult();
+            }
+            catch (FormatException)
+            {
+                return NotFound();
+            }
+            catch (Exception e)
+            {
+                return InternalServerError(e);
+            }
+        }
     }
 }
