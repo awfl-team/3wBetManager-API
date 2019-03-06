@@ -120,5 +120,16 @@ namespace _3wBetManager_API.Controllers
                 return Ok(await BetManager.GetUserBetsPerType(user));
             });
         }
+
+        [Route("stats/public/type/{id}")]
+        [HttpGet]
+        public async Task<IHttpActionResult> GetUserBetsPerTypePublic(string id)
+        {
+            return await HandleNotFound(async () =>
+            {
+                var user = await GetUserDao().FindUser(id);
+                return Ok(await BetManager.GetUserBetsPerType(user));
+            });
+        }
     }
 }

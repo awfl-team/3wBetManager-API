@@ -42,7 +42,7 @@ namespace _3wBetManager_API.Controllers
             return await HandleError(async () =>
             {
                 var user = await GetUserByToken(Request);
-                return Ok(await UserManager.GetUserPlace(user));
+                return Ok(await UserManager.GetUserPositionAmongSiblings(user));
             });
 
         }
@@ -176,6 +176,18 @@ namespace _3wBetManager_API.Controllers
             return await HandleError(async () =>
             {
                 var user = await GetUserByToken(Request);
+                return Ok(await UserManager.GetUserCoinStats(user));
+            });
+        }
+
+        [Route("stats/public/coins/{id}")]
+        [HttpGet]
+        public async Task<IHttpActionResult> GetPublicUserCoinStats(string id)
+        {
+         
+            return await HandleNotFound(async () =>
+            {
+                var user = await GetUserDao().FindUser(id);
                 return Ok(await UserManager.GetUserCoinStats(user));
             });
         }
