@@ -1,0 +1,64 @@
+#================================
+# Stages
+#================================
+
+stages:
+    - build
+    - deploy
+
+#================================
+# Before_script
+#================================    
+
+before_script:
+  - 'powershell.exe Stop-Process -Name "3wBetManager-API" -ErrorAction silentlycontinue'
+
+#================================
+# Build
+#================================
+
+build_dev:
+    stage: build
+    except:
+        - master
+    script:
+        - 'C:\Tools\nuget.exe restore 3wBetManager-API.sln'
+        - '"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\MSBuild.exe" 3wBetManager-API.sln /p:Configuration=Release'
+    artifacts:
+        paths:
+            - 3wBetManager-API/
+            - 3wBetManager-API.Test/bin/
+
+build_prod:
+    stage: build
+    only:
+        - master
+    script:
+        - 'C:\Tools\nuget.exe restore 3wBetManager-API.sln'
+        - '"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\MSBuild.exe" 3wBetManager-API.sln /p:Configuration=Release'
+    artifacts:
+        paths:
+            - 3wBetManager-API/
+            - 3wBetManager-API.Test/bin/
+
+#================================
+# Deploy
+#================================
+
+deploy_dev:
+    stage: deploy
+    only:
+        - develop
+    script:
+        - ''
+    dependencies:
+        - build_dev
+
+deploy_prod:
+    stage: deploy
+    only:
+        - master
+    script:
+        - ''
+    dependencies:
+        - build_prod
