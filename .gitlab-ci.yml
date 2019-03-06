@@ -47,8 +47,7 @@ deploy_dev:
     except:
         - master
     script:
-        - 'powershell.exe Stop-Process -Name "3wBetManager-API" -ErrorAction silentlycontinue'
-        - 'start 3wBetManager-API\bin\Release\3wBetManager-API.exe'
+        - 'call deploy.bat'
     dependencies:
         - build_dev
 
