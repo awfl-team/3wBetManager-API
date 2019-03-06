@@ -26,7 +26,6 @@ build_dev:
     artifacts:
         paths:
             - 3wBetManager-API/
-            - 3wBetManager-API.Test/bin/
 
 build_prod:
     stage: build
@@ -38,7 +37,6 @@ build_prod:
     artifacts:
         paths:
             - 3wBetManager-API/
-            - 3wBetManager-API.Test/bin/
 
 #================================
 # Deploy
@@ -49,7 +47,8 @@ deploy_dev:
     only:
         - develop
     script:
-        - ''
+        - 'powershell.exe Stop-Process -Name "3wBetManager-API" -ErrorAction silentlycontinue'
+        - 'start 3wBetManager-API\bin\Release\3wBetManager-API.exe'
     dependencies:
         - build_dev
 
@@ -58,6 +57,7 @@ deploy_prod:
     only:
         - master
     script:
-        - ''
+        - 'powershell.exe Stop-Process -Name "3wBetManager-API" -ErrorAction silentlycontinue'
+        - 'start 3wBetManager-API\bin\Release\3wBetManager-API.exe'
     dependencies:
         - build_prod
