@@ -7,11 +7,10 @@ stages:
     - deploy
 
 #================================
-# Before_script
+# Before script
 #================================    
 
-before_script:
-  - 'powershell.exe Stop-Process -Name "3wBetManager-API" -ErrorAction silentlycontinue'
+
 
 #================================
 # Build
