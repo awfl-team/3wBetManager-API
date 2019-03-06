@@ -84,19 +84,19 @@ namespace Manager
             return users;
         }
 
-        public static async Task<List<dynamic>> GetUserPlace(User userParam)
+        public static async Task<List<dynamic>> GetUserPositionAmongSiblings(User userParam)
         {
             var users = new List<dynamic>();
             var usersByPoint = await Singleton.Instance.UserDao.FindAllUserByPoint();
             var userPlace = usersByPoint.FindIndex(u => u.Id == userParam.Id);
             var usersRange = new List<User>();
-            if (userPlace - 10 < 0 || userPlace + 10 > usersByPoint.Count)
+            if (userPlace - 5 < 0 || userPlace + 5 > usersByPoint.Count)
             {
                  usersRange = usersByPoint;
             }
             else
             {
-                usersRange = usersByPoint.GetRange(userPlace - 10, userPlace + 10);
+                usersRange = usersByPoint.GetRange(userPlace - 5, userPlace + 5);
             }
 
             foreach (var user in usersRange)
