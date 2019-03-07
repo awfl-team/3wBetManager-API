@@ -48,8 +48,6 @@ deploy_dev:
         - master
     script:
         - 'call deploy.bat'
-    after_script:
-        - 'exit 0'
     dependencies:
         - build_dev
 
