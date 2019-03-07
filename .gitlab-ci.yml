@@ -16,18 +16,7 @@ stages:
 # Build
 #================================
 
-build_dev:
-    stage: build
-    except:
-        - master
-    script:
-        - 'C:\Tools\nuget.exe restore 3wBetManager-API.sln'
-        - '"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\MSBuild.exe" 3wBetManager-API.sln /p:Configuration=Release'
-    artifacts:
-        paths:
-            - 3wBetManager-API/
-
-build_prod:
+build:
     stage: build
     only:
         - master
@@ -42,9 +31,9 @@ build_prod:
 # Deploy
 #================================
 
-deploy_dev:
+deploy:
     stage: deploy
-    except:
+    only:
         - master
     script:
         - 'call deploy.bat'
@@ -52,14 +41,4 @@ deploy_dev:
         - 'ECHO After Script'
         - 'exit 0'
     dependencies:
-        - build_dev
-
-deploy_prod:
-    stage: deploy
-    only:
-        - master
-    script:
-        - 'powershell.exe Stop-Process -Name "3wBetManager-API" -ErrorAction silentlycontinue'
-        - 'start 3wBetManager-API\bin\Release\3wBetManager-API.exe'
-    dependencies:
-        - build_prod
+        - build
