@@ -47,11 +47,9 @@ deploy_dev:
     except:
         - master
     script:
-        - '@ECHO OFF'
-        - 'ECHO Start Deploy'
-        - 'START /wait taskkill /f /im 3wBetManager-API.exe'
-        - 'START 3wBetManager-API\bin\Release\3wBetManager-API.exe'
-        - 'ECHO End Deploy'
+        - 'call deploy.bat'
+    after_script:
+        - 'exit 0'
     dependencies:
         - build_dev
 
