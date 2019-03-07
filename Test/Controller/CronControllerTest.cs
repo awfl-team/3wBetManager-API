@@ -51,16 +51,6 @@ namespace Test.Controller
             Assert.IsInstanceOf<Task<IHttpActionResult>>(refreshMatch);
         }
 
-        [Test]
-        public void RefreshAllTest()
-        {
-            var refreshAll = _cronController.RefreshAll();
-            _footballDataManager.Received().GetAllCompetitions();
-            _footballDataManager.Received().GetAllTeams();
-            _footballDataManager.Received().GetAllMatchForAWeek();
-            Assert.IsInstanceOf<Task<IHttpActionResult>>(refreshAll);
-        }
-
 
     }
 }

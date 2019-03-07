@@ -1,0 +1,44 @@
+#================================
+# Stages
+#================================
+
+stages:
+    - build
+    - deploy
+
+#================================
+# Before script
+#================================    
+
+
+
+#================================
+# Build
+#================================
+
+build:
+    stage: build
+    only:
+        - master
+    script:
+        - 'C:\Tools\nuget.exe restore 3wBetManager-API.sln'
+        - '"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\MSBuild.exe" 3wBetManager-API.sln /p:Configuration=Release'
+    artifacts:
+        paths:
+            - 3wBetManager-API/
+
+#================================
+# Deploy
+#================================
+
+deploy:
+    stage: deploy
+    only:
+        - master
+    script:
+        - 'call deploy.bat'
+    after_script:
+        - 'ECHO After Script'
+        - 'exit 0'
+    dependencies:
+        - build

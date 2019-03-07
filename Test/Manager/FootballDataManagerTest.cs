@@ -35,7 +35,6 @@ namespace Test.Manager
         private Penalties _penalties;
         private ExpressionFilterDefinition<Competition> _filterExpressionCompetition;
         private ExpressionFilterDefinition<Team> _filterExpressionTeam;
-        private ExpressionFilterDefinition<Match> _filterExpressionMatch;
 
         [SetUp]
         public void SetUp()
