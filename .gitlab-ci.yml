@@ -49,8 +49,8 @@ deploy_dev:
     script:
         - '@ECHO OFF'
         - 'ECHO Start Deploy'
-        - 'QPROCESS 3wBetManager-API.exe > NUL IF /I "%ERRORLEVEL%" NEQ "0" (Taskkill /IM 3wBetManager-API.exe /F)'
-        - 'start 3wBetManager-API\bin\Release\3wBetManager-API.exe'
+        - 'START /wait taskkill /f /im 3wBetManager-API.exe'
+        - 'START 3wBetManager-API\bin\Release\3wBetManager-API.exe'
         - 'ECHO End Deploy'
     dependencies:
         - build_dev
