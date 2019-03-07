@@ -49,7 +49,7 @@ deploy_dev:
     script:
         - '@ECHO OFF'
         - 'ECHO Start Deploy'
-        - 'powershell.exe Stop-Process -Name "3wBetManager-API" -passThru -ErrorAction silentlycontinue'
+        - 'QPROCESS 3wBetManager-API.exe > NUL IF /I "%ERRORLEVEL%" NEQ "0" (Taskkill /IM 3wBetManager-API.exe /F)'
         - 'start 3wBetManager-API\bin\Release\3wBetManager-API.exe'
         - 'ECHO End Deploy'
     dependencies:
