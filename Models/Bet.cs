@@ -12,7 +12,7 @@ namespace Models
         public const string PerfectStatus = "Perfect";
         public const int PerfectBet = 100;
         public const int OkBet = 50;
-        public const int WrongBet = 0;
+        public const int WrongBet = -10;
         public const int DashboardMaxToShow = 4;
 
         [BsonId]

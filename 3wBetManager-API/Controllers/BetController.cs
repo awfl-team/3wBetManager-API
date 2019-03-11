@@ -121,6 +121,17 @@ namespace _3wBetManager_API.Controllers
             });
         }
 
+        [Route("stats/earnings/type")]
+        [HttpGet]
+        public async Task<IHttpActionResult> GetUserBetsEarningsPerType()
+        {
+            return await HandleError(async () =>
+            {
+                var user = await GetUserByToken(Request);
+                return Ok(await BetManager.GetUserBetsEarningsPerType(user));
+            });
+        }
+
         [Route("stats/public/type/{id}")]
         [HttpGet]
         public async Task<IHttpActionResult> GetUserBetsPerTypePublic(string id)
