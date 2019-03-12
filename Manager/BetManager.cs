@@ -139,6 +139,26 @@ namespace Manager
             return userBetsPerType;
         }
 
+        public static async Task<dynamic> GetUserIncomesPerMonth(User user)
+        {
+            var userBets = await Singleton.Instance.BetDao.FindBetsByUser(user);
+
+            if (userBets.Count == 0)
+            {
+                return new ExpandoObject();
+            }
+
+            //@todo sort asc bets results date
+            var userIncomesPerMonth = userBets.GroupBy(bet => bet.Date.ToString("yyyy/MM"))
+                .Select(bet => new
+                {
+                    Date = bet.Key,
+                    Points = bet.Sum(bet2 => bet2.PointsWon)
+                }).ToList();
+
+            return userIncomesPerMonth;
+        }
+
         public static async Task<dynamic> GetUserBetsEarningsPerType(User user)
         {
             var userBets = await Singleton.Instance.BetDao.FindBetsByUser(user);
@@ -148,14 +168,12 @@ namespace Manager
                 return new ExpandoObject();
             }
 
-            var perfectBets = userBets.FindAll(bet => bet.Status == Bet.PerfectStatus);
-            var okBets = userBets.FindAll(bet => bet.Status == Bet.OkStatus);
-            var wrongBets = userBets.FindAll(bet => bet.Status == Bet.WrongStatus);
-
-            dynamic userBetsPerType = new ExpandoObject();
-            userBetsPerType.wrongBets = wrongBets.Count * Bet.WrongBet;
-            userBetsPerType.okBets = okBets.Count * Bet.OkBet;
-            userBetsPerType.perfectBets = perfectBets.Count * Bet.PerfectBet;
+            var userBetsPerType = userBets.GroupBy(bet => bet.Date)
+                .Select(bet => new
+                {
+                    Date = bet.Key,
+                    Points = bet.Sum(bet2 => bet2.PointsWon)
+                }).ToList();           
 
             return userBetsPerType;
         }
