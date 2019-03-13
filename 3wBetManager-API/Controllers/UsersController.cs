@@ -179,6 +179,7 @@ namespace _3wBetManager_API.Controllers
                 return Ok(await UserManager.GetUserCoinStats(user));
             });
         }
+
         [Route("stats/month")]
         [HttpGet]
         public async Task<IHttpActionResult> GetUserIncomesPerMonth()
@@ -187,6 +188,17 @@ namespace _3wBetManager_API.Controllers
             {
                 var user = await GetUserByToken(Request);
                 return Ok(await BetManager.GetUserIncomesPerMonth(user));
+            });
+        }
+
+        [Route("stats/year")]
+        [HttpGet]
+        public async Task<IHttpActionResult> GetUserIncomesPerYear()
+        {
+            return await HandleError(async () =>
+            {
+                var user = await GetUserByToken(Request);
+                return Ok(await BetManager.GetUserIncomesPerYear(user));
             });
         }
 

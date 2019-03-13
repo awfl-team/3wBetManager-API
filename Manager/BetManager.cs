@@ -31,7 +31,7 @@ namespace Manager
 
         public static async Task<List<Bet>> GetFinishBetsLimited(User user)
         {
-            var betsByUser = await Singleton.Instance.BetDao.FindBetsByUserLimited(user);
+            var betsByUser = await Singleton.Instance.BetDao.FindBetsByUser(user, 1);
             foreach (var bet in betsByUser)
             {
                 var matchInformation = await Singleton.Instance.MatchDao.FindMatch(bet.Match.Id);
@@ -48,7 +48,7 @@ namespace Manager
 
         public static async Task<List<Bet>> GetCurrentBetsLimited(User user)
         {
-            var betsByUser = await Singleton.Instance.BetDao.FindBetsByUserLimited(user);
+            var betsByUser = await Singleton.Instance.BetDao.FindBetsByUser(user, 1);
             foreach (var bet in betsByUser)
             {
                 var matchInformation = await Singleton.Instance.MatchDao.FindMatch(bet.Match.Id);
@@ -141,14 +141,13 @@ namespace Manager
 
         public static async Task<dynamic> GetUserIncomesPerMonth(User user)
         {
-            var userBets = await Singleton.Instance.BetDao.FindBetsByUser(user);
+            var userBets = await Singleton.Instance.BetDao.FindBetsByUser(user, 1);
 
             if (userBets.Count == 0)
             {
                 return new ExpandoObject();
             }
 
-            //@todo sort asc bets results date
             var userIncomesPerMonth = userBets.GroupBy(bet => bet.Date.ToString("yyyy/MM"))
                 .Select(bet => new
                 {
@@ -157,6 +156,25 @@ namespace Manager
                 }).ToList();
 
             return userIncomesPerMonth;
+        }
+
+        public static async Task<dynamic> GetUserIncomesPerYear(User user)
+        {
+            var userBets = await Singleton.Instance.BetDao.FindBetsByUser(user, 1);
+
+            if (userBets.Count == 0)
+            {
+                return new ExpandoObject();
+            }
+
+            var userIncomesPerYear = userBets.GroupBy(bet => bet.Date.ToString("yyyy"))
+                .Select(bet => new
+                {
+                    Date = bet.Key,
+                    Points = bet.Sum(bet2 => bet2.PointsWon)
+                }).ToList();
+
+            return userIncomesPerYear;
         }
 
         public static async Task<dynamic> GetUserBetsEarningsPerType(User user)
@@ -168,12 +186,14 @@ namespace Manager
                 return new ExpandoObject();
             }
 
-            var userBetsPerType = userBets.GroupBy(bet => bet.Date)
-                .Select(bet => new
-                {
-                    Date = bet.Key,
-                    Points = bet.Sum(bet2 => bet2.PointsWon)
-                }).ToList();           
+            var perfectBets = userBets.FindAll(bet => bet.Status == Bet.PerfectStatus);
+            var okBets = userBets.FindAll(bet => bet.Status == Bet.OkStatus);
+            var wrongBets = userBets.FindAll(bet => bet.Status == Bet.WrongStatus);
+
+            dynamic userBetsPerType = new ExpandoObject();
+            userBetsPerType.wrongBets = wrongBets.Count * Bet.WrongBet;
+            userBetsPerType.okBets = okBets.Count * Bet.OkBet;
+            userBetsPerType.perfectBets = perfectBets.Count * Bet.PerfectBet;
 
             return userBetsPerType;
         }

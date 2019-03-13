@@ -29,14 +29,9 @@ namespace DAO
             return result.FirstOrDefault();
         }
 
-        public async Task<List<Bet>> FindBetsByUser(User user)
+        public async Task<List<Bet>> FindBetsByUser(User user, int sortDirection = -1)
         {
-            return await _collection.Find(bet => bet.User.Id == user.Id).Sort("{Date: -1}").ToListAsync();
-        }
-
-        public async Task<List<Bet>> FindBetsByUserLimited(User user)
-        {
-            return await _collection.Find(bet => bet.User.Id == user.Id).Sort("{Date: 1}").ToListAsync();
+            return await _collection.Find(bet => bet.User.Id == user.Id).Sort("{Date: "+ sortDirection + "}").ToListAsync();
         }
 
         public async Task AddBet(Bet bet)
