@@ -67,6 +67,7 @@
     <Compile Include="BetManager.cs" />
     <Compile Include="EmailManager.cs" />
     <Compile Include="FootballDataManager.cs" />
+    <Compile Include="MonitoringManager.cs" />
     <Compile Include="TokenManager.cs" />
     <Compile Include="UserManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
