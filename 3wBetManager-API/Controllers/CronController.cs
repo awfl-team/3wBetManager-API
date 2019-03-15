@@ -6,6 +6,7 @@ using Manager;
 
 namespace _3wBetManager_API.Controllers
 {
+    [IsGranted(Models.User.AdminRole)]
     [RoutePrefix("cron")]
     public class CronController : BaseController
     {

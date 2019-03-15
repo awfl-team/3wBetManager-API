@@ -9,6 +9,7 @@ using Models;
 
 namespace _3wBetManager_API.Controllers
 {
+    [IsGranted]
     [RoutePrefix("bets")]
     public class BetController : BaseController
     {
@@ -107,39 +108,6 @@ namespace _3wBetManager_API.Controllers
             {
                 var user = await GetUserByToken(Request);
                 return Ok(await BetManager.NumberFinishMatchAndBet(user, competitionId));
-            });
-        }
-
-        [Route("stats/type")]
-        [HttpGet]
-        public async Task<IHttpActionResult> GetUserBetsPerType()
-        {
-            return await HandleError(async () =>
-            {
-                var user = await GetUserByToken(Request);
-                return Ok(await BetManager.GetUserBetsPerType(user));
-            });
-        }
-
-        [Route("stats/earnings/type")]
-        [HttpGet]
-        public async Task<IHttpActionResult> GetUserBetsEarningsPerType()
-        {
-            return await HandleError(async () =>
-            {
-                var user = await GetUserByToken(Request);
-                return Ok(await BetManager.GetUserBetsEarningsPerType(user));
-            });
-        }
-
-        [Route("stats/public/type/{id}")]
-        [HttpGet]
-        public async Task<IHttpActionResult> GetUserBetsPerTypePublic(string id)
-        {
-            return await HandleNotFound(async () =>
-            {
-                var user = await GetUserDao().FindUser(id);
-                return Ok(await BetManager.GetUserBetsPerType(user));
             });
         }
     }
