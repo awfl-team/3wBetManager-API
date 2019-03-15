@@ -2,6 +2,7 @@
 using System.Configuration;
 using System.Runtime.InteropServices;
 using DAO;
+using Manager;
 using Microsoft.Owin.Hosting;
 using MongoDB.Driver;
 

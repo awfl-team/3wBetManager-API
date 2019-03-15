@@ -2,11 +2,11 @@
 using System.Web.Http;
 using DAO;
 using DAO.Interfaces;
+using Manager;
 using Models;
 using NSubstitute;
 using NUnit.Framework;
 using _3wBetManager_API.Controllers;
-using _3wBetManager_API.Manager;
 
 namespace Test.Controller
 {
