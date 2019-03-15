@@ -54,13 +54,13 @@ namespace DAO
             return result.FirstOrDefault();
         }
 
-        public async Task AddUser(User user)
+        public async Task AddUser(User user, string role)
         {
             user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
             user.IsPrivate = User.DefaultIsPrivate;
             user.Point = User.DefaultPoint;
             user.Life = User.DefaultLife;
-            user.Role = user.Role;
+            user.Role = role;
             user.TotalPointsUsedToBet = User.DefaultTotalPointsUsedToBet;
             await _collection.InsertOneAsync(user);
         }
@@ -121,6 +121,14 @@ namespace DAO
             await _collection.UpdateOneAsync(
                 u => u.Id == user.Id,
                 Builders<User>.Update.Set(u => u.Life, user.Life - 1)
+            );
+        }
+
+        public async Task UpdateUserPassword(User user)
+        {
+            await _collection.UpdateOneAsync(
+                u => u.Id == user.Id,
+                Builders<User>.Update.Set(u => u.Password, BCrypt.Net.BCrypt.HashPassword(user.Password))
             );
         }
 

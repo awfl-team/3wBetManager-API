@@ -4,8 +4,8 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using DAO;
 using DAO.Interfaces;
+using Manager;
 using Models;
-using _3wBetManager_API.Manager;
 
 namespace _3wBetManager_API.Controllers
 {
@@ -38,6 +38,10 @@ namespace _3wBetManager_API.Controllers
             try
             {
                 return await getHttpActionResult();
+            }
+            catch (NullReferenceException)
+            {
+                return BadRequest("Invalid Token");
             }
             catch (Exception e)
             {

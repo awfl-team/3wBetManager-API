@@ -1,20 +1,38 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IdentityModel.Tokens;
-using System.Linq;
-using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Net.Http;
 using System.Security.Claims;
-using System.Threading.Tasks;
-using DAO;
-using Models;
+using Microsoft.IdentityModel.Tokens;
 
-namespace _3wBetManager_API.Manager
+namespace Manager
 {
     public class TokenManager
     {
         private const string Secret = "XCAP05H6LoKvbRRa/QkqLNMI7cOHguaRyHzyg7n5qEkGjQmtBhz4SzYh4Fqwjyi3KJHlSXKPwVu2+bXr6CtpgQ==";
+
+        public static string GenerateEmailToken(string email, string role, string pseudo)
+        {
+            var key = Convert.FromBase64String(Secret);
+            var securityKey = new SymmetricSecurityKey(key);
+            var descriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new[]
+                {
+                    new Claim(ClaimTypes.Email, email),
+                    new Claim(ClaimTypes.Role, role),
+                    new Claim(ClaimTypes.Name, pseudo),
+                }),
+                Expires = DateTime.UtcNow.AddHours(1),
+                SigningCredentials = new SigningCredentials(securityKey,
+                    SecurityAlgorithms.HmacSha256Signature)
+            };
+
+            var handler = new JwtSecurityTokenHandler();
+            var token = handler.CreateJwtSecurityToken(descriptor);
+            return handler.WriteToken(token);
+        }
 
         public static string GenerateToken(string email, string role, string pseudo)
         {
@@ -101,7 +119,6 @@ namespace _3wBetManager_API.Manager
             var token = bearerToken.StartsWith("Bearer ") ? bearerToken.Substring(7) : bearerToken;
             return token;
         }
-
 
     }
 }

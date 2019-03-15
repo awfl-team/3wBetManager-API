@@ -12,7 +12,7 @@ namespace DAO.Interfaces
         Task<User> FindUser(string uid);
         Task<User> FindUserByEmail(string email);
         Task<User> FindUserByUsername(string username);
-        Task AddUser(User user);
+        Task AddUser(User user, string role);
         Task DeleteUser(string id);
         Task UpdateUserLives(User user);
         Task<List<User>> FindAllUserByPoint();
@@ -24,5 +24,6 @@ namespace DAO.Interfaces
         Task<List<User>> OrderUserByPoint();
         Task<List<User>> SearchUser(string value);
         Task<List<User>> PaginatedUsers(int usersToPass);
+        Task UpdateUserPassword(User user);
     }
 }
