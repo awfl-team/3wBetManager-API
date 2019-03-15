@@ -35,6 +35,18 @@ namespace Manager
             _smtp.Send(mailMessage);
         }
 
+        public void SendWebMasterEmail(Exception exception)
+        {
+            var mailMessage = new MailMessage();
+            mailMessage.To.Add("florob95@gmail.com");
+            var now = DateTime.Now.ToString("yyyy-MM-dd"); 
+            mailMessage.Subject = "[" + now + "]" + " ERROR API";
+            mailMessage.Body = exception.ToString();
+            mailMessage.From = new MailAddress("3wbet.manager@gmail.com", "3wbetManager");
+
+            _smtp.Send(mailMessage);
+        }
+
         public void Dispose()
         {
             _smtp = null;
