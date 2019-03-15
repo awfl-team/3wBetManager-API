@@ -9,13 +9,14 @@ using Newtonsoft.Json.Linq;
 
 namespace Manager
 {
-    public class FootballDataManager
+    public class FootballDataManager : IDisposable
     {
-        private readonly HttpClient _http = new HttpClient();
+        private HttpClient _http;
 
 
-        public FootballDataManager()
+        public FootballDataManager(HttpClient http = null)
         {
+            _http = http ?? new HttpClient();
             _http.BaseAddress = new Uri("https://api.football-data.org/v2/");
             _http.DefaultRequestHeaders.Add("X-Auth-Token", "f74e0beb5501485895a1ebb03ba925db");
         }
@@ -139,6 +140,11 @@ namespace Manager
                 Console.WriteLine(e);
                 throw;
             }
+        }
+
+        public void Dispose()
+        {
+            _http = null;
         }
     }
 }
