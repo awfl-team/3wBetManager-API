@@ -14,9 +14,10 @@ namespace Manager
         {
             var userByEmail = await Singleton.Instance.UserDao.FindUserByEmail(user.Email);
             var userByUsername = await Singleton.Instance.UserDao.FindUserByUsername(user.Username);
+
             if (userByEmail == null && userByUsername == null)
             {
-                return null;
+                return "";
             }
 
             if (userByEmail != null && userByUsername == null)
@@ -38,9 +39,11 @@ namespace Manager
             users.Remove(users.Single(user => user.Id == ObjectId.Parse(id)));
             var userByEmail = users.Find(user => user.Email == userParam.Email);
             var userByUsername = users.Find(user => user.Username == userParam.Username);
+
+
             if (userByEmail == null && userByUsername == null)
             {
-                return null;
+                return "";
             }
 
             if (userByEmail != null && userByUsername == null)

@@ -1,10 +1,9 @@
-﻿using System;
-using System.Net;
+﻿using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Manager;
 using Models;
-using _3wBetManager_API.Manager;
+
 
 namespace _3wBetManager_API.Controllers
 {
@@ -17,12 +16,12 @@ namespace _3wBetManager_API.Controllers
             return await HandleError(async () =>
             {
                 var userExist = await UserManager.UsernameAndEmailExist(user);
-                if (userExist != null)
+                if (userExist.Length > 0)
                 {
                     return Content(HttpStatusCode.BadRequest, userExist);
                 }
-
-                await GetUserDao().AddUser(user);
+                
+                await GetUserDao().AddUser(user, Models.User.AdminRole);
                 return Created("", user);
             });
         }
@@ -43,6 +42,45 @@ namespace _3wBetManager_API.Controllers
                 }
 
                 return Content(HttpStatusCode.BadRequest, errorMessage);
+            });
+        }
+
+        [Route("forgot_password")]
+        [HttpPost]
+        public async Task<IHttpActionResult> ForgotPassword([FromBody] User userParam)
+        {
+            return await HandleError(async () =>
+            {
+                var user = await GetUserDao().FindUserByEmail(userParam.Email);
+                if (user == null)
+                {
+                    return NotFound();
+                }
+
+                using (var emailManager = new EmailManager())
+                {
+                    emailManager.SendResetPasswordEmail(user);
+                }
+                return Ok();
+            });
+        }
+
+        [Route("reset_password")]
+        [HttpPut]
+        public async Task<IHttpActionResult> ResetPassword([FromBody] User userParam)
+        {
+            return await HandleError(async () =>
+            {
+                var user = await GetUserByToken(Request);
+                if (user == null)
+                {
+                    return BadRequest();
+                }
+
+                user.Password = userParam.Password;
+                await GetUserDao().UpdateUserPassword(user);
+             
+                return Content(HttpStatusCode.NoContent, "");
             });
         }
     }

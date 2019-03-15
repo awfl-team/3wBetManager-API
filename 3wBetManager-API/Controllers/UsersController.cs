@@ -4,13 +4,14 @@ using System.Web.Http;
 using DAO;
 using Manager;
 using Models;
-using _3wBetManager_API.Manager;
 
 namespace _3wBetManager_API.Controllers
 {
+    [IsGranted]
     [RoutePrefix("users")]
     public class UsersController : BaseController
     {
+        [IsGranted(Models.User.AdminRole)]
         [Route("")]
         [HttpGet]
         public async Task<IHttpActionResult> GetAll()
@@ -69,7 +70,7 @@ namespace _3wBetManager_API.Controllers
             return await HandleNotFound(async () =>
             {
                 var canUpdate = await UserManager.CanUpdate(id, user);
-                if (canUpdate != null)
+                if (canUpdate.Length > 0)
                 {
                     return Content(HttpStatusCode.BadRequest, canUpdate);
                 }
@@ -114,6 +115,7 @@ namespace _3wBetManager_API.Controllers
             });
         }
 
+        [IsGranted(Models.User.AdminRole)]
         [Route("search/{value}")]
         [HttpGet]
         public async Task<IHttpActionResult> Search(string value)
@@ -145,6 +147,7 @@ namespace _3wBetManager_API.Controllers
             });
         }
 
+        [IsGranted(Models.User.AdminRole)]
         [Route("paginated/{page}")]
         [HttpGet]
         public async Task<IHttpActionResult> GetAllUsersPaginated(int page)
@@ -152,66 +155,23 @@ namespace _3wBetManager_API.Controllers
             return await HandleError(async () => Ok(await UserManager.GetAllUsersPaginated(page)));
         }
 
-        [Route("new")]
+        [Route("")]
         [HttpPost]
         public async Task<IHttpActionResult> AddUser([FromBody] User user)
         {
             return await HandleError(async () =>
             {
                 var userExist = await UserManager.UsernameAndEmailExist(user);
-                if (userExist != null)
+                if (userExist.Length > 0)
                 {
                     return Content(HttpStatusCode.BadRequest, userExist);
                 }
-
-                await GetUserDao().AddUser(user);
+                // TODO change this
+                await GetUserDao().AddUser(user, user.Role);
                 return Created("", user);
             });
         }
 
-        [Route("stats/coins")]
-        [HttpGet]
-        public async Task<IHttpActionResult> GetUserCoinStats()
-        {
-            return await HandleError(async () =>
-            {
-                var user = await GetUserByToken(Request);
-                return Ok(await UserManager.GetUserCoinStats(user));
-            });
-        }
-
-        [Route("stats/month")]
-        [HttpGet]
-        public async Task<IHttpActionResult> GetUserIncomesPerMonth()
-        {
-            return await HandleError(async () =>
-            {
-                var user = await GetUserByToken(Request);
-                return Ok(await BetManager.GetUserIncomesPerMonth(user));
-            });
-        }
-
-        [Route("stats/year")]
-        [HttpGet]
-        public async Task<IHttpActionResult> GetUserIncomesPerYear()
-        {
-            return await HandleError(async () =>
-            {
-                var user = await GetUserByToken(Request);
-                return Ok(await BetManager.GetUserIncomesPerYear(user));
-            });
-        }
-
-        [Route("stats/public/coins/{id}")]
-        [HttpGet]
-        public async Task<IHttpActionResult> GetPublicUserCoinStats(string id)
-        {
-         
-            return await HandleNotFound(async () =>
-            {
-                var user = await GetUserDao().FindUser(id);
-                return Ok(await UserManager.GetUserCoinStats(user));
-            });
-        }
+        
     }
 }
