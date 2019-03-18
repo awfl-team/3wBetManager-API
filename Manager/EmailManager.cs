@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Configuration;
 using System.Net;
 using System.Net.Mail;
-using Microsoft.IdentityModel.Tokens;
 using Models;
 
 namespace Manager
@@ -18,6 +16,11 @@ namespace Manager
             _smtp.Host = "smtp.gmail.com";
             _smtp.Credentials = new NetworkCredential("3wbet.manager@gmail.com", "3wbetManager.@wfl-team");
             _smtp.EnableSsl = true;
+        }
+
+        public void Dispose()
+        {
+            _smtp = null;
         }
 
         public void SendResetPasswordEmail(User user)
@@ -39,17 +42,12 @@ namespace Manager
         {
             var mailMessage = new MailMessage();
             mailMessage.To.Add("florob95@gmail.com");
-            var now = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"); 
+            var now = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
             mailMessage.Subject = "[" + now + "]" + " ERROR API";
             mailMessage.Body = exception.ToString();
             mailMessage.From = new MailAddress("3wbet.manager@gmail.com", "3wbetManager");
 
             _smtp.Send(mailMessage);
-        }
-
-        public void Dispose()
-        {
-            _smtp = null;
         }
     }
 }

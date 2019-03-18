@@ -13,6 +13,5 @@ namespace _3wBetManager_API.Controllers
         {
             return await HandleError(async () => Ok(await GetCompetitionDao().FindAllCompetitions()));
         }
-
     }
 }

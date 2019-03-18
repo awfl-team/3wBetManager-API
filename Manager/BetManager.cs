@@ -42,8 +42,8 @@ namespace Manager
                 bet.Match.HomeTeam = homeTeamInformation;
             }
 
-            return betsByUser.FindAll(bet => bet.Match.Status == Match.FinishedStatus).Take(Bet.DashboardMaxToShow).ToList();
-
+            return betsByUser.FindAll(bet => bet.Match.Status == Match.FinishedStatus).Take(Bet.DashboardMaxToShow)
+                .ToList();
         }
 
         public static async Task<List<Bet>> GetCurrentBetsLimited(User user)
@@ -59,8 +59,8 @@ namespace Manager
                 bet.Match.HomeTeam = homeTeamInformation;
             }
 
-            return betsByUser.FindAll(bet => bet.Match.Status == Match.ScheduledStatus).Take(Bet.DashboardMaxToShow).ToList();
-
+            return betsByUser.FindAll(bet => bet.Match.Status == Match.ScheduledStatus).Take(Bet.DashboardMaxToShow)
+                .ToList();
         }
 
         public static async Task<dynamic> GetCurrentBetsAndScheduledMatches(User user, int competitionId)
@@ -85,10 +85,7 @@ namespace Manager
             foreach (var bet in betsByMatchStatus)
             {
                 var findMatch = matchesByCompetition.Find(m => m.Id == bet.Match.Id);
-                if (findMatch != null)
-                {
-                    matchesByCompetition.Remove(findMatch);
-                }
+                if (findMatch != null) matchesByCompetition.Remove(findMatch);
             }
 
             foreach (var match in matchesByCompetition)
@@ -109,9 +106,7 @@ namespace Manager
         {
             var currentBetsAndMatches = await GetCurrentBetsAndScheduledMatches(user, competitionId);
             if (currentBetsAndMatches.Bets.Count == 0 && currentBetsAndMatches.Matches.Count == 0)
-            {
                 return new ExpandoObject();
-            }
             dynamic numberCurrentMatchAndBet = new ExpandoObject();
             numberCurrentMatchAndBet.NbBet = currentBetsAndMatches.Bets.Count;
             numberCurrentMatchAndBet.NbMatch = currentBetsAndMatches.Matches.Count;
@@ -121,11 +116,8 @@ namespace Manager
         public static async Task<dynamic> GetUserBetsPerType(User user)
         {
             var userBets = await Singleton.Instance.BetDao.FindBetsByUser(user);
-           
-            if (userBets.Count == 0)
-            {
-               return new ExpandoObject();
-            }
+
+            if (userBets.Count == 0) return new ExpandoObject();
 
             var perfectBets = userBets.FindAll(bet => bet.Status == Bet.PerfectStatus);
             var okBets = userBets.FindAll(bet => bet.Status == Bet.OkStatus);
@@ -143,10 +135,7 @@ namespace Manager
         {
             var userBets = await Singleton.Instance.BetDao.FindBetsByUser(user, 1);
 
-            if (userBets.Count == 0)
-            {
-                return new ExpandoObject();
-            }
+            if (userBets.Count == 0) return new ExpandoObject();
 
             var userIncomesPerMonth = userBets.GroupBy(bet => bet.Date.ToString("yyyy/MM"))
                 .Select(bet => new
@@ -162,10 +151,7 @@ namespace Manager
         {
             var userBets = await Singleton.Instance.BetDao.FindBetsByUser(user, 1);
 
-            if (userBets.Count == 0)
-            {
-                return new ExpandoObject();
-            }
+            if (userBets.Count == 0) return new ExpandoObject();
 
             var userIncomesPerYear = userBets.GroupBy(bet => bet.Date.ToString("yyyy"))
                 .Select(bet => new
@@ -181,10 +167,7 @@ namespace Manager
         {
             var userBets = await Singleton.Instance.BetDao.FindBetsByUser(user);
 
-            if (userBets.Count == 0)
-            {
-                return new ExpandoObject();
-            }
+            if (userBets.Count == 0) return new ExpandoObject();
 
             var perfectBets = userBets.FindAll(bet => bet.Status == Bet.PerfectStatus);
             var okBets = userBets.FindAll(bet => bet.Status == Bet.OkStatus);
@@ -201,16 +184,13 @@ namespace Manager
         public static async Task<dynamic> NumberFinishMatchAndBet(User user, int competitionId)
         {
             var finishBetsAndMatches = await GetFinishBets(user, competitionId);
-            if (finishBetsAndMatches.Count == 0)
-            {
-                return new ExpandoObject();
-            }
+            if (finishBetsAndMatches.Count == 0) return new ExpandoObject();
             dynamic numberFinishBetsAndMatches = new ExpandoObject();
             numberFinishBetsAndMatches.NbBet = finishBetsAndMatches.Count;
             return numberFinishBetsAndMatches;
         }
 
-        public static List<Bet> AddGuidList(User user,List<Bet> bets)
+        public static List<Bet> AddGuidList(User user, List<Bet> bets)
         {
             foreach (var bet in bets)
             {

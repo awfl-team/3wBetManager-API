@@ -35,9 +35,7 @@ namespace _3wBetManager_API
             }
 
             if (_role == User.AdminRole && user["role"] != User.AdminRole)
-            {
                 actionContext.Response = new HttpResponseMessage(HttpStatusCode.Forbidden);
-            }
         }
     }
 }

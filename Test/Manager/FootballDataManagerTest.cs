@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
 using DAO;
 using DAO.Interfaces;
 using Models;
@@ -7,34 +10,31 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 using NSubstitute;
 using NUnit.Framework;
-using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Test.Manager
 {
     public class FootballDataManagerTest
     {
         private IMongoCollection<Competition> _collectionCompetition;
-        private IMongoCollection<Team> _collectionTeam;
         private IMongoCollection<Match> _collectionMatch;
-        private ICompetitionDao _competitionDao;
-        private ITeamDao _teamDao;
-        private IMatchDao _matchDao;
-        private IMongoDatabase _database;
-        private HttpClient _http;
+        private IMongoCollection<Team> _collectionTeam;
         private Competition _competition;
+        private ICompetitionDao _competitionDao;
+        private IMongoDatabase _database;
+        private ExtraTime _extraTime;
+        private ExpressionFilterDefinition<Competition> _filterExpressionCompetition;
+        private ExpressionFilterDefinition<Team> _filterExpressionTeam;
+        private FullTime _fullTime;
+        private HalfTime _halfTime;
+        private HttpClient _http;
+        private Match _match;
+        private IMatchDao _matchDao;
+        private Penalties _penalties;
+        private Score _score;
         private Team _team;
         private Team _team1;
         private Team _team2;
-        private Match _match;
-        private Score _score;
-        private FullTime _fullTime;
-        private HalfTime _halfTime;
-        private ExtraTime _extraTime;
-        private Penalties _penalties;
-        private ExpressionFilterDefinition<Competition> _filterExpressionCompetition;
-        private ExpressionFilterDefinition<Team> _filterExpressionTeam;
+        private ITeamDao _teamDao;
 
         [SetUp]
         public void SetUp()
@@ -93,11 +93,14 @@ namespace Test.Manager
                 Colors = "test",
                 Venue = "test"
             };
-            _fullTime = new FullTime { AwayTeam = 1, HomeTeam = 1 };
-            _halfTime = new HalfTime { AwayTeam = 1, HomeTeam = 1 };
-            _extraTime = new ExtraTime { AwayTeam = 1, HomeTeam = 1 };
-            _penalties = new Penalties { AwayTeam = 1, HomeTeam = 1 };
-            _score = new Score { Winner = "test", Duration = "test", ExtraTime = _extraTime, FullTime = _fullTime, Penalties = _penalties };
+            _fullTime = new FullTime {AwayTeam = 1, HomeTeam = 1};
+            _halfTime = new HalfTime {AwayTeam = 1, HomeTeam = 1};
+            _extraTime = new ExtraTime {AwayTeam = 1, HomeTeam = 1};
+            _penalties = new Penalties {AwayTeam = 1, HomeTeam = 1};
+            _score = new Score
+            {
+                Winner = "test", Duration = "test", ExtraTime = _extraTime, FullTime = _fullTime, Penalties = _penalties
+            };
 
             _match = new Match
             {
@@ -106,7 +109,6 @@ namespace Test.Manager
                 HomeTeam = _team1,
                 AwayTeam = _team2,
                 Score = _score
-
             };
         }
 
@@ -123,7 +125,8 @@ namespace Test.Manager
         public void GetCompetitionTest()
         {
             _competitionDao.FindCompetition(1);
-            _filterExpressionCompetition = new ExpressionFilterDefinition<Competition>(competition => competition.Id == _competition.Id);
+            _filterExpressionCompetition =
+                new ExpressionFilterDefinition<Competition>(competition => competition.Id == _competition.Id);
             _collectionCompetition.Received().Find(_filterExpressionCompetition);
         }
 
@@ -153,7 +156,7 @@ namespace Test.Manager
 
         [Test]
         public void GetCompetitionsHttpTest()
-        { 
+        {
             _http.GetAsync("competitions/" + 1);
             _http.Received().GetAsync("test");
         }

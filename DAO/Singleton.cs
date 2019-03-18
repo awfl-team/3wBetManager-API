@@ -48,7 +48,5 @@ namespace DAO
         {
             return BetDao = betDao;
         }
-
-
     }
 }

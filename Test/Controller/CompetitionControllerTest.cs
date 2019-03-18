@@ -1,20 +1,15 @@
 ﻿using System.Threading.Tasks;
-using System.Web.Http;
 using DAO;
-using Manager;
+using DAO.Interfaces;
 using NSubstitute;
 using NUnit.Framework;
 using _3wBetManager_API.Controllers;
-using DAO.Interfaces;
 
 namespace Test.Controller
 {
     [TestFixture]
     public class CompetitionControllerTest
     {
-        private CompetitionController _competitionController;
-        private ICompetitionDao _competitionDao;
-
         [SetUp]
         public void SetUp()
         {
@@ -28,6 +23,9 @@ namespace Test.Controller
             _competitionDao.ClearReceivedCalls();
         }
 
+        private CompetitionController _competitionController;
+        private ICompetitionDao _competitionDao;
+
         [Test]
         public void GetAllTest()
         {
@@ -35,7 +33,6 @@ namespace Test.Controller
 
             _competitionDao.Received().FindAllCompetitions();
             Assert.IsInstanceOf<Task<IHttpActionResult>>(getAllCompetition);
-
         }
     }
 }

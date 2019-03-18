@@ -12,12 +12,6 @@ namespace Test.DAO
     [TestFixture]
     public class TeamDaoTest
     {
-        private Team _team;
-        private IMongoCollection<Team> _collection;
-        private ITeamDao _teamDao;
-        private IMongoDatabase _database;
-        private ExpressionFilterDefinition<Team> _filterExpression;
-
         [SetUp]
         public void SetUp()
         {
@@ -36,6 +30,12 @@ namespace Test.DAO
         {
             _collection.ClearReceivedCalls();
         }
+
+        private Team _team;
+        private IMongoCollection<Team> _collection;
+        private ITeamDao _teamDao;
+        private IMongoDatabase _database;
+        private ExpressionFilterDefinition<Team> _filterExpression;
 
         [Test]
         public void AddTeamTest()

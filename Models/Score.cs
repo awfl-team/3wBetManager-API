@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Models
+﻿namespace Models
 {
     public class Score
     {
@@ -18,25 +12,25 @@ namespace Models
 
     public class FullTime
     {
-        public Nullable<int> HomeTeam { get; set; }
-        public Nullable<int> AwayTeam { get; set; }
+        public int? HomeTeam { get; set; }
+        public int? AwayTeam { get; set; }
     }
 
     public class HalfTime
     {
-        public Nullable<int> HomeTeam { get; set; }
-        public Nullable<int> AwayTeam { get; set; }
+        public int? HomeTeam { get; set; }
+        public int? AwayTeam { get; set; }
     }
 
     public class ExtraTime
     {
-        public Nullable<int> HomeTeam { get; set; }
-        public Nullable<int> AwayTeam { get; set; }
+        public int? HomeTeam { get; set; }
+        public int? AwayTeam { get; set; }
     }
 
     public class Penalties
     {
-        public Nullable<int> HomeTeam { get; set; }
-        public Nullable<int> AwayTeam { get; set; }
+        public int? HomeTeam { get; set; }
+        public int? AwayTeam { get; set; }
     }
 }

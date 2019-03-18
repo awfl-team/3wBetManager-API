@@ -32,7 +32,6 @@ namespace _3wBetManager_API.Controllers
         public async Task<IHttpActionResult> GetTop50()
         {
             return await HandleError(async () => Ok(await UserManager.GetBestBetters()));
-      
         }
 
 
@@ -45,7 +44,6 @@ namespace _3wBetManager_API.Controllers
                 var user = await GetUserByToken(Request);
                 return Ok(await UserManager.GetUserPositionAmongSiblings(user));
             });
-
         }
 
         [Route("top3")]
@@ -53,7 +51,6 @@ namespace _3wBetManager_API.Controllers
         public async Task<IHttpActionResult> GetTop3()
         {
             return await HandleError(async () => Ok(await UserManager.GetTop3()));
-
         }
 
         [Route("token")]
@@ -62,7 +59,7 @@ namespace _3wBetManager_API.Controllers
         {
             return await HandleError(async () => Ok(await GetUserByToken(Request)));
         }
-        
+
         [Route("{id}")]
         [HttpPut]
         public async Task<IHttpActionResult> Put(string id, [FromBody] User user)
@@ -70,10 +67,7 @@ namespace _3wBetManager_API.Controllers
             return await HandleNotFound(async () =>
             {
                 var canUpdate = await UserManager.CanUpdate(id, user);
-                if (canUpdate.Length > 0)
-                {
-                    return Content(HttpStatusCode.BadRequest, canUpdate);
-                }
+                if (canUpdate.Length > 0) return Content(HttpStatusCode.BadRequest, canUpdate);
                 await GetUserDao().UpdateUser(id, user);
                 var fullUser = await Singleton.Instance.UserDao.FindUser(id);
                 return Ok(TokenManager.GenerateToken(fullUser.Email, fullUser.Role, fullUser.Username));
@@ -101,7 +95,6 @@ namespace _3wBetManager_API.Controllers
                 await GetUserDao().UpdateUserRole(id, userParam.Role);
                 return Ok();
             });
-      
         }
 
         [Route("{id}")]
@@ -123,10 +116,7 @@ namespace _3wBetManager_API.Controllers
             return await HandleError(async () =>
             {
                 var searchValue = await GetUserDao().SearchUser(value);
-                if (searchValue.Count == 0)
-                {
-                    return NotFound();
-                }
+                if (searchValue.Count == 0) return NotFound();
                 return Ok(searchValue);
             });
         }
@@ -138,10 +128,7 @@ namespace _3wBetManager_API.Controllers
             return await HandleError(async () =>
             {
                 var user = await GetUserByToken(Request);
-                if (user.Life == 0)
-                {
-                    return Content(HttpStatusCode.BadRequest, "You already used all your lives");
-                }
+                if (user.Life == 0) return Content(HttpStatusCode.BadRequest, "You already used all your lives");
                 await UserManager.ResetUser(user);
                 return Ok();
             });
@@ -162,16 +149,11 @@ namespace _3wBetManager_API.Controllers
             return await HandleError(async () =>
             {
                 var userExist = await UserManager.UsernameAndEmailExist(user);
-                if (userExist.Length > 0)
-                {
-                    return Content(HttpStatusCode.BadRequest, userExist);
-                }
+                if (userExist.Length > 0) return Content(HttpStatusCode.BadRequest, userExist);
                 // TODO change this
                 await GetUserDao().AddUser(user, user.Role);
                 return Created("", user);
             });
         }
-
-        
     }
 }

@@ -45,7 +45,6 @@ namespace _3wBetManager_API.Controllers
         [HttpGet]
         public async Task<IHttpActionResult> GetPublicUserCoinStats(string id)
         {
-
             return await HandleNotFound(async () =>
             {
                 var user = await GetUserDao().FindUser(id);
@@ -86,6 +85,5 @@ namespace _3wBetManager_API.Controllers
                 return Ok(await BetManager.GetUserBetsPerType(user));
             });
         }
-
     }
 }

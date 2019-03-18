@@ -13,19 +13,17 @@ namespace Test.DAO
     [TestFixture]
     public class UserDaoTest
     {
-        private User _user;
-        private IMongoCollection<User> _collection;
-        private IUserDao _userDao;
-        private IMongoDatabase _database;
-        private ExpressionFilterDefinition<User> _filterExpression;
-
         [SetUp]
         public void SetUp()
         {
             _collection = Substitute.For<IMongoCollection<User>>();
             _database = Substitute.For<IMongoDatabase>();
-            _userDao = new UserDao(_database,_collection);
-            _user = new User { Email = "test", Password = "test", Username = "test", Id = new ObjectId("5c06f4b43cd1d72a48b44237"), TotalPointsUsedToBet = 40, Point = 100};
+            _userDao = new UserDao(_database, _collection);
+            _user = new User
+            {
+                Email = "test", Password = "test", Username = "test", Id = new ObjectId("5c06f4b43cd1d72a48b44237"),
+                TotalPointsUsedToBet = 40, Point = 100
+            };
         }
 
         [TearDown]
@@ -34,21 +32,41 @@ namespace Test.DAO
             _collection.ClearReceivedCalls();
         }
 
+        private User _user;
+        private IMongoCollection<User> _collection;
+        private IUserDao _userDao;
+        private IMongoDatabase _database;
+        private ExpressionFilterDefinition<User> _filterExpression;
+
+        [Test]
+        public void AddUserTest()
+        {
+            _userDao.AddUser(_user, User.UserRole);
+            _collection.Received().InsertOneAsync(Arg.Any<User>());
+        }
+
+        [Test]
+        public void DeleteUserTest()
+        {
+            _userDao.DeleteUser("5c06f4b43cd1d72a48b44237");
+            _collection.Received()
+                .DeleteOneAsync(Arg.Any<ExpressionFilterDefinition<User>>());
+        }
+
+        [Test]
+        public void FindAllUsersByPoints()
+        {
+            _userDao.FindAllUserByPoint();
+            _collection.Received().Find(new BsonDocument());
+            Assert.IsInstanceOf<Task<List<User>>>(_userDao.FindAllUserByPoint());
+        }
+
         [Test]
         public void FindAllUserTest()
         {
             _userDao.FindAllUser();
             _collection.Received().Find(new BsonDocument());
             Assert.IsInstanceOf<Task<List<User>>>(_userDao.FindAllUser());
-        }
-
-        [Test]
-        public void FindUserTest()
-        {
-            _userDao.FindUser("5c06f4b43cd1d72a48b44237");
-            _filterExpression = new ExpressionFilterDefinition<User>(user => user.Id == _user.Id);
-            _collection.Received().Find(_filterExpression);
-            Assert.IsInstanceOf<Task<User>>(_userDao.FindUser(Arg.Any<string>()));
         }
 
         [Test]
@@ -70,44 +88,48 @@ namespace Test.DAO
         }
 
         [Test]
-        public void AddUserTest()
+        public void FindUserTest()
         {
-            _userDao.AddUser(_user,  User.UserRole);
-            _collection.Received().InsertOneAsync(Arg.Any<User>());
+            _userDao.FindUser("5c06f4b43cd1d72a48b44237");
+            _filterExpression = new ExpressionFilterDefinition<User>(user => user.Id == _user.Id);
+            _collection.Received().Find(_filterExpression);
+            Assert.IsInstanceOf<Task<User>>(_userDao.FindUser(Arg.Any<string>()));
         }
 
-        [Test]
-        public void DeleteUserTest()
-        {
-            _userDao.DeleteUser("5c06f4b43cd1d72a48b44237");
-            _collection.Received()
-                .DeleteOneAsync(Arg.Any<ExpressionFilterDefinition<User>>());
-        }
 
         [Test]
-        public void UpdateUserLivesTest()
+        public void OrderUserByPointsTest()
         {
-            _userDao.UpdateUserLives(_user);
-            _collection.Received().UpdateOneAsync(Arg.Any<ExpressionFilterDefinition<User>>(),
-                Arg.Any<UpdateDefinition<User>>()
-            );
-        }
-
-        [Test]
-        public void FindAllUsersByPoints()
-        {
-            _userDao.FindAllUserByPoint();
+            _userDao.OrderUserByPoint();
             _collection.Received().Find(new BsonDocument());
-            Assert.IsInstanceOf<Task<List<User>>>(_userDao.FindAllUserByPoint());
+            Assert.IsInstanceOf<Task<List<User>>>(_userDao.OrderUserByPoint());
         }
 
         [Test]
-        public void UpdateUserTest()
+        public void PaginatedUsersTest()
         {
-            _userDao.UpdateUser("5c06f4b43cd1d72a48b44237", _user);
+            _userDao.PaginatedUsers(10);
+            _collection.Received().Find(new BsonDocument());
+            Assert.IsInstanceOf<Task<List<User>>>(_userDao.PaginatedUsers(10));
+        }
+
+        [Test]
+        public void ResetUserTest()
+        {
+            _userDao.ResetUserPoints(_user);
             _collection.Received().UpdateOneAsync(Arg.Any<ExpressionFilterDefinition<User>>(),
                 Arg.Any<UpdateDefinition<User>>()
             );
+        }
+
+        [Test]
+        public void SearchUserTest()
+        {
+            _userDao.SearchUser("test");
+            _filterExpression =
+                new ExpressionFilterDefinition<User>(u => u.Email.Contains("test") || u.Username.Contains("test"));
+            _collection.Received().Find(_filterExpression);
+            Assert.IsInstanceOf<Task<List<User>>>(_userDao.SearchUser(Arg.Any<string>()));
         }
 
         [Test]
@@ -120,18 +142,18 @@ namespace Test.DAO
         }
 
         [Test]
-        public void UpdateUserPointsTest()
+        public void UpdateUserLivesTest()
         {
-            _userDao.UpdateUserPoints(_user, _user.Point ,_user.TotalPointsUsedToBet);
+            _userDao.UpdateUserLives(_user);
             _collection.Received().UpdateOneAsync(Arg.Any<ExpressionFilterDefinition<User>>(),
                 Arg.Any<UpdateDefinition<User>>()
             );
         }
 
         [Test]
-        public void ResetUserTest()
+        public void UpdateUserPointsTest()
         {
-            _userDao.ResetUserPoints(_user);
+            _userDao.UpdateUserPoints(_user, _user.Point, _user.TotalPointsUsedToBet);
             _collection.Received().UpdateOneAsync(Arg.Any<ExpressionFilterDefinition<User>>(),
                 Arg.Any<UpdateDefinition<User>>()
             );
@@ -146,30 +168,13 @@ namespace Test.DAO
             );
         }
 
-
         [Test]
-        public void OrderUserByPointsTest()
+        public void UpdateUserTest()
         {
-            _userDao.OrderUserByPoint();
-            _collection.Received().Find(new BsonDocument());
-            Assert.IsInstanceOf<Task<List<User>>>(_userDao.OrderUserByPoint());
-        }
-
-        [Test]
-        public void SearchUserTest()
-        {
-            _userDao.SearchUser("test");
-            _filterExpression = new ExpressionFilterDefinition<User>(u => u.Email.Contains("test") || u.Username.Contains("test"));
-            _collection.Received().Find(_filterExpression);
-            Assert.IsInstanceOf<Task<List<User>>>(_userDao.SearchUser(Arg.Any<string>()));
-        }
-
-        [Test]
-        public void PaginatedUsersTest()
-        {
-            _userDao.PaginatedUsers(10);
-            _collection.Received().Find(new BsonDocument());
-            Assert.IsInstanceOf<Task<List<User>>>(_userDao.PaginatedUsers(10));
+            _userDao.UpdateUser("5c06f4b43cd1d72a48b44237", _user);
+            _collection.Received().UpdateOneAsync(Arg.Any<ExpressionFilterDefinition<User>>(),
+                Arg.Any<UpdateDefinition<User>>()
+            );
         }
     }
 }
