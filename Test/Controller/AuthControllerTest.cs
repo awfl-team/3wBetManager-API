@@ -36,7 +36,7 @@ namespace Test.Controller
             var register = _authController.Register(_user);
             var calls = _userDao.ReceivedCalls();
             //_userDao.Received().UsernameAndEmailExist(Arg.Any<User>(), out var message);
-            _userDao.Received().AddUser(Arg.Any<User>());
+            _userDao.Received().AddUser(Arg.Any<User>(), Arg.Any<string>());
             Assert.IsInstanceOf<Task<IHttpActionResult>>(register);
         }
     }

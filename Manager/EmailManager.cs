@@ -39,7 +39,7 @@ namespace Manager
         {
             var mailMessage = new MailMessage();
             mailMessage.To.Add("florob95@gmail.com");
-            var now = DateTime.Now.ToString("yyyy-MM-dd"); 
+            var now = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"); 
             mailMessage.Subject = "[" + now + "]" + " ERROR API";
             mailMessage.Body = exception.ToString();
             mailMessage.From = new MailAddress("3wbet.manager@gmail.com", "3wbetManager");

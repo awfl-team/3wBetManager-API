@@ -72,7 +72,7 @@ namespace Test.DAO
         [Test]
         public void AddUserTest()
         {
-            _userDao.AddUser(_user);
+            _userDao.AddUser(_user,  User.UserRole);
             _collection.Received().InsertOneAsync(Arg.Any<User>());
         }
 
