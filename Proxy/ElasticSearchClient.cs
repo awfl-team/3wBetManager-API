@@ -21,7 +21,5 @@ namespace Proxy
         {
             await _elasticClient.IndexAsync(document, idx => idx.Index(index));
         }
-
-        
     }
 }

@@ -6,7 +6,7 @@ using System.Runtime.Remoting.Proxies;
 
 namespace Proxy
 {
-    public class Proxy<T>: RealProxy
+    public class Proxy<T> : RealProxy
     {
         private readonly T _decorator;
 
@@ -47,7 +47,5 @@ namespace Proxy
         {
             Console.WriteLine($"{DateTime.Now:s} - {message}");
         }
-
-
     }
 }

@@ -3,7 +3,7 @@ using System.Diagnostics;
 
 namespace Proxy
 {
-    public class ElasticsSearchControllerContext: IDisposable
+    public class ElasticsSearchControllerContext : IDisposable
     {
         private readonly string _ip;
         private readonly string _requestPath;
