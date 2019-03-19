@@ -1,5 +1,6 @@
 ﻿using DAO.Interfaces;
 using MongoDB.Driver;
+using Proxy;
 
 namespace DAO
 {
@@ -26,27 +27,32 @@ namespace DAO
 
         public IUserDao SetUserDao(IUserDao userDao)
         {
-            return UserDao = userDao;
+            var dynamicUserDaoProxy = new Proxy<IUserDao>(userDao);
+            return UserDao = dynamicUserDaoProxy.GetTransparentProxy() as IUserDao;
         }
 
         public ICompetitionDao SetCompetitionDao(ICompetitionDao competitionDao)
         {
-            return CompetitionDao = competitionDao;
+            var dynamicCompetitionDaoProxy = new Proxy<ICompetitionDao>(competitionDao);
+            return CompetitionDao = dynamicCompetitionDaoProxy.GetTransparentProxy() as ICompetitionDao;
         }
 
         public ITeamDao SetTeamDao(ITeamDao teamDao)
         {
-            return TeamDao = teamDao;
+            var dynamicTeamDaoProxy = new Proxy<ITeamDao>(teamDao);
+            return TeamDao = dynamicTeamDaoProxy.GetTransparentProxy() as ITeamDao;
         }
 
         public IMatchDao SetMatchDao(IMatchDao matchDao)
         {
-            return MatchDao = matchDao;
+            var dynamicMatchDaoProxy = new Proxy<IMatchDao>(matchDao);
+            return MatchDao = dynamicMatchDaoProxy.GetTransparentProxy() as MatchDao;
         }
 
         public IBetDao SetBetDao(IBetDao betDao)
         {
-            return BetDao = betDao;
+            var dynamicCompetitionDaoProxy = new Proxy<IBetDao>(betDao);
+            return BetDao = dynamicCompetitionDaoProxy.GetTransparentProxy() as IBetDao;
         }
     }
 }
