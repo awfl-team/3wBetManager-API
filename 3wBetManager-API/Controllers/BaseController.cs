@@ -6,6 +6,7 @@ using DAO;
 using DAO.Interfaces;
 using Manager;
 using Models;
+using Proxy;
 
 namespace _3wBetManager_API.Controllers
 {
@@ -35,17 +36,21 @@ namespace _3wBetManager_API.Controllers
 
         protected async Task<IHttpActionResult> HandleError(Func<Task<IHttpActionResult>> getHttpActionResult)
         {
-            try
+            using (new ElasticsSearchControllerContext(Request.Method.Method,
+                Request.RequestUri.AbsolutePath, Request.GetOwinContext().Request.RemoteIpAddress))
             {
-                return await getHttpActionResult();
-            }
-            catch (NullReferenceException)
-            {
-                return BadRequest("Invalid Token");
-            }
-            catch (Exception e)
-            {
-                return InternalServerError(e);
+                try
+                {
+                    return await getHttpActionResult();
+                }
+                catch (NullReferenceException)
+                {
+                    return BadRequest("Invalid Token");
+                }
+                catch (Exception e)
+                {
+                    return InternalServerError(e);
+                }
             }
         }
 

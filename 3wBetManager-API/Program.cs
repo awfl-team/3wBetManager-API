@@ -27,7 +27,7 @@ namespace _3wBetManager_API
 
             Singleton.Instance.SetAll(database);
             var handle = GetConsoleWindow();
-            ShowWindow(handle, SW_HIDE);
+            //ShowWindow(handle, SW_HIDE);
 
             // Start OWIN host 
             using (WebApp.Start<Startup>(baseAddress))

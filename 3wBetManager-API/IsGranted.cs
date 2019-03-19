@@ -20,22 +20,22 @@ namespace _3wBetManager_API
 
         public override void OnAuthorization(HttpActionContext actionContext)
         {
-            var token = TokenManager.GetTokenFromRequest(actionContext.Request);
-            if (token == null)
-            {
-                actionContext.Response = new HttpResponseMessage(HttpStatusCode.Unauthorized);
-                return;
-            }
+                var token = TokenManager.GetTokenFromRequest(actionContext.Request);
+                if (token == null)
+                {
+                    actionContext.Response = new HttpResponseMessage(HttpStatusCode.Unauthorized);
+                    return;
+                }
 
-            var user = TokenManager.ValidateToken(token);
-            if (user == null)
-            {
-                actionContext.Response = new HttpResponseMessage(HttpStatusCode.Unauthorized);
-                return;
-            }
+                var user = TokenManager.ValidateToken(token);
+                if (user == null)
+                {
+                    actionContext.Response = new HttpResponseMessage(HttpStatusCode.Unauthorized);
+                    return;
+                }
 
-            if (_role == User.AdminRole && user["role"] != User.AdminRole)
-                actionContext.Response = new HttpResponseMessage(HttpStatusCode.Forbidden);
+                if (_role == User.AdminRole && user["role"] != User.AdminRole)
+                    actionContext.Response = new HttpResponseMessage(HttpStatusCode.Forbidden);
         }
     }
 }

@@ -157,6 +157,10 @@
       <Project>{057423D6-1327-47F7-B455-D281935FA5A5}</Project>
       <Name>Models</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Proxy\Proxy.csproj">
+      <Project>{59DD1BA3-6456-419D-B6BC-D86D59740443}</Project>
+      <Name>Proxy</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <UsingTask TaskName="TransformXml" AssemblyFile="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Web\Microsoft.Web.Publishing.Tasks.dll" />
