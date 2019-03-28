@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using System.Web.Http;
 using Manager;
+using Models;
 
 namespace _3wBetManager_API.Controllers
 {
@@ -87,5 +88,14 @@ namespace _3wBetManager_API.Controllers
             });
         }
 
+        [Route("type/{user}")]
+        [HttpGet]
+        public async Task<IHttpActionResult> GetProfileUserBetsPerType(User user)
+        {
+            return await HandleError(async () =>
+            {
+                return Ok(await BetManager.GetUserBetsPerType(user));
+            });
+        }
     }
 }
