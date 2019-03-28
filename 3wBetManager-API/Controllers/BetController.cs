@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
-using DAO;
 using Manager;
 using Models;
 
@@ -13,7 +11,6 @@ namespace _3wBetManager_API.Controllers
     [RoutePrefix("bets")]
     public class BetController : BaseController
     {
-
         [Route("")]
         [HttpPost]
         public async Task<IHttpActionResult> Post([FromBody] List<Bet> bets)
@@ -23,7 +20,7 @@ namespace _3wBetManager_API.Controllers
                 var user = await GetUserByToken(Request);
                 bets = BetManager.AddGuidList(user, bets);
                 await GetBetDao().AddListBet(bets);
-                await GetUserDao().UpdateUserPoints(user, user.Point - (bets.Count * 10), (bets.Count * 10));
+                await GetUserDao().UpdateUserPoints(user, user.Point - bets.Count * 10, bets.Count * 10);
                 return Created("", bets);
             });
         }
@@ -35,12 +32,9 @@ namespace _3wBetManager_API.Controllers
             return await HandleError(async () =>
             {
                 var user = await GetUserByToken(Request);
-                foreach (var bet in bets)
-                {
-                    await GetBetDao().UpdateBet(bet);
-                }
+                foreach (var bet in bets) await GetBetDao().UpdateBet(bet);
 
-                await GetUserDao().UpdateUserPoints(user, user.Point - (bets.Count * 10), (bets.Count * 10));
+                await GetUserDao().UpdateUserPoints(user, user.Point - bets.Count * 10, bets.Count * 10);
                 return Content(HttpStatusCode.NoContent, "");
             });
         }

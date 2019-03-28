@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using DAO;
 using Models;
@@ -19,6 +20,11 @@ namespace Manager
             _http = http ?? new HttpClient();
             _http.BaseAddress = new Uri("https://api.football-data.org/v2/");
             _http.DefaultRequestHeaders.Add("X-Auth-Token", "f74e0beb5501485895a1ebb03ba925db");
+        }
+
+        public void Dispose()
+        {
+            _http = null;
         }
 
         public async Task GetAllCompetitions()
@@ -45,7 +51,7 @@ namespace Manager
                         Singleton.Instance.CompetitionDao.ReplaceCompetition(findCompetition.Id, competition);
                     }
 
-                    System.Threading.Thread.Sleep(10000);
+                    Thread.Sleep(10000);
                 }
 
                 Console.WriteLine("     ----- End Fetch competitions ----- ");
@@ -86,7 +92,7 @@ namespace Manager
                         }
                     }
 
-                    System.Threading.Thread.Sleep(10000);
+                    Thread.Sleep(10000);
                 }
 
                 Console.WriteLine("     ----- End Fetch teams ----- ");
@@ -140,11 +146,6 @@ namespace Manager
                 Console.WriteLine(e);
                 throw;
             }
-        }
-
-        public void Dispose()
-        {
-            _http = null;
         }
     }
 }

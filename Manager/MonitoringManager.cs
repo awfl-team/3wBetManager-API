@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace Manager
 {
-    public class MonitoringManager: IDisposable
+    public class MonitoringManager : IDisposable
     {
         private HttpClient _http;
 
@@ -43,7 +43,6 @@ namespace Manager
                     emailManager.SendWebMasterEmail(e);
                 }
             }
-
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Configuration;
+using System.Threading;
 using System.Threading.Tasks;
 using DAO;
 using Manager;
@@ -12,7 +13,6 @@ namespace FetchFootballData
         private static async Task Main(string[] args)
         {
             if (args[0] == "REFRESH")
-            {
                 using (var footballDataManager = new FootballDataManager())
                 {
                     var client = new MongoClient(ConfigurationManager.AppSettings["dbUrl"]);
@@ -24,19 +24,15 @@ namespace FetchFootballData
                     await footballDataManager.GetAllMatchForAWeek();
                     Console.WriteLine("----- End Fetch football data ----- ");
                     UserManager.RecalculateUserPoints();
-                    System.Threading.Thread.Sleep(10000);
+                    Thread.Sleep(10000);
                     Environment.Exit(0);
                 }
-          
-            }
 
             if (args[0] == "MONITORING")
-            {
                 using (var monitoringManager = new MonitoringManager())
                 {
                     await monitoringManager.ResponseApi();
                 }
-            }
         }
     }
 }

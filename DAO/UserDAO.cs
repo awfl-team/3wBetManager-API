@@ -87,7 +87,6 @@ namespace DAO
             await _collection.UpdateOneAsync(
                 user => user.Id == id,
                 Builders<User>.Update.Set(user => user.IsPrivate, isPrivate)
-
             );
         }
 
@@ -96,23 +95,24 @@ namespace DAO
             await _collection.UpdateOneAsync(
                 user => user.Id == ObjectId.Parse(id),
                 Builders<User>.Update.Set(user => user.Role, role)
-
             );
         }
 
         public async Task UpdateUserPoints(User user, int point, int pointsUsedToBet)
         {
             await _collection.UpdateOneAsync(
-               u => u.Id == user.Id,
-                Builders<User>.Update.Set(u => u.Point, point).Set(u => u.TotalPointsUsedToBet, user.TotalPointsUsedToBet + pointsUsedToBet)
+                u => u.Id == user.Id,
+                Builders<User>.Update.Set(u => u.Point, point).Set(u => u.TotalPointsUsedToBet,
+                    user.TotalPointsUsedToBet + pointsUsedToBet)
             );
         }
 
         public async Task ResetUserPoints(User user)
         {
             await _collection.UpdateOneAsync(
-               u => u.Id == user.Id,
-                Builders<User>.Update.Set(u => u.Point, User.DefaultPoint).Set(u => u.TotalPointsUsedToBet, User.DefaultTotalPointsUsedToBet)
+                u => u.Id == user.Id,
+                Builders<User>.Update.Set(u => u.Point, User.DefaultPoint)
+                    .Set(u => u.TotalPointsUsedToBet, User.DefaultTotalPointsUsedToBet)
             );
         }
 

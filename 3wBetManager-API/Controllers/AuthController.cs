@@ -4,7 +4,6 @@ using System.Web.Http;
 using Manager;
 using Models;
 
-
 namespace _3wBetManager_API.Controllers
 {
     public class AuthController : BaseController
@@ -16,11 +15,8 @@ namespace _3wBetManager_API.Controllers
             return await HandleError(async () =>
             {
                 var userExist = await UserManager.UsernameAndEmailExist(user);
-                if (userExist.Length > 0)
-                {
-                    return Content(HttpStatusCode.BadRequest, userExist);
-                }
-                
+                if (userExist.Length > 0) return Content(HttpStatusCode.BadRequest, userExist);
+
                 await GetUserDao().AddUser(user, Models.User.AdminRole);
                 return Created("", user);
             });
@@ -36,10 +32,8 @@ namespace _3wBetManager_API.Controllers
                 var fullUser = await GetUserDao().FindUserByEmail(user.Email);
 
                 if (BCrypt.Net.BCrypt.Verify(user.Password, fullUser.Password))
-                {
                     return Ok(TokenManager.GenerateToken(fullUser.Email, fullUser.Role,
                         fullUser.Username));
-                }
 
                 return Content(HttpStatusCode.BadRequest, errorMessage);
             });
@@ -52,15 +46,13 @@ namespace _3wBetManager_API.Controllers
             return await HandleError(async () =>
             {
                 var user = await GetUserDao().FindUserByEmail(userParam.Email);
-                if (user == null)
-                {
-                    return NotFound();
-                }
+                if (user == null) return NotFound();
 
                 using (var emailManager = new EmailManager())
                 {
                     emailManager.SendResetPasswordEmail(user);
                 }
+
                 return Ok();
             });
         }
@@ -72,14 +64,11 @@ namespace _3wBetManager_API.Controllers
             return await HandleError(async () =>
             {
                 var user = await GetUserByToken(Request);
-                if (user == null)
-                {
-                    return BadRequest();
-                }
+                if (user == null) return BadRequest();
 
                 user.Password = userParam.Password;
                 await GetUserDao().UpdateUserPassword(user);
-             
+
                 return Content(HttpStatusCode.NoContent, "");
             });
         }
