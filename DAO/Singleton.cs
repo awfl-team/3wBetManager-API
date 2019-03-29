@@ -15,6 +15,7 @@ namespace DAO
         public ITeamDao TeamDao { get; private set; }
         public IMatchDao MatchDao { get; private set; }
         public IBetDao BetDao { get; private set; }
+        public IItemDao ItemDao { get; private set; }
 
         public void SetAll(IMongoDatabase database)
         {
@@ -23,6 +24,7 @@ namespace DAO
             SetBetDao(new BetDao(database));
             SetCompetitionDao(new CompetitionDao(database));
             SetUserDao(new UserDao(database));
+            SetItemDao(new ItemDao(database));
         }
 
         public IUserDao SetUserDao(IUserDao userDao)
@@ -46,13 +48,19 @@ namespace DAO
         public IMatchDao SetMatchDao(IMatchDao matchDao)
         {
             var dynamicMatchDaoProxy = new Proxy<IMatchDao>(matchDao);
-            return MatchDao = dynamicMatchDaoProxy.GetTransparentProxy() as MatchDao;
+            return MatchDao = dynamicMatchDaoProxy.GetTransparentProxy() as IMatchDao;
         }
 
         public IBetDao SetBetDao(IBetDao betDao)
         {
             var dynamicCompetitionDaoProxy = new Proxy<IBetDao>(betDao);
             return BetDao = dynamicCompetitionDaoProxy.GetTransparentProxy() as IBetDao;
+        }
+
+        public IItemDao SetItemDao(IItemDao itemDao)
+        {
+            var dynamicCompetitionDaoProxy = new Proxy<IItemDao>(itemDao);
+            return ItemDao = dynamicCompetitionDaoProxy.GetTransparentProxy() as IItemDao;
         }
     }
 }

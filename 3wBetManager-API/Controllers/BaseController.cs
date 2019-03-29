@@ -10,7 +10,7 @@ using Proxy;
 
 namespace _3wBetManager_API.Controllers
 {
-    public class BaseController : ApiController
+    public abstract class BaseController : ApiController
     {
         protected IUserDao GetUserDao()
         {
@@ -25,6 +25,11 @@ namespace _3wBetManager_API.Controllers
         protected ICompetitionDao GetCompetitionDao()
         {
             return Singleton.Instance.CompetitionDao;
+        }
+
+        protected IItemDao GetItemDao()
+        {
+            return Singleton.Instance.ItemDao;
         }
 
         protected static async Task<User> GetUserByToken(HttpRequestMessage request)
@@ -42,10 +47,6 @@ namespace _3wBetManager_API.Controllers
                 try
                 {
                     return await getHttpActionResult();
-                }
-                catch (NullReferenceException)
-                {
-                    return BadRequest("Invalid Token");
                 }
                 catch (Exception e)
                 {

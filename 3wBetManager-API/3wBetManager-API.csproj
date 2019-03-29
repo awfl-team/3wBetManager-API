@@ -123,6 +123,7 @@
     <Compile Include="Controllers\BetController.cs" />
     <Compile Include="Controllers\CompetitionController.cs" />
     <Compile Include="Controllers\CronController.cs" />
+    <Compile Include="Controllers\ItemController.cs" />
     <Compile Include="Controllers\StatController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="IsGranted.cs" />

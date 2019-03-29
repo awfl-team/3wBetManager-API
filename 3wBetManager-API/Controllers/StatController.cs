@@ -91,10 +91,7 @@ namespace _3wBetManager_API.Controllers
         [HttpGet]
         public async Task<IHttpActionResult> GetProfileUserBetsPerType(User user)
         {
-            return await HandleError(async () =>
-            {
-                return Ok(await BetManager.GetUserBetsPerType(user));
-            });
+            return await HandleError(async () => Ok(await BetManager.GetUserBetsPerType(user)));
         }
     }
 }

@@ -132,6 +132,15 @@ namespace DAO
             );
         }
 
+        public async Task AddUserItem(Item item, User user)
+        {
+            await _collection.UpdateOneAsync(
+                u => u.Id == user.Id,
+                Builders<User>.Update.Push(u => u.Items, item)
+            );
+
+        }
+
         public async Task<List<User>> SearchUser(string value)
         {
             return await _collection.Find(u => u.Email.Contains(value) || u.Username.Contains(value)).ToListAsync();
