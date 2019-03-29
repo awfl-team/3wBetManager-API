@@ -184,8 +184,8 @@ namespace Manager
         public static async Task<dynamic> NumberFinishMatchAndBet(User user, int competitionId)
         {
             var finishBetsAndMatches = await GetFinishBets(user, competitionId);
-            if (finishBetsAndMatches.Count == 0) return new ExpandoObject();
             dynamic numberFinishBetsAndMatches = new ExpandoObject();
+            if (finishBetsAndMatches.Count == 0) return numberFinishBetsAndMatches;
             numberFinishBetsAndMatches.NbBet = finishBetsAndMatches.Count;
             return numberFinishBetsAndMatches;
         }
