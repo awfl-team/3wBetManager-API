@@ -59,9 +59,11 @@
     <Compile Include="CompetitionDao.cs" />
     <Compile Include="Interfaces\IBetDao.cs" />
     <Compile Include="Interfaces\ICompetitionDao.cs" />
+    <Compile Include="Interfaces\IItemDao.cs" />
     <Compile Include="Interfaces\IMatchDao.cs" />
     <Compile Include="Interfaces\ITeamDao.cs" />
     <Compile Include="Interfaces\IUserDao.cs" />
+    <Compile Include="ItemDao.cs" />
     <Compile Include="MatchDao.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Singleton.cs" />
