@@ -1,24 +1,17 @@
 ﻿using System.Threading.Tasks;
-using System.Web.Http;
 using DAO;
 using DAO.Interfaces;
+using Manager;
 using Models;
 using NSubstitute;
 using NUnit.Framework;
 using _3wBetManager_API.Controllers;
-using _3wBetManager_API.Manager;
 
 namespace Test.Controller
 {
     [TestFixture]
     public class UsersControllerTest
     {
-        private UsersController _usersController;
-        private IUserDao _userDao;
-        private User _user;
-        private static TokenManager _tokenManager;
-
-
         [SetUp]
         public void SetUp()
         {
@@ -26,8 +19,6 @@ namespace Test.Controller
             _userDao = Singleton.Instance.SetUserDao(Substitute.For<IUserDao>());
             _user = new User {Email = "test", Password = "test", Username = "test"};
             _tokenManager = Substitute.For<TokenManager>();
-    
-
         }
 
         [TearDown]
@@ -37,11 +28,16 @@ namespace Test.Controller
             _tokenManager.ClearReceivedCalls();
         }
 
+        private UsersController _usersController;
+        private IUserDao _userDao;
+        private User _user;
+        private static TokenManager _tokenManager;
+
         [Test]
         public void GetAllTest()
         {
             _usersController.GetAll();
-             _userDao.Received().FindAllUser();
+            _userDao.Received().FindAllUser();
             Assert.IsInstanceOf<Task<IHttpActionResult>>(_usersController.GetAll());
         }
 

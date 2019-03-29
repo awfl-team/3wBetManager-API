@@ -15,6 +15,45 @@ namespace Test.DAO
     [TestFixture]
     public class MatchDaoTest
     {
+        [SetUp]
+        public void SetUp()
+        {
+            _database = Substitute.For<IMongoDatabase>();
+            _collection = Substitute.For<IMongoCollection<Match>>();
+            _matchDao = new MatchDao(_database, _collection);
+
+            _team1 = new Team
+            {
+                Name = "test", Email = "test", ShortName = "test", Tla = "test", CrestUrl = "test",
+                Address = "test", Phone = "test", Colors = "test", Venue = "test"
+            };
+            _team2 = new Team
+            {
+                Name = "test", Email = "test", ShortName = "test", Tla = "test", CrestUrl = "test",
+                Address = "test", Phone = "test", Colors = "test", Venue = "test"
+            };
+            _fullTime = new FullTime {AwayTeam = 1, HomeTeam = 1};
+            _halfTime = new HalfTime {AwayTeam = 1, HomeTeam = 1};
+            _extraTime = new ExtraTime {AwayTeam = 1, HomeTeam = 1};
+            _penalties = new Penalties {AwayTeam = 1, HomeTeam = 1};
+            _score = new Score
+            {
+                Winner = "test", Duration = "test", ExtraTime = _extraTime, FullTime = _fullTime, Penalties = _penalties
+            };
+
+            _match = new Match
+            {
+                Status = "test", LastUpdated = DateTime.Now, HomeTeam = _team1, AwayTeam = _team2,
+                Score = _score
+            };
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            _collection.ClearReceivedCalls();
+        }
+
         private Match _match;
         private IMongoCollection<Match> _collection;
         private IMatchDao _matchDao;
@@ -28,51 +67,20 @@ namespace Test.DAO
         private IMongoDatabase _database;
         private ExpressionFilterDefinition<Match> _filterExpression;
 
-        [SetUp]
-        public void SetUp()
-        {
-            _database = Substitute.For<IMongoDatabase>();
-            _collection = Substitute.For<IMongoCollection<Match>>();
-            _matchDao = new MatchDao(_database, _collection);
-            
-            _team1 = new Team { Name = "test" , Email = "test", ShortName = "test", Tla = "test", CrestUrl = "test",
-                Address = "test", Phone = "test", Colors = "test", Venue = "test"};
-            _team2 = new Team { Name = "test" , Email = "test", ShortName = "test", Tla = "test", CrestUrl = "test",
-                Address = "test", Phone = "test", Colors = "test", Venue = "test"};
-            _fullTime = new FullTime {AwayTeam = 1,HomeTeam = 1};
-            _halfTime = new HalfTime { AwayTeam = 1, HomeTeam = 1 };
-            _extraTime = new ExtraTime { AwayTeam = 1, HomeTeam = 1 };
-            _penalties = new Penalties { AwayTeam = 1, HomeTeam = 1 };
-            _score = new Score {Winner = "test", Duration = "test",ExtraTime = _extraTime,FullTime = _fullTime,Penalties = _penalties};
-
-            _match = new Match
-            {
-                Status = "test", LastUpdated = DateTime.Now, HomeTeam = _team1, AwayTeam = _team2,
-                Score = _score
-
-            };
-        }
-        
-        [TearDown]
-        public void TearDown()
-        {
-            _collection.ClearReceivedCalls();
-        }
-        
         [Test]
         public void AddMatchTest()
         {
             _matchDao.AddMatch(_match);
             _collection.Received().InsertOneAsync(Arg.Any<Match>());
         }
-        
+
         [Test]
-        public void FindMatchTest()
+        public void FindAllMatchByStatusTest()
         {
-            _matchDao.FindMatch(1);
-            _filterExpression = new ExpressionFilterDefinition<Match>(match => match.Id == _match.Id);
+            _matchDao.FindByStatus(_match.Status);
+            _filterExpression = new ExpressionFilterDefinition<Match>(m => m.Status == _match.Status);
             _collection.Received().Find(_filterExpression);
-            Assert.IsInstanceOf<Task<Match>>(_matchDao.FindMatch(Arg.Any<int>()));
+            Assert.IsInstanceOf<Task<List<Match>>>(_matchDao.FindAll());
         }
 
         [Test]
@@ -84,12 +92,12 @@ namespace Test.DAO
         }
 
         [Test]
-        public void FindAllMatchByStatusTest()
+        public void FindMatchTest()
         {
-            _matchDao.FindByStatus(_match.Status);
-            _filterExpression = new ExpressionFilterDefinition<Match>(m => m.Status == _match.Status);
+            _matchDao.FindMatch(1);
+            _filterExpression = new ExpressionFilterDefinition<Match>(match => match.Id == _match.Id);
             _collection.Received().Find(_filterExpression);
-            Assert.IsInstanceOf<Task<List<Match>>>(_matchDao.FindAll());
+            Assert.IsInstanceOf<Task<Match>>(_matchDao.FindMatch(Arg.Any<int>()));
         }
 
         [Test]

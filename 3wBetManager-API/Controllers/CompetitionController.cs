@@ -3,6 +3,7 @@ using System.Web.Http;
 
 namespace _3wBetManager_API.Controllers
 {
+    [IsGranted]
     [RoutePrefix("competitions")]
     public class CompetitionController : BaseController
     {
@@ -11,8 +12,6 @@ namespace _3wBetManager_API.Controllers
         public async Task<IHttpActionResult> GetAll()
         {
             return await HandleError(async () => Ok(await GetCompetitionDao().FindAllCompetitions()));
-    
         }
-
     }
 }

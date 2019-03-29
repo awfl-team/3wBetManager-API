@@ -12,7 +12,7 @@ namespace Models
         public const int DefaultTotalPointsUsedToBet = 0;
 
 
-        public ObjectId Id { get; set; } 
+        public ObjectId Id { get; set; }
         public int Point { get; set; }
         public int Life { get; set; }
         public string Role { get; set; }

@@ -10,21 +10,17 @@ namespace _3wBetManager_API
         public void Configuration(IAppBuilder appBuilder)
         {
             // Configure Web API for self-host. 
-            HttpConfiguration config = new HttpConfiguration();
+            var config = new HttpConfiguration();
             var cors = new EnableCorsAttribute("*", "*", "*");
             config.EnableCors(cors);
-            config.EnableSwagger(c =>
-            {
-                c.SingleApiVersion("v1", "3wBetManager-API");
-            }).EnableSwaggerUi();
+            config.EnableSwagger(c => { c.SingleApiVersion("v1", "3wBetManager-API"); }).EnableSwaggerUi();
             config.MapHttpAttributeRoutes();
             config.Routes.MapHttpRoute(
-                name: "3wBetManager-API",
-                routeTemplate: "{controller}/{action}/{id}",
-                defaults: new { id = RouteParameter.Optional }
+                "3wBetManager-API",
+                "{controller}/{action}/{id}",
+                new {id = RouteParameter.Optional}
             );
             appBuilder.UseWebApi(config);
         }
     }
-
 }

@@ -1,18 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
-using DAO;
 using Manager;
 using Models;
 
 namespace _3wBetManager_API.Controllers
 {
+    [IsGranted]
     [RoutePrefix("bets")]
     public class BetController : BaseController
     {
-
         [Route("")]
         [HttpPost]
         public async Task<IHttpActionResult> Post([FromBody] List<Bet> bets)
@@ -22,7 +20,7 @@ namespace _3wBetManager_API.Controllers
                 var user = await GetUserByToken(Request);
                 bets = BetManager.AddGuidList(user, bets);
                 await GetBetDao().AddListBet(bets);
-                await GetUserDao().UpdateUserPoints(user, user.Point - (bets.Count * 10), (bets.Count * 10));
+                await GetUserDao().UpdateUserPoints(user, user.Point - bets.Count * 10, bets.Count * 10);
                 return Created("", bets);
             });
         }
@@ -34,12 +32,9 @@ namespace _3wBetManager_API.Controllers
             return await HandleError(async () =>
             {
                 var user = await GetUserByToken(Request);
-                foreach (var bet in bets)
-                {
-                    await GetBetDao().UpdateBet(bet);
-                }
+                foreach (var bet in bets) await GetBetDao().UpdateBet(bet);
 
-                await GetUserDao().UpdateUserPoints(user, user.Point - (bets.Count * 10), (bets.Count * 10));
+                await GetUserDao().UpdateUserPoints(user, user.Point - bets.Count * 10, bets.Count * 10);
                 return Content(HttpStatusCode.NoContent, "");
             });
         }
@@ -107,28 +102,6 @@ namespace _3wBetManager_API.Controllers
             {
                 var user = await GetUserByToken(Request);
                 return Ok(await BetManager.NumberFinishMatchAndBet(user, competitionId));
-            });
-        }
-
-        [Route("stats/type")]
-        [HttpGet]
-        public async Task<IHttpActionResult> GetUserBetsPerType()
-        {
-            return await HandleError(async () =>
-            {
-                var user = await GetUserByToken(Request);
-                return Ok(await BetManager.GetUserBetsPerType(user));
-            });
-        }
-
-        [Route("stats/public/type/{id}")]
-        [HttpGet]
-        public async Task<IHttpActionResult> GetUserBetsPerTypePublic(string id)
-        {
-            return await HandleNotFound(async () =>
-            {
-                var user = await GetUserDao().FindUser(id);
-                return Ok(await BetManager.GetUserBetsPerType(user));
             });
         }
     }

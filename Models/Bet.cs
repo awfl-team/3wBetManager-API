@@ -1,5 +1,4 @@
 using System;
-using System.Security.Policy;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
@@ -12,11 +11,11 @@ namespace Models
         public const string PerfectStatus = "Perfect";
         public const int PerfectBet = 100;
         public const int OkBet = 50;
-        public const int WrongBet = 0;
+        public const int WrongBet = -10;
         public const int DashboardMaxToShow = 4;
 
-        [BsonId]
-        public ObjectId Id { get; set; }
+        [BsonId] public ObjectId Id { get; set; }
+
         public string Guid { get; set; }
         public DateTime Date { get; set; }
         public int PointsWon { get; set; }
