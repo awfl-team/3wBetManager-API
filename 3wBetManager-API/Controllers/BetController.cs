@@ -23,6 +23,11 @@ namespace _3wBetManager_API.Controllers
                 bets = BetManager.AddGuidList(user, bets);
                 await GetBetDao().AddListBet(bets);
                 await GetUserDao().UpdateUserPoints(user, user.Point - (bets.Count * 10), (bets.Count * 10));
+                foreach (var bet in bets)
+                {
+                    MatchManager.CalculateMatchRating(match: bet.Match);
+                }
+
                 return Created("", bets);
             });
         }
@@ -37,6 +42,7 @@ namespace _3wBetManager_API.Controllers
                 foreach (var bet in bets)
                 {
                     await GetBetDao().UpdateBet(bet);
+                    MatchManager.CalculateMatchRating(match: bet.Match);
                 }
 
                 await GetUserDao().UpdateUserPoints(user, user.Point - (bets.Count * 10), (bets.Count * 10));

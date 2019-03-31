@@ -65,6 +65,7 @@
   <ItemGroup>
     <Compile Include="BetManager.cs" />
     <Compile Include="FootballDataManager.cs" />
+    <Compile Include="MatchManager.cs" />
     <Compile Include="TokenManager.cs" />
     <Compile Include="UserManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
