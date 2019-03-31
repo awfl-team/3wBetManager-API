@@ -34,6 +34,11 @@ namespace DAO
                 .ToListAsync();
         }
 
+        public async Task<List<Bet>> FindBetsByMatch(Match match)
+        {
+            return await _collection.Find(bet => bet.Match.Id == match.Id).ToListAsync();
+        }
+
         public async Task AddBet(Bet bet)
         {
             await _collection.InsertOneAsync(bet);
@@ -55,12 +60,6 @@ namespace DAO
         public async void DeleteBetsByUser(ObjectId id)
         {
             await _collection.DeleteManyAsync(bet => bet.User.Id == id);
-        }
-
-        public async Task<List<Bet>> FindBetsByMatch(Match match)
-        {
-            var result = await _collection.Find(b => b.Match.Id == match.Id).ToListAsync();
-            return result;
         }
 
         public async void UpdateBetPointsWon(Bet bet, int point)
