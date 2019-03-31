@@ -12,16 +12,12 @@ namespace Test.Controller
     [TestFixture]
     public class AuthControllerTest
     {
-        private AuthController _authController;
-        private IUserDao _userDao;
-        private User _user;
-
         [SetUp]
         public void SetUp()
         {
             _authController = new AuthController();
             _userDao = Singleton.Instance.SetUserDao(Substitute.For<IUserDao>());
-            _user = new User { Email = "test", Password = "test", Username = "test" };
+            _user = new User {Email = "test", Password = "test", Username = "test"};
         }
 
         [TearDown]
@@ -30,13 +26,17 @@ namespace Test.Controller
             _userDao.ClearReceivedCalls();
         }
 
+        private AuthController _authController;
+        private IUserDao _userDao;
+        private User _user;
+
         //[Test]
         public void RegisterTest()
         {
             var register = _authController.Register(_user);
             var calls = _userDao.ReceivedCalls();
             //_userDao.Received().UsernameAndEmailExist(Arg.Any<User>(), out var message);
-            _userDao.Received().AddUser(Arg.Any<User>());
+            _userDao.Received().AddUser(Arg.Any<User>(), Arg.Any<string>());
             Assert.IsInstanceOf<Task<IHttpActionResult>>(register);
         }
     }

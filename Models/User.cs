@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson;
+﻿using System.Collections.Generic;
+using MongoDB.Bson;
 
 namespace Models
 {
@@ -12,7 +13,7 @@ namespace Models
         public const int DefaultTotalPointsUsedToBet = 0;
 
 
-        public ObjectId Id { get; set; } 
+        public ObjectId Id { get; set; }
         public int Point { get; set; }
         public int Life { get; set; }
         public string Role { get; set; }
@@ -21,5 +22,6 @@ namespace Models
         public string Email { get; set; }
         public string Username { get; set; }
         public bool IsPrivate { get; set; }
+        public List<Item> Items { get; set; }
     }
 }

@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using DAO.Interfaces;
 using Models;
-using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace DAO
 {
-    public class TeamDao: ITeamDao
+    public class TeamDao : ITeamDao
     {
         private readonly IMongoCollection<Team> _collection;
 
@@ -28,7 +24,7 @@ namespace DAO
         {
             await _collection.ReplaceOneAsync(teamFilter => teamFilter.Id == id,
                 team,
-                new UpdateOptions { IsUpsert = true }
+                new UpdateOptions {IsUpsert = true}
             );
         }
 

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Dynamic;
 using System.Threading.Tasks;
 using Models;
 using MongoDB.Bson;
@@ -10,8 +9,7 @@ namespace DAO.Interfaces
     public interface IBetDao
     {
         Task AddBet(Bet bet);
-        Task<List<Bet>> FindBetsByUser(User user);
-        Task<List<Bet>> FindBetsByUserLimited(User user);
+        Task<List<Bet>> FindBetsByUser(User user, int sortOrder = -1);
         Task<Bet> Find(Bet bet);
         Task<List<Bet>> FindAll();
         Task<UpdateResult> UpdateBet(Bet bet);

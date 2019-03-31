@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DAO.Interfaces;
@@ -13,7 +12,7 @@ namespace DAO
     {
         private readonly IMongoCollection<Bet> _collection;
 
-        public BetDao(IMongoDatabase database,IMongoCollection<Bet> collection = null)
+        public BetDao(IMongoDatabase database, IMongoCollection<Bet> collection = null)
         {
             _collection = collection ?? database.GetCollection<Bet>("bet");
         }
@@ -29,14 +28,10 @@ namespace DAO
             return result.FirstOrDefault();
         }
 
-        public async Task<List<Bet>> FindBetsByUser(User user)
+        public async Task<List<Bet>> FindBetsByUser(User user, int sortDirection = -1)
         {
-            return await _collection.Find(bet => bet.User.Id == user.Id).Sort("{Date: -1}").ToListAsync();
-        }
-
-        public async Task<List<Bet>> FindBetsByUserLimited(User user)
-        {
-            return await _collection.Find(bet => bet.User.Id == user.Id && bet.Date >= DateTime.Today.AddDays(-7)).Sort("{Date: -1}").ToListAsync();
+            return await _collection.Find(bet => bet.User.Id == user.Id).Sort("{Date: " + sortDirection + "}")
+                .ToListAsync();
         }
 
         public async Task<List<Bet>> FindBetsByMatch(Match match)
@@ -46,7 +41,7 @@ namespace DAO
 
         public async Task AddBet(Bet bet)
         {
-          await _collection.InsertOneAsync(bet);
+            await _collection.InsertOneAsync(bet);
         }
 
         public async Task AddListBet(List<Bet> bets)
@@ -61,7 +56,7 @@ namespace DAO
                 Builders<Bet>.Update.Set(b => b.HomeTeamScore, bet.HomeTeamScore)
                     .Set(b => b.AwayTeamScore, bet.AwayTeamScore));
         }
-        
+
         public async void DeleteBetsByUser(ObjectId id)
         {
             await _collection.DeleteManyAsync(bet => bet.User.Id == id);

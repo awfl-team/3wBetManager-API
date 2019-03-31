@@ -16,6 +16,7 @@ namespace FetchFootballData
                     Singleton.Instance.BetDao.UpdateBetPointsWon(bet, Bet.PerfectBet);
                     return;
                 }
+
                 switch (match.Score.Winner)
                 {
                     case "HOME_TEAM":
@@ -39,6 +40,7 @@ namespace FetchFootballData
                         break;
                     }
                 }
+
                 if (match.Score.FullTime.HomeTeam != bet.HomeTeamScore &&
                     match.Score.FullTime.AwayTeam != bet.AwayTeamScore)
                 {

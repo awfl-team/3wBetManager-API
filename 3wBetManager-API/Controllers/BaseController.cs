@@ -4,12 +4,13 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using DAO;
 using DAO.Interfaces;
+using Manager;
 using Models;
-using _3wBetManager_API.Manager;
+using Proxy;
 
 namespace _3wBetManager_API.Controllers
 {
-    public class BaseController : ApiController
+    public abstract class BaseController : ApiController
     {
         protected IUserDao GetUserDao()
         {
@@ -26,6 +27,11 @@ namespace _3wBetManager_API.Controllers
             return Singleton.Instance.CompetitionDao;
         }
 
+        protected IItemDao GetItemDao()
+        {
+            return Singleton.Instance.ItemDao;
+        }
+
         protected static async Task<User> GetUserByToken(HttpRequestMessage request)
         {
             var token = TokenManager.GetTokenFromRequest(request);
@@ -35,13 +41,17 @@ namespace _3wBetManager_API.Controllers
 
         protected async Task<IHttpActionResult> HandleError(Func<Task<IHttpActionResult>> getHttpActionResult)
         {
-            try
+            using (new ElasticsSearchControllerContext(Request.Method.Method,
+                Request.RequestUri.AbsolutePath, Request.GetOwinContext().Request.RemoteIpAddress))
             {
-                return await getHttpActionResult();
-            }
-            catch (Exception e)
-            {
-                return InternalServerError(e);
+                try
+                {
+                    return await getHttpActionResult();
+                }
+                catch (Exception e)
+                {
+                    return InternalServerError(e);
+                }
             }
         }
 
