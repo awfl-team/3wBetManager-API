@@ -125,6 +125,9 @@ namespace Manager
                     var findMatch = Singleton.Instance.MatchDao.FindMatch(match.Id).Result;
                     if (findMatch == null)
                     {
+                        match.HomeTeamRating = 0;
+                        match.AwayTeamRating = 0;
+                        match.DrawRating = 0;
                         Console.WriteLine("Add match " + match.Id);
                         Singleton.Instance.MatchDao.AddMatch(match);
                     }

@@ -53,8 +53,11 @@ namespace DAO
                 Builders<Match>.Update.Set(match => match.Status, matchParam.Status)
                     .Set(match => match.LastUpdated, matchParam.LastUpdated)
                     .Set(match => match.HomeTeam, matchParam.HomeTeam)
+                    .Set(match => match.HomeTeamRating, matchParam.HomeTeamRating)
                     .Set(match => match.Score, matchParam.Score)
                     .Set(match => match.AwayTeam, matchParam.AwayTeam)
+                    .Set(match => match.AwayTeamRating, matchParam.AwayTeamRating)
+                    .Set(match => match.DrawRating, matchParam.DrawRating)
                     .Set(match => match.Competition, matchParam.Competition)
                     .Set(match => match.UtcDate, matchParam.UtcDate)
             );

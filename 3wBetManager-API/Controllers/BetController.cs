@@ -20,7 +20,12 @@ namespace _3wBetManager_API.Controllers
                 var user = await GetUserByToken(Request);
                 bets = BetManager.AddGuidList(user, bets);
                 await GetBetDao().AddListBet(bets);
-                await GetUserDao().UpdateUserPoints(user, user.Point - bets.Count * 10, bets.Count * 10);
+
+                await GetUserDao().UpdateUserPoints(user, user.Point - (bets.Count * 10), (bets.Count * 10));
+                foreach (var bet in bets)
+                {
+                    MatchManager.CalculateMatchRating(match: bet.Match);
+                }
                 return Created("", bets);
             });
         }
@@ -32,7 +37,12 @@ namespace _3wBetManager_API.Controllers
             return await HandleError(async () =>
             {
                 var user = await GetUserByToken(Request);
-                foreach (var bet in bets) await GetBetDao().UpdateBet(bet);
+
+                foreach (var bet in bets)
+                {
+                    await GetBetDao().UpdateBet(bet);
+                    MatchManager.CalculateMatchRating(match: bet.Match);
+                }
 
                 await GetUserDao().UpdateUserPoints(user, user.Point - bets.Count * 10, bets.Count * 10);
                 return Content(HttpStatusCode.NoContent, "");
