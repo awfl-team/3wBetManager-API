@@ -30,11 +30,10 @@ namespace _3wBetManager_API.Controllers
             {
                 const string errorMessage = "Wrong login password";
                 var fullUser = await GetUserDao().FindUserByEmail(user.Email);
-
+                if (fullUser == null) return Content(HttpStatusCode.BadRequest, errorMessage);
                 if (BCrypt.Net.BCrypt.Verify(user.Password, fullUser.Password))
                     return Ok(TokenManager.GenerateToken(fullUser.Email, fullUser.Role,
                         fullUser.Username));
-
                 return Content(HttpStatusCode.BadRequest, errorMessage);
             });
         }
