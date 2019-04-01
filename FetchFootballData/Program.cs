@@ -12,12 +12,12 @@ namespace FetchFootballData
     {
         private static async Task Main(string[] args)
         {
+            var client = new MongoClient(ConfigurationManager.AppSettings["dbUrl"]);
+            var database = client.GetDatabase(ConfigurationManager.AppSettings["dbName"]);
+            Singleton.Instance.SetAll(database);
             if (args[0] == "REFRESH")
                 using (var footballDataManager = new FootballDataManager())
                 {
-                    var client = new MongoClient(ConfigurationManager.AppSettings["dbUrl"]);
-                    var database = client.GetDatabase(ConfigurationManager.AppSettings["dbName"]);
-                    Singleton.Instance.SetAll(database);
                     Console.WriteLine("----- Begin Fetch football data ----- ");
                     await footballDataManager.GetAllCompetitions();
                     await footballDataManager.GetAllTeams();
@@ -33,6 +33,11 @@ namespace FetchFootballData
                 {
                     await monitoringManager.ResponseApi();
                 }
+
+            if (args[0] == "FIXTURE")
+            {
+                await ItemManager.CreateDefaultItems();
+            }
         }
     }
 }

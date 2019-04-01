@@ -30,6 +30,16 @@ namespace DAO
             return result.FirstOrDefault();
         }
 
+        public async Task AddListItem(List<Item> items)
+        {
+            await _collection.InsertManyAsync(items);
+        }
+
+        public async Task PurgeItemCollection()
+        {
+            await _collection.DeleteManyAsync(i => i.Id != null);
+        }
+
         public async Task UpdateCostItem(string id, Item item )
         {
             await _collection.UpdateOneAsync(
