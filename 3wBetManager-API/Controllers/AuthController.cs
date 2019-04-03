@@ -17,7 +17,7 @@ namespace _3wBetManager_API.Controllers
                 var userExist = await UserManager.UsernameAndEmailExist(user);
                 if (userExist.Length > 0) return Content(HttpStatusCode.BadRequest, userExist);
 
-                await GetUserDao().AddUser(user, Models.User.AdminRole);
+                await GetUserDao().AddUser(user, Models.User.UserRole);
                 return Created("", user);
             });
         }
