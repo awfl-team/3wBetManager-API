@@ -59,6 +59,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssignmentPointManager.cs" />
     <Compile Include="BetManager.cs" />
     <Compile Include="EmailManager.cs" />
     <Compile Include="FootballDataManager.cs" />

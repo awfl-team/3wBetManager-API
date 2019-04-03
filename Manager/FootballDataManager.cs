@@ -137,7 +137,7 @@ namespace Manager
                         Singleton.Instance.MatchDao.UpdateMatch(findMatch.Id, match);
                         if (findMatch.Status == Match.ScheduledStatus && match.Status == Match.FinishedStatus)
                         {
-                            //AssignmentPoint.AddPointToBet(match);
+                            AssignmentPointManager.AddPointToBet(match);
                         }
                     }
                 }
