@@ -62,6 +62,7 @@ namespace DAO
             user.Life = User.DefaultLife;
             user.Role = role;
             user.TotalPointsUsedToBet = User.DefaultTotalPointsUsedToBet;
+            user.Items = new List<Item>();
             await _collection.InsertOneAsync(user);
         }
 
