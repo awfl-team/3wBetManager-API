@@ -23,6 +23,9 @@ build:
     script:
         - 'C:\Tools\nuget.exe restore 3wBetManager-API.sln'
         - '"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\MSBuild.exe" 3wBetManager-API.sln /p:Configuration=Release'
+    before_script:
+        - C:\Tools\BismiAppRunner\BismiAppRunner.exe STOP 3wBetManager-API
+        - rmdir /s "C:\GitLab-Runner\builds\Sns1WAaE\0\RomanLeichnig\backend-bet-manager-group2"
     artifacts:
         paths:
             - 3wBetManager-API/
@@ -38,8 +41,5 @@ deploy:
         - master
     script:
         - 'call deploy.bat'
-    before_script:
-        - C:\Tools\BismiAppRunner\BismiAppRunner.exe STOP 3wBetManager-API
-        - rmdir /s "C:\GitLab-Runner\builds\Sns1WAaE\0\RomanLeichnig\backend-bet-manager-group2"
     dependencies:
         - build
