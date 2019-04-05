@@ -38,8 +38,8 @@ deploy:
         - master
     script:
         - 'call deploy.bat'
-    after_script:
-        - 'ECHO After Script'
-        - 'exit 0'
+    before_script:
+        - C:\Tools\BismiAppRunner\BismiAppRunner.exe STOP 3wBetManager-API
+        - rmdir /s "C:\GitLab-Runner\builds\Sns1WAaE\0\RomanLeichnig\backend-bet-manager-group2"
     dependencies:
         - build
