@@ -58,7 +58,10 @@ namespace Manager
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                using (var emailManager = new EmailManager())
+                {
+                    emailManager.SendWebMasterEmail(e);
+                }
                 throw;
             }
         }
@@ -99,7 +102,10 @@ namespace Manager
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                using (var emailManager = new EmailManager())
+                {
+                    emailManager.SendWebMasterEmail(e);
+                }
                 throw;
             }
         }
@@ -146,7 +152,10 @@ namespace Manager
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                using (var emailManager = new EmailManager())
+                {
+                    emailManager.SendWebMasterEmail(e);
+                }
                 throw;
             }
         }
