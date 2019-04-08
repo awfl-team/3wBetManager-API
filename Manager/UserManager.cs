@@ -52,7 +52,7 @@ namespace Manager
                 var betsByUser = await Singleton.Instance.BetDao.FindBetsByUser(user);
                 obj.Id = user.Id;
                 obj.Point = user.Point;
-                obj.Life = user.Life;
+                obj.Life = user.Items.FindAll(i => i.Type == Item.Life).Count;
                 obj.Username = user.Username;
                 obj.IsPrivate = user.IsPrivate;
                 obj.NbBets = betsByUser.Count;
@@ -83,7 +83,7 @@ namespace Manager
                 if (user.Id == userParam.Id) obj.IsCurrent = true;
                 obj.Id = user.Id;
                 obj.Point = user.Point;
-                obj.Life = user.Life;
+                obj.Life = user.Items.FindAll(i => i.Type == Item.Life).Count;
                 obj.Username = user.Username;
                 obj.IsPrivate = user.IsPrivate;
                 obj.NbBets = betsByUser.Count;
@@ -106,7 +106,7 @@ namespace Manager
                 var betsByUser = await Singleton.Instance.BetDao.FindBetsByUser(user);
                 obj.Id = user.Id;
                 obj.Point = user.Point;
-                obj.Life = user.Life;
+                obj.Life = user.Items.FindAll(i => i.Type == Item.Life).Count;
                 obj.Username = user.Username;
                 obj.IsPrivate = user.IsPrivate;
                 obj.NbBets = betsByUser.Count;

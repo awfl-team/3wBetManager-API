@@ -128,7 +128,8 @@ namespace _3wBetManager_API.Controllers
             return await HandleError(async () =>
             {
                 var user = await GetUserByToken(Request);
-                if (user.Life == 0) return Content(HttpStatusCode.BadRequest, "You already used all your lives");
+                if (user.Items.FindAll(i => i.Type == Item.Life).Count == 0)
+                    return Content(HttpStatusCode.BadRequest, "You already used all your lives");
                 await UserManager.ResetUser(user);
                 return Ok();
             });
