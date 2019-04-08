@@ -156,11 +156,14 @@ namespace Manager
         {
             var userBets = await Singleton.Instance.BetDao.FindBetsByUser(user);
             var totalBetsEarnings = 0;
+            var totalShopCoinUsage = 0;
             if (userBets.Count == 0) return new ExpandoObject();
 
             foreach (var userBet in userBets) totalBetsEarnings += userBet.PointsWon;
+            foreach (var item in user.Items) totalShopCoinUsage += item.Cost;
 
             dynamic obj = new ExpandoObject();
+            obj.TotalShopCoinUsage = totalShopCoinUsage;
             obj.TotalPointsUsedToBet = user.TotalPointsUsedToBet;
             obj.TotalBetsEarnings = totalBetsEarnings;
 

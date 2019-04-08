@@ -9,6 +9,7 @@ namespace _3wBetManager_API.Controllers
     [RoutePrefix("stats")]
     public class StatController : BaseController
     {
+        /* UserToken routes */
         [Route("coins")]
         [HttpGet]
         public async Task<IHttpActionResult> GetUserCoinStats()
@@ -42,18 +43,6 @@ namespace _3wBetManager_API.Controllers
             });
         }
 
-        [Route("public/coins/{id}")]
-        [HttpGet]
-        public async Task<IHttpActionResult> GetPublicUserCoinStats(string id)
-        {
-            return await HandleNotFound(async () =>
-            {
-                var user = await GetUserDao().FindUser(id);
-                return Ok(await UserManager.GetUserCoinStats(user));
-            });
-        }
-
-
         [Route("type")]
         [HttpGet]
         public async Task<IHttpActionResult> GetUserBetsPerType()
@@ -76,6 +65,7 @@ namespace _3wBetManager_API.Controllers
             });
         }
 
+        /* ConsultUser routes */
         [Route("public/type/{id}")]
         [HttpGet]
         public async Task<IHttpActionResult> GetUserBetsPerTypePublic(string id)
@@ -87,11 +77,49 @@ namespace _3wBetManager_API.Controllers
             });
         }
 
-        [Route("type/{user}")]
+        [Route("public/coins/{id}")]
         [HttpGet]
-        public async Task<IHttpActionResult> GetProfileUserBetsPerType(User user)
+        public async Task<IHttpActionResult> GetPublicUserCoinStats(string id)
         {
-            return await HandleError(async () => Ok(await BetManager.GetUserBetsPerType(user)));
+            return await HandleNotFound(async () =>
+            {
+                var user = await GetUserDao().FindUser(id);
+                return Ok(await UserManager.GetUserCoinStats(user));
+            });
         }
+
+        [Route("public/month/{id}")]
+        [HttpGet]
+        public async Task<IHttpActionResult> GetPublicUserIncomesPerMonth(string id)
+        {
+            return await HandleNotFound(async () =>
+            {
+                var user = await GetUserDao().FindUser(id);
+                return Ok(await BetManager.GetUserIncomesPerMonth(user));
+            });
+        }
+
+        [Route("public/year/{id}")]
+        [HttpGet]
+        public async Task<IHttpActionResult> GetPublicUserIncomesPerYear(string id)
+        {
+            return await HandleNotFound(async () =>
+            {
+                var user = await GetUserDao().FindUser(id);
+                return Ok(await BetManager.GetUserIncomesPerYear(user));
+            });
+        }
+
+        [Route("public/earnings/type/{id}")]
+        [HttpGet]
+        public async Task<IHttpActionResult> GetPublicUserBetsEarningsPerType(string id)
+        {
+            return await HandleNotFound(async () =>
+            {
+                var user = await GetUserDao().FindUser(id);
+                return Ok(await BetManager.GetUserBetsEarningsPerType(user));
+            });
+        }
+
     }
 }
