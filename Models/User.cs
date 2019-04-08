@@ -14,7 +14,7 @@ namespace Models
 
 
         public ObjectId Id { get; set; }
-        public int Point { get; set; }
+        public float Point { get; set; }
         public string Role { get; set; }
         public int TotalPointsUsedToBet { get; set; }
         public string Password { get; set; }

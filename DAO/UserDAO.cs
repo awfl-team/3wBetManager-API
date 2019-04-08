@@ -103,7 +103,7 @@ namespace DAO
             );
         }
 
-        public async Task UpdateUserPoints(User user, int point, int pointsUsedToBet)
+        public async Task UpdateUserPoints(User user, float point, int pointsUsedToBet)
         {
             await _collection.UpdateOneAsync(
                 u => u.Id == user.Id,
