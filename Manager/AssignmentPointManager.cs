@@ -1,4 +1,5 @@
-﻿using DAO;
+﻿using System;
+using DAO;
 using Models;
 
 namespace Manager
@@ -10,36 +11,40 @@ namespace Manager
             var bets = await Singleton.Instance.BetDao.FindBetsByMatch(match);
             foreach (var bet in bets)
             {
-                if (match.Score.FullTime.HomeTeam == bet.HomeTeamScore && match.Score.FullTime.AwayTeam == bet.AwayTeamScore)
-                {
-                    Singleton.Instance.BetDao.UpdateBetPointsWon(bet, Bet.PerfectBet);
-                    continue;
-                }
-
                 var betTeamHightScore = GetTeamNameWithTheBestHightScore(bet);
 
-                if (betTeamHightScore == "HOME" && match.Score.Winner == "HOME_TEAM")
+                if (match.Score.FullTime.HomeTeam == bet.HomeTeamScore && match.Score.FullTime.AwayTeam == bet.AwayTeamScore)
                 {
-                    Singleton.Instance.BetDao.UpdateBetPointsWon(bet, Bet.OkBet);
-                    continue;
+                    switch (betTeamHightScore)
+                    {
+                        case "AWAY":
+                            Singleton.Instance.BetDao.UpdateBetPointsWon(bet, Bet.PerfectBet * match.AwayTeamRating);
+                            continue;
+                        case "HOME":
+                            Singleton.Instance.BetDao.UpdateBetPointsWon(bet, Bet.PerfectBet * match.HomeTeamRating);
+                            continue;
+                        case "DRAW":
+                            Singleton.Instance.BetDao.UpdateBetPointsWon(bet, Bet.PerfectBet * match.DrawRating);
+                            continue;
+                    }
                 }
 
-                if (betTeamHightScore == "AWAY" && match.Score.Winner == "AWAY_TEAM")
+                switch (betTeamHightScore)
                 {
-                    Singleton.Instance.BetDao.UpdateBetPointsWon(bet, Bet.OkBet);
-                    continue;
+                    case "HOME" when match.Score.Winner == "HOME_TEAM":
+                        Singleton.Instance.BetDao.UpdateBetPointsWon(bet, Bet.OkBet * match.HomeTeamRating);
+                        continue;
+                    case "AWAY" when match.Score.Winner == "AWAY_TEAM":
+                        Singleton.Instance.BetDao.UpdateBetPointsWon(bet, Bet.OkBet * match.AwayTeamRating);
+                        continue;
+                    // TODO Verifi if "DRAW" is good
+                    case "DRAW" when match.Score.Winner =="DRAW":
+                        Singleton.Instance.BetDao.UpdateBetPointsWon(bet, Bet.OkBet * match.DrawRating);
+                        continue;
+                    default:
+                        Singleton.Instance.BetDao.UpdateBetPointsWon(bet, Bet.WrongBet);
+                        break;
                 }
-
-                // TODO Verifi if "DRAW" is good
-                if (betTeamHightScore == "DRAW" && match.Score.Winner =="DRAW" )
-                {
-                    Singleton.Instance.BetDao.UpdateBetPointsWon(bet, Bet.OkBet);
-                    continue;
-                }
-
-                Singleton.Instance.BetDao.UpdateBetPointsWon(bet, Bet.WrongBet);
-
-
             }
         }
 
