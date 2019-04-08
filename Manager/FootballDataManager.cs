@@ -58,7 +58,10 @@ namespace Manager
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                using (var emailManager = new EmailManager())
+                {
+                    emailManager.SendWebMasterEmail(e);
+                }
                 throw;
             }
         }
@@ -99,7 +102,10 @@ namespace Manager
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                using (var emailManager = new EmailManager())
+                {
+                    emailManager.SendWebMasterEmail(e);
+                }
                 throw;
             }
         }
@@ -109,10 +115,9 @@ namespace Manager
             try
             {
                 Console.WriteLine("     ----- Begin Fetch matches ----- ");
-                var dateFrom = DateTime.Now;
-                var dateTo = dateFrom.AddDays(7);
-                dateFrom = dateTo.AddDays(-2);
-
+                var dateFrom = DateTime.Now.AddDays(-2);
+                var dateTo = DateTime.Now.AddDays(7);
+                
                 var response = await _http.GetAsync("matches?dateFrom=" + dateFrom.ToString("yyyy-MM-dd") + "&dateTo=" +
                                                     dateTo.ToString("yyyy-MM-dd"));
                 var responseContent = await response.Content.ReadAsStringAsync();
@@ -146,7 +151,10 @@ namespace Manager
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                using (var emailManager = new EmailManager())
+                {
+                    emailManager.SendWebMasterEmail(e);
+                }
                 throw;
             }
         }

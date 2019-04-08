@@ -59,10 +59,14 @@ namespace DAO
             user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
             user.IsPrivate = User.DefaultIsPrivate;
             user.Point = User.DefaultPoint;
-            user.Life = User.DefaultLife;
             user.Role = role;
             user.TotalPointsUsedToBet = User.DefaultTotalPointsUsedToBet;
             user.Items = new List<Item>();
+            for (var i = 0; i < User.DefaultLife; i++)
+            {
+                var life = new Item{Name = "Life", Type = Item.Life};
+                user.Items.Add(life);
+            }
             await _collection.InsertOneAsync(user);
         }
 
@@ -99,7 +103,7 @@ namespace DAO
             );
         }
 
-        public async Task UpdateUserPoints(User user, int point, int pointsUsedToBet)
+        public async Task UpdateUserPoints(User user, float point, int pointsUsedToBet)
         {
             await _collection.UpdateOneAsync(
                 u => u.Id == user.Id,
@@ -119,9 +123,12 @@ namespace DAO
 
         public async Task UpdateUserLives(User user)
         {
+            var lifeFilter = Builders<User>.Update.PullFilter(u => u.Items,
+                i => i.Type == Item.Life);
+
             await _collection.UpdateOneAsync(
                 u => u.Id == user.Id,
-                Builders<User>.Update.Set(u => u.Life, user.Life - 1)
+                lifeFilter
             );
         }
 

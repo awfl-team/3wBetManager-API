@@ -17,7 +17,7 @@ namespace DAO.Interfaces
         Task<List<User>> FindAllUserByPoint();
         Task UpdateUser(string id, User userParam);
         Task UpdateUserIsPrivate(ObjectId id, bool isPrivate);
-        Task UpdateUserPoints(User user, int point, int pointsUsedToBet);
+        Task UpdateUserPoints(User user, float point, int pointsUsedToBet);
         Task ResetUserPoints(User user);
         Task UpdateUserRole(string id, string role);
         Task<List<User>> OrderUserByPoint();

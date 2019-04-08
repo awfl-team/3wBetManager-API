@@ -25,7 +25,6 @@ namespace FetchFootballData
                     Console.WriteLine("----- End Fetch football data ----- ");
                     UserManager.RecalculateUserPoints();
                     Thread.Sleep(10000);
-                    Environment.Exit(0);
                 }
 
             if (args[0] == "MONITORING")
@@ -38,6 +37,8 @@ namespace FetchFootballData
             {
                 await ItemManager.CreateDefaultItems();
             }
+
+            Environment.Exit(0);
         }
     }
 }

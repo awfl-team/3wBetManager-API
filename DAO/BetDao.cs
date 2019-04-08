@@ -62,7 +62,7 @@ namespace DAO
             await _collection.DeleteManyAsync(bet => bet.User.Id == id);
         }
 
-        public async void UpdateBetPointsWon(Bet bet, int point)
+        public async void UpdateBetPointsWon(Bet bet, double point)
         {
             await _collection.UpdateOneAsync(b => b.Id == bet.Id,
                 Builders<Bet>.Update.Set(b => b.PointsWon, point));
