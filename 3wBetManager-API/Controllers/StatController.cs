@@ -42,7 +42,6 @@ namespace _3wBetManager_API.Controllers
                 return Ok(await BetManager.GetUserIncomesPerYear(user));
             });
         }
-    
 
         [Route("type")]
         [HttpGet]
@@ -93,7 +92,7 @@ namespace _3wBetManager_API.Controllers
         [HttpGet]
         public async Task<IHttpActionResult> GetPublicUserIncomesPerMonth(string id)
         {
-            return await HandleError(async () =>
+            return await HandleNotFound(async () =>
             {
                 var user = await GetUserDao().FindUser(id);
                 return Ok(await BetManager.GetUserIncomesPerMonth(user));
@@ -104,7 +103,7 @@ namespace _3wBetManager_API.Controllers
         [HttpGet]
         public async Task<IHttpActionResult> GetPublicUserIncomesPerYear(string id)
         {
-            return await HandleError(async () =>
+            return await HandleNotFound(async () =>
             {
                 var user = await GetUserDao().FindUser(id);
                 return Ok(await BetManager.GetUserIncomesPerYear(user));
@@ -115,7 +114,7 @@ namespace _3wBetManager_API.Controllers
         [HttpGet]
         public async Task<IHttpActionResult> GetPublicUserBetsEarningsPerType(string id)
         {
-            return await HandleError(async () =>
+            return await HandleNotFound(async () =>
             {
                 var user = await GetUserDao().FindUser(id);
                 return Ok(await BetManager.GetUserBetsEarningsPerType(user));
