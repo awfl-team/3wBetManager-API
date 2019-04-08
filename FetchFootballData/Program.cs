@@ -15,17 +15,16 @@ namespace FetchFootballData
             var client = new MongoClient(ConfigurationManager.AppSettings["dbUrl"]);
             var database = client.GetDatabase(ConfigurationManager.AppSettings["dbName"]);
             Singleton.Instance.SetAll(database);
-            if (args[0] == "REFRESH")
+            //if (args[0] == "REFRESH")
                 using (var footballDataManager = new FootballDataManager())
                 {
                     Console.WriteLine("----- Begin Fetch football data ----- ");
-                    await footballDataManager.GetAllCompetitions();
-                    await footballDataManager.GetAllTeams();
+                    //await footballDataManager.GetAllCompetitions();
+                    //await footballDataManager.GetAllTeams();
                     await footballDataManager.GetAllMatchForAWeek();
                     Console.WriteLine("----- End Fetch football data ----- ");
                     UserManager.RecalculateUserPoints();
                     Thread.Sleep(10000);
-                    Environment.Exit(0);
                 }
 
             if (args[0] == "MONITORING")
@@ -38,6 +37,8 @@ namespace FetchFootballData
             {
                 await ItemManager.CreateDefaultItems();
             }
+
+            Environment.Exit(0);
         }
     }
 }
