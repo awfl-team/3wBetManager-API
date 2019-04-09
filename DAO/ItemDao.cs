@@ -8,7 +8,7 @@ using MongoDB.Driver;
 
 namespace DAO
 {
-    public class ItemDao: IItemDao
+    public class ItemDao : IItemDao
     {
         private readonly IMongoCollection<Item> _collection;
 
@@ -24,7 +24,7 @@ namespace DAO
 
         public async Task<Item> FindItem(string id)
         {
-            var result =  await _collection.Find(i => i.Id == ObjectId.Parse(id)).ToListAsync();
+            var result = await _collection.Find(i => i.Id == ObjectId.Parse(id)).ToListAsync();
             return result.FirstOrDefault();
         }
 
@@ -38,11 +38,12 @@ namespace DAO
             await _collection.DeleteManyAsync(i => i.Id != null);
         }
 
-        public async Task UpdateCostItem(string id, Item item )
+        public async Task UpdateItem(string id, Item item)
         {
             await _collection.UpdateOneAsync(
                 i => i.Id == ObjectId.Parse(id),
                 Builders<Item>.Update.Set(i => i.Cost, item.Cost)
+                    .Set(i => i.Rarety, item.Rarety)
             );
         }
     }

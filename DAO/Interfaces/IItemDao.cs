@@ -11,8 +11,8 @@ namespace DAO.Interfaces
     {
         Task<List<Item>> FindAllItems();
         Task<Item> FindItem(string id);
-        Task UpdateCostItem(string id, Item item);
         Task AddListItem(List<Item> items);
         Task PurgeItemCollection();
+        Task UpdateItem(string id, Item item);
     }
 }

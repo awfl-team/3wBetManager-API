@@ -35,7 +35,7 @@ namespace _3wBetManager_API.Controllers
         {
             return await HandleError(async () =>
             {
-                await GetItemDao().UpdateCostItem(id, item);
+                await GetItemDao().UpdateItem(id, item);
                 return Ok();
             });
         }

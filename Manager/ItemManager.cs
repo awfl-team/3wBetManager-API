@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Dynamic;
 using System.Threading.Tasks;
 using DAO;
 using Models;
@@ -33,7 +32,8 @@ namespace Manager
                 Cost = 50,
                 Description = "Can use on players and the target player lose 30 coins",
                 Name = "Bomb",
-                Type = Item.Bomb
+                Type = Item.Bomb,
+                Rarety = Item.Rare
             };
             items.Add(bomb);
 
@@ -42,7 +42,8 @@ namespace Manager
                 Cost = 10,
                 Description = "Random item",
                 Name = "Loot Boxe",
-                Type = Item.LootBoxe
+                Type = Item.LootBoxe,
+                Rarety = Item.Legendary
             };
             items.Add(lootBoxe);
 
@@ -51,7 +52,8 @@ namespace Manager
                 Cost = 100,
                 Description = "Multiply the coins earned on a bet by 10",
                 Name = "Multiplier",
-                Type = Item.Multiply
+                Type = Item.Multiply,
+                Rarety = Item.Epic
             };
             items.Add(multiply);
 
@@ -60,7 +62,8 @@ namespace Manager
                 Cost = 25,
                 Description = "Life for reset account",
                 Name = "Life",
-                Type = Item.Life
+                Type = Item.Life,
+                Rarety = Item.Common
             };
             items.Add(life);
 
@@ -69,7 +72,9 @@ namespace Manager
                 Cost = 75,
                 Description = "Watch on detail any profile even private ",
                 Name = "Key",
-                Type = Item.Key
+                Type = Item.Key,
+                Rarety = Item.Rare
+
             };
             items.Add(key);
             Console.WriteLine("Load default item");

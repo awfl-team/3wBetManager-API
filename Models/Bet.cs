@@ -14,7 +14,7 @@ namespace Models
         public const int WrongBet = 0;
         public const int DashboardMaxToShow = 4;
 
-        [BsonId] public ObjectId Id { get; set; }
+        public ObjectId Id { get; set; }
 
         public string Guid { get; set; }
         public DateTime Date { get; set; }
