@@ -19,6 +19,6 @@ namespace Models
         public string Name { get; set; }
         public string Description { get; set; }
         public int Cost { get; set; }
-        public string Rarety { get; set; }
+        public string Rarity { get; set; }
     }
 }
