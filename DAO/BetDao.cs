@@ -73,5 +73,10 @@ namespace DAO
             await _collection.UpdateOneAsync(b => b.Id == bet.Id,
                 Builders<Bet>.Update.Set(b => b.Status, status));
         }
+
+        public async Task<List<Bet>> PaginatedScheduledBets(int betsToPass)
+        {
+            return await _collection.Find(bet => bet.Match.Status == Match.ScheduledStatus).Skip(betsToPass).Limit(10).ToListAsync();
+        }
     }
 }

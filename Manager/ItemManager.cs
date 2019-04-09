@@ -33,7 +33,7 @@ namespace Manager
                 Description = "Can use on players and the target player lose 30 coins",
                 Name = "Bomb",
                 Type = Item.Bomb,
-                Rarety = Item.Rare
+                Rarity = Item.Rare
             };
             items.Add(bomb);
 
@@ -43,7 +43,7 @@ namespace Manager
                 Description = "Random item",
                 Name = "Loot Boxe",
                 Type = Item.LootBoxe,
-                Rarety = Item.Legendary
+                Rarity = Item.Legendary
             };
             items.Add(lootBoxe);
 
@@ -53,7 +53,7 @@ namespace Manager
                 Description = "Multiply the coins earned on a bet by 10",
                 Name = "Multiplier",
                 Type = Item.Multiply,
-                Rarety = Item.Epic
+                Rarity = Item.Epic
             };
             items.Add(multiply);
 
@@ -63,7 +63,7 @@ namespace Manager
                 Description = "Life for reset account",
                 Name = "Life",
                 Type = Item.Life,
-                Rarety = Item.Common
+                Rarity = Item.Common
             };
             items.Add(life);
 
@@ -73,7 +73,7 @@ namespace Manager
                 Description = "Watch on detail any profile even private ",
                 Name = "Key",
                 Type = Item.Key,
-                Rarety = Item.Rare
+                Rarity = Item.Rare
 
             };
             items.Add(key);

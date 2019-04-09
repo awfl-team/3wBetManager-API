@@ -18,5 +18,6 @@ namespace DAO.Interfaces
         Task<List<Bet>> FindBetsByMatch(Match match);
         void UpdateBetPointsWon(Bet bet, double point);
         void UpdateBetStatus(Bet bet, string status);
+        Task<List<Bet>> PaginatedScheduledBets(int betsToPass);
     }
 }
