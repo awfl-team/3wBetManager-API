@@ -67,5 +67,11 @@ namespace DAO
             await _collection.UpdateOneAsync(b => b.Id == bet.Id,
                 Builders<Bet>.Update.Set(b => b.PointsWon, point));
         }
+
+        public async void UpdateBetStatus(Bet bet, string status)
+        {
+            await _collection.UpdateOneAsync(b => b.Id == bet.Id,
+                Builders<Bet>.Update.Set(b => b.Status, status));
+        }
     }
 }

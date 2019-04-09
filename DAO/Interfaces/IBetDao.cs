@@ -17,5 +17,6 @@ namespace DAO.Interfaces
         Task AddListBet(List<Bet> bets);
         Task<List<Bet>> FindBetsByMatch(Match match);
         void UpdateBetPointsWon(Bet bet, double point);
+        void UpdateBetStatus(Bet bet, string status);
     }
 }
