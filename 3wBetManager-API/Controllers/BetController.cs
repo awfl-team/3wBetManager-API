@@ -114,5 +114,16 @@ namespace _3wBetManager_API.Controllers
                 return Ok(await BetManager.NumberFinishMatchAndBet(user, competitionId));
             });
         }
+
+        [Route("{page}/result/paginated")]
+        [HttpGet]
+        public async Task<IHttpActionResult> GetUserScheduledBetsPaginated(int page)
+        {
+            return await HandleError(async () =>
+            {
+                var user = await GetUserByToken(Request);
+                return Ok(await BetManager.GetUserScheduledBetsPaginated(user, page));
+            });
+        }
     }
 }

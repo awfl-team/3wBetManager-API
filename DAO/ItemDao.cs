@@ -43,7 +43,7 @@ namespace DAO
             await _collection.UpdateOneAsync(
                 i => i.Id == ObjectId.Parse(id),
                 Builders<Item>.Update.Set(i => i.Cost, item.Cost)
-                    .Set(i => i.Rarety, item.Rarety)
+                    .Set(i => i.Rarity, item.Rarity)
             );
         }
     }

@@ -199,5 +199,36 @@ namespace Manager
 
             return bets;
         }
+
+        public static async Task<dynamic> GetUserScheduledBetsPaginated(User user, int page)
+        {
+            var betsByUser = await Singleton.Instance.BetDao.FindBetsByUser(user, 1);
+           
+            foreach (var bet in betsByUser)
+            {
+                var matchInformation = await Singleton.Instance.MatchDao.FindMatch(bet.Match.Id);
+                bet.Match = matchInformation;
+                var awayTeamInformation = await Singleton.Instance.TeamDao.FindTeam(bet.Match.AwayTeam.Id);
+                bet.Match.AwayTeam = awayTeamInformation;
+                var homeTeamInformation = await Singleton.Instance.TeamDao.FindTeam(bet.Match.HomeTeam.Id);
+                bet.Match.HomeTeam = homeTeamInformation;
+            }
+
+            var finishedBets = betsByUser.FindAll(bet => bet.Match.Status == Match.FinishedStatus);
+            var totalBets = finishedBets.Count();
+            var totalPages = totalBets / 10 + 1;
+            page = page - 1;
+           
+
+            var betsToPass = 10 * page;
+            var betsPaginated = await Singleton.Instance.BetDao.PaginatedScheduledBets(betsToPass);
+            dynamic obj = new ExpandoObject();
+            obj.Items = betsPaginated;
+            obj.TotalPages = totalPages;
+            obj.TotalBets = totalBets;
+            obj.Page = page + 1;
+
+            return obj;
+        }
     }
 }
