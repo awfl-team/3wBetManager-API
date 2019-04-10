@@ -9,9 +9,9 @@ namespace Models
         public const string WrongStatus = "Wrong";
         public const string OkStatus = "Ok";
         public const string PerfectStatus = "Perfect";
-        public const int PerfectBet = 100;
-        public const int OkBet = 50;
-        public const int WrongBet = 0;
+        public const double PerfectBet = 100;
+        public const double OkBet = 50;
+        public const double WrongBet = 0;
         public const int DashboardMaxToShow = 4;
 
         public ObjectId Id { get; set; }
