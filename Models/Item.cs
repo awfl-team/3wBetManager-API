@@ -5,7 +5,7 @@ namespace Models
     public class Item
     {
         public const string Bomb = "BOMB";
-        public const string LootBoxe = "LOOT_BOXE";
+        public const string LootBoxe = "LOOT_BOX";
         public const string Multiply = "MULTIPLY_BY_TEN";
         public const string Life = "LIFE";
         public const string Key = "KEY";
