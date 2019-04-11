@@ -19,5 +19,6 @@ namespace DAO.Interfaces
         void UpdateBetPointsWon(Bet bet, double point);
         void UpdateBetStatus(Bet bet, string status);
         Task<List<Bet>> PaginatedScheduledBets(int betsToPass);
+        Task UpdateBetMultiply(string id, int multiply);
     }
 }

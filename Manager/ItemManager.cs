@@ -8,7 +8,7 @@ namespace Manager
 {
     public class ItemManager
     {
-        public static async Task AddListItemsToUser(List<Item> items, User user)
+        public static async Task BuyItemsToUser(List<Item> items, User user)
         {
             var totalCost = 0;
             foreach (var item in items)
@@ -19,6 +19,27 @@ namespace Manager
 
             await Singleton.Instance.UserDao.UpdateUserPoints(user, (user.Point - totalCost),
                 user.TotalPointsUsedToBet);
+        }
+
+        public static async Task AddItemsToUser(List<Item> items, User user)
+        {
+            foreach (var item in items)
+            {
+                await Singleton.Instance.UserDao.AddUserItem(item, user);
+            }
+
+        }
+
+        public static async Task UseBomb(string userId)
+        {
+            var user = await Singleton.Instance.UserDao.FindUser(userId);
+            await Singleton.Instance.UserDao.UpdateUserPoints(user, (user.Point - 30),
+                user.TotalPointsUsedToBet);
+        }
+
+        public static async Task UseMultiplier(string betId, int multiply)
+        {
+            await Singleton.Instance.BetDao.UpdateBetMultiply(betId, multiply);
         }
 
         public static async Task CreateDefaultItems()

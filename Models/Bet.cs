@@ -1,6 +1,5 @@
 using System;
 using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
 
 namespace Models
 {
@@ -20,6 +19,7 @@ namespace Models
         public DateTime Date { get; set; }
         public int PointsWon { get; set; }
         public string Status { get; set; }
+        public int Multiply { get; set; }
         public User User { get; set; }
         public int HomeTeamScore { get; set; }
         public int AwayTeamScore { get; set; }
