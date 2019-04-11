@@ -139,6 +139,9 @@ namespace Manager
                     else
                     {
                         Console.WriteLine("Update match " + match.Id);
+                        match.AwayTeamRating = findMatch.AwayTeamRating;
+                        match.HomeTeamRating = findMatch.HomeTeamRating;
+                        match.DrawRating = findMatch.DrawRating;
                         Singleton.Instance.MatchDao.UpdateMatch(findMatch.Id, match);
                         if (findMatch.Status == Match.ScheduledStatus && match.Status == Match.FinishedStatus)
                         {
