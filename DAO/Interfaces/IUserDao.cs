@@ -25,5 +25,6 @@ namespace DAO.Interfaces
         Task<List<User>> PaginatedUsers(int usersToPass);
         Task UpdateUserPassword(User user);
         Task AddUserItem(Item item, User user);
+        Task RemoveUserItem(User user, string itemType);
     }
 }

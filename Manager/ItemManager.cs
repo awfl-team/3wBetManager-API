@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using DAO;
 using Models;
@@ -21,13 +22,15 @@ namespace Manager
                 user.TotalPointsUsedToBet);
         }
 
-        public static async Task AddItemsToUser(List<Item> items, User user)
+        public static async Task<List<Item>> AddItemsToUser(User user)
         {
-            foreach (var item in items)
+            var itemsLooted = await GenerateLoot();
+            foreach (var item in itemsLooted)
             {
-                await Singleton.Instance.UserDao.AddUserItem(item, user);
+              await Singleton.Instance.UserDao.AddUserItem(item, user);
             }
 
+            return itemsLooted;
         }
 
         public static async Task UseBomb(string userId)
@@ -37,9 +40,46 @@ namespace Manager
                 user.TotalPointsUsedToBet);
         }
 
-        public static async Task UseMultiplier(string betId, int multiply)
+        public static async Task UseMultiplier(string betId, int multiply, User currentUser)
         {
             await Singleton.Instance.BetDao.UpdateBetMultiply(betId, multiply);
+        }
+
+        public static async Task<List<Item>> GenerateLoot()
+        {
+            var items = await Singleton.Instance.ItemDao.FindAllItems();
+            var itemLooted = new List<Item>();
+            var randomizer = new Random();
+
+            var commonItems = items.FindAll(i => i.Rarity == Item.Common);
+            var rareItems = items.FindAll(i => i.Rarity == Item.Rare);
+            var epicItems = items.FindAll(i => i.Rarity == Item.Epic);
+            var legendaryItems = items.FindAll(i => i.Rarity == Item.Legendary);
+
+            while (itemLooted.Count < Item.MaxLoot)
+            {
+                var lootDropChanceFactor = randomizer.NextDouble() * (100 - 0);
+               
+                switch (lootDropChanceFactor)
+                {
+                    case double dropFactor when (dropFactor > 0 && dropFactor <= Item.CommonDropChance):
+                        itemLooted.Add(commonItems[randomizer.Next(commonItems.Count)]);
+                        break;
+
+                    case double dropFactor when (dropFactor > Item.RareDropChanceMin && dropFactor <= Item.RareDropChanceMax):
+                        itemLooted.Add(rareItems[randomizer.Next(commonItems.Count)]);
+                        break;
+
+                    case double dropFactor when (dropFactor > Item.EpicDropChanceMin && dropFactor <= Item.EpicDropChanceMax):
+                        itemLooted.Add(epicItems[randomizer.Next(commonItems.Count)]);
+                        break;
+                    case double dropFactor when (dropFactor > Item.LegendaryDropChanceMin && dropFactor <= Item.LegendaryDropChanceMax):
+                        itemLooted.Add(legendaryItems[randomizer.Next(commonItems.Count)]);
+                        break;
+                }
+            }
+
+            return itemLooted;
         }
 
         public static async Task CreateDefaultItems()
@@ -63,7 +103,7 @@ namespace Manager
                 Cost = 10,
                 Description = "Random item",
                 Name = "Loot Boxe",
-                Type = Item.LootBoxe,
+                Type = Item.LootBox,
                 Rarity = Item.Legendary
             };
             items.Add(lootBoxe);

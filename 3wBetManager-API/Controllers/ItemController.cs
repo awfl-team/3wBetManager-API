@@ -2,6 +2,7 @@
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
+using DAO;
 using Manager;
 using Models;
 
@@ -26,12 +27,13 @@ namespace _3wBetManager_API.Controllers
 
         [Route("loot")]
         [HttpPost]
-        public async Task<IHttpActionResult> AddItems(List<Item> items)
+        public async Task<IHttpActionResult> AddItems()
         {
             return await HandleError(async () =>
             {
                 var user = await GetUserByToken(Request);
-                await ItemManager.AddItemsToUser(items, user);
+                var items = await ItemManager.AddItemsToUser(user);
+                await Singleton.Instance.UserDao.RemoveUserItem(await GetUserByToken(Request), Item.LootBox);
                 return Created("", items);
             });
         }
@@ -43,6 +45,7 @@ namespace _3wBetManager_API.Controllers
             return await HandleError(async () =>
             {
                 await ItemManager.UseBomb(userId);
+                await Singleton.Instance.UserDao.RemoveUserItem(await GetUserByToken(Request), Item.Bomb);
                 return Content(HttpStatusCode.NoContent, "");
             });
         }
@@ -53,7 +56,9 @@ namespace _3wBetManager_API.Controllers
         {
             return await HandleError(async () =>
             {
-                await ItemManager.UseMultiplier(betId, multiply);
+                var user = await GetUserByToken(Request);
+                await ItemManager.UseMultiplier(betId, multiply, user);
+                await Singleton.Instance.UserDao.RemoveUserItem(await GetUserByToken(Request), Item.Multiply);
                 return Content(HttpStatusCode.NoContent, "");
             });
         }

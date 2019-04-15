@@ -149,6 +149,16 @@ namespace DAO
 
         }
 
+        public async Task RemoveUserItem(User user, string itemType)
+        {
+            user.Items.Remove(user.Items.FirstOrDefault(i => i.Type == itemType));
+
+            await _collection.UpdateOneAsync(
+                u => u.Id == user.Id,
+                Builders<User>.Update.Set(u => u.Items, user.Items)
+            );
+        }
+
         public async Task<List<User>> SearchUser(string value)
         {
             return await _collection.Find(u => u.Email.Contains(value) || u.Username.Contains(value)).ToListAsync();
