@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
+using DAO;
 using Manager;
 using Models;
 
@@ -17,10 +19,60 @@ namespace _3wBetManager_API.Controllers
             return await HandleError(async () =>
             {
                 var user = await GetUserByToken(Request);
-                await ItemManager.AddListItemsToUser(items, user);
+                await ItemManager.BuyItemsToUser(items, user);
                 return Created("", items);
             });
         }
+
+
+        [Route("loot")]
+        [HttpPost]
+        public async Task<IHttpActionResult> AddItems()
+        {
+            return await HandleError(async () =>
+            {
+                var user = await GetUserByToken(Request);
+                var items = await ItemManager.AddItemsToUser(user);
+                await Singleton.Instance.UserDao.RemoveUserItem(await GetUserByToken(Request), Item.LootBox);
+                return Created("", items);
+            });
+        }
+
+        [Route("bomb/{userId}")]
+        [HttpPut]
+        public async Task<IHttpActionResult> UseBomb(string userId)
+        {
+            return await HandleError(async () =>
+            {
+                await ItemManager.UseBomb(userId);
+                await Singleton.Instance.UserDao.RemoveUserItem(await GetUserByToken(Request), Item.Bomb);
+                return Content(HttpStatusCode.NoContent, "");
+            });
+        }
+
+        [Route("multiplier/{multiply}/{betId}")]
+        [HttpPut]
+        public async Task<IHttpActionResult> UseMultiplier(int multiply,string betId)
+        {
+            return await HandleError(async () =>
+            {
+                var user = await GetUserByToken(Request);
+                await ItemManager.UseMultiplier(betId, multiply, user);
+                await Singleton.Instance.UserDao.RemoveUserItem(await GetUserByToken(Request), Item.Multiply);
+                return Content(HttpStatusCode.NoContent, "");
+            });
+        }
+
+        /*[Route("key/{userId}")]
+        [HttpGet]
+        public async Task<IHttpActionResult> UseKey(int multiply, string betId)
+        {
+            return await HandleError(async () =>
+            {
+                await ItemManager.UseMultiplier(betId, multiply);
+                return Content(HttpStatusCode.NoContent, "");
+            });
+        }*/
 
         [Route("")]
         [HttpGet]
@@ -31,7 +83,7 @@ namespace _3wBetManager_API.Controllers
 
         [Route("{id}")]
         [HttpPut]
-        public async Task<IHttpActionResult> UpdateCost(string id, [FromBody] Item item)
+        public async Task<IHttpActionResult> UpdateItem(string id, [FromBody] Item item)
         {
             return await HandleError(async () =>
             {

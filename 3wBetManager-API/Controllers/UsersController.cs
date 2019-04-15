@@ -108,7 +108,6 @@ namespace _3wBetManager_API.Controllers
             });
         }
 
-        [IsGranted(Models.User.AdminRole)]
         [Route("search/{value}")]
         [HttpGet]
         public async Task<IHttpActionResult> Search(string value)
@@ -135,7 +134,6 @@ namespace _3wBetManager_API.Controllers
             });
         }
 
-        [IsGranted(Models.User.AdminRole)]
         [Route("paginated/{page}")]
         [HttpGet]
         public async Task<IHttpActionResult> GetAllUsersPaginated(int page)
