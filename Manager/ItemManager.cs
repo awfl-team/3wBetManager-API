@@ -58,23 +58,23 @@ namespace Manager
 
             while (itemLooted.Count < Item.MaxLoot)
             {
-                var lootDropChanceFactor = randomizer.NextDouble() * (100 - 0);
-               
+                var lootDropChanceFactor = randomizer.NextDouble() * 100;
+            
                 switch (lootDropChanceFactor)
                 {
-                    case double dropFactor when (dropFactor > 0 && dropFactor <= Item.CommonDropChance):
+                    case double dropFactor when (dropFactor > 0 && dropFactor <= Item.CommonDropChance && commonItems.Count > 0):
                         itemLooted.Add(commonItems[randomizer.Next(commonItems.Count)]);
                         break;
 
-                    case double dropFactor when (dropFactor > Item.RareDropChanceMin && dropFactor <= Item.RareDropChanceMax):
-                        itemLooted.Add(rareItems[randomizer.Next(commonItems.Count)]);
+                    case double dropFactor when (dropFactor > Item.RareDropChanceMin && dropFactor <= Item.RareDropChanceMax && rareItems.Count > 0):
+                        itemLooted.Add(rareItems[randomizer.Next(rareItems.Count)]);
                         break;
 
-                    case double dropFactor when (dropFactor > Item.EpicDropChanceMin && dropFactor <= Item.EpicDropChanceMax):
-                        itemLooted.Add(epicItems[randomizer.Next(commonItems.Count)]);
+                    case double dropFactor when (dropFactor > Item.EpicDropChanceMin && dropFactor <= Item.EpicDropChanceMax && epicItems.Count > 0):
+                        itemLooted.Add(epicItems[randomizer.Next(epicItems.Count)]);
                         break;
-                    case double dropFactor when (dropFactor > Item.LegendaryDropChanceMin && dropFactor <= Item.LegendaryDropChanceMax):
-                        itemLooted.Add(legendaryItems[randomizer.Next(commonItems.Count)]);
+                    case double dropFactor when (dropFactor > Item.LegendaryDropChanceMin && dropFactor <= Item.LegendaryDropChanceMax && legendaryItems.Count > 0):
+                        itemLooted.Add(legendaryItems[randomizer.Next(legendaryItems.Count)]);
                         break;
                 }
             }
