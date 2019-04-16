@@ -26,7 +26,7 @@ namespace _3wBetManager_API.Controllers
 
 
         [Route("loot")]
-        [HttpPost]
+        [HttpGet]
         public async Task<IHttpActionResult> AddItems()
         {
             return await HandleError(async () =>

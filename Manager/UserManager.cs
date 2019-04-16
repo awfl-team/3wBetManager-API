@@ -149,6 +149,7 @@ namespace Manager
         {
             await Singleton.Instance.UserDao.ResetUserPoints(user);
             await Singleton.Instance.UserDao.UpdateUserLives(user);
+            await Singleton.Instance.UserDao.ResetUserItems(user);
             Singleton.Instance.BetDao.DeleteBetsByUser(user.Id);
         }
 

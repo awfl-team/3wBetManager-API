@@ -14,6 +14,7 @@ namespace DAO.Interfaces
         Task AddUser(User user, string role);
         Task DeleteUser(string id);
         Task UpdateUserLives(User user);
+        Task ResetUserItems(User user);
         Task<List<User>> FindAllUserByPoint();
         Task UpdateUser(string id, User userParam);
         Task UpdateUserIsPrivate(ObjectId id, bool isPrivate);
