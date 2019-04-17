@@ -26,7 +26,6 @@ namespace _3wBetManager_API.Controllers
             return await HandleNotFound(async () => Ok(await GetUserDao().FindUser(id)));
         }
 
-
         [Route("top50")]
         [HttpGet]
         public async Task<IHttpActionResult> GetTop50()

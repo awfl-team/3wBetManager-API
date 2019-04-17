@@ -63,16 +63,16 @@ namespace _3wBetManager_API.Controllers
             });
         }
 
-        /*[Route("key/{userId}")]
+        [Route("key/{userId}")]
         [HttpGet]
-        public async Task<IHttpActionResult> UseKey(int multiply, string betId)
+        public async Task<IHttpActionResult> UseKey(string userId)
         {
             return await HandleError(async () =>
-            {
-                await ItemManager.UseMultiplier(betId, multiply);
-                return Content(HttpStatusCode.NoContent, "");
+            { 
+                await Singleton.Instance.UserDao.RemoveUserItem(await GetUserByToken(Request), Item.Key);
+                return await HandleNotFound(async () => Ok(await GetUserDao().FindUser(userId)));
             });
-        }*/
+        }
 
         [Route("")]
         [HttpGet]
