@@ -2,6 +2,7 @@
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
+using Hub;
 using Manager;
 using Models;
 
@@ -42,6 +43,7 @@ namespace _3wBetManager_API.Controllers
         {
             return await HandleError(async () =>
             {
+                NotificationHub.SayHello();
                 await ItemManager.UseBomb(userId);
                 return Content(HttpStatusCode.NoContent, "");
             });
