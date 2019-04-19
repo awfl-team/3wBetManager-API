@@ -33,6 +33,17 @@ namespace Manager
             return itemsLooted;
         }
 
+        public static async Task<Item> AddMysteryItemToUser(User user)
+        {
+            var items = await Singleton.Instance.ItemDao.FindAllItems();
+            var randomizer = new Random();
+            var item = items[randomizer.Next(items.Count)];
+
+            await Singleton.Instance.UserDao.AddUserItem(item, user);
+
+            return item;
+        }
+
         public static async Task UseBomb(string userId)
         {
             var user = await Singleton.Instance.UserDao.FindUser(userId);
@@ -88,56 +99,94 @@ namespace Manager
             await Singleton.Instance.ItemDao.PurgeItemCollection();
             var items = new List<Item>();
 
+            /* COMMON AND TRASH */
             var bomb = new Item
             {
                 Cost = 50,
-                Description = "Can use on players and the target player lose 30 coins",
+                Description = "Can be used on players to make them lose 30 coins per bomb.",
                 Name = "Bomb",
                 Type = Item.Bomb,
-                Rarity = Item.Rare
+                Rarity = Item.Common
             };
             items.Add(bomb);
 
-            var lootBoxe = new Item
-            {
-                Cost = 10,
-                Description = "Random item",
-                Name = "Loot Boxe",
-                Type = Item.LootBox,
-                Rarity = Item.Legendary
-            };
-            items.Add(lootBoxe);
-
-            var multiply = new Item
-            {
-                Cost = 100,
-                Description = "Multiply the coins earned on a bet by 10",
-                Name = "Multiplier",
-                Type = Item.Multiply,
-                Rarity = Item.Epic
-            };
-            items.Add(multiply);
-
-            var life = new Item
-            {
-                Cost = 25,
-                Description = "Life for reset account",
-                Name = "Life",
-                Type = Item.Life,
-                Rarity = Item.Common
-            };
-            items.Add(life);
-
+            /* RARE */
             var key = new Item
             {
                 Cost = 75,
-                Description = "Watch on detail any profile even private ",
+                Description = "Allow you to spy any profile even private ones.",
                 Name = "Key",
                 Type = Item.Key,
                 Rarity = Item.Rare
-
             };
             items.Add(key);
+
+            var multiplierByTwo = new Item
+            {
+                Cost = 125,
+                Description = "Double your incomes on a bet results.",
+                Name = "2x Multiplier",
+                Type = Item.MultiplyByTwo,
+                Rarity = Item.Rare
+
+            };
+            items.Add(multiplierByTwo);
+
+            var mysteryItem = new Item
+            {
+                Cost = 100,
+                Description = "Get a random item of any rarity",
+                Name = "Mystery item",
+                Type = Item.Mystery,
+                Rarity = Item.Rare
+            };
+            items.Add(mysteryItem);
+
+            /* EPIC */
+            var multiplierByFive = new Item
+            {
+                Cost = 100,
+                Description = "Multiply the coins earned on a bet by 5.",
+                Name = "5x Multiplier",
+                Type = Item.MultiplyByFive,
+                Rarity = Item.Epic
+
+            };
+            items.Add(multiplierByFive);
+                
+            /* LEGENDARY */
+            var lootBox = new Item
+            {
+                Cost = 175,
+                Description = "Get random items of any rarity",
+                Name = "Loot Box",
+                Type = Item.LootBox,
+                Rarity = Item.Legendary
+            };
+            items.Add(lootBox);
+
+
+            var life = new Item
+            {
+                Cost = 150,
+                Description = "Life for reset your account.",
+                Name = "Life",
+                Type = Item.Life,
+                Rarity = Item.Legendary
+            };
+            items.Add(life);
+
+            var multiplyByTen = new Item
+            {
+                Cost = 250,
+                Description = "Multiply the coins earned on a bet by 10.",
+                Name = "x10 Multiplier",
+                Type = Item.MultiplyByTen,
+                Rarity = Item.Legendary
+            };
+            items.Add(multiplyByTen);
+
+
             Console.WriteLine("Load default item");
             await Singleton.Instance.ItemDao.AddListItem(items);
         }
