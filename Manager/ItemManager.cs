@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using DAO;
 using Models;
@@ -21,13 +22,26 @@ namespace Manager
                 user.TotalPointsUsedToBet);
         }
 
-        public static async Task AddItemsToUser(List<Item> items, User user)
+        public static async Task<List<Item>> AddItemsToUser(User user)
         {
-            foreach (var item in items)
+            var itemsLooted = await GenerateLoot();
+            foreach (var item in itemsLooted)
             {
-                await Singleton.Instance.UserDao.AddUserItem(item, user);
+              await Singleton.Instance.UserDao.AddUserItem(item, user);
             }
 
+            return itemsLooted;
+        }
+
+        public static async Task<Item> AddMysteryItemToUser(User user)
+        {
+            var items = await Singleton.Instance.ItemDao.FindAllItems();
+            var randomizer = new Random();
+            var item = items[randomizer.Next(items.Count)];
+
+            await Singleton.Instance.UserDao.AddUserItem(item, user);
+
+            return item;
         }
 
         public static async Task<User> UseBomb(string userId)
@@ -38,9 +52,46 @@ namespace Manager
             return user;
         }
 
-        public static async Task UseMultiplier(string betId, int multiply)
+        public static async Task UseMultiplier(string betId, int multiply, User currentUser)
         {
             await Singleton.Instance.BetDao.UpdateBetMultiply(betId, multiply);
+        }
+
+        public static async Task<List<Item>> GenerateLoot()
+        {
+            var items = await Singleton.Instance.ItemDao.FindAllItems();
+            var itemLooted = new List<Item>();
+            var randomizer = new Random();
+
+            var commonItems = items.FindAll(i => i.Rarity == Item.Common);
+            var rareItems = items.FindAll(i => i.Rarity == Item.Rare);
+            var epicItems = items.FindAll(i => i.Rarity == Item.Epic);
+            var legendaryItems = items.FindAll(i => i.Rarity == Item.Legendary);
+
+            while (itemLooted.Count < Item.MaxLoot)
+            {
+                var lootDropChanceFactor = randomizer.NextDouble() * 100;
+            
+                switch (lootDropChanceFactor)
+                {
+                    case double dropFactor when (dropFactor > 0 && dropFactor <= Item.CommonDropChance && commonItems.Count > 0):
+                        itemLooted.Add(commonItems[randomizer.Next(commonItems.Count)]);
+                        break;
+
+                    case double dropFactor when (dropFactor > Item.RareDropChanceMin && dropFactor <= Item.RareDropChanceMax && rareItems.Count > 0):
+                        itemLooted.Add(rareItems[randomizer.Next(rareItems.Count)]);
+                        break;
+
+                    case double dropFactor when (dropFactor > Item.EpicDropChanceMin && dropFactor <= Item.EpicDropChanceMax && epicItems.Count > 0):
+                        itemLooted.Add(epicItems[randomizer.Next(epicItems.Count)]);
+                        break;
+                    case double dropFactor when (dropFactor > Item.LegendaryDropChanceMin && dropFactor <= Item.LegendaryDropChanceMax && legendaryItems.Count > 0):
+                        itemLooted.Add(legendaryItems[randomizer.Next(legendaryItems.Count)]);
+                        break;
+                }
+            }
+
+            return itemLooted;
         }
 
         public static async Task CreateDefaultItems()
@@ -49,56 +100,94 @@ namespace Manager
             await Singleton.Instance.ItemDao.PurgeItemCollection();
             var items = new List<Item>();
 
+            /* COMMON AND TRASH */
             var bomb = new Item
             {
                 Cost = 50,
-                Description = "Can use on players and the target player lose 30 coins",
+                Description = "Can be used on players to make them lose 30 coins per bomb.",
                 Name = "Bomb",
                 Type = Item.Bomb,
-                Rarity = Item.Rare
+                Rarity = Item.Common
             };
             items.Add(bomb);
 
-            var lootBoxe = new Item
-            {
-                Cost = 10,
-                Description = "Random item",
-                Name = "Loot Boxe",
-                Type = Item.LootBoxe,
-                Rarity = Item.Legendary
-            };
-            items.Add(lootBoxe);
-
-            var multiply = new Item
-            {
-                Cost = 100,
-                Description = "Multiply the coins earned on a bet by 10",
-                Name = "Multiplier",
-                Type = Item.Multiply,
-                Rarity = Item.Epic
-            };
-            items.Add(multiply);
-
-            var life = new Item
-            {
-                Cost = 25,
-                Description = "Life for reset account",
-                Name = "Life",
-                Type = Item.Life,
-                Rarity = Item.Common
-            };
-            items.Add(life);
-
+            /* RARE */
             var key = new Item
             {
                 Cost = 75,
-                Description = "Watch on detail any profile even private ",
+                Description = "Allow you to spy any profile even private ones.",
                 Name = "Key",
                 Type = Item.Key,
                 Rarity = Item.Rare
-
             };
             items.Add(key);
+
+            var multiplierByTwo = new Item
+            {
+                Cost = 125,
+                Description = "Double your incomes on a bet results.",
+                Name = "2x Multiplier",
+                Type = Item.MultiplyByTwo,
+                Rarity = Item.Rare
+
+            };
+            items.Add(multiplierByTwo);
+
+            var mysteryItem = new Item
+            {
+                Cost = 100,
+                Description = "Get a random item of any rarity",
+                Name = "Mystery item",
+                Type = Item.Mystery,
+                Rarity = Item.Rare
+            };
+            items.Add(mysteryItem);
+
+            /* EPIC */
+            var multiplierByFive = new Item
+            {
+                Cost = 100,
+                Description = "Multiply the coins earned on a bet by 5.",
+                Name = "5x Multiplier",
+                Type = Item.MultiplyByFive,
+                Rarity = Item.Epic
+
+            };
+            items.Add(multiplierByFive);
+                
+            /* LEGENDARY */
+            var lootBox = new Item
+            {
+                Cost = 175,
+                Description = "Get random items of any rarity",
+                Name = "Loot Box",
+                Type = Item.LootBox,
+                Rarity = Item.Legendary
+            };
+            items.Add(lootBox);
+
+
+            var life = new Item
+            {
+                Cost = 150,
+                Description = "Life for reset your account.",
+                Name = "Life",
+                Type = Item.Life,
+                Rarity = Item.Legendary
+            };
+            items.Add(life);
+
+            var multiplyByTen = new Item
+            {
+                Cost = 250,
+                Description = "Multiply the coins earned on a bet by 10.",
+                Name = "x10 Multiplier",
+                Type = Item.MultiplyByTen,
+                Rarity = Item.Legendary
+            };
+            items.Add(multiplyByTen);
+
+
             Console.WriteLine("Load default item");
             await Singleton.Instance.ItemDao.AddListItem(items);
         }

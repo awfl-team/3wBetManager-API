@@ -122,14 +122,29 @@ namespace DAO
         }
 
         public async Task UpdateUserLives(User user)
-        {
-            var lifeFilter = Builders<User>.Update.PullFilter(u => u.Items,
-                i => i.Type == Item.Life);
+        { 
+            user.Items.Remove(user.Items.FirstOrDefault(i => i.Type == Item.Life));
 
             await _collection.UpdateOneAsync(
                 u => u.Id == user.Id,
-                lifeFilter
+                Builders<User>.Update.Set(u => u.Items, user.Items)
             );
+        }
+
+        public async Task ResetUserItems(User user)
+        {
+            var items = await Singleton.Instance.ItemDao.FindAllItems();
+            items = items.FindAll(i => i.Type != Item.Life);
+            foreach (var item in items)
+            {
+                var objectFilter = Builders<User>.Update.PullFilter(u => u.Items,
+                    i => i.Type == item.Type);
+
+                await _collection.UpdateOneAsync(
+                    u => u.Id == user.Id,
+                    objectFilter
+                );
+            }
         }
 
         public async Task UpdateUserPassword(User user)
@@ -147,6 +162,16 @@ namespace DAO
                 Builders<User>.Update.Push(u => u.Items, item)
             );
 
+        }
+
+        public async Task RemoveUserItem(User user, string itemType)
+        {
+            user.Items.Remove(user.Items.FirstOrDefault(i => i.Type == itemType));
+
+            await _collection.UpdateOneAsync(
+                u => u.Id == user.Id,
+                Builders<User>.Update.Set(u => u.Items, user.Items)
+            );
         }
 
         public async Task<List<User>> SearchUser(string value)

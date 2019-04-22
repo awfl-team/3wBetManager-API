@@ -214,7 +214,7 @@ namespace Manager
                 bet.Match.HomeTeam = homeTeamInformation;
             }
 
-            var finishedBets = betsByUser.FindAll(bet => bet.Match.Status == Match.FinishedStatus);
+            var finishedBets = betsByUser.FindAll(bet => bet.Match.Status == Match.ScheduledStatus);
             var totalBets = finishedBets.Count();
             var totalPages = totalBets / 10 + 1;
             page = page - 1;

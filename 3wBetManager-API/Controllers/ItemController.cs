@@ -26,14 +26,28 @@ namespace _3wBetManager_API.Controllers
 
 
         [Route("loot")]
-        [HttpPost]
-        public async Task<IHttpActionResult> AddItems(List<Item> items)
+        [HttpGet]
+        public async Task<IHttpActionResult> AddItems()
         {
             return await HandleError(async () =>
             {
                 var user = await GetUserByToken(Request);
-                await ItemManager.AddItemsToUser(items, user);
+                var items = await ItemManager.AddItemsToUser(user);
+                await GetUserDao().RemoveUserItem(await GetUserByToken(Request), Item.LootBox);
                 return Created("", items);
+            });
+        }
+
+        [Route("mystery")]
+        [HttpGet]
+        public async Task<IHttpActionResult> AddMysteryItem()
+        {
+            return await HandleError(async () =>
+            {
+                var user = await GetUserByToken(Request);
+                var item = await ItemManager.AddMysteryItemToUser(user);
+                await Singleton.Instance.UserDao.RemoveUserItem(await GetUserByToken(Request), Item.Mystery);
+                return Created("", item);
             });
         }
 
@@ -47,6 +61,7 @@ namespace _3wBetManager_API.Controllers
                 var user = await GetUserByToken(Request);
                 var sendTo = await ItemManager.UseBomb(userId);
                 notificationHub.SendNotification(sendTo.Username, user.Username + " used a bomb on you");
+                await GetUserDao().RemoveUserItem(user, Item.Bomb);
                 return Content(HttpStatusCode.NoContent, "");
             });
         }
@@ -57,21 +72,39 @@ namespace _3wBetManager_API.Controllers
         {
             return await HandleError(async () =>
             {
-                await ItemManager.UseMultiplier(betId, multiply);
+                var user = await GetUserByToken(Request);
+                var itemToUse = "";
+                switch (multiply)
+                {
+                    case 2:
+                        itemToUse = Item.MultiplyByTwo;
+                        break;
+                    case 5:
+                        itemToUse = Item.MultiplyByFive;
+                        break;
+                    case 10:
+                        itemToUse = Item.MultiplyByTen;
+                        break;
+                    default:
+                        return Content(HttpStatusCode.BadRequest, "");
+                }
+                await ItemManager.UseMultiplier(betId, multiply, user);
+             
+                await Singleton.Instance.UserDao.RemoveUserItem(await GetUserByToken(Request), itemToUse);
                 return Content(HttpStatusCode.NoContent, "");
             });
         }
 
-        /*[Route("key/{userId}")]
+        [Route("key/{userId}")]
         [HttpGet]
-        public async Task<IHttpActionResult> UseKey(int multiply, string betId)
+        public async Task<IHttpActionResult> UseKey(string userId)
         {
             return await HandleError(async () =>
-            {
-                await ItemManager.UseMultiplier(betId, multiply);
-                return Content(HttpStatusCode.NoContent, "");
+            { 
+                await Singleton.Instance.UserDao.RemoveUserItem(await GetUserByToken(Request), Item.Key);
+                return await HandleNotFound(async () => Ok(await GetUserDao().FindUser(userId)));
             });
-        }*/
+        }
 
         [Route("")]
         [HttpGet]

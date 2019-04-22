@@ -14,6 +14,7 @@ namespace DAO.Interfaces
         Task AddUser(User user, string role);
         Task DeleteUser(string id);
         Task UpdateUserLives(User user);
+        Task ResetUserItems(User user);
         Task<List<User>> FindAllUserByPoint();
         Task UpdateUser(string id, User userParam);
         Task UpdateUserIsPrivate(ObjectId id, bool isPrivate);
@@ -25,5 +26,6 @@ namespace DAO.Interfaces
         Task<List<User>> PaginatedUsers(int usersToPass);
         Task UpdateUserPassword(User user);
         Task AddUserItem(Item item, User user);
+        Task RemoveUserItem(User user, string itemType);
     }
 }
