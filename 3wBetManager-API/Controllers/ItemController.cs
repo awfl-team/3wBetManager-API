@@ -44,8 +44,9 @@ namespace _3wBetManager_API.Controllers
             return await HandleError(async () =>
             {
                 var notificationHub = new NotificationHub();
-                notificationHub.SendNotification("Florian", "ntm roman");
-                await ItemManager.UseBomb(userId);
+                var user = await GetUserByToken(Request);
+                var sendTo = await ItemManager.UseBomb(userId);
+                notificationHub.SendNotification(sendTo.Username, user.Username + " used a bomb on you");
                 return Content(HttpStatusCode.NoContent, "");
             });
         }
