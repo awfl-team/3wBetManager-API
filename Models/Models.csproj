@@ -48,6 +48,7 @@
     <Compile Include="Score.cs" />
     <Compile Include="Team.cs" />
     <Compile Include="User.cs" />
+    <Compile Include="UserHub.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

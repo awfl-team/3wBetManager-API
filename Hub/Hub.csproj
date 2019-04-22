@@ -82,5 +82,11 @@
     <None Include="Scripts\jquery-3.3.1.min.map" />
     <None Include="Scripts\jquery-3.3.1.slim.min.map" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Models\Models.csproj">
+      <Project>{057423D6-1327-47F7-B455-D281935FA5A5}</Project>
+      <Name>Models</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
