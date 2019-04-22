@@ -2,7 +2,7 @@
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
-using DAO;
+using Hub;
 using Manager;
 using Models;
 
@@ -33,7 +33,7 @@ namespace _3wBetManager_API.Controllers
             {
                 var user = await GetUserByToken(Request);
                 var items = await ItemManager.AddItemsToUser(user);
-                await Singleton.Instance.UserDao.RemoveUserItem(await GetUserByToken(Request), Item.LootBox);
+                await GetUserDao().RemoveUserItem(await GetUserByToken(Request), Item.LootBox);
                 return Created("", items);
             });
         }
@@ -46,7 +46,7 @@ namespace _3wBetManager_API.Controllers
             {
                 var user = await GetUserByToken(Request);
                 var item = await ItemManager.AddMysteryItemToUser(user);
-                await Singleton.Instance.UserDao.RemoveUserItem(await GetUserByToken(Request), Item.Mystery);
+                await GetUserDao().RemoveUserItem(await GetUserByToken(Request), Item.Mystery);
                 return Created("", item);
             });
         }
@@ -57,8 +57,11 @@ namespace _3wBetManager_API.Controllers
         {
             return await HandleError(async () =>
             {
-                await ItemManager.UseBomb(userId);
-                await Singleton.Instance.UserDao.RemoveUserItem(await GetUserByToken(Request), Item.Bomb);
+                var notificationHub = new NotificationHub();
+                var user = await GetUserByToken(Request);
+                var sendTo = await ItemManager.UseBomb(userId);
+                notificationHub.SendNotification(sendTo.Username, user.Username + " used a bomb on you");
+                await GetUserDao().RemoveUserItem(user, Item.Bomb);
                 return Content(HttpStatusCode.NoContent, "");
             });
         }
@@ -87,7 +90,7 @@ namespace _3wBetManager_API.Controllers
                 }
                 await ItemManager.UseMultiplier(betId, multiply, user);
              
-                await Singleton.Instance.UserDao.RemoveUserItem(await GetUserByToken(Request), itemToUse);
+                await GetUserDao().RemoveUserItem(await GetUserByToken(Request), itemToUse);
                 return Content(HttpStatusCode.NoContent, "");
             });
         }
@@ -98,7 +101,7 @@ namespace _3wBetManager_API.Controllers
         {
             return await HandleError(async () =>
             { 
-                await Singleton.Instance.UserDao.RemoveUserItem(await GetUserByToken(Request), Item.Key);
+                await GetUserDao().RemoveUserItem(await GetUserByToken(Request), Item.Key);
                 return await HandleNotFound(async () => Ok(await GetUserDao().FindUser(userId)));
             });
         }

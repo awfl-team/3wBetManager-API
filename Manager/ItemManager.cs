@@ -44,11 +44,12 @@ namespace Manager
             return item;
         }
 
-        public static async Task UseBomb(string userId)
+        public static async Task<User> UseBomb(string userId)
         {
             var user = await Singleton.Instance.UserDao.FindUser(userId);
             await Singleton.Instance.UserDao.UpdateUserPoints(user, (user.Point - 30),
                 user.TotalPointsUsedToBet);
+            return user;
         }
 
         public static async Task UseMultiplier(string betId, int multiply, User currentUser)
