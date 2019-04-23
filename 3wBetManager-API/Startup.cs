@@ -1,4 +1,5 @@
 ﻿using System.Web.Http;
+using Microsoft.AspNet.SignalR;
 using Microsoft.Owin.Cors;
 using Owin;
 using Swashbuckle.Application;
@@ -15,7 +16,8 @@ namespace _3wBetManager_API
             config.MapHttpAttributeRoutes();
             appBuilder.UseCors(CorsOptions.AllowAll);
             appBuilder.UseWebApi(config);
-            appBuilder.MapSignalR();
+            appBuilder.MapSignalR(new HubConfiguration
+                {EnableJSONP = true, EnableDetailedErrors = true, EnableJavaScriptProxies = true});
         }
     }
 }
