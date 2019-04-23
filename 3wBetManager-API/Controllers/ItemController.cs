@@ -60,7 +60,7 @@ namespace _3wBetManager_API.Controllers
                 var notificationHub = new NotificationHub();
                 var user = await GetUserByToken(Request);
                 var sendTo = await ItemManager.UseBomb(userId);
-                notificationHub.SendNotification(sendTo.Username, user.Username + " used a bomb on you");
+                notificationHub.SendNotification("Florian", user.Username + " used a bomb on you");
                 await GetUserDao().RemoveUserItem(user, Item.Bomb);
                 return Content(HttpStatusCode.NoContent, "");
             });
@@ -70,10 +70,10 @@ namespace _3wBetManager_API.Controllers
         [HttpPut]
         public async Task<IHttpActionResult> UseMultiplier(int multiply,string betId)
         {
+            string itemToUse;
             return await HandleError(async () =>
             {
                 var user = await GetUserByToken(Request);
-                var itemToUse = "";
                 switch (multiply)
                 {
                     case 2:
@@ -99,10 +99,14 @@ namespace _3wBetManager_API.Controllers
         [HttpGet]
         public async Task<IHttpActionResult> UseKey(string userId)
         {
-            return await HandleError(async () =>
-            { 
+            return await HandleNotFound(async () =>
+            {
+                var sendTo = await GetUserDao().FindUser(userId);
+                var user = await GetUserByToken(Request);
+                var notificationHub = new NotificationHub();
+                notificationHub.SendNotification(sendTo.Username, user.Username + " used a bomb on you");
                 await GetUserDao().RemoveUserItem(await GetUserByToken(Request), Item.Key);
-                return await HandleNotFound(async () => Ok(await GetUserDao().FindUser(userId)));
+                return Ok(sendTo);
             });
         }
 
