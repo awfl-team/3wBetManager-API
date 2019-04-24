@@ -60,7 +60,7 @@ namespace _3wBetManager_API.Controllers
                 var notificationHub = new NotificationHub();
                 var user = await GetUserByToken(Request);
                 var sendTo = await ItemManager.UseBomb(userId);
-                notificationHub.SendNotification("Florian", user.Username + " used a bomb on you");
+                notificationHub.SendNotification(sendTo.Username, user.Username + " used a bomb on you");
                 await GetUserDao().RemoveUserItem(user, Item.Bomb);
                 return Content(HttpStatusCode.NoContent, "");
             });
