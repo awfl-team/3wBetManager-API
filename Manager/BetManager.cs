@@ -185,8 +185,8 @@ namespace Manager
             }
    
             dynamic userBetsPerType = new ExpandoObject();
-            userBetsPerType.okBets = perfectBetsPoint;
-            userBetsPerType.perfectBets = okBetsPoint;
+            userBetsPerType.okBets = okBetsPoint;
+            userBetsPerType.perfectBets = perfectBetsPoint;
 
             return userBetsPerType;
         }
