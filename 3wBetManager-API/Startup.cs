@@ -16,7 +16,11 @@ namespace _3wBetManager_API
             config.MapHttpAttributeRoutes();
             appBuilder.UseCors(CorsOptions.AllowAll);
             appBuilder.UseWebApi(config);
-            appBuilder.MapSignalR();
+            appBuilder.MapSignalR("", new HubConfiguration()
+            {
+                EnableJSONP = true,
+                EnableJavaScriptProxies = true
+            });
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR;
@@ -13,6 +12,7 @@ namespace Hub
     {
         private static readonly List<UserHub> ConnectedUsers =
             new List<UserHub>();
+
 
         [HubMethodName("notification")]
         public void SendNotification(string sentTo, string message)
