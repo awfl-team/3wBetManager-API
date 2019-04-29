@@ -169,15 +169,28 @@ namespace Manager
 
             if (userBets.Count == 0) return new ExpandoObject();
 
-            var perfectBets = userBets.FindAll(bet => bet.Status == Bet.PerfectStatus);
-            var okBets = userBets.FindAll(bet => bet.Status == Bet.OkStatus);
-
+            var perfectBetsPoint = 0;
+            var okBetsPoint = 0;
+            foreach (var bet in userBets)
+            {
+                switch (bet.Status)
+                {
+                    case Bet.PerfectStatus:
+                        perfectBetsPoint += bet.PointsWon;
+                        break;
+                    case Bet.OkStatus:
+                        okBetsPoint += bet.PointsWon;
+                        break;
+                }
+            }
+   
             dynamic userBetsPerType = new ExpandoObject();
-            userBetsPerType.okBets = okBets.Count * Bet.OkBet;
-            userBetsPerType.perfectBets = perfectBets.Count * Bet.PerfectBet;
+            userBetsPerType.okBets = perfectBetsPoint;
+            userBetsPerType.perfectBets = okBetsPoint;
 
             return userBetsPerType;
         }
+
 
         public static async Task<dynamic> NumberFinishMatchAndBet(User user, int competitionId)
         {
