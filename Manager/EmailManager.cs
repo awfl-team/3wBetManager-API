@@ -30,9 +30,24 @@ namespace Manager
             mailMessage.To.Add(user.Email);
             var token = TokenManager.GenerateEmailToken(user.Email, user.Role, user.Username);
             // TODO add url in settings
-            var url = "http://localhost:3000/reset_password/" + token;
+            var url = "https://qsomazzi.gitlab.io/react-master-group-1/#/reset_password/" + token;
             mailMessage.Subject = "Reset Your Password";
             mailMessage.Body = "You requested for a password reset, use the link below to reset your password : " + url;
+            mailMessage.From = new MailAddress("3wbet.manager@gmail.com", "3wbetManager");
+
+            _smtp.Send(mailMessage);
+        }
+
+        public void SendVerifyAccountEmail(User user)
+        {
+            var mailMessage = new MailMessage();
+
+            mailMessage.To.Add(user.Email);
+            var token = TokenManager.GenerateEmailToken(user.Email, user.Role, user.Username);
+            // TODO add goof route
+            var url = "https://qsomazzi.gitlab.io/react-master-group-1/#/verify_account/" + token;
+            mailMessage.Subject = "Confirm your email";
+            mailMessage.Body = " To get started, click the link below to confirm your account" + url;
             mailMessage.From = new MailAddress("3wbet.manager@gmail.com", "3wbetManager");
 
             _smtp.Send(mailMessage);
@@ -41,6 +56,7 @@ namespace Manager
         public void SendWebMasterEmail(Exception exception)
         {
             var mailMessage = new MailMessage();
+            // TODO add email in database for manage it in admin
             mailMessage.To.Add("florob95@gmail.com");
             var now = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
             mailMessage.Subject = "[" + now + "]" + " ERROR API";

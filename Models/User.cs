@@ -21,6 +21,7 @@ namespace Models
         public string Email { get; set; }
         public string Username { get; set; }
         public bool IsPrivate { get; set; }
+        public bool IsEnabled { get; set; }
         public List<Item> Items { get; set; }
     }
 }

@@ -60,6 +60,7 @@ namespace DAO
             user.IsPrivate = User.DefaultIsPrivate;
             user.Point = User.DefaultPoint;
             user.Role = role;
+            user.IsEnabled = false;
             user.TotalPointsUsedToBet = User.DefaultTotalPointsUsedToBet;
             user.Items = new List<Item>();
             for (var i = 0; i < User.DefaultLife; i++)
@@ -100,6 +101,14 @@ namespace DAO
             await _collection.UpdateOneAsync(
                 user => user.Id == ObjectId.Parse(id),
                 Builders<User>.Update.Set(user => user.Role, role)
+            );
+        }
+
+        public async Task UpdateUserIsEnabled(ObjectId id, bool isEnabled)
+        {
+            await _collection.UpdateOneAsync(
+                user => user.Id == user.Id,
+                Builders<User>.Update.Set(user => user.IsEnabled, isEnabled)
             );
         }
 

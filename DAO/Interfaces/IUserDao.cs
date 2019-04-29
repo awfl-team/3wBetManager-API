@@ -27,5 +27,6 @@ namespace DAO.Interfaces
         Task UpdateUserPassword(User user);
         Task AddUserItem(Item item, User user);
         Task RemoveUserItem(User user, string itemType);
+        Task UpdateUserIsEnabled(ObjectId id, bool isEnabled);
     }
 }

@@ -18,6 +18,10 @@ namespace _3wBetManager_API.Controllers
                 if (userExist.Length > 0) return Content(HttpStatusCode.BadRequest, userExist);
 
                 await GetUserDao().AddUser(user, Models.User.UserRole);
+                using (var emailManager = new EmailManager())
+                {
+                    emailManager.SendVerifyAccountEmail(user);
+                }
                 return Created("", user);
             });
         }
@@ -67,6 +71,21 @@ namespace _3wBetManager_API.Controllers
 
                 user.Password = userParam.Password;
                 await GetUserDao().UpdateUserPassword(user);
+
+                return Content(HttpStatusCode.NoContent, "");
+            });
+        }
+
+        [Route("verify_account")]
+        [HttpPut]
+        public async Task<IHttpActionResult> VerifyAccount([FromBody] User userParam)
+        {
+            return await HandleError(async () =>
+            {
+                var user = await GetUserByToken(Request);
+                if (user == null) return BadRequest();
+
+                await GetUserDao().UpdateUserIsEnabled(user.Id, true);
 
                 return Content(HttpStatusCode.NoContent, "");
             });

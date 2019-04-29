@@ -171,7 +171,6 @@ namespace Manager
 
             var perfectBets = userBets.FindAll(bet => bet.Status == Bet.PerfectStatus);
             var okBets = userBets.FindAll(bet => bet.Status == Bet.OkStatus);
-            var wrongBets = userBets.FindAll(bet => bet.Status == Bet.WrongStatus);
 
             dynamic userBetsPerType = new ExpandoObject();
             userBetsPerType.okBets = okBets.Count * Bet.OkBet;
