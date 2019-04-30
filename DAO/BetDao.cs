@@ -80,9 +80,9 @@ namespace DAO
                 Builders<Bet>.Update.Set(b => b.Multiply, multiply));
         }
 
-        public async Task<List<Bet>> PaginatedScheduledBets(int betsToPass)
+        public async Task<List<Bet>> PaginatedScheduledBets(int betsToPass, User user)
         {
-            return await _collection.Find(bet => bet.Match.Status == Match.ScheduledStatus).Skip(betsToPass).Limit(10)
+            return await _collection.Find(bet => bet.Match.Status == Match.ScheduledStatus && bet.User.Id == user.Id).Skip(betsToPass).Limit(10)
                 .ToListAsync();
         }
     }

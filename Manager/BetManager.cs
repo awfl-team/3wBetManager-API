@@ -233,7 +233,7 @@ namespace Manager
            
 
             var betsToPass = 10 * page;
-            var betsPaginated = await Singleton.Instance.BetDao.PaginatedScheduledBets(betsToPass);
+            var betsPaginated = await Singleton.Instance.BetDao.PaginatedScheduledBets(betsToPass, user);
             dynamic obj = new ExpandoObject();
             obj.Items = betsPaginated;
             obj.TotalPages = totalPages;
