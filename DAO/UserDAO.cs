@@ -107,7 +107,7 @@ namespace DAO
         public async Task UpdateUserIsEnabled(ObjectId id, bool isEnabled)
         {
             await _collection.UpdateOneAsync(
-                user => user.Id == user.Id,
+                user => user.Id == id,
                 Builders<User>.Update.Set(user => user.IsEnabled, isEnabled)
             );
         }
