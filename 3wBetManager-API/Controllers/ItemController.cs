@@ -104,7 +104,7 @@ namespace _3wBetManager_API.Controllers
                 var sendTo = await GetUserDao().FindUser(userId);
                 var user = await GetUserByToken(Request);
                 var notificationHub = new NotificationHub();
-                notificationHub.SendNotification(sendTo.Username, user.Username + " used a bomb on you");
+                notificationHub.SendNotification(sendTo.Username, user.Username + " used a key on you");
                 await GetUserDao().RemoveUserItem(await GetUserByToken(Request), Item.Key);
                 return Ok(sendTo);
             });

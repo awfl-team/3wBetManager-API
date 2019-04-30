@@ -11,21 +11,30 @@ namespace Manager
             foreach (var bet in bets)
             {
                 var betTeamHightScore = GetTeamNameWithTheBestHightScore(bet);
+                var multiply = bet.Multiply;
+                if (multiply == 0)
+                {
+                    multiply = 1;
+                }
 
-                if (match.Score.FullTime.HomeTeam == bet.HomeTeamScore && match.Score.FullTime.AwayTeam == bet.AwayTeamScore)
+                if (match.Score.FullTime.HomeTeam == bet.HomeTeamScore &&
+                    match.Score.FullTime.AwayTeam == bet.AwayTeamScore)
                 {
                     switch (betTeamHightScore)
                     {
                         case "AWAY":
-                            Singleton.Instance.BetDao.UpdateBetPointsWon(bet, Bet.PerfectBet * match.AwayTeamRating);
+                            Singleton.Instance.BetDao.UpdateBetPointsWon(bet,
+                                (Bet.PerfectBet * match.AwayTeamRating) * multiply);
                             Singleton.Instance.BetDao.UpdateBetStatus(bet, Bet.PerfectStatus);
                             continue;
                         case "HOME":
-                            Singleton.Instance.BetDao.UpdateBetPointsWon(bet, Bet.PerfectBet * match.HomeTeamRating);
+                            Singleton.Instance.BetDao.UpdateBetPointsWon(bet,
+                                (Bet.PerfectBet * match.HomeTeamRating) * multiply);
                             Singleton.Instance.BetDao.UpdateBetStatus(bet, Bet.PerfectStatus);
                             continue;
                         case "DRAW":
-                            Singleton.Instance.BetDao.UpdateBetPointsWon(bet, Bet.PerfectBet * match.DrawRating);
+                            Singleton.Instance.BetDao.UpdateBetPointsWon(bet,
+                                (Bet.PerfectBet * match.DrawRating) * multiply);
                             Singleton.Instance.BetDao.UpdateBetStatus(bet, Bet.PerfectStatus);
                             continue;
                     }
@@ -34,15 +43,17 @@ namespace Manager
                 switch (betTeamHightScore)
                 {
                     case "HOME" when match.Score.Winner == "HOME_TEAM":
-                        Singleton.Instance.BetDao.UpdateBetPointsWon(bet, Bet.OkBet * match.HomeTeamRating);
+                        Singleton.Instance.BetDao.UpdateBetPointsWon(bet,
+                            (Bet.OkBet * match.HomeTeamRating) * multiply);
                         Singleton.Instance.BetDao.UpdateBetStatus(bet, Bet.OkStatus);
                         continue;
                     case "AWAY" when match.Score.Winner == "AWAY_TEAM":
-                        Singleton.Instance.BetDao.UpdateBetPointsWon(bet, Bet.OkBet * match.AwayTeamRating);
+                        Singleton.Instance.BetDao.UpdateBetPointsWon(bet,
+                            (Bet.OkBet * match.AwayTeamRating) * multiply);
                         Singleton.Instance.BetDao.UpdateBetStatus(bet, Bet.OkStatus);
                         continue;
-                    case "DRAW" when match.Score.Winner =="DRAW":
-                        Singleton.Instance.BetDao.UpdateBetPointsWon(bet, Bet.OkBet * match.DrawRating);
+                    case "DRAW" when match.Score.Winner == "DRAW":
+                        Singleton.Instance.BetDao.UpdateBetPointsWon(bet, (Bet.OkBet * match.DrawRating) * multiply);
                         Singleton.Instance.BetDao.UpdateBetStatus(bet, Bet.OkStatus);
                         continue;
                     default:

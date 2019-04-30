@@ -14,8 +14,9 @@ namespace Manager
             _smtp = smtp ?? new SmtpClient();
             // TODO add smtp config in settings
             _smtp.Host = "smtp.gmail.com";
-            _smtp.Credentials = new NetworkCredential("3wbet.manager@gmail.com", "3wbetManager.@wfl-team");
+            _smtp.Credentials = new NetworkCredential("3wbet.manager@gmail.com", "3wbetManager.@wfl-team1");
             _smtp.EnableSsl = true;
+            _smtp.Port = 587;
         }
 
         public void Dispose()
@@ -47,7 +48,7 @@ namespace Manager
             // TODO add goof route
             var url = "https://qsomazzi.gitlab.io/react-master-group-1/#/verify_account/" + token;
             mailMessage.Subject = "Confirm your email";
-            mailMessage.Body = " To get started, click the link below to confirm your account" + url;
+            mailMessage.Body = " To get started, click the link below to confirm your account " + url;
             mailMessage.From = new MailAddress("3wbet.manager@gmail.com", "3wbetManager");
 
             _smtp.Send(mailMessage);
