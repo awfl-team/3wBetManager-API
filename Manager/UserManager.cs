@@ -74,7 +74,7 @@ namespace Manager
             if (userPlace - 5 < 0 || userPlace + 5 > usersByPoint.Count)
                 usersRange = usersByPoint;
             else
-                usersRange = usersByPoint.GetRange(userPlace - 5, userPlace + 5);
+                usersRange = usersByPoint.GetRange(userPlace - 5, userPlace);
 
             foreach (var user in usersRange)
             {
