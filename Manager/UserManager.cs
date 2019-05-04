@@ -71,10 +71,12 @@ namespace Manager
             var usersByPoint = await Singleton.Instance.UserDao.FindAllUserByPoint();
             var userPlace = usersByPoint.FindIndex(u => u.Id == userParam.Id);
             var usersRange = new List<User>();
-            if (userPlace - 5 < 0 || userPlace + 5 > usersByPoint.Count)
-                usersRange = usersByPoint;
-            else
-                usersRange = usersByPoint.GetRange(userPlace - 5, userPlace);
+
+
+            var index = userPlace - 5 + (userPlace - 5 < 0 ? 0 - (userPlace - 5) : 0);
+            var count = 11 - (userPlace - 5 < 0 ? 0 - (userPlace - 5) : 0) - (index + 11 >= usersByPoint.Count ? (index + 11) - usersByPoint.Count : 0);
+
+            usersRange = usersByPoint.GetRange(index, count);
 
             foreach (var user in usersRange)
             {
