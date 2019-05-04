@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -69,6 +70,11 @@ namespace Manager
         {
             var users = new List<dynamic>();
             var usersByPoint = await Singleton.Instance.UserDao.FindAllUserByPoint();
+            int rank = 1;
+            foreach (var user in usersByPoint)
+            {
+                user.Rank = rank++;
+            }
             var userPlace = usersByPoint.FindIndex(u => u.Id == userParam.Id);
             var usersRange = new List<User>();
 
@@ -88,6 +94,7 @@ namespace Manager
                 obj.Life = user.Items.FindAll(i => i.Type == Item.Life).Count;
                 obj.Username = user.Username;
                 obj.IsPrivate = user.IsPrivate;
+                obj.Rank = user.Rank;
                 obj.NbBets = betsByUser.Count;
                 obj.NbPerfectBets = betsByUser.FindAll(b => b.Status == Bet.PerfectStatus).Count;
                 obj.NbOkBets = betsByUser.FindAll(b => b.Status == Bet.OkStatus).Count;

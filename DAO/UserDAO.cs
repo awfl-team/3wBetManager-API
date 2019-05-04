@@ -39,6 +39,17 @@ namespace DAO
         public async Task<List<User>> FindAllUserByPoint()
         {
             return await _collection.Find(new BsonDocument()).Sort("{Point: -1}").ToListAsync();
+            var unwindOptions = new AggregateUnwindOptions<User>
+            {
+                IncludeArrayIndex = new StringFieldDefinition<User>("Rank")
+            };
+
+           return await _collection.Aggregate()
+                .Unwind(x => x.Rank, unwindOptions)
+                .Match(new BsonDocument())
+                .SortByDescending(s => s.Point)
+                .ToListAsync();
+
         }
 
 
