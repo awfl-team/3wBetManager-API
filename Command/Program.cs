@@ -6,7 +6,7 @@ using DAO;
 using Manager;
 using MongoDB.Driver;
 
-namespace FetchFootballData
+namespace Command
 {
     internal class Program
     {
@@ -17,13 +17,14 @@ namespace FetchFootballData
             Singleton.Instance.SetAll(database);
             if (args[0] == "REFRESH")
                 using (var footballDataManager = new FootballDataManager())
+                using (var userManager = new UserManager())
                 {
                     Console.WriteLine("----- Begin Fetch football data ----- ");
                     await footballDataManager.GetAllCompetitions();
                     await footballDataManager.GetAllTeams();
                     await footballDataManager.GetAllMatchForAWeek();
                     Console.WriteLine("----- End Fetch football data ----- ");
-                    UserManager.RecalculateUserPoints();
+                    userManager.RecalculateUserPoints();
                     Thread.Sleep(10000);
                 }
 
@@ -35,7 +36,11 @@ namespace FetchFootballData
 
             if (args[0] == "FIXTURE")
             {
-                await ItemManager.CreateDefaultItems();
+                using (var itemManager = new ItemManager())
+                {
+                await itemManager.CreateDefaultItems();
+
+                }
             }
 
             Environment.Exit(0);
