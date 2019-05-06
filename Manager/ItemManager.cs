@@ -47,8 +47,7 @@ namespace Manager
         public static async Task<User> UseBomb(string userId)
         {
             var user = await Singleton.Instance.UserDao.FindUser(userId);
-            await Singleton.Instance.UserDao.UpdateUserPoints(user, (user.Point - 30),
-                user.TotalPointsUsedToBet);
+            await Singleton.Instance.UserDao.UpdateUserPointsAfterBomb(user);
             return user;
         }
 

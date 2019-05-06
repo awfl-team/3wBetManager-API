@@ -6,6 +6,7 @@ namespace Models
     {
         /* COMMON & TRASH */
         public const string Bomb = "BOMB";
+        public const int BombPoints = 30;
 
         /* RARE */
         public const string MultiplyByTwo = "MULTIPLY_BY_TWO";

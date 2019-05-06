@@ -138,7 +138,7 @@ namespace Manager
 
         public static async Task<dynamic> GetAllUsersPaginated(int page)
         {
-            var users = await Singleton.Instance.UserDao.FindAllUser();
+            var users = await Singleton.Instance.UserDao.FindAllUserByPoint();
             var totalUsers = users.Count();
             var totalPages = totalUsers / 10 + 1;
             page = page - 1;
