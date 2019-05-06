@@ -1,13 +1,22 @@
-﻿using DAO;
+﻿using System;
+using DAO;
+using DAO.Interfaces;
 using Models;
 
 namespace Manager
 {
-    public class AssignmentPointManager
+    public class AssignmentPointManager : IDisposable
     {
-        public static async void AddPointToBet(Match match)
+        private IBetDao _betDao;
+
+        public AssignmentPointManager(IBetDao betDao = null)
         {
-            var bets = await Singleton.Instance.BetDao.FindBetsByMatch(match);
+            _betDao = betDao ?? Singleton.Instance.BetDao;
+        }
+
+        public async void AddPointToBet(Match match)
+        {
+            var bets = await _betDao.FindBetsByMatch(match);
             foreach (var bet in bets)
             {
                 var betTeamHightScore = GetTeamNameWithTheBestHightScore(bet);
@@ -23,19 +32,19 @@ namespace Manager
                     switch (betTeamHightScore)
                     {
                         case "AWAY":
-                            Singleton.Instance.BetDao.UpdateBetPointsWon(bet,
+                            _betDao.UpdateBetPointsWon(bet,
                                 (Bet.PerfectBet * match.AwayTeamRating) * multiply);
-                            Singleton.Instance.BetDao.UpdateBetStatus(bet, Bet.PerfectStatus);
+                            _betDao.UpdateBetStatus(bet, Bet.PerfectStatus);
                             continue;
                         case "HOME":
-                            Singleton.Instance.BetDao.UpdateBetPointsWon(bet,
+                            _betDao.UpdateBetPointsWon(bet,
                                 (Bet.PerfectBet * match.HomeTeamRating) * multiply);
-                            Singleton.Instance.BetDao.UpdateBetStatus(bet, Bet.PerfectStatus);
+                            _betDao.UpdateBetStatus(bet, Bet.PerfectStatus);
                             continue;
                         case "DRAW":
-                            Singleton.Instance.BetDao.UpdateBetPointsWon(bet,
+                            _betDao.UpdateBetPointsWon(bet,
                                 (Bet.PerfectBet * match.DrawRating) * multiply);
-                            Singleton.Instance.BetDao.UpdateBetStatus(bet, Bet.PerfectStatus);
+                            _betDao.UpdateBetStatus(bet, Bet.PerfectStatus);
                             continue;
                     }
                 }
@@ -43,22 +52,22 @@ namespace Manager
                 switch (betTeamHightScore)
                 {
                     case "HOME" when match.Score.Winner == "HOME_TEAM":
-                        Singleton.Instance.BetDao.UpdateBetPointsWon(bet,
+                        _betDao.UpdateBetPointsWon(bet,
                             (Bet.OkBet * match.HomeTeamRating) * multiply);
-                        Singleton.Instance.BetDao.UpdateBetStatus(bet, Bet.OkStatus);
+                        _betDao.UpdateBetStatus(bet, Bet.OkStatus);
                         continue;
                     case "AWAY" when match.Score.Winner == "AWAY_TEAM":
-                        Singleton.Instance.BetDao.UpdateBetPointsWon(bet,
+                        _betDao.UpdateBetPointsWon(bet,
                             (Bet.OkBet * match.AwayTeamRating) * multiply);
-                        Singleton.Instance.BetDao.UpdateBetStatus(bet, Bet.OkStatus);
+                        _betDao.UpdateBetStatus(bet, Bet.OkStatus);
                         continue;
                     case "DRAW" when match.Score.Winner == "DRAW":
-                        Singleton.Instance.BetDao.UpdateBetPointsWon(bet, (Bet.OkBet * match.DrawRating) * multiply);
-                        Singleton.Instance.BetDao.UpdateBetStatus(bet, Bet.OkStatus);
+                        _betDao.UpdateBetPointsWon(bet, (Bet.OkBet * match.DrawRating) * multiply);
+                        _betDao.UpdateBetStatus(bet, Bet.OkStatus);
                         continue;
                     default:
-                        Singleton.Instance.BetDao.UpdateBetPointsWon(bet, Bet.WrongBet);
-                        Singleton.Instance.BetDao.UpdateBetStatus(bet, Bet.WrongStatus);
+                        _betDao.UpdateBetPointsWon(bet, Bet.WrongBet);
+                        _betDao.UpdateBetStatus(bet, Bet.WrongStatus);
                         break;
                 }
             }
@@ -82,6 +91,11 @@ namespace Manager
             }
 
             return null;
+        }
+
+        public void Dispose()
+        {
+            _betDao = null;
         }
     }
 }

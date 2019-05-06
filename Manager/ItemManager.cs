@@ -1,65 +1,76 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using DAO;
+using DAO.Interfaces;
 using Models;
 
 namespace Manager
 {
-    public class ItemManager
+    public class ItemManager : IDisposable
     {
-        public static async Task BuyItemsToUser(List<Item> items, User user)
+        private IItemDao _itemDao;
+        private IUserDao _userDao;
+        private IBetDao _betDao;
+
+        public ItemManager(IItemDao itemDao = null, IUserDao userDao = null, IBetDao betDao = null)
+        {
+            _itemDao = itemDao ?? Singleton.Instance.ItemDao;
+            _userDao = userDao ?? Singleton.Instance.UserDao;
+            _betDao = betDao ?? Singleton.Instance.BetDao;
+
+        }
+        public async Task BuyItemsToUser(List<Item> items, User user)
         {
             var totalCost = 0;
             foreach (var item in items)
             {
-                await Singleton.Instance.UserDao.AddUserItem(item, user);
+                await _userDao.AddUserItem(item, user);
                 totalCost += item.Cost;
             }
 
-            await Singleton.Instance.UserDao.UpdateUserPoints(user, (user.Point - totalCost),
+            await _userDao.UpdateUserPoints(user, (user.Point - totalCost),
                 user.TotalPointsUsedToBet);
         }
 
-        public static async Task<List<Item>> AddItemsToUser(User user)
+        public async Task<List<Item>> AddItemsToUser(User user)
         {
             var itemsLooted = await GenerateLoot();
             foreach (var item in itemsLooted)
             {
-              await Singleton.Instance.UserDao.AddUserItem(item, user);
+              await _userDao.AddUserItem(item, user);
             }
 
             return itemsLooted;
         }
 
-        public static async Task<Item> AddMysteryItemToUser(User user)
+        public async Task<Item> AddMysteryItemToUser(User user)
         {
-            var items = await Singleton.Instance.ItemDao.FindAllItems();
+            var items = await _itemDao.FindAllItems();
             var randomizer = new Random();
             var item = items[randomizer.Next(items.Count)];
 
-            await Singleton.Instance.UserDao.AddUserItem(item, user);
+            await _userDao.AddUserItem(item, user);
 
             return item;
         }
 
-        public static async Task<User> UseBomb(string userId)
+        public async Task<User> UseBomb(string userId)
         {
-            var user = await Singleton.Instance.UserDao.FindUser(userId);
-            await Singleton.Instance.UserDao.UpdateUserPoints(user, (user.Point - 30),
+            var user = await _userDao.FindUser(userId);
+            await _userDao.UpdateUserPoints(user, (user.Point - 30),
                 user.TotalPointsUsedToBet);
             return user;
         }
 
-        public static async Task UseMultiplier(string betId, int multiply, User currentUser)
+        public async Task UseMultiplier(string betId, int multiply, User currentUser)
         {
-            await Singleton.Instance.BetDao.UpdateBetMultiply(betId, multiply);
+            await _betDao.UpdateBetMultiply(betId, multiply);
         }
 
-        public static async Task<List<Item>> GenerateLoot()
+        public async Task<List<Item>> GenerateLoot()
         {
-            var items = await Singleton.Instance.ItemDao.FindAllItems();
+            var items = await _itemDao.FindAllItems();
             var itemLooted = new List<Item>();
             var randomizer = new Random();
 
@@ -94,10 +105,10 @@ namespace Manager
             return itemLooted;
         }
 
-        public static async Task CreateDefaultItems()
+        public async Task CreateDefaultItems()
         {
             Console.WriteLine("Purge item collection");
-            await Singleton.Instance.ItemDao.PurgeItemCollection();
+            await _itemDao.PurgeItemCollection();
             var items = new List<Item>();
 
             /* COMMON AND TRASH */
@@ -189,7 +200,14 @@ namespace Manager
 
 
             Console.WriteLine("Load default item");
-            await Singleton.Instance.ItemDao.AddListItem(items);
+            await _itemDao.AddListItem(items);
+        }
+
+        public void Dispose()
+        {
+            _itemDao = null;
+            _betDao = null;
+            _userDao = null;
         }
     }
 }

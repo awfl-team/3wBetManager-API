@@ -14,14 +14,18 @@ namespace _3wBetManager_API.Controllers
         {
             return await HandleError(async () =>
             {
-                var userExist = await UserManager.UsernameAndEmailExist(user);
-                if (userExist.Length > 0) return Content(HttpStatusCode.BadRequest, userExist);
+                using (var userManager = new UserManager())
+                {
+                    var userExist = await userManager.UsernameAndEmailExist(user);
+                    if (userExist.Length > 0) return Content(HttpStatusCode.BadRequest, userExist);
+                }
 
                 await GetUserDao().AddUser(user, Models.User.UserRole);
                 using (var emailManager = new EmailManager())
                 {
                     emailManager.SendVerifyAccountEmail(user);
                 }
+
                 return Created("", user);
             });
         }

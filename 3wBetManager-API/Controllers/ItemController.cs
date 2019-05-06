@@ -10,7 +10,7 @@ namespace _3wBetManager_API.Controllers
 {
     [IsGranted]
     [RoutePrefix("items")]
-    public class ItemController: BaseController
+    public class ItemController : BaseController
     {
         [Route("")]
         [HttpPost]
@@ -19,7 +19,11 @@ namespace _3wBetManager_API.Controllers
             return await HandleError(async () =>
             {
                 var user = await GetUserByToken(Request);
-                await ItemManager.BuyItemsToUser(items, user);
+                using (var itemManager = new ItemManager())
+                {
+                    await itemManager.BuyItemsToUser(items, user);
+                }
+
                 return Created("", items);
             });
         }
@@ -32,9 +36,12 @@ namespace _3wBetManager_API.Controllers
             return await HandleError(async () =>
             {
                 var user = await GetUserByToken(Request);
-                var items = await ItemManager.AddItemsToUser(user);
-                await GetUserDao().RemoveUserItem(await GetUserByToken(Request), Item.LootBox);
-                return Created("", items);
+                using (var itemManager = new ItemManager())
+                {
+                    var items = await itemManager.AddItemsToUser(user);
+                    await GetUserDao().RemoveUserItem(await GetUserByToken(Request), Item.LootBox);
+                    return Created("", items);
+                }
             });
         }
 
@@ -45,9 +52,12 @@ namespace _3wBetManager_API.Controllers
             return await HandleError(async () =>
             {
                 var user = await GetUserByToken(Request);
-                var item = await ItemManager.AddMysteryItemToUser(user);
-                await GetUserDao().RemoveUserItem(await GetUserByToken(Request), Item.Mystery);
-                return Created("", item);
+                using (var itemManager = new ItemManager())
+                {
+                    var item = await itemManager.AddMysteryItemToUser(user);
+                    await GetUserDao().RemoveUserItem(await GetUserByToken(Request), Item.Mystery);
+                    return Created("", item);
+                }
             });
         }
 
@@ -59,8 +69,13 @@ namespace _3wBetManager_API.Controllers
             {
                 var notificationHub = new NotificationHub();
                 var user = await GetUserByToken(Request);
-                var sendTo = await ItemManager.UseBomb(userId);
-                notificationHub.SendNotification(sendTo.Username, user.Username + " used a bomb on you");
+
+                using (var itemManager = new ItemManager())
+                {
+                    var sendTo = await itemManager.UseBomb(userId);
+                    notificationHub.SendNotification(sendTo.Username, user.Username + " used a bomb on you");
+                }
+
                 await GetUserDao().RemoveUserItem(user, Item.Bomb);
                 return Content(HttpStatusCode.NoContent, "");
             });
@@ -68,7 +83,7 @@ namespace _3wBetManager_API.Controllers
 
         [Route("multiplier/{multiply}/{betId}")]
         [HttpPut]
-        public async Task<IHttpActionResult> UseMultiplier(int multiply,string betId)
+        public async Task<IHttpActionResult> UseMultiplier(int multiply, string betId)
         {
             string itemToUse;
             return await HandleError(async () =>
@@ -88,8 +103,11 @@ namespace _3wBetManager_API.Controllers
                     default:
                         return Content(HttpStatusCode.BadRequest, "");
                 }
-                await ItemManager.UseMultiplier(betId, multiply, user);
-             
+
+                using (var itemManager = new ItemManager())
+                {
+                    await itemManager.UseMultiplier(betId, multiply, user);
+                }
                 await GetUserDao().RemoveUserItem(await GetUserByToken(Request), itemToUse);
                 return Content(HttpStatusCode.NoContent, "");
             });

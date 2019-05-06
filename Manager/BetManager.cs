@@ -4,22 +4,34 @@ using System.Dynamic;
 using System.Linq;
 using System.Threading.Tasks;
 using DAO;
+using DAO.Interfaces;
 using Models;
 
 namespace Manager
 {
-    public class BetManager
+    public class BetManager: IDisposable
     {
-        public static async Task<List<Bet>> GetFinishBets(User user, int competitionId)
+        private ITeamDao _teamDao;
+        private IMatchDao _matchDao;
+        private IBetDao _betDao;
+
+        public BetManager(IBetDao betDao = null, ITeamDao teamDao = null, IMatchDao matchDao = null)
         {
-            var betsByUser = await Singleton.Instance.BetDao.FindBetsByUser(user);
+            _betDao = betDao ?? Singleton.Instance.BetDao;
+            _teamDao = teamDao ?? Singleton.Instance.TeamDao;
+            _matchDao = matchDao ?? Singleton.Instance.MatchDao;
+        }
+
+        public async Task<List<Bet>> GetFinishBets(User user, int competitionId)
+        {
+            var betsByUser = await _betDao.FindBetsByUser(user);
             foreach (var bet in betsByUser)
             {
-                var matchInformation = await Singleton.Instance.MatchDao.FindMatch(bet.Match.Id);
+                var matchInformation = await _matchDao.FindMatch(bet.Match.Id);
                 bet.Match = matchInformation;
-                var awayTeamInformation = await Singleton.Instance.TeamDao.FindTeam(bet.Match.AwayTeam.Id);
+                var awayTeamInformation = await _teamDao.FindTeam(bet.Match.AwayTeam.Id);
                 bet.Match.AwayTeam = awayTeamInformation;
-                var homeTeamInformation = await Singleton.Instance.TeamDao.FindTeam(bet.Match.HomeTeam.Id);
+                var homeTeamInformation = await _teamDao.FindTeam(bet.Match.HomeTeam.Id);
                 bet.Match.HomeTeam = homeTeamInformation;
             }
 
@@ -29,16 +41,16 @@ namespace Manager
             return betsByMatchStatus;
         }
 
-        public static async Task<List<Bet>> GetFinishBetsLimited(User user)
+        public async Task<List<Bet>> GetFinishBetsLimited(User user)
         {
-            var betsByUser = await Singleton.Instance.BetDao.FindBetsByUser(user, 1);
+            var betsByUser = await _betDao.FindBetsByUser(user, 1);
             foreach (var bet in betsByUser)
             {
-                var matchInformation = await Singleton.Instance.MatchDao.FindMatch(bet.Match.Id);
+                var matchInformation = await _matchDao.FindMatch(bet.Match.Id);
                 bet.Match = matchInformation;
-                var awayTeamInformation = await Singleton.Instance.TeamDao.FindTeam(bet.Match.AwayTeam.Id);
+                var awayTeamInformation = await _teamDao.FindTeam(bet.Match.AwayTeam.Id);
                 bet.Match.AwayTeam = awayTeamInformation;
-                var homeTeamInformation = await Singleton.Instance.TeamDao.FindTeam(bet.Match.HomeTeam.Id);
+                var homeTeamInformation = await _teamDao.FindTeam(bet.Match.HomeTeam.Id);
                 bet.Match.HomeTeam = homeTeamInformation;
             }
 
@@ -46,16 +58,16 @@ namespace Manager
                 .ToList();
         }
 
-        public static async Task<List<Bet>> GetCurrentBetsLimited(User user)
+        public async Task<List<Bet>> GetCurrentBetsLimited(User user)
         {
             var betsByUser = await Singleton.Instance.BetDao.FindBetsByUser(user, 1);
             foreach (var bet in betsByUser)
             {
-                var matchInformation = await Singleton.Instance.MatchDao.FindMatch(bet.Match.Id);
+                var matchInformation = await _matchDao.FindMatch(bet.Match.Id);
                 bet.Match = matchInformation;
-                var awayTeamInformation = await Singleton.Instance.TeamDao.FindTeam(bet.Match.AwayTeam.Id);
+                var awayTeamInformation = await _teamDao.FindTeam(bet.Match.AwayTeam.Id);
                 bet.Match.AwayTeam = awayTeamInformation;
-                var homeTeamInformation = await Singleton.Instance.TeamDao.FindTeam(bet.Match.HomeTeam.Id);
+                var homeTeamInformation = await _teamDao.FindTeam(bet.Match.HomeTeam.Id);
                 bet.Match.HomeTeam = homeTeamInformation;
             }
 
@@ -63,23 +75,23 @@ namespace Manager
                 .ToList();
         }
 
-        public static async Task<dynamic> GetCurrentBetsAndScheduledMatches(User user, int competitionId)
+        public async Task<dynamic> GetCurrentBetsAndScheduledMatches(User user, int competitionId)
         {
-            var betsByUser = await Singleton.Instance.BetDao.FindBetsByUser(user);
+            var betsByUser = await _betDao.FindBetsByUser(user);
             foreach (var bet in betsByUser)
             {
-                var matchInformation = await Singleton.Instance.MatchDao.FindMatch(bet.Match.Id);
+                var matchInformation = await _matchDao.FindMatch(bet.Match.Id);
                 bet.Match = matchInformation;
-                var awayTeamInformation = await Singleton.Instance.TeamDao.FindTeam(bet.Match.AwayTeam.Id);
+                var awayTeamInformation = await _teamDao.FindTeam(bet.Match.AwayTeam.Id);
                 bet.Match.AwayTeam = awayTeamInformation;
-                var homeTeamInformation = await Singleton.Instance.TeamDao.FindTeam(bet.Match.HomeTeam.Id);
+                var homeTeamInformation = await _teamDao.FindTeam(bet.Match.HomeTeam.Id);
                 bet.Match.HomeTeam = homeTeamInformation;
             }
 
             var betsByCompetition = betsByUser.FindAll(bet => bet.Match.Competition.Id == competitionId);
             var betsByMatchStatus = betsByCompetition.FindAll(bet => bet.Match.Status == Match.ScheduledStatus);
 
-            var matchByStatus = await Singleton.Instance.MatchDao.FindByStatus(Match.ScheduledStatus);
+            var matchByStatus = await _matchDao.FindByStatus(Match.ScheduledStatus);
             var matchesByCompetition = matchByStatus.FindAll(m => m.Competition.Id == competitionId);
 
             foreach (var bet in betsByMatchStatus)
@@ -90,9 +102,9 @@ namespace Manager
 
             foreach (var match in matchesByCompetition)
             {
-                var awayTeamInformation = await Singleton.Instance.TeamDao.FindTeam(match.AwayTeam.Id);
+                var awayTeamInformation = await _teamDao.FindTeam(match.AwayTeam.Id);
                 match.AwayTeam = awayTeamInformation;
-                var homeTeamInformation = await Singleton.Instance.TeamDao.FindTeam(match.HomeTeam.Id);
+                var homeTeamInformation = await _teamDao.FindTeam(match.HomeTeam.Id);
                 match.HomeTeam = homeTeamInformation;
             }
 
@@ -102,7 +114,7 @@ namespace Manager
             return betsAndMatches;
         }
 
-        public static async Task<dynamic> NumberCurrentMatchAndBet(User user, int competitionId)
+        public async Task<dynamic> NumberCurrentMatchAndBet(User user, int competitionId)
         {
             var currentBetsAndMatches = await GetCurrentBetsAndScheduledMatches(user, competitionId);
             if (currentBetsAndMatches.Bets.Count == 0 && currentBetsAndMatches.Matches.Count == 0)
@@ -113,9 +125,9 @@ namespace Manager
             return numberCurrentMatchAndBet;
         }
 
-        public static async Task<dynamic> GetUserBetsPerType(User user)
+        public async Task<dynamic> GetUserBetsPerType(User user)
         {
-            var userBets = await Singleton.Instance.BetDao.FindBetsByUser(user);
+            var userBets = await _betDao.FindBetsByUser(user);
 
             if (userBets.Count == 0) return new ExpandoObject();
 
@@ -131,9 +143,9 @@ namespace Manager
             return userBetsPerType;
         }
 
-        public static async Task<dynamic> GetUserIncomesPerMonth(User user)
+        public async Task<dynamic> GetUserIncomesPerMonth(User user)
         {
-            var userBets = await Singleton.Instance.BetDao.FindBetsByUser(user, 1);
+            var userBets = await _betDao.FindBetsByUser(user, 1);
 
             if (userBets.Count == 0) return new ExpandoObject();
 
@@ -147,9 +159,9 @@ namespace Manager
             return userIncomesPerMonth;
         }
 
-        public static async Task<dynamic> GetUserIncomesPerYear(User user)
+        public async Task<dynamic> GetUserIncomesPerYear(User user)
         {
-            var userBets = await Singleton.Instance.BetDao.FindBetsByUser(user, 1);
+            var userBets = await _betDao.FindBetsByUser(user, 1);
 
             if (userBets.Count == 0) return new ExpandoObject();
 
@@ -163,9 +175,9 @@ namespace Manager
             return userIncomesPerYear;
         }
 
-        public static async Task<dynamic> GetUserBetsEarningsPerType(User user)
+        public async Task<dynamic> GetUserBetsEarningsPerType(User user)
         {
-            var userBets = await Singleton.Instance.BetDao.FindBetsByUser(user);
+            var userBets = await _betDao.FindBetsByUser(user);
 
             if (userBets.Count == 0) return new ExpandoObject();
 
@@ -192,7 +204,7 @@ namespace Manager
         }
 
 
-        public static async Task<dynamic> NumberFinishMatchAndBet(User user, int competitionId)
+        public async Task<dynamic> NumberFinishMatchAndBet(User user, int competitionId)
         {
             var finishBetsAndMatches = await GetFinishBets(user, competitionId);
             dynamic numberFinishBetsAndMatches = new ExpandoObject();
@@ -212,17 +224,17 @@ namespace Manager
             return bets;
         }
 
-        public static async Task<dynamic> GetUserScheduledBetsPaginated(User user, int page)
+        public async Task<dynamic> GetUserScheduledBetsPaginated(User user, int page)
         {
-            var betsByUser = await Singleton.Instance.BetDao.FindBetsByUser(user, 1);
+            var betsByUser = await _betDao.FindBetsByUser(user, 1);
            
             foreach (var bet in betsByUser)
             {
-                var matchInformation = await Singleton.Instance.MatchDao.FindMatch(bet.Match.Id);
+                var matchInformation = await _matchDao.FindMatch(bet.Match.Id);
                 bet.Match = matchInformation;
-                var awayTeamInformation = await Singleton.Instance.TeamDao.FindTeam(bet.Match.AwayTeam.Id);
+                var awayTeamInformation = await _teamDao.FindTeam(bet.Match.AwayTeam.Id);
                 bet.Match.AwayTeam = awayTeamInformation;
-                var homeTeamInformation = await Singleton.Instance.TeamDao.FindTeam(bet.Match.HomeTeam.Id);
+                var homeTeamInformation = await _teamDao.FindTeam(bet.Match.HomeTeam.Id);
                 bet.Match.HomeTeam = homeTeamInformation;
             }
 
@@ -233,7 +245,7 @@ namespace Manager
            
 
             var betsToPass = 10 * page;
-            var betsPaginated = await Singleton.Instance.BetDao.PaginatedScheduledBets(betsToPass, user);
+            var betsPaginated = await _betDao.PaginatedScheduledBets(betsToPass, user);
             dynamic obj = new ExpandoObject();
             obj.Items = betsPaginated;
             obj.TotalPages = totalPages;
@@ -241,6 +253,13 @@ namespace Manager
             obj.Page = page + 1;
 
             return obj;
+        }
+
+        public void Dispose()
+        {
+            _betDao = null;
+            _matchDao = null;
+            _teamDao = null;
         }
     }
 }

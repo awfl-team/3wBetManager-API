@@ -1,7 +1,6 @@
 ﻿using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
-using DAO;
 using Manager;
 using Models;
 
@@ -30,7 +29,13 @@ namespace _3wBetManager_API.Controllers
         [HttpGet]
         public async Task<IHttpActionResult> GetTop50()
         {
-            return await HandleError(async () => Ok(await UserManager.GetBestBetters()));
+            return await HandleError(async () =>
+            {
+                using (var userManager = new UserManager())
+                {
+                    return Ok(await userManager.GetBestBetters());
+                }
+            });
         }
 
 
@@ -41,7 +46,10 @@ namespace _3wBetManager_API.Controllers
             return await HandleError(async () =>
             {
                 var user = await GetUserByToken(Request);
-                return Ok(await UserManager.GetUserPositionAmongSiblings(user));
+                using (var userManager = new UserManager())
+                {
+                    return Ok(await userManager.GetUserPositionAmongSiblings(user));
+                }
             });
         }
 
@@ -49,7 +57,13 @@ namespace _3wBetManager_API.Controllers
         [HttpGet]
         public async Task<IHttpActionResult> GetTop3()
         {
-            return await HandleError(async () => Ok(await UserManager.GetTop3()));
+            return await HandleError(async () =>
+            {
+                using (var userManager = new UserManager())
+                {
+                    return Ok(await userManager.GetTop3());
+                }
+            });
         }
 
         [Route("token")]
@@ -65,10 +79,14 @@ namespace _3wBetManager_API.Controllers
         {
             return await HandleNotFound(async () =>
             {
-                var canUpdate = await UserManager.CanUpdate(id, user);
-                if (canUpdate.Length > 0) return Content(HttpStatusCode.BadRequest, canUpdate);
+                using (var userManager = new UserManager())
+                {
+                    var canUpdate = await userManager.CanUpdate(id, user);
+                    if (canUpdate.Length > 0) return Content(HttpStatusCode.BadRequest, canUpdate);
+                }
+
                 await GetUserDao().UpdateUser(id, user);
-                var fullUser = await Singleton.Instance.UserDao.FindUser(id);
+                var fullUser = await GetUserDao().FindUser(id);
                 return Ok(TokenManager.GenerateToken(fullUser.Email, fullUser.Role, fullUser.Username));
             });
         }
@@ -128,7 +146,11 @@ namespace _3wBetManager_API.Controllers
                 var user = await GetUserByToken(Request);
                 if (user.Items.FindAll(i => i.Type == Item.Life).Count == 0)
                     return Content(HttpStatusCode.BadRequest, "You already used all your lives");
-                await UserManager.ResetUser(user);
+                using (var userManager = new UserManager())
+                {
+                    await userManager.ResetUser(user);
+                }
+
                 return Ok();
             });
         }
@@ -137,7 +159,13 @@ namespace _3wBetManager_API.Controllers
         [HttpGet]
         public async Task<IHttpActionResult> GetAllUsersPaginated(int page)
         {
-            return await HandleError(async () => Ok(await UserManager.GetAllUsersPaginated(page)));
+            return await HandleError(async () =>
+            {
+                using (var userManager = new UserManager())
+                {
+                    return Ok(await userManager.GetAllUsersPaginated(page));
+                }
+            });
         }
 
         [Route("")]
@@ -146,8 +174,12 @@ namespace _3wBetManager_API.Controllers
         {
             return await HandleError(async () =>
             {
-                var userExist = await UserManager.UsernameAndEmailExist(user);
-                if (userExist.Length > 0) return Content(HttpStatusCode.BadRequest, userExist);
+                using (var userManager = new UserManager())
+                {
+                    var userExist = await userManager.UsernameAndEmailExist(user);
+                    if (userExist.Length > 0) return Content(HttpStatusCode.BadRequest, userExist);
+                }
+
                 // TODO change this
                 await GetUserDao().AddUser(user, user.Role);
                 return Created("", user);

@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using DAO;
+using DAO.Interfaces;
 using Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -13,18 +14,28 @@ namespace Manager
     public class FootballDataManager : IDisposable
     {
         private HttpClient _http;
+        private ITeamDao _teamDao;
+        private IMatchDao _matchDao;
+        private ICompetitionDao _competitionDao;
 
 
-        public FootballDataManager(HttpClient http = null)
+        public FootballDataManager(HttpClient http = null, ITeamDao teamDao = null, IMatchDao matchDao = null,
+            ICompetitionDao competitionDao = null)
         {
             _http = http ?? new HttpClient();
             _http.BaseAddress = new Uri("https://api.football-data.org/v2/");
             _http.DefaultRequestHeaders.Add("X-Auth-Token", "f74e0beb5501485895a1ebb03ba925db");
+            _teamDao = teamDao ?? Singleton.Instance.TeamDao;
+            _matchDao = matchDao ?? Singleton.Instance.MatchDao;
+            _competitionDao = competitionDao ?? Singleton.Instance.CompetitionDao;
         }
 
         public void Dispose()
         {
             _http = null;
+            _teamDao = null;
+            _matchDao = null;
+            _competitionDao = null;
         }
 
         public async Task GetAllCompetitions()
@@ -39,16 +50,16 @@ namespace Manager
                     var competition =
                         JsonConvert.DeserializeObject<Competition>(responseContent);
 
-                    var findCompetition = Singleton.Instance.CompetitionDao.FindCompetition(competition.Id).Result;
+                    var findCompetition = _competitionDao.FindCompetition(competition.Id).Result;
                     if (findCompetition == null)
                     {
                         Console.WriteLine("Add competition " + competition.Id + " " + competition.Name);
-                        Singleton.Instance.CompetitionDao.AddCompetition(competition);
+                        _competitionDao.AddCompetition(competition);
                     }
                     else
                     {
                         Console.WriteLine("Replace competition " + competition.Id + " " + competition.Name);
-                        Singleton.Instance.CompetitionDao.ReplaceCompetition(findCompetition.Id, competition);
+                        _competitionDao.ReplaceCompetition(findCompetition.Id, competition);
                     }
 
                     Thread.Sleep(10000);
@@ -62,6 +73,7 @@ namespace Manager
                 {
                     emailManager.SendWebMasterEmail(e);
                 }
+
                 throw;
             }
         }
@@ -82,16 +94,16 @@ namespace Manager
 
                     foreach (var team in teams)
                     {
-                        var findTeam = Singleton.Instance.TeamDao.FindTeam(team.Id).Result;
+                        var findTeam = _teamDao.FindTeam(team.Id).Result;
                         if (findTeam == null)
                         {
                             Console.WriteLine("Add team " + team.Id + " " + team.Name);
-                            Singleton.Instance.TeamDao.AddTeam(team);
+                            _teamDao.AddTeam(team);
                         }
                         else
                         {
                             Console.WriteLine("Replace team " + team.Id + " " + team.Name);
-                            Singleton.Instance.TeamDao.ReplaceTeam(findTeam.Id, team);
+                            _teamDao.ReplaceTeam(findTeam.Id, team);
                         }
                     }
 
@@ -106,6 +118,7 @@ namespace Manager
                 {
                     emailManager.SendWebMasterEmail(e);
                 }
+
                 throw;
             }
         }
@@ -117,7 +130,7 @@ namespace Manager
                 Console.WriteLine("     ----- Begin Fetch matches ----- ");
                 var dateFrom = DateTime.Now.AddDays(-2);
                 var dateTo = DateTime.Now.AddDays(7);
-                
+
                 var response = await _http.GetAsync("matches?dateFrom=" + dateFrom.ToString("yyyy-MM-dd") + "&dateTo=" +
                                                     dateTo.ToString("yyyy-MM-dd"));
                 var responseContent = await response.Content.ReadAsStringAsync();
@@ -127,14 +140,14 @@ namespace Manager
 
                 foreach (var match in matches)
                 {
-                    var findMatch = Singleton.Instance.MatchDao.FindMatch(match.Id).Result;
+                    var findMatch = _matchDao.FindMatch(match.Id).Result;
                     if (findMatch == null)
                     {
                         match.HomeTeamRating = 0;
                         match.AwayTeamRating = 0;
                         match.DrawRating = 0;
                         Console.WriteLine("Add match " + match.Id);
-                        Singleton.Instance.MatchDao.AddMatch(match);
+                        _matchDao.AddMatch(match);
                     }
                     else
                     {
@@ -142,10 +155,13 @@ namespace Manager
                         match.AwayTeamRating = findMatch.AwayTeamRating;
                         match.HomeTeamRating = findMatch.HomeTeamRating;
                         match.DrawRating = findMatch.DrawRating;
-                        Singleton.Instance.MatchDao.UpdateMatch(findMatch.Id, match);
+                        _matchDao.UpdateMatch(findMatch.Id, match);
                         if (findMatch.Status == Match.ScheduledStatus && match.Status == Match.FinishedStatus)
                         {
-                            AssignmentPointManager.AddPointToBet(match);
+                            using (var assignmentPointManager = new AssignmentPointManager())
+                            {
+                                assignmentPointManager.AddPointToBet(match);
+                            }
                         }
                     }
                 }
@@ -158,6 +174,7 @@ namespace Manager
                 {
                     emailManager.SendWebMasterEmail(e);
                 }
+
                 throw;
             }
         }

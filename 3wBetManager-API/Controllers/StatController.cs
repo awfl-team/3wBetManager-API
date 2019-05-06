@@ -17,7 +17,10 @@ namespace _3wBetManager_API.Controllers
             return await HandleError(async () =>
             {
                 var user = await GetUserByToken(Request);
-                return Ok(await UserManager.GetUserCoinStats(user));
+                using (var userManager = new UserManager()) 
+                {
+                    return Ok(await userManager.GetUserCoinStats(user));
+                }
             });
         }
 
@@ -28,7 +31,10 @@ namespace _3wBetManager_API.Controllers
             return await HandleError(async () =>
             {
                 var user = await GetUserByToken(Request);
-                return Ok(await BetManager.GetUserIncomesPerMonth(user));
+                using (var betManager = new BetManager())
+                {
+                    return Ok(await betManager.GetUserIncomesPerMonth(user));
+                }
             });
         }
 
@@ -39,7 +45,10 @@ namespace _3wBetManager_API.Controllers
             return await HandleError(async () =>
             {
                 var user = await GetUserByToken(Request);
-                return Ok(await BetManager.GetUserIncomesPerYear(user));
+                using (var betManager = new BetManager())
+                {
+                    return Ok(await betManager.GetUserIncomesPerYear(user));
+                }
             });
         }
 
@@ -50,7 +59,10 @@ namespace _3wBetManager_API.Controllers
             return await HandleError(async () =>
             {
                 var user = await GetUserByToken(Request);
-                return Ok(await BetManager.GetUserBetsPerType(user));
+                using (var betManager = new BetManager())
+                {
+                    return Ok(await betManager.GetUserBetsPerType(user));
+                }
             });
         }
 
@@ -61,7 +73,10 @@ namespace _3wBetManager_API.Controllers
             return await HandleError(async () =>
             {
                 var user = await GetUserByToken(Request);
-                return Ok(await BetManager.GetUserBetsEarningsPerType(user));
+                using (var betManager = new BetManager())
+                {
+                    return Ok(await betManager.GetUserBetsEarningsPerType(user));
+                }
             });
         }
 
@@ -73,7 +88,10 @@ namespace _3wBetManager_API.Controllers
             return await HandleNotFound(async () =>
             {
                 var user = await GetUserDao().FindUser(id);
-                return Ok(await BetManager.GetUserBetsPerType(user));
+                using (var betManager = new BetManager())
+                {
+                    return Ok(await betManager.GetUserBetsPerType(user));
+                }
             });
         }
 
@@ -84,7 +102,11 @@ namespace _3wBetManager_API.Controllers
             return await HandleNotFound(async () =>
             {
                 var user = await GetUserDao().FindUser(id);
-                return Ok(await UserManager.GetUserCoinStats(user));
+                using (var userManager = new UserManager())
+                {
+                return Ok(await userManager.GetUserCoinStats(user));
+
+                }
             });
         }
 
@@ -95,7 +117,10 @@ namespace _3wBetManager_API.Controllers
             return await HandleNotFound(async () =>
             {
                 var user = await GetUserDao().FindUser(id);
-                return Ok(await BetManager.GetUserIncomesPerMonth(user));
+                using (var betManager = new BetManager())
+                {
+                    return Ok(await betManager.GetUserIncomesPerMonth(user));
+                }
             });
         }
 
@@ -106,7 +131,10 @@ namespace _3wBetManager_API.Controllers
             return await HandleNotFound(async () =>
             {
                 var user = await GetUserDao().FindUser(id);
-                return Ok(await BetManager.GetUserIncomesPerYear(user));
+                using (var betManager = new BetManager())
+                {
+                    return Ok(await betManager.GetUserIncomesPerYear(user));
+                }
             });
         }
 
@@ -117,9 +145,11 @@ namespace _3wBetManager_API.Controllers
             return await HandleNotFound(async () =>
             {
                 var user = await GetUserDao().FindUser(id);
-                return Ok(await BetManager.GetUserBetsEarningsPerType(user));
+                using (var betManager = new BetManager())
+                {
+                    return Ok(await betManager.GetUserBetsEarningsPerType(user));
+                }
             });
         }
-
     }
 }
