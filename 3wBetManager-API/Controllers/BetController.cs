@@ -18,9 +18,13 @@ namespace _3wBetManager_API.Controllers
             return await HandleError(async () =>
             {
                 var user = await GetUserByToken(Request);
-                bets = BetManager.AddGuidList(user, bets);
-                await GetBetDao().AddListBet(bets);
-
+                using (var betManager = new BetManager())
+                {
+                    var betsParsed = betManager.ParseListBet(bets);
+                    betsParsed = betManager.AddGuidList(user, betsParsed);
+                    await GetBetDao().AddListBet(betsParsed);
+                }
+               
                 await GetUserDao().UpdateUserPoints(user, user.Point - (bets.Count * 10), (bets.Count * 10));
                 foreach (var bet in bets)
                 {
@@ -41,13 +45,16 @@ namespace _3wBetManager_API.Controllers
             return await HandleError(async () =>
             {
                 var user = await GetUserByToken(Request);
-
-                foreach (var bet in bets)
+                using (var betManager = new BetManager())
                 {
-                    await GetBetDao().UpdateBet(bet);
-                    using (var matchManager = new MatchManager())
+                    var betsParsed = betManager.ParseListBet(bets);
+                    foreach (var bet in betsParsed)
                     {
-                        matchManager.CalculateMatchRating(match: bet.Match);
+                        await GetBetDao().UpdateBet(bet);
+                        using (var matchManager = new MatchManager())
+                        {
+                            matchManager.CalculateMatchRating(match: bet.Match);
+                        }
                     }
                 }
 

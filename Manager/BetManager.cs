@@ -22,6 +22,13 @@ namespace Manager
             _matchDao = matchDao ?? Singleton.Instance.MatchDao;
         }
 
+        public void Dispose()
+        {
+            _betDao = null;
+            _matchDao = null;
+            _teamDao = null;
+        }
+
         public async Task<List<Bet>> GetFinishBets(User user, int competitionId)
         {
             var betsByUser = await _betDao.FindBetsByUser(user);
@@ -213,7 +220,7 @@ namespace Manager
             return numberFinishBetsAndMatches;
         }
 
-        public static List<Bet> AddGuidList(User user, List<Bet> bets)
+        public List<Bet> AddGuidList(User user, List<Bet> bets)
         {
             foreach (var bet in bets)
             {
@@ -255,11 +262,19 @@ namespace Manager
             return obj;
         }
 
-        public void Dispose()
+        public List<Bet> ParseListBet(List<Bet> bets)
         {
-            _betDao = null;
-            _matchDao = null;
-            _teamDao = null;
+            var betsParsed = new List<Bet>();
+            foreach (var bet in bets)
+            {
+                if (bet.AwayTeamScore >= 0 || bet.HomeTeamScore >= 0)
+                {
+                    betsParsed.Add(bet);
+                }
+            }
+
+            return betsParsed;
         }
+
     }
 }
