@@ -33,7 +33,7 @@ namespace Manager
             // TODO add url in settings
             var url = "https://qsomazzi.gitlab.io/react-master-group-1/#/reset_password/" + token;
             mailMessage.Subject = "Reset Your Password";
-            mailMessage.Body = "You requested for a password reset, use the link below to reset your password : " + url;
+            mailMessage.Body = "You requested for a password reset, use the link below to reset your password, Warning this link is only available for 1 hour " + url;
             mailMessage.From = new MailAddress("3wbet.manager@gmail.com", "3wbetManager");
 
             _smtp.Send(mailMessage);
@@ -48,7 +48,7 @@ namespace Manager
             // TODO add goof route
             var url = "https://qsomazzi.gitlab.io/react-master-group-1/#/verify_account/" + token;
             mailMessage.Subject = "Confirm your email";
-            mailMessage.Body = " To get started, click the link below to confirm your account " + url;
+            mailMessage.Body = " To get started, click the link below to confirm your account, Warning this link is only available for 1 hour " + url;
             mailMessage.From = new MailAddress("3wbet.manager@gmail.com", "3wbetManager");
 
             _smtp.Send(mailMessage);
