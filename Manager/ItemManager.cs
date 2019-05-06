@@ -18,8 +18,8 @@ namespace Manager
             _itemDao = itemDao ?? Singleton.Instance.ItemDao;
             _userDao = userDao ?? Singleton.Instance.UserDao;
             _betDao = betDao ?? Singleton.Instance.BetDao;
-
         }
+
         public async Task BuyItemsToUser(List<Item> items, User user)
         {
             var totalCost = 0;
@@ -38,7 +38,7 @@ namespace Manager
             var itemsLooted = await GenerateLoot();
             foreach (var item in itemsLooted)
             {
-              await _userDao.AddUserItem(item, user);
+                await _userDao.AddUserItem(item, user);
             }
 
             return itemsLooted;
@@ -60,6 +60,7 @@ namespace Manager
             var user = await _userDao.FindUser(userId);
             await _userDao.UpdateUserPoints(user, (user.Point - 30),
                 user.TotalPointsUsedToBet);
+
             return user;
         }
 
@@ -82,21 +83,25 @@ namespace Manager
             while (itemLooted.Count < Item.MaxLoot)
             {
                 var lootDropChanceFactor = randomizer.NextDouble() * 100;
-            
+
                 switch (lootDropChanceFactor)
                 {
-                    case double dropFactor when (dropFactor > 0 && dropFactor <= Item.CommonDropChance && commonItems.Count > 0):
+                    case double dropFactor
+                        when (dropFactor > 0 && dropFactor <= Item.CommonDropChance && commonItems.Count > 0):
                         itemLooted.Add(commonItems[randomizer.Next(commonItems.Count)]);
                         break;
 
-                    case double dropFactor when (dropFactor > Item.RareDropChanceMin && dropFactor <= Item.RareDropChanceMax && rareItems.Count > 0):
+                    case double dropFactor when (dropFactor > Item.RareDropChanceMin &&
+                                                 dropFactor <= Item.RareDropChanceMax && rareItems.Count > 0):
                         itemLooted.Add(rareItems[randomizer.Next(rareItems.Count)]);
                         break;
 
-                    case double dropFactor when (dropFactor > Item.EpicDropChanceMin && dropFactor <= Item.EpicDropChanceMax && epicItems.Count > 0):
+                    case double dropFactor when (dropFactor > Item.EpicDropChanceMin &&
+                                                 dropFactor <= Item.EpicDropChanceMax && epicItems.Count > 0):
                         itemLooted.Add(epicItems[randomizer.Next(epicItems.Count)]);
                         break;
-                    case double dropFactor when (dropFactor > Item.LegendaryDropChanceMin && dropFactor <= Item.LegendaryDropChanceMax && legendaryItems.Count > 0):
+                    case double dropFactor when (dropFactor > Item.LegendaryDropChanceMin &&
+                                                 dropFactor <= Item.LegendaryDropChanceMax && legendaryItems.Count > 0):
                         itemLooted.Add(legendaryItems[randomizer.Next(legendaryItems.Count)]);
                         break;
                 }
@@ -140,7 +145,6 @@ namespace Manager
                 Name = "2x Multiplier",
                 Type = Item.MultiplyByTwo,
                 Rarity = Item.Rare
-
             };
             items.Add(multiplierByTwo);
 
@@ -162,10 +166,9 @@ namespace Manager
                 Name = "5x Multiplier",
                 Type = Item.MultiplyByFive,
                 Rarity = Item.Epic
-
             };
             items.Add(multiplierByFive);
-                
+
             /* LEGENDARY */
             var lootBox = new Item
             {

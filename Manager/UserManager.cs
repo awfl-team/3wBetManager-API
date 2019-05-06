@@ -80,12 +80,19 @@ namespace Manager
         {
             var users = new List<dynamic>();
             var usersByPoint = await _userDao.FindAllUserByPoint();
+            var rank = 1;
+            foreach (var user in usersByPoint)
+            {
+                user.Rank = rank++;
+            }
             var userPlace = usersByPoint.FindIndex(u => u.Id == userParam.Id);
             var usersRange = new List<User>();
-            if (userPlace - 5 < 0 || userPlace + 5 > usersByPoint.Count)
-                usersRange = usersByPoint;
-            else
-                usersRange = usersByPoint.GetRange(userPlace - 5, userPlace);
+
+
+            var index = userPlace - 5 + (userPlace - 5 < 0 ? 0 - (userPlace - 5) : 0);
+            var count = 11 - (userPlace - 5 < 0 ? 0 - (userPlace - 5) : 0) - (index + 11 >= usersByPoint.Count ? (index + 11) - usersByPoint.Count : 0);
+
+            usersRange = usersByPoint.GetRange(index, count);
 
             foreach (var user in usersRange)
             {
@@ -97,6 +104,7 @@ namespace Manager
                 obj.Life = user.Items.FindAll(i => i.Type == Item.Life).Count;
                 obj.Username = user.Username;
                 obj.IsPrivate = user.IsPrivate;
+                obj.Rank = user.Rank;
                 obj.NbBets = betsByUser.Count;
                 obj.NbPerfectBets = betsByUser.FindAll(b => b.Status == Bet.PerfectStatus).Count;
                 obj.NbOkBets = betsByUser.FindAll(b => b.Status == Bet.OkStatus).Count;

@@ -121,6 +121,14 @@ namespace DAO
             );
         }
 
+        public async Task UpdateUserPointsAfterBomb(User user)
+        {
+            await _collection.UpdateOneAsync(
+                u => u.Id == user.Id,
+                Builders<User>.Update.Set(u => u.Point, user.Point - Item.BombPoints)
+            );
+        }
+
         public async Task ResetUserPoints(User user)
         {
             await _collection.UpdateOneAsync(
@@ -190,7 +198,7 @@ namespace DAO
 
         public async Task<List<User>> PaginatedUsers(int usersToPass)
         {
-            return await _collection.Find(new BsonDocument()).Skip(usersToPass).Limit(10).ToListAsync();
+            return await _collection.Find(new BsonDocument()).Sort("{Point: -1}").Skip(usersToPass).Limit(10).ToListAsync();
         }
     }
 }
