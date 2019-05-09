@@ -55,6 +55,7 @@ deploy:
 integration:
     stage: integration
     script:
+        - "timeout 15"
         - '"C:\Users\Administrator\AppData\Roaming\npm\newman.cmd" run postman\3wbetManager.postman_collection.json -e postman\PROD.postman_environment.json'
     dependencies:
         - deploy
