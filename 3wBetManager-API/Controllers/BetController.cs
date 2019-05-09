@@ -24,14 +24,11 @@ namespace _3wBetManager_API.Controllers
                     betsParsed = betManager.AddGuidList(user, betsParsed);
                     await GetBetDao().AddListBet(betsParsed);
                 }
-               
+
                 await GetUserDao().UpdateUserPoints(user, user.Point - (bets.Count * 10), (bets.Count * 10));
                 foreach (var bet in bets)
                 {
-                    using (var matchManager = new MatchManager())
-                    {
-                        matchManager.CalculateMatchRating(match: bet.Match);
-                    }
+                    new MatchManager().CalculateMatchRating(match: bet.Match);
                 }
 
                 return Created("", bets);
@@ -45,16 +42,14 @@ namespace _3wBetManager_API.Controllers
             return await HandleError(async () =>
             {
                 var user = await GetUserByToken(Request);
+
                 using (var betManager = new BetManager())
                 {
                     var betsParsed = betManager.ParseListBet(bets);
                     foreach (var bet in betsParsed)
                     {
                         await GetBetDao().UpdateBet(bet);
-                        using (var matchManager = new MatchManager())
-                        {
-                            matchManager.CalculateMatchRating(match: bet.Match);
-                        }
+                        new MatchManager().CalculateMatchRating(match: bet.Match);
                     }
                 }
 

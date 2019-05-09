@@ -1,14 +1,13 @@
-﻿using System;
-using DAO;
+﻿using DAO;
 using DAO.Interfaces;
 using Models;
 
 namespace Manager
 {
-    public class MatchManager : IDisposable
+    public class MatchManager
     {
-        private IBetDao _betDao;
-        private IMatchDao _matchDao;
+        private readonly IBetDao _betDao;
+        private readonly IMatchDao _matchDao;
 
         public MatchManager(IBetDao betDao = null, IMatchDao matchDao = null)
         {
@@ -18,13 +17,11 @@ namespace Manager
 
         public async void CalculateMatchRating(Match match)
         {
-          
-
             var bets = await _betDao.FindBetsByMatch(match);
 
-            double homeTeamCount = bets.FindAll(bet => bet.AwayTeamScore < bet.HomeTeamScore).Count;
-            double awayTeamCount = bets.FindAll(bet => bet.AwayTeamScore > bet.HomeTeamScore).Count;
-            double drawCount = bets.FindAll(bet => bet.AwayTeamScore == bet.HomeTeamScore).Count;
+            var homeTeamCount = bets.FindAll(bet => bet.AwayTeamScore < bet.HomeTeamScore).Count;
+            var awayTeamCount = bets.FindAll(bet => bet.AwayTeamScore > bet.HomeTeamScore).Count;
+            var drawCount = bets.FindAll(bet => bet.AwayTeamScore == bet.HomeTeamScore).Count;
 
 
             match.DrawRating = drawCount == 0d ? 0d : 1d / (drawCount/ bets.Count);
@@ -34,10 +31,5 @@ namespace Manager
             _matchDao.UpdateMatch(match.Id, match);
         }
 
-        public void Dispose()
-        {
-            _betDao = null;
-            _matchDao = null;
-        }
     }
 }
