@@ -21,10 +21,6 @@ namespace _3wBetManager_API.Controllers
                 }
 
                 await GetUserDao().AddUser(user, Models.User.UserRole);
-                using (var emailManager = new EmailManager())
-                {
-                    emailManager.SendVerifyAccountEmail(user);
-                }
 
                 return Created("", user);
             });
