@@ -1,0 +1,2129 @@
+{
+	"info": {
+		"_postman_id": "17785980-0953-4494-b73b-641cb15f62d3",
+		"name": "3wbetManager",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "INIT",
+			"item": [
+				{
+					"name": "/users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a9d5d55a-0f4e-4dd9-bd58-80b794dec8ae",
+								"exec": [
+									"const userJson = pm.response.json();",
+									"",
+									"",
+									"pm.test(\"Successful POST request\", () => {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,201,202,204]);",
+									"});",
+									"",
+									"pm.test(\"Response is a valid User object\", () => {",
+									"    pm.expect(userJson).to.have.property('Id');",
+									"    pm.expect(userJson).to.have.property('Point');",
+									"    pm.expect(userJson).to.have.property('Role');",
+									"    pm.expect(userJson).to.have.property('TotalPointsUsedToBet');",
+									"    pm.expect(userJson).to.have.property('Password');",
+									"    pm.expect(userJson).to.have.property('Email');",
+									"    pm.expect(userJson).to.have.property('Username');",
+									"    pm.expect(userJson).to.have.property('Rank');",
+									"    pm.expect(userJson).to.have.property('IsPrivate');",
+									"    pm.expect(userJson).to.have.property('IsEnabled');",
+									"    pm.expect(userJson).to.have.property('Items');",
+									"    pm.expect(userJson).to.be.an(\"object\");",
+									"});",
+									"",
+									"pm.test(\"User has 3 items\", () => {",
+									"    pm.expect(userJson.Items.length).to.eq(3);",
+									"});",
+									"",
+									"pm.test(\"Items types are only LIFE\", () => {",
+									"   userJson.Items.forEach((item) => {",
+									"       pm.expect(item.Type).to.be.string('LIFE');",
+									"    });",
+									"});",
+									"",
+									"pm.test(\"User's items are valid objects\", () => {",
+									"   userJson.Items.forEach((item) => {",
+									"       pm.expect(item).to.be.an(\"object\");",
+									"       pm.expect(item).to.have.property('Id');",
+									"       pm.expect(item).to.have.property('Type');",
+									"       pm.expect(item).to.have.property('Name');",
+									"       pm.expect(item).to.have.property('Description');",
+									"       pm.expect(item).to.have.property('Cost');",
+									"       pm.expect(item).to.have.property('Rarity');",
+									"       pm.expect(item.Type).to.be.string('LIFE');",
+									"    });",
+									"});",
+									"",
+									"pm.globals.unset(\"userId\");",
+									"pm.globals.set(\"userId\", pm.response.json().Id);",
+									"postman.setNextRequest(\"/login\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"{{emailAdmin}}\",\n\t\"password\": \"{{password}}\",\n\t\"username\": \"{{pseudoAdmin}}\",\n\t\"role\": \"{{roleAdmin}}\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/users",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "/login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "41d5eb87-713b-460e-9ce5-9a3665468341",
+								"exec": [
+									"pm.test(\"Successful POST request\", () => {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,201,202,204]);",
+									"});",
+									"",
+									"pm.test(\"Request has a body\", () => {",
+									"    pm.response.to.have.body();",
+									"});",
+									"",
+									"pm.test(\"Response is not null\", () => {",
+									"   pm.expect(pm.response.json()).to.not.be.null;",
+									"});",
+									"",
+									"pm.test(\"Response is not empty\", () => {",
+									"   pm.expect(pm.response.json()).length.above(0);",
+									"});",
+									"",
+									"pm.test(\"Response is a string\", () => {",
+									"   pm.expect(pm.response.json()).to.be.an('string');",
+									"});",
+									"",
+									"",
+									"pm.environment.set(\"tempToken\", pm.variables.get(\"token\"));",
+									"pm.environment.unset(\"token\");",
+									"pm.environment.set(\"token\", pm.response.json());",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "25d0159a-e550-4bbb-9efd-52330538d06d",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"{{emailAdmin}}\",\n\t\"password\": \"{{password}}\"\n}\n"
+						},
+						"url": {
+							"raw": "{{url}}/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Bet",
+			"item": [
+				{
+					"name": "/bets/result",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ee90de3f-871c-4954-84e1-12a05a12ddad",
+								"exec": [
+									"pm.test(\"Valide response status\",  () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response have a body\", () => {\r",
+									"     pm.response.to.be.withBody;\r",
+									"     pm.response.to.be.json; \r",
+									"});\r",
+									"\r",
+									"pm.test(\"return array\", () => {\r",
+									"   pm.expect(pm.response.json()).to.be.an('array')\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/bets/result",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"bets",
+								"result"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/bets/current",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0c69ce29-a3f6-4c9d-b089-6ac8f1baa3b6",
+								"exec": [
+									"pm.test(\"Valide response status\",  () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response have a body\", () => {\r",
+									"     pm.response.to.be.withBody;\r",
+									"     pm.response.to.be.json; \r",
+									"});\r",
+									"\r",
+									"pm.test(\"return array\", () => {\r",
+									"   pm.expect(pm.response.json()).to.be.an('array')\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/bets/current",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"bets",
+								"current"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/bets/{userId}/result/key",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ee90de3f-871c-4954-84e1-12a05a12ddad",
+								"exec": [
+									"pm.test(\"Valide response status\",  () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response have a body\", () => {\r",
+									"     pm.response.to.be.withBody;\r",
+									"     pm.response.to.be.json; \r",
+									"});\r",
+									"\r",
+									"pm.test(\"return array\", () => {\r",
+									"   pm.expect(pm.response.json()).to.be.an('array')\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/bets/result",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"bets",
+								"result"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/bets/{userId}/current/key",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0c69ce29-a3f6-4c9d-b089-6ac8f1baa3b6",
+								"exec": [
+									"pm.test(\"Valide response status\",  () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response have a body\", () => {\r",
+									"     pm.response.to.be.withBody;\r",
+									"     pm.response.to.be.json; \r",
+									"});\r",
+									"\r",
+									"pm.test(\"return array\", () => {\r",
+									"   pm.expect(pm.response.json()).to.be.an('array')\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/bets/current",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"bets",
+								"current"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/bets/{competitionId}/current",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e7af2f55-3594-437a-9aed-65709b30d1f0",
+								"exec": [
+									"pm.test(\"Valide response status\",  () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response have a body\", () => {\r",
+									"     pm.response.to.be.withBody;\r",
+									"     pm.response.to.be.json; \r",
+									"});\r",
+									"\r",
+									"pm.test(\"return array\", () => {\r",
+									"   pm.expect(pm.response.json().Bets).to.be.an('array')\r",
+									"   pm.expect(pm.response.json().Matches).to.be.an('array')\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/bets/2000/current",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"bets",
+								"2000",
+								"current"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/bets/{competitionId}/result",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cd761b57-e4a1-44c3-84e6-7068791a8b43",
+								"exec": [
+									"pm.test(\"Valide response status\",  () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response have a body\", () => {\r",
+									"     pm.response.to.be.withBody;\r",
+									"     pm.response.to.be.json; \r",
+									"});\r",
+									"\r",
+									"pm.test(\"return array\", () => {\r",
+									"   pm.expect(pm.response.json()).to.be.an('array')\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/bets/2000/result",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"bets",
+								"2000",
+								"result"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/bets/{competitionId}/current/number",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1fbba324-d9a5-4fc8-a0c7-545617181a6d",
+								"exec": [
+									"pm.test(\"Valide response status\",  () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response have a body\", () => {\r",
+									"     pm.response.to.be.withBody;\r",
+									"     pm.response.to.be.json; \r",
+									"});\r",
+									"\r",
+									"pm.test(\"return object\", () => {\r",
+									"   pm.expect(pm.response.json()).to.be.an('object')\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/bets/2000/current/number",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"bets",
+								"2000",
+								"current",
+								"number"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/bets/{competitionId}/result/number",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0b6c77e6-5563-43ad-afbb-f98d03ae906d",
+								"exec": [
+									"pm.test(\"Valide response status\",  () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response have a body\", () => {\r",
+									"     pm.response.to.be.withBody;\r",
+									"     pm.response.to.be.json; \r",
+									"});\r",
+									"\r",
+									"pm.test(\"return object\", () => {\r",
+									"   pm.expect(pm.response.json()).to.be.an('object')\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/bets/2000/result/number",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"bets",
+								"2000",
+								"result",
+								"number"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/bets/{page}/result/paginated",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "454aca50-8719-46ae-b931-da31edaa281a",
+								"exec": [
+									"pm.test(\"Valide response status\",  () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response have a body\", () => {\r",
+									"     pm.response.to.be.withBody;\r",
+									"     pm.response.to.be.json; \r",
+									"});\r",
+									"\r",
+									"pm.test(\"return array\", () => {\r",
+									"   pm.expect(pm.response.json().Items).to.be.an('array')\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/bets/1/result/paginated",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"bets",
+								"1",
+								"result",
+								"paginated"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Competition",
+			"item": [
+				{
+					"name": "/competitions",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5b026dd7-f98c-46b7-94f3-2bec4cc9deea",
+								"exec": [
+									"pm.test(\"Valide response status\",  () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response have a body\", () => {\r",
+									"     pm.response.to.be.withBody;\r",
+									"     pm.response.to.be.json; \r",
+									"});\r",
+									"\r",
+									"pm.test(\"return array\", () => {\r",
+									"   pm.expect(pm.response.json()).to.be.an('array')\r",
+									"});\r",
+									"\r",
+									"pm.test(\"returned 12 competitions\", () => {\r",
+									"    pm.expect(pm.response.json().length).to.eq(12);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/competitions",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"competitions"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Item",
+			"item": [
+				{
+					"name": "/items",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5e351a8e-5419-4734-898a-93e539fa5c82",
+								"exec": [
+									"pm.test(\"Valide response status\",  () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response have a body\", () => {\r",
+									"     pm.response.to.be.withBody;\r",
+									"     pm.response.to.be.json; \r",
+									"});\r",
+									"\r",
+									"pm.test(\"return array\", () => {\r",
+									"   pm.expect(pm.response.json()).to.be.an('array')\r",
+									"});\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/items",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"items"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/items",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b37cbf80-dcda-4c34-a94c-a90d4d0bb1f1",
+								"exec": [
+									"pm.test(\"Successful POST request\",  () => {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,201,202,204]);",
+									"});",
+									"",
+									"pm.test(\"Response have a body\", () => {",
+									"     pm.response.to.be.withBody;",
+									"     pm.response.to.be.json; ",
+									"});",
+									"",
+									"pm.test(\"Return array\", () => {",
+									"   pm.expect(pm.response.json()).to.be.an(\"array\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n\t{\n        \"Id\": \"5cb8368da858b563b0cdb1b6\",\n        \"Type\": \"BOMB\",\n        \"Name\": \"Bomb\",\n        \"Description\": \"Can be used on players to make them lose 30 coins per bomb.\",\n        \"Cost\": 50,\n        \"Rarity\": \"Common\"\n    },\n   {\n\t    \"Id\": \"5cb8368da858b563b0cdb1bc\",\n\t    \"Type\": \"LIFE\",\n\t    \"Name\": \"Life\",\n\t    \"Description\": \"Life for reset your account.\",\n\t    \"Cost\": 150,\n\t    \"Rarity\": \"Legendary\"\n\t},\n    {\n        \"Id\": \"5cb8368da858b563b0cdb1b6\",\n        \"Type\": \"BOMB\",\n        \"Name\": \"Bomb\",\n        \"Description\": \"Can be used on players to make them lose 30 coins per bomb.\",\n        \"Cost\": 50,\n        \"Rarity\": \"Common\"\n    },\n    {\n\t    \"Id\": \"5cb8368da858b563b0cdb1ba\",\n\t    \"Type\": \"MULTIPLY_BY_FIVE\",\n\t    \"Name\": \"5x Multiplier\",\n\t    \"Description\": \"Multiply the coins earned on a bet by 5.\",\n\t    \"Cost\": 100,\n\t    \"Rarity\": \"Epic\"\n\t},\n\t{\n\t    \"Id\": \"5cb8368da858b563b0cdb1bd\",\n\t    \"Type\": \"MULTIPLY_BY_TEN\",\n\t    \"Name\": \"x10 Multiplier\",\n\t    \"Description\": \"Multiply the coins earned on a bet by 10.\",\n\t    \"Cost\": 250,\n\t    \"Rarity\": \"Legendary\"\n\t},\n    {\n        \"Id\": \"5cb8368da858b563b0cdb1b8\",\n        \"Type\": \"MULTIPLY_BY_TWO\",\n        \"Name\": \"2x Multiplier\",\n        \"Description\": \"Double your incomes on a bet results.\",\n        \"Cost\": 125,\n        \"Rarity\": \"Rare\"\n    },\n    {\n\t    \"Id\": \"5cb8368da858b563b0cdb1b7\",\n\t    \"Type\": \"KEY\",\n\t    \"Name\": \"Key\",\n\t    \"Description\": \"Allow you to spy any profile even private ones.\",\n\t    \"Cost\": 75,\n\t    \"Rarity\": \"Rare\"\n\t}\n\n]"
+						},
+						"url": {
+							"raw": "{{url}}/items",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"items"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/items/loot",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b37cbf80-dcda-4c34-a94c-a90d4d0bb1f1",
+								"exec": [
+									"pm.test(\"Valid response status\",  () => {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,201,202,204]);",
+									"});",
+									"",
+									"pm.test(\"Response have a body\", () => {",
+									"     pm.response.to.be.withBody;",
+									"     pm.response.to.be.json; ",
+									"});",
+									"",
+									"pm.test(\"Return array\", () => {",
+									"   pm.expect(pm.response.json()).to.be.an(\"array\");",
+									"});",
+									"",
+									"pm.test(\"Response contains 3 items\", () => {",
+									"    pm.expect(pm.response.json().length).to.eq(3);",
+									"});",
+									"",
+									"pm.test(\"User's items are valid objects\", () => {",
+									"   pm.response.json().forEach((item) => {",
+									"       pm.expect(item).to.be.an(\"object\");",
+									"       pm.expect(item).to.have.property('Id');",
+									"       pm.expect(item).to.have.property('Type');",
+									"       pm.expect(item).to.have.property('Name');",
+									"       pm.expect(item).to.have.property('Description');",
+									"       pm.expect(item).to.have.property('Cost');",
+									"       pm.expect(item).to.have.property('Rarity');",
+									"    });",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[]"
+						},
+						"url": {
+							"raw": "{{url}}/items/loot",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"items",
+								"loot"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/items/bomb/{userId}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b37cbf80-dcda-4c34-a94c-a90d4d0bb1f1",
+								"exec": [
+									"const userJson = pm.response.json();",
+									"",
+									"pm.test(\"Valid response status\",  () => {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,201,202,204]);",
+									"});",
+									"",
+									"pm.test(\"Response have a body\", () => {",
+									"     pm.response.to.be.withBody;",
+									"     pm.response.to.be.json; ",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/items/bomb/{{userId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"items",
+								"bomb",
+								"{{userId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/items/key/{userId}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b37cbf80-dcda-4c34-a94c-a90d4d0bb1f1",
+								"exec": [
+									"const userJson = pm.response.json();",
+									"",
+									"pm.test(\"Valid response status\",  () => {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,201,202,204]);",
+									"});",
+									"",
+									"pm.test(\"Response have a body\", () => {",
+									"     pm.response.to.be.withBody;",
+									"     pm.response.to.be.json; ",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/items/key/{{userId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"items",
+								"key",
+								"{{userId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/items/mystery",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b37cbf80-dcda-4c34-a94c-a90d4d0bb1f1",
+								"exec": [
+									"pm.test(\"Valid response status\",  () => {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,201,202,204]);",
+									"});",
+									"",
+									"pm.test(\"Response have a body\", () => {",
+									"     pm.response.to.be.withBody;",
+									"     pm.response.to.be.json; ",
+									"});",
+									"",
+									"pm.test(\"Response is an object\", () => {",
+									"   pm.expect(pm.response.json()).to.be.an(\"object\");",
+									"});",
+									"",
+									"pm.test(\"Response is not null\", () => {",
+									"    pm.expect(pm.response.json().length).to.not.be.null",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[]"
+						},
+						"url": {
+							"raw": "{{url}}/items/mystery",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"items",
+								"mystery"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Stat",
+			"item": [
+				{
+					"name": "/stats/coins",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "56d12a12-be16-4b97-b75d-76c35f21ada6",
+								"exec": [
+									"pm.test(\"Valide response status\",  () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response have a body\", () => {\r",
+									"     pm.response.to.be.withBody;\r",
+									"     pm.response.to.be.json; \r",
+									"});\r",
+									"\r",
+									"pm.test(\"return object\", () => {\r",
+									"   pm.expect(pm.response.json()).to.be.an('object')\r",
+									"});\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/stats/coins",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"stats",
+								"coins"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/stats/month",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "46f42645-4d1a-4467-83e8-cb5f9718b1bd",
+								"exec": [
+									"pm.test(\"Valide response status\",  () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response have a body\", () => {\r",
+									"     pm.response.to.be.withBody;\r",
+									"     pm.response.to.be.json; \r",
+									"});\r",
+									"\r",
+									"pm.test(\"return object\", () => {\r",
+									"   pm.expect(pm.response.json()).to.be.an('object')\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/stats/month",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"stats",
+								"month"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/stats/year",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "834f66b6-f9cd-49bb-a241-cbd78c90bb25",
+								"exec": [
+									"pm.test(\"Valide response status\",  () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response have a body\", () => {\r",
+									"     pm.response.to.be.withBody;\r",
+									"     pm.response.to.be.json; \r",
+									"});\r",
+									"\r",
+									"pm.test(\"return object\", () => {\r",
+									"   pm.expect(pm.response.json()).to.be.an('object')\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/stats/year",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"stats",
+								"year"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/stats/type",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1086afaa-9a2b-4960-9fca-28207491f59b",
+								"exec": [
+									"pm.test(\"Valide response status\",  () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response have a body\", () => {\r",
+									"     pm.response.to.be.withBody;\r",
+									"     pm.response.to.be.json; \r",
+									"});\r",
+									"\r",
+									"pm.test(\"return object\", () => {\r",
+									"   pm.expect(pm.response.json()).to.be.an('object')\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/stats/type",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"stats",
+								"type"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/stats/earnings/type",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3d6bfe8d-415b-4051-8c5e-f929b4fdc0cb",
+								"exec": [
+									"pm.test(\"Valide response status\",  () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response have a body\", () => {\r",
+									"     pm.response.to.be.withBody;\r",
+									"     pm.response.to.be.json; \r",
+									"});\r",
+									"\r",
+									"pm.test(\"return object\", () => {\r",
+									"   pm.expect(pm.response.json()).to.be.an('object')\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/stats/earnings/type",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"stats",
+								"earnings",
+								"type"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/stats/public/month/{userId}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "46f42645-4d1a-4467-83e8-cb5f9718b1bd",
+								"exec": [
+									"pm.test(\"Valide response status\",  () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response have a body\", () => {\r",
+									"     pm.response.to.be.withBody;\r",
+									"     pm.response.to.be.json; \r",
+									"});\r",
+									"\r",
+									"pm.test(\"return object\", () => {\r",
+									"   pm.expect(pm.response.json()).to.be.an('object')\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/stats/public/month/{{userId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"stats",
+								"public",
+								"month",
+								"{{userId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/stats/public/year/{userId}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "834f66b6-f9cd-49bb-a241-cbd78c90bb25",
+								"exec": [
+									"pm.test(\"Valide response status\",  () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response have a body\", () => {\r",
+									"     pm.response.to.be.withBody;\r",
+									"     pm.response.to.be.json; \r",
+									"});\r",
+									"\r",
+									"pm.test(\"return object\", () => {\r",
+									"   pm.expect(pm.response.json()).to.be.an('object')\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/stats/public/year/{{userId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"stats",
+								"public",
+								"year",
+								"{{userId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/stats/public/coins/{userId}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "56d12a12-be16-4b97-b75d-76c35f21ada6",
+								"exec": [
+									"pm.test(\"Valide response status\",  () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response have a body\", () => {\r",
+									"     pm.response.to.be.withBody;\r",
+									"     pm.response.to.be.json; \r",
+									"});\r",
+									"\r",
+									"pm.test(\"return object\", () => {\r",
+									"   pm.expect(pm.response.json()).to.be.an('object')\r",
+									"});\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/stats/public/coins/{{userId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"stats",
+								"public",
+								"coins",
+								"{{userId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/stats/public/type/{userId}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1086afaa-9a2b-4960-9fca-28207491f59b",
+								"exec": [
+									"pm.test(\"Valide response status\",  () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response have a body\", () => {\r",
+									"     pm.response.to.be.withBody;\r",
+									"     pm.response.to.be.json; \r",
+									"});\r",
+									"\r",
+									"pm.test(\"return object\", () => {\r",
+									"   pm.expect(pm.response.json()).to.be.an('object')\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/stats/public/type/{{userId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"stats",
+								"public",
+								"type",
+								"{{userId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/stats/public/earnings/type/{userId}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3d6bfe8d-415b-4051-8c5e-f929b4fdc0cb",
+								"exec": [
+									"pm.test(\"Valide response status\",  () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response have a body\", () => {\r",
+									"     pm.response.to.be.withBody;\r",
+									"     pm.response.to.be.json; \r",
+									"});\r",
+									"\r",
+									"pm.test(\"return object\", () => {\r",
+									"   pm.expect(pm.response.json()).to.be.an('object')\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/stats/public/earnings/type/{{userId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"stats",
+								"public",
+								"earnings",
+								"type",
+								"{{userId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "/users/{userId}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c26a1869-9a09-40fa-b7c0-cf1c19040220",
+								"exec": [
+									"const userJson = pm.response.json();",
+									"",
+									"pm.test(\"Valid response status\",  () => {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,201,202,204]);",
+									"});",
+									"",
+									"pm.test(\"Response is a valid User object\", () => {",
+									"    pm.expect(userJson).to.have.property('Id');",
+									"    pm.expect(userJson).to.have.property('Point');",
+									"    pm.expect(userJson).to.have.property('Role');",
+									"    pm.expect(userJson).to.have.property('TotalPointsUsedToBet');",
+									"    pm.expect(userJson).to.have.property('Password');",
+									"    pm.expect(userJson).to.have.property('Email');",
+									"    pm.expect(userJson).to.have.property('Username');",
+									"    pm.expect(userJson).to.have.property('Rank');",
+									"    pm.expect(userJson).to.have.property('IsPrivate');",
+									"    pm.expect(userJson).to.have.property('IsEnabled');",
+									"    pm.expect(userJson).to.have.property('Items');",
+									"    pm.expect(userJson).to.be.an(\"object\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/users/{{userId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"{{userId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/users/{userId}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "175af070-5188-4616-9ef7-d80cf0f36091",
+								"exec": [
+									"pm.test(\"Successful POST request\", () => {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,201,202,204]);",
+									"});",
+									"",
+									"pm.test(\"Request has a body\", () => {",
+									"    pm.response.to.have.body();",
+									"});",
+									"",
+									"pm.test(\"Response is not null\", () => {",
+									"   pm.expect(pm.response.json()).to.not.be.null;",
+									"});",
+									"",
+									"pm.test(\"Response is not empty\", () => {",
+									"   pm.expect(pm.response.json()).length.above(0);",
+									"});",
+									"",
+									"pm.test(\"Response is a string\", () => {",
+									"   pm.expect(pm.response.json()).to.be.an('string');",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"{{emailAdmin}}\",\n\t\"password\": \"{{password}}\",\n\t\"username\": \"{{pseudoAdmin}}\",\n\t\"role\": \"{{roleAdmin}}\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/users/{{userId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"{{userId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/users/top50",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "954fbf1c-4ba0-4048-8d79-85b7ac5a1803",
+								"exec": [
+									"pm.test(\"Valide response status\",  () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response have a body\", () => {\r",
+									"     pm.response.to.be.withBody;\r",
+									"     pm.response.to.be.json; \r",
+									"});\r",
+									"\r",
+									"pm.test(\"return array\", () => {\r",
+									"   pm.expect(pm.response.json()).to.be.an('array')\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/users/top50",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"top50"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/users/place",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "018c5dfc-7e7b-42d3-b985-5d232ca129ef",
+								"exec": [
+									"pm.test(\"Valide response status\",  () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response have a body\", () => {\r",
+									"     pm.response.to.be.withBody;\r",
+									"     pm.response.to.be.json; \r",
+									"});\r",
+									"\r",
+									"pm.test(\"return array\", () => {\r",
+									"   pm.expect(pm.response.json()).to.be.an('array')\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/users/place",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"place"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/users/top3",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "460571e3-2092-4d3b-ab75-f5a58bad6690",
+								"exec": [
+									"pm.test(\"Valide response status\",  () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response have a body\", () => {\r",
+									"     pm.response.to.be.withBody;\r",
+									"     pm.response.to.be.json; \r",
+									"});\r",
+									"\r",
+									"pm.test(\"return array\", () => {\r",
+									"   pm.expect(pm.response.json()).to.be.an('array')\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/users/top3",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"top3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/users/token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "707fb7dc-5016-414f-9df7-b8154f874114",
+								"exec": [
+									"pm.test(\"Valide response status\",  () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response have a body\", () => {\r",
+									"     pm.response.to.be.withBody;\r",
+									"     pm.response.to.be.json; \r",
+									"});\r",
+									"\r",
+									"pm.test(\"return object\", () => {\r",
+									"   pm.expect(pm.response.json()).to.be.an('object')\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/users/token",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/users/visibility",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4bdd363c-c56e-47a5-9ddc-7472b43ee083",
+								"exec": [
+									"pm.test(\"Valid response status\",  () => {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,201,202,204]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"IsPrivate\": false\n}"
+						},
+						"url": {
+							"raw": "{{url}}/users/visibility",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"visibility"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/users/reset",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4bdd363c-c56e-47a5-9ddc-7472b43ee083",
+								"exec": [
+									"pm.test(\"Valid response status\",  () => {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,201,202,204]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/users/reset",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"reset"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/users/{userId}/role",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b6f0f623-21f4-46d3-b4ad-cc67ffb655dc",
+								"exec": [
+									"pm.test(\"Valid response status\",  () => {",
+									" pm.expect(pm.response.code).to.be.oneOf([200,201,202,204]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"Role\": \"{{roleAdmin}}\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/users/{{userId}}/role",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"{{userId}}",
+								"role"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/users/search/{value}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "904b390b-402e-4ded-a8a0-afc73ee73554",
+								"exec": [
+									"pm.test(\"Valid response status\",  () => {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,201,202,204]);",
+									"});",
+									"",
+									"pm.test(\"Response have a body\", () => {",
+									"     pm.response.to.be.withBody;",
+									"     pm.response.to.be.json; ",
+									"});",
+									"",
+									"pm.test(\"Return array\", () => {",
+									"   pm.expect(pm.response.json()).to.be.an(\"array\");",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/users/search/a",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"search",
+								"a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/users/paginated/{page}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e8dc9314-c358-41db-bd5a-d9cb1b68103c",
+								"exec": [
+									"pm.test(\"Valide response status\",  () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response have a body\", () => {\r",
+									"     pm.response.to.be.withBody;\r",
+									"     pm.response.to.be.json; \r",
+									"});\r",
+									"\r",
+									"pm.test(\"return array\", () => {\r",
+									"   pm.expect(pm.response.json().Items).to.be.an('array')\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/users/paginated/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"paginated",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ac357546-d0f7-479c-a5ec-caa42d22cc31",
+								"exec": [
+									"const userJson = pm.response.json();\r",
+									"\r",
+									"\r",
+									"pm.test(\"Successful POST request\", () => {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,201,202,204]);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response have a body\", () => {\r",
+									"     pm.response.to.be.withBody;\r",
+									"     pm.response.to.be.json; \r",
+									"});\r",
+									"\r",
+									"pm.test(\"return array\", () => {\r",
+									"   pm.expect(pm.response.json()).to.be.an('array')\r",
+									"});\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/users",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "UNMOUNT",
+			"item": [
+				{
+					"name": "deleteUser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e947cb09-7ba7-4a56-a0fd-0f727913b11c",
+								"exec": [
+									"pm.test(\"Valid response status\",  () => {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,201,202,204]);",
+									"});",
+									"",
+									"",
+									"pm.globals.unset(\"userId\");",
+									"pm.environment.unset(\"token\");",
+									"pm.environment.set(\"token\", pm.variables.get(\"tempToken\"));",
+									"pm.environment.unset(\"tempToken\");",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/users/{{userId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"{{userId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "a9639fa7-93a9-49dc-86ef-ea1f2ad7e15f",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "ec0f6e14-027b-4dfb-826a-5465d7850531",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
