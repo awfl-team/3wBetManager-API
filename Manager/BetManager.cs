@@ -95,11 +95,12 @@ namespace Manager
                 bet.Match.HomeTeam = homeTeamInformation;
             }
 
+            var now = DateTime.UtcNow;
+
             var betsByCompetition = betsByUser.FindAll(bet => bet.Match.Competition.Id == competitionId);
             var betsByMatchStatus = betsByCompetition.FindAll(bet => bet.Match.Status == Match.ScheduledStatus);
-
             var matchByStatus = await _matchDao.FindByStatus(Match.ScheduledStatus);
-            var matchesByCompetition = matchByStatus.FindAll(m => m.Competition.Id == competitionId);
+            var matchesByCompetition = matchByStatus.FindAll(m => m.Competition.Id == competitionId && now <= DateTimeOffset.Parse(m.UtcDate));
 
             foreach (var bet in betsByMatchStatus)
             {
@@ -265,9 +266,10 @@ namespace Manager
         public List<Bet> ParseListBet(List<Bet> bets)
         {
             var betsParsed = new List<Bet>();
+            var now = DateTime.UtcNow;
             foreach (var bet in bets)
             {
-                if (bet.AwayTeamScore >= 0 || bet.HomeTeamScore >= 0)
+                if (now <= DateTimeOffset.Parse(bet.Match.UtcDate) && (bet.AwayTeamScore >= 0 || bet.HomeTeamScore >= 0))
                 {
                     betsParsed.Add(bet);
                 }
