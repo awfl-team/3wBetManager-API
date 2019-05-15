@@ -4,8 +4,8 @@
 
 stages:
     - build
+    - test
     - deploy
-    - integration
 
 #================================
 # Build
@@ -31,6 +31,12 @@ build:
 # Test
 #================================
 
+test:
+    stage: test
+    script:
+        - '"C:\Program Files (x86)\NUnit.org\nunit-console\nunit3-console.exe" "Test\bin\Debug\backend-bet-manager-group2.Test.dll"'
+    dependencies:
+        - build
 
 #================================
 # Deploy
@@ -45,7 +51,7 @@ deploy:
         - 'ECHO End Deploy'
         - 'exit 0'
     dependencies:
-        - build
+        - test
 
 
 #================================
