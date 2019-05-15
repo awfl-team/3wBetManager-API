@@ -22,6 +22,11 @@ namespace DAO
             return await _collection.Find(new BsonDocument()).ToListAsync();
         }
 
+        public async Task<List<Item>> FindItemsFiltered(string itemType)
+        {
+            return await _collection.Find(i => i.Type != itemType).ToListAsync();
+        }
+
         public async Task<Item> FindItem(string id)
         {
             var result = await _collection.Find(i => i.Id == ObjectId.Parse(id)).ToListAsync();

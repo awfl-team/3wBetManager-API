@@ -35,7 +35,7 @@ namespace Manager
 
         public async Task<List<Item>> AddItemsToUser(User user)
         {
-            var itemsLooted = await GenerateLoot();
+            var itemsLooted = await GenerateLoot(Item.LootBox);
             foreach (var item in itemsLooted)
             {
                 await _userDao.AddUserItem(item, user);
@@ -46,7 +46,7 @@ namespace Manager
 
         public async Task<Item> AddMysteryItemToUser(User user)
         {
-            var items = await _itemDao.FindAllItems();
+            var items = await _itemDao.FindItemsFiltered(Item.Mystery);
             var randomizer = new Random();
             var item = items[randomizer.Next(items.Count)];
 
@@ -69,9 +69,10 @@ namespace Manager
             await _betDao.UpdateBetMultiply(betId, multiply);
         }
 
-        public async Task<List<Item>> GenerateLoot()
+        public async Task<List<Item>> GenerateLoot(string itemType)
         {
-            var items = await _itemDao.FindAllItems();
+            var items = await _itemDao.FindItemsFiltered(itemType);
+
             var itemLooted = new List<Item>();
             var randomizer = new Random();
 
