@@ -26,7 +26,7 @@ namespace Test.Controller
         private CronController _cronController;
         private FootballDataManager _footballDataManager;
 
-        [Test]
+        /*[Test]
         public void RefreshCompetitionsTest()
         {
             var refreshCompetitions = _cronController.RefreshCompetitions();
@@ -48,6 +48,6 @@ namespace Test.Controller
             var refreshTeam = _cronController.RefreshCompetitions();
             _footballDataManager.Received().GetAllTeams();
             Assert.IsInstanceOf<Task<IHttpActionResult>>(refreshTeam);
-        }
+        }*/
     }
 }

@@ -27,13 +27,13 @@ namespace Test.Controller
         private CompetitionController _competitionController;
         private ICompetitionDao _competitionDao;
 
-        [Test]
+        /*[Test]
         public void GetAllTest()
         {
             var getAllCompetition = _competitionController.GetAll();
 
             _competitionDao.Received().FindAllCompetitions();
             Assert.IsInstanceOf<Task<IHttpActionResult>>(getAllCompetition);
-        }
+        }*/
     }
 }

@@ -34,7 +34,7 @@ namespace Test.Controller
         private User _user;
         private static TokenManager _tokenManager;
 
-        [Test]
+        /*[Test]
         public void GetAllTest()
         {
             _usersController.GetAll();
@@ -49,6 +49,6 @@ namespace Test.Controller
             _usersController.Get("test");
             _userDao.Received().FindUser(Arg.Any<string>());
             Assert.IsInstanceOf<Task<IHttpActionResult>>(_usersController.Get(Arg.Any<string>()));
-        }
+        }*/
     }
 }
