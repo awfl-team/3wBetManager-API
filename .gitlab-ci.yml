@@ -34,7 +34,7 @@ build:
 test:
     stage: test
     script:
-        - '"C:\Program Files (x86)\NUnit.org\nunit-console\nunit3-console.exe" "Test\bin\Debug\backend-bet-manager-group2.Test.dll"'
+        - '"C:\Program Files (x86)\NUnit.org\nunit-console\nunit3-console.exe" "Test\bin\Release\Test.dll"'
     dependencies:
         - build
 
