@@ -88,9 +88,20 @@ namespace Manager
             var userPlace = usersByPoint.FindIndex(u => u.Id == userParam.Id);
             var usersRange = new List<User>();
 
+            int index;
+            int count;
+            if (usersByPoint.Count < 5)
+            {
+                index = userPlace - usersByPoint.Count + (userPlace - usersByPoint.Count < 0 ? 0 - (userPlace - usersByPoint.Count) : 0);
+                count = usersByPoint.Count;
+            }
+            else
+            {
+                index = userPlace - 5 + (userPlace - 5 < 0 ? 0 - (userPlace - 5) : 0);
+                count = 11 - (userPlace - 5 < 0 ? 0 - (userPlace - 5) : 0) - (index + 11 >= usersByPoint.Count ? (index + 11) - usersByPoint.Count : 0);
+            }
 
-            var index = userPlace - 5 + (userPlace - 5 < 0 ? 0 - (userPlace - 5) : 0);
-            var count = 11 - (userPlace - 5 < 0 ? 0 - (userPlace - 5) : 0) - (index + 11 >= usersByPoint.Count ? (index + 11) - usersByPoint.Count : 0);
+            
 
             usersRange = usersByPoint.GetRange(index, count);
 

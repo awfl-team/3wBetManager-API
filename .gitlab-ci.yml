@@ -5,7 +5,7 @@
 stages:
     - build
     - deploy
-    - integration
+#    - integration
 
 #================================
 # Build
@@ -52,9 +52,9 @@ deploy:
 # Integration Test
 #================================
 
-integration:
-    stage: integration
-    script:
-        - '"C:\Users\Administrator\AppData\Roaming\npm\newman.cmd" run postman\3wbetManager.postman_collection.json -e postman\PROD.postman_environment.json'
-    dependencies:
-        - deploy
+#integration:
+#    stage: integration
+#    script:
+#        - '"C:\Users\Administrator\AppData\Roaming\npm\newman.cmd" run postman\3wbetManager.postman_collection.json -e postman\PROD.postman_environment.json'
+#    dependencies:
+#        - deploy
