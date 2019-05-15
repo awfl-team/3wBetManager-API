@@ -23,6 +23,8 @@ build:
         - rmdir /s "C:\GitLab-Runner\builds\Sns1WAaE\0\RomanLeichnig\backend-bet-manager-group2"
     artifacts:
         paths:
+            - 3wBetManager-API/
+            - Command/
             - Test/
 
 #================================
