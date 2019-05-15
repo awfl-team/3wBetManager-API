@@ -23,8 +23,6 @@ build:
         - rmdir /s "C:\GitLab-Runner\builds\Sns1WAaE\0\RomanLeichnig\backend-bet-manager-group2"
     artifacts:
         paths:
-            - 3wBetManager-API/
-            - Command/
             - Test/
 
 #================================
@@ -37,7 +35,10 @@ test:
         - '"C:\Program Files (x86)\NUnit.org\nunit-console\nunit3-console.exe" "Test\bin\Release\Test.dll"'
     dependencies:
         - build
-
+    artifacts:
+        paths:
+            - 3wBetManager-API/
+            - Command/
 #================================
 # Deploy
 #================================
