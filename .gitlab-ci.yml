@@ -33,6 +33,8 @@ build:
 
 test:
     stage: test
+    only:
+        - master
     script:
         - '"C:\Program Files (x86)\NUnit.org\nunit-console\nunit3-console.exe" "Test\bin\Release\Test.dll"'
     dependencies:
@@ -47,6 +49,8 @@ test:
 
 deploy:
     stage: deploy
+    only:
+        - master
     script:
         - 'ECHO Start Deploy'
         - 'C:\Tools\BismiAppRunner\BismiAppRunner.exe STOP 3wBetManager-API'
