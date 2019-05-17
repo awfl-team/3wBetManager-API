@@ -84,6 +84,7 @@
     <Compile Include="Controller\CronControllerTest.cs" />
     <Compile Include="DAO\BetDaoTest.cs" />
     <Compile Include="DAO\CompetitionDaoTest.cs" />
+    <Compile Include="DAO\ItemDaoTest.cs" />
     <Compile Include="DAO\MatchDaoTest.cs" />
     <Compile Include="DAO\TeamDaoTest.cs" />
     <Compile Include="DAO\UserDaoTest.cs" />
