@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Manager.Interfaces;
 using Models;
 using Newtonsoft.Json;
 
 namespace Manager
 {
-    public class MonitoringManager : IDisposable
+    public class MonitoringManager : IMonitoringManager
     {
-        private HttpClient _http;
+        private readonly HttpClient _http;
 
 
         public MonitoringManager(HttpClient http = null)
@@ -16,12 +17,6 @@ namespace Manager
             _http = http ?? new HttpClient();
             _http.BaseAddress = new Uri("https://api.football-data.org/v2/");
             _http.DefaultRequestHeaders.Add("X-Auth-Token", "f74e0beb5501485895a1ebb03ba925db");
-        }
-
-
-        public void Dispose()
-        {
-            _http = null;
         }
 
         public async Task ResponseApi()
@@ -38,10 +33,7 @@ namespace Manager
             catch (Exception e)
             {
                 Console.WriteLine("----- API ERROR SEND EMAIL TO WEBMASTER -----");
-                using (var emailManager = new EmailManager())
-                {
-                    emailManager.SendWebMasterEmail(e);
-                }
+                SingletonManager.Instance.EmailManager.SendWebMasterEmail(e);
             }
         }
     }

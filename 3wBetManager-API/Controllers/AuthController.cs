@@ -14,13 +14,11 @@ namespace _3wBetManager_API.Controllers
         {
             return await HandleError(async () =>
             {
-                using (var userManager = new UserManager())
-                {
-                    var userExist = await userManager.UsernameAndEmailExist(user);
-                    if (userExist.Length > 0) return Content(HttpStatusCode.BadRequest, userExist);
-                }
+                var userExist = await GetUserManager().UsernameAndEmailExist(user);
+                if (userExist.Length > 0) return Content(HttpStatusCode.BadRequest, userExist);
 
-                await GetUserDao().AddUser(user, Models.User.UserRole);
+
+                await GetUserManager().AddUser(user, Models.User.UserRole);
 
                 return Created("", user);
             });
@@ -33,10 +31,10 @@ namespace _3wBetManager_API.Controllers
             return await HandleError(async () =>
             {
                 const string errorMessage = "Wrong login password";
-                var fullUser = await GetUserDao().FindUserByEmail(user.Email);
+                var fullUser = await GetUserManager().GetUserByEmail(user.Email);
                 if (fullUser == null) return Content(HttpStatusCode.BadRequest, errorMessage);
                 if (BCrypt.Net.BCrypt.Verify(user.Password, fullUser.Password))
-                    return Ok(TokenManager.GenerateToken(fullUser.Email, fullUser.Role,
+                    return Ok(SingletonManager.Instance.TokenManager.GenerateToken(fullUser.Email, fullUser.Role,
                         fullUser.Username));
                 return Content(HttpStatusCode.BadRequest, errorMessage);
             });
@@ -48,13 +46,10 @@ namespace _3wBetManager_API.Controllers
         {
             return await HandleError(async () =>
             {
-                var user = await GetUserDao().FindUserByEmail(userParam.Email);
+                var user = await GetUserManager().GetUserByEmail(userParam.Email);
                 if (user == null) return NotFound();
 
-                using (var emailManager = new EmailManager())
-                {
-                    emailManager.SendResetPasswordEmail(user);
-                }
+                SingletonManager.Instance.EmailManager.SendResetPasswordEmail(user);
 
                 return Ok();
             });
@@ -70,7 +65,7 @@ namespace _3wBetManager_API.Controllers
                 if (user == null) return BadRequest();
 
                 user.Password = userParam.Password;
-                await GetUserDao().UpdateUserPassword(user);
+                await GetUserManager().ChangePassword(user);
 
                 return Content(HttpStatusCode.NoContent, "");
             });
@@ -85,7 +80,7 @@ namespace _3wBetManager_API.Controllers
                 var user = await GetUserByToken(Request);
                 if (user == null) return BadRequest();
 
-                await GetUserDao().UpdateUserIsEnabled(user.Id, true);
+                await GetUserManager().ChangeIsEnabled(user.Id, true);
 
                 return Content(HttpStatusCode.NoContent, "");
             });

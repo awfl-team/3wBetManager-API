@@ -1,24 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 using System.Threading.Tasks;
 using DAO;
 using DAO.Interfaces;
+using Manager.Interfaces;
 using Models;
 using MongoDB.Bson;
 
 namespace Manager
 {
-    public class UserManager : IDisposable
+    public class UserManager : IUserManager
     {
-        private IBetDao _betDao;
-        private IUserDao _userDao;
+        private readonly IBetDao _betDao;
+        private readonly IUserDao _userDao;
 
         public UserManager(IUserDao userDao = null, IBetDao betDao = null)
         {
-            _userDao = userDao ?? Singleton.Instance.UserDao;
-            _betDao = betDao ?? Singleton.Instance.BetDao;
+            _userDao = userDao ?? SingletonDao.Instance.UserDao;
+            _betDao = betDao ?? SingletonDao.Instance.BetDao;
         }
 
         public async Task<string> UsernameAndEmailExist(User user)
@@ -81,10 +81,8 @@ namespace Manager
             var users = new List<dynamic>();
             var usersByPoint = await _userDao.FindAllUserByPoint();
             var rank = 1;
-            foreach (var user in usersByPoint)
-            {
-                user.Rank = rank++;
-            }
+            foreach (var user in usersByPoint) user.Rank = rank++;
+
             var userPlace = usersByPoint.FindIndex(u => u.Id == userParam.Id);
             var usersRange = new List<User>();
 
@@ -92,16 +90,17 @@ namespace Manager
             int count;
             if (usersByPoint.Count < 5)
             {
-                index = userPlace - usersByPoint.Count + (userPlace - usersByPoint.Count < 0 ? 0 - (userPlace - usersByPoint.Count) : 0);
+                index = userPlace - usersByPoint.Count +
+                        (userPlace - usersByPoint.Count < 0 ? 0 - (userPlace - usersByPoint.Count) : 0);
                 count = usersByPoint.Count;
             }
             else
             {
                 index = userPlace - 5 + (userPlace - 5 < 0 ? 0 - (userPlace - 5) : 0);
-                count = 11 - (userPlace - 5 < 0 ? 0 - (userPlace - 5) : 0) - (index + 11 >= usersByPoint.Count ? (index + 11) - usersByPoint.Count : 0);
+                count = 11 - (userPlace - 5 < 0 ? 0 - (userPlace - 5) : 0) -
+                        (index + 11 >= usersByPoint.Count ? index + 11 - usersByPoint.Count : 0);
             }
 
-            
 
             usersRange = usersByPoint.GetRange(index, count);
 
@@ -201,10 +200,69 @@ namespace Manager
             return obj;
         }
 
-        public void Dispose()
+        public async Task<User> GetUserByEmail(string email)
         {
-            _betDao = null;
-            _userDao = null;
+            return await SingletonDao.Instance.UserDao.FindUserByEmail(email);
+        }
+
+        public async Task AddUser(User user, string role)
+        {
+            await SingletonDao.Instance.UserDao.AddUser(user, role);
+        }
+
+        public async Task ChangePassword(User user)
+        {
+            await SingletonDao.Instance.UserDao.UpdateUserPassword(user);
+        }
+
+        public async Task ChangeIsEnabled(ObjectId id, bool isEnable)
+        {
+            await SingletonDao.Instance.UserDao.UpdateUserIsEnabled(id, isEnable);
+        }
+
+        public async Task ChangeUserPoint(User user, float point, int pointUsedToBet)
+        {
+            await SingletonDao.Instance.UserDao.UpdateUserPoints(user, point, pointUsedToBet);
+        }
+
+        public async Task<User> GetUser(string id)
+        {
+            return await SingletonDao.Instance.UserDao.FindUser(id);
+        }
+
+        public async Task DeleteUserItem(User user, string type)
+        {
+            await SingletonDao.Instance.UserDao.RemoveUserItem(user, type);
+        }
+
+        public async Task<List<User>> GetAllUser()
+        {
+            return await SingletonDao.Instance.UserDao.FindAllUser();
+        }
+
+        public async Task ChangeUser(string id, User user)
+        {
+            await SingletonDao.Instance.UserDao.UpdateUser(id, user);
+        }
+
+        public async Task ChangeUserIsPrivate(ObjectId id, bool isPrivate)
+        {
+            await SingletonDao.Instance.UserDao.UpdateUserIsPrivate(id, isPrivate);
+        }
+
+        public async Task ChangeUserRole(string id, string role)
+        {
+            await SingletonDao.Instance.UserDao.UpdateUserRole(id, role);
+        }
+
+        public async Task DeleteUser(string id)
+        {
+            await SingletonDao.Instance.UserDao.DeleteUser(id);
+        }
+
+        public async Task<List<User>> SearchUser(string value)
+        {
+            return await SingletonDao.Instance.UserDao.SearchUser(value);
         }
     }
 }

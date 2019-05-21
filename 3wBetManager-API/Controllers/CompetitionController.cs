@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using System.Web.Http;
+using DAO;
 
 namespace _3wBetManager_API.Controllers
 {
@@ -11,7 +12,7 @@ namespace _3wBetManager_API.Controllers
         [HttpGet]
         public async Task<IHttpActionResult> GetAll()
         {
-            return await HandleError(async () => Ok(await GetCompetitionDao().FindAllCompetitions()));
+            return await HandleError(async () => Ok(await SingletonDao.Instance.CompetitionDao.FindAllCompetitions()));
         }
     }
 }

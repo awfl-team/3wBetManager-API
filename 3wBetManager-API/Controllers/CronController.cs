@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using System.Web.Http;
-using Manager;
 
 namespace _3wBetManager_API.Controllers
 {
@@ -14,11 +13,8 @@ namespace _3wBetManager_API.Controllers
         {
             return await HandleError(async () =>
             {
-                using (var footballDataManager = new FootballDataManager())
-                {
-                    await footballDataManager.GetAllCompetitions();
-                    return Ok();
-                }
+                await GetFootballDataManager().GetAllCompetitions();
+                return Ok();
             });
         }
 
@@ -28,11 +24,8 @@ namespace _3wBetManager_API.Controllers
         {
             return await HandleError(async () =>
             {
-                using (var footballDataManager = new FootballDataManager())
-                {
-                    await footballDataManager.GetAllTeams();
-                    return Ok();
-                }
+                await GetFootballDataManager().GetAllTeams();
+                return Ok();
             });
         }
 
@@ -42,11 +35,8 @@ namespace _3wBetManager_API.Controllers
         {
             return await HandleError(async () =>
             {
-                using (var footballDataManager = new FootballDataManager())
-                {
-                    await footballDataManager.GetAllMatchForAWeek();
-                    return Ok();
-                }
+                await GetFootballDataManager().GetAllMatchForAWeek();
+                return Ok();
             });
         }
     }

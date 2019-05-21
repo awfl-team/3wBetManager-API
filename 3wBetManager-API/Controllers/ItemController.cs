@@ -3,7 +3,6 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Hub;
-using Manager;
 using Models;
 
 namespace _3wBetManager_API.Controllers
@@ -19,10 +18,9 @@ namespace _3wBetManager_API.Controllers
             return await HandleError(async () =>
             {
                 var user = await GetUserByToken(Request);
-                using (var itemManager = new ItemManager())
-                {
-                    await itemManager.BuyItemsToUser(items, user);
-                }
+
+                await GetItemManager().BuyItemsToUser(items, user);
+
 
                 return Created("", items);
             });
@@ -36,12 +34,10 @@ namespace _3wBetManager_API.Controllers
             return await HandleError(async () =>
             {
                 var user = await GetUserByToken(Request);
-                using (var itemManager = new ItemManager())
-                {
-                    var items = await itemManager.AddItemsToUser(user);
-                    await GetUserDao().RemoveUserItem(await GetUserByToken(Request), Item.LootBox);
-                    return Created("", items);
-                }
+
+                var items = await GetItemManager().AddItemsToUser(user);
+                await GetUserManager().DeleteUserItem(await GetUserByToken(Request), Item.LootBox);
+                return Created("", items);
             });
         }
 
@@ -52,12 +48,10 @@ namespace _3wBetManager_API.Controllers
             return await HandleError(async () =>
             {
                 var user = await GetUserByToken(Request);
-                using (var itemManager = new ItemManager())
-                {
-                    var item = await itemManager.AddMysteryItemToUser(user);
-                    await GetUserDao().RemoveUserItem(await GetUserByToken(Request), Item.Mystery);
-                    return Created("", item);
-                }
+
+                var item = await GetItemManager().AddMysteryItemToUser(user);
+                await GetUserManager().DeleteUserItem(await GetUserByToken(Request), Item.Mystery);
+                return Created("", item);
             });
         }
 
@@ -70,13 +64,12 @@ namespace _3wBetManager_API.Controllers
                 var notificationHub = new NotificationHub();
                 var user = await GetUserByToken(Request);
 
-                using (var itemManager = new ItemManager())
-                {
-                    var sendTo = await itemManager.UseBomb(userId);
-                    notificationHub.SendNotification(sendTo.Username, user.Username + " used a bomb on you");
-                }
 
-                await GetUserDao().RemoveUserItem(user, Item.Bomb);
+                var sendTo = await GetItemManager().UseBomb(userId);
+                notificationHub.SendNotification(sendTo.Username, user.Username + " used a bomb on you");
+
+
+                await GetUserManager().DeleteUserItem(user, Item.Bomb);
                 return Content(HttpStatusCode.NoContent, "");
             });
         }
@@ -104,11 +97,10 @@ namespace _3wBetManager_API.Controllers
                         return Content(HttpStatusCode.BadRequest, "");
                 }
 
-                using (var itemManager = new ItemManager())
-                {
-                    await itemManager.UseMultiplier(betId, multiply, user);
-                }
-                await GetUserDao().RemoveUserItem(await GetUserByToken(Request), itemToUse);
+
+                await GetItemManager().UseMultiplier(betId, multiply, user);
+
+                await GetUserManager().DeleteUserItem(await GetUserByToken(Request), itemToUse);
                 return Content(HttpStatusCode.NoContent, "");
             });
         }
@@ -119,11 +111,11 @@ namespace _3wBetManager_API.Controllers
         {
             return await HandleNotFound(async () =>
             {
-                var sendTo = await GetUserDao().FindUser(userId);
+                var sendTo = await GetUserManager().GetUser(userId);
                 var user = await GetUserByToken(Request);
                 var notificationHub = new NotificationHub();
                 notificationHub.SendNotification(sendTo.Username, user.Username + " used a key on you");
-                await GetUserDao().RemoveUserItem(await GetUserByToken(Request), Item.Key);
+                await GetUserManager().DeleteUserItem(await GetUserByToken(Request), Item.Key);
                 return Ok(sendTo);
             });
         }
@@ -132,7 +124,7 @@ namespace _3wBetManager_API.Controllers
         [HttpGet]
         public async Task<IHttpActionResult> GetAll()
         {
-            return await HandleError(async () => Ok(await GetItemDao().FindAllItems()));
+            return await HandleError(async () => Ok(await GetItemManager().GetAllItems()));
         }
 
         [Route("{id}")]
@@ -141,7 +133,7 @@ namespace _3wBetManager_API.Controllers
         {
             return await HandleError(async () =>
             {
-                await GetItemDao().UpdateItem(id, item);
+                await GetItemManager().ChangeItem(id, item);
                 return Ok();
             });
         }
