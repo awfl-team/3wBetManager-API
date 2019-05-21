@@ -12,6 +12,12 @@ namespace Test.DAO
     [TestFixture]
     public class TeamDaoTest
     {
+        private Team _team;
+        private IMongoCollection<Team> _collection;
+        private ITeamDao _teamDao;
+        private IMongoDatabase _database;
+        private ExpressionFilterDefinition<Team> _filterExpression;
+
         [SetUp]
         public void SetUp()
         {
@@ -32,35 +38,28 @@ namespace Test.DAO
             _collection.ClearReceivedCalls();
         }
 
-        private Team _team;
-        private IMongoCollection<Team> _collection;
-        private ITeamDao _teamDao;
-        private IMongoDatabase _database;
-        private ExpressionFilterDefinition<Team> _filterExpression;
-
         [Test]
-        public void AddTeamTest()
+        public void AssertThatAddTeamIsCalled()
         {
             _teamDao.AddTeam(_team);
             _collection.Received().InsertOneAsync(Arg.Any<Team>());
         }
 
         [Test]
-        public void FindTeamTest()
-        {
-            _teamDao.FindTeam(1);
-            _filterExpression = new ExpressionFilterDefinition<Team>(team => team.Id == _team.Id);
-            _collection.Received().Find(_filterExpression);
-            Assert.IsInstanceOf<Task<Team>>(_teamDao.FindTeam(Arg.Any<int>()));
-        }
-
-        [Test]
-        public void ReplaceTeamTest()
+        public void AssertThatReplaceTeamIsCalled()
         {
             _teamDao.ReplaceTeam(1, _team);
             _collection.Received().ReplaceOneAsync(Arg.Any<ExpressionFilterDefinition<Team>>(),
                 Arg.Any<Team>(), Arg.Any<UpdateOptions>(), Arg.Any<CancellationToken>()
             );
+        }
+
+        [Test]
+        public void AssertThatFindTeamIsCalled()
+        {
+            _teamDao.FindTeam(1);
+            _filterExpression = new ExpressionFilterDefinition<Team>(team => team.Id == _team.Id);
+            _collection.Received().Find(_filterExpression);
         }
     }
 }

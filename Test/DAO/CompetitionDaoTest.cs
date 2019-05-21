@@ -14,6 +14,13 @@ namespace Test.DAO
     [TestFixture]
     public class CompetitionDaoTest
     {
+
+        private Competition _competition;
+        private IMongoCollection<Competition> _collection;
+        private ICompetitionDao _competitionDao;
+        private IMongoDatabase _database;
+        private ExpressionFilterDefinition<Competition> _filterExpression;
+
         [SetUp]
         public void SetUp()
         {
@@ -33,21 +40,22 @@ namespace Test.DAO
             _collection.ClearReceivedCalls();
         }
 
-        private Competition _competition;
-        private IMongoCollection<Competition> _collection;
-        private ICompetitionDao _competitionDao;
-        private IMongoDatabase _database;
-        private ExpressionFilterDefinition<Competition> _filterExpression;
+        [Test]
+        public void FindAllCompetitionTest()
+        {
+            _competitionDao.FindAllCompetitions();
+            _collection.Received().Find(new BsonDocument());
+        }
 
         [Test]
-        public void AddCompetitionTest()
+        public void AssertThatAddCompetitionIsCalled()
         {
             _competitionDao.AddCompetition(_competition);
             _collection.Received().InsertOneAsync(Arg.Any<Competition>());
         }
 
         [Test]
-        public void CompetitionMatchTest()
+        public void AssertThatReplaceCompetitionIsCalled()
         {
             _competitionDao.ReplaceCompetition(1, _competition);
             _collection.Received().ReplaceOneAsync(Arg.Any<ExpressionFilterDefinition<Competition>>(),
@@ -56,21 +64,12 @@ namespace Test.DAO
         }
 
         [Test]
-        public void FindAllCompetitionTest()
-        {
-            _competitionDao.FindAllCompetitions();
-            _collection.Received().Find(new BsonDocument());
-            Assert.IsInstanceOf<Task<List<Competition>>>(_competitionDao.FindAllCompetitions());
-        }
-
-        [Test]
-        public void FindCompetitionTest()
+        public void AssertThatFindCompetitionIsCalled()
         {
             _competitionDao.FindCompetition(_competition.Id);
             _filterExpression =
                 new ExpressionFilterDefinition<Competition>(competition => competition.Id == _competition.Id);
             _collection.Received().Find(_filterExpression);
-            Assert.IsInstanceOf<Task<Competition>>(_competitionDao.FindCompetition(Arg.Any<int>()));
         }
     }
 }

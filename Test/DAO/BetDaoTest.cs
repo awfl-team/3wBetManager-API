@@ -14,6 +14,15 @@ namespace Test.DAO
     [TestFixture]
     public class BetDaoTest
     {
+        private Bet _bet;
+        private IMongoCollection<Bet> _collection;
+        private IBetDao _betDao;
+        private User _user;
+        private Match _match;
+        private readonly List<Bet> _bets = new List<Bet>();
+        private IMongoDatabase _database;
+        private ExpressionFilterDefinition<Bet> _filterExpression;
+
         [SetUp]
         public void SetUp()
         {
@@ -43,38 +52,8 @@ namespace Test.DAO
             _collection.ClearReceivedCalls();
         }
 
-        private Bet _bet;
-        private IMongoCollection<Bet> _collection;
-        private IBetDao _betDao;
-        private User _user;
-        private Match _match;
-        private readonly List<Bet> _bets = new List<Bet>();
-        private IMongoDatabase _database;
-        private ExpressionFilterDefinition<Bet> _filterExpression;
-
         [Test]
-        public void AddBetTest()
-        {
-            _betDao.AddBet(_bet);
-            _collection.Received().InsertOneAsync(Arg.Any<Bet>());
-        }
-
-        [Test]
-        public void AddListBetTest()
-        {
-            _betDao.AddListBet(_bets);
-            _collection.Received().InsertManyAsync(Arg.Any<List<Bet>>());
-        }
-
-        [Test]
-        public void DeleteBetsByUserTest()
-        {
-            _betDao.DeleteBetsByUser(new ObjectId("5c06f4b43cd1d72a48b44237"));
-            _collection.Received().DeleteManyAsync(Arg.Any<ExpressionFilterDefinition<Bet>>());
-        }
-
-        [Test]
-        public void FindAllTest()
+        public void AssertThatFindAllIsCalled()
         {
             _betDao.FindAll();
             _collection.Received().Find(new BsonDocument());
@@ -82,26 +61,7 @@ namespace Test.DAO
         }
 
         [Test]
-        public void FindBetsByMatchTest()
-        {
-            _betDao.FindBetsByMatch(_match);
-            _filterExpression = new ExpressionFilterDefinition<Bet>(b => b.Match.Id == _match.Id);
-            _collection.Received().Find(_filterExpression);
-            Assert.IsInstanceOf<Task<List<Bet>>>(_betDao.FindBetsByMatch(Arg.Any<Match>()));
-        }
-
-        [Test]
-        public void FindBetsByUserTest()
-        {
-            _betDao.FindBetsByUser(_user);
-            _filterExpression = new ExpressionFilterDefinition<Bet>(bet =>
-                bet.User.Id == _user.Id && bet.Date >= DateTime.Today.AddDays(-7));
-            _collection.Received().Find(_filterExpression);
-            Assert.IsInstanceOf<Task<List<Bet>>>(_betDao.FindBetsByUser(Arg.Any<User>()));
-        }
-
-        [Test]
-        public void FindBetTest()
+        public void AssertThatFindBetIsCalled()
         {
             _betDao.Find(_bet);
             _filterExpression = new ExpressionFilterDefinition<Bet>(b => b.Guid == _bet.Guid);
@@ -110,7 +70,54 @@ namespace Test.DAO
         }
 
         [Test]
-        public void UpdateBetPointsWonTest()
+        public void AssertThatFindBetsByUserIsCalled()
+        {
+            _betDao.FindBetsByUser(_user);
+            _filterExpression = new ExpressionFilterDefinition<Bet>(bet =>
+                bet.User.Id == _user.Id && bet.Date >= DateTime.Today.AddDays(-7));
+            _collection.Received().Find(_filterExpression);
+        }
+
+        [Test]
+        public void AssertThatFindBetsByMatchIsCalled()
+        {
+            _betDao.FindBetsByMatch(_match);
+            _filterExpression = new ExpressionFilterDefinition<Bet>(b => b.Match.Id == _match.Id);
+            _collection.Received().Find(_filterExpression);
+        }
+
+        [Test]
+        public void AssertThatAddBetIsCalled()
+        {
+            _betDao.AddBet(_bet);
+            _collection.Received().InsertOneAsync(Arg.Any<Bet>());
+        }
+
+        [Test]
+        public void AssertThatAddListBetIsCalled()
+        {
+            _betDao.AddListBet(_bets);
+            _collection.Received().InsertManyAsync(Arg.Any<List<Bet>>());
+        }
+
+        [Test]
+        public void AssertThatUpdateBetIsCalled()
+        {
+            _betDao.UpdateBet(_bet);
+            _collection.Received().UpdateOneAsync(Arg.Any<ExpressionFilterDefinition<Bet>>(),
+                Arg.Any<UpdateDefinition<Bet>>()
+            );
+        }
+
+        [Test]
+        public void AssertThatDeleteBetByUserIsCalled()
+        {
+            _betDao.DeleteBetsByUser(new ObjectId("5c06f4b43cd1d72a48b44237"));
+            _collection.Received().DeleteManyAsync(Arg.Any<ExpressionFilterDefinition<Bet>>());
+        }
+
+        [Test]
+        public void AssertThatUpdateBetPointsWonIsCalled()
         {
             _betDao.UpdateBetPointsWon(_bet, 10);
             _collection.Received().UpdateOneAsync(Arg.Any<ExpressionFilterDefinition<Bet>>(),
@@ -119,12 +126,21 @@ namespace Test.DAO
         }
 
         [Test]
-        public void UpdateBetTest()
+        public void AssertThatUpdateBetStatusIsCalled()
         {
-            _betDao.UpdateBet(_bet);
-            _collection.Received().UpdateOneAsync(Arg.Any<ExpressionFilterDefinition<Bet>>(),
-                Arg.Any<UpdateDefinition<Bet>>()
-            );
+            //Todo
+        }
+
+        [Test]
+        public void AssertThatUpdateBetMultiplyIsCalled()
+        {
+            //Todo
+        }
+
+        [Test]
+        public void AssertThatPaginatedScheduledBetsIsCalled()
+        {
+            //Todo
         }
     }
 }
