@@ -199,6 +199,7 @@ namespace Test.DAO
         {
             _itemDao.FindAllItems();
             _collectionItem.Received().Find(new BsonDocument());
+            // Todo Foreach test if userDao is called
         }
 
         [Test]

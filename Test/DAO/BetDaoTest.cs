@@ -128,19 +128,27 @@ namespace Test.DAO
         [Test]
         public void AssertThatUpdateBetStatusIsCalled()
         {
-            //Todo
+            _betDao.UpdateBetStatus(_bet, Bet.PerfectStatus);
+            _collection.Received().UpdateOneAsync(Arg.Any<ExpressionFilterDefinition<Bet>>(),
+                Arg.Any<UpdateDefinition<Bet>>()
+            );
         }
 
         [Test]
         public void AssertThatUpdateBetMultiplyIsCalled()
         {
-            //Todo
+            _betDao.UpdateBetMultiply(_bet.Id.ToString(), 10);
+            _collection.Received().UpdateOneAsync(Arg.Any<ExpressionFilterDefinition<Bet>>(),
+                Arg.Any<UpdateDefinition<Bet>>()
+            );
         }
 
         [Test]
         public void AssertThatPaginatedScheduledBetsIsCalled()
         {
-            //Todo
+            _betDao.PaginatedScheduledBets(10, _user);
+            _filterExpression = new ExpressionFilterDefinition<Bet>(b => b.Match.Id == _match.Id);
+            _collection.Received().Find(_filterExpression);
         }
     }
 }
