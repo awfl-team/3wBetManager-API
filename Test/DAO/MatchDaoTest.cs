@@ -109,7 +109,6 @@ namespace Test.DAO
             );
         }
 
-        // Need to find solution why when the name is "UpdateMatchTest" the test failed in run all 
         [Test]
         public void UpdateMatchTest()
         {

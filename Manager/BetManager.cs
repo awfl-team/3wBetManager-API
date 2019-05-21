@@ -228,7 +228,6 @@ namespace Manager
                 bet.Guid = Guid.NewGuid().ToString();
                 bet.User = user;
             }
-
             return bets;
         }
 
@@ -250,7 +249,6 @@ namespace Manager
             var totalBets = finishedBets.Count();
             var totalPages = totalBets / 10 + 1;
             page = page - 1;
-           
 
             var betsToPass = 10 * page;
             var betsPaginated = await _betDao.PaginatedScheduledBets(betsToPass, user);
