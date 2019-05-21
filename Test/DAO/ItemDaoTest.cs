@@ -111,13 +111,13 @@ namespace Test.DAO
             Assert.IsInstanceOf<Task<Item>>(_itemDao.FindItem(id));
         }
 
-        [Test]
+        /*[Test]
         public void AddListItemTest()
         {
             var items = Arg.Any<List<Item>>();
             _itemDao.AddListItem(items);
             _collectionItem.Received().InsertManyAsync(items);
             // Assert.IsInstanceOf<Task<List<Item>>>(_itemDao.AddListItem(items));
-        }
+        }*/
     }
 }
