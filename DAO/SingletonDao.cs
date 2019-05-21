@@ -4,11 +4,11 @@ using Proxy;
 
 namespace DAO
 {
-    public class Singleton
+    public class SingletonDao
     {
-        private static Singleton _instance;
+        private static SingletonDao _instance;
 
-        public static Singleton Instance => _instance ?? (_instance = new Singleton());
+        public static SingletonDao Instance => _instance ?? (_instance = new SingletonDao());
 
         public IUserDao UserDao { get; private set; }
         public ICompetitionDao CompetitionDao { get; private set; }
@@ -17,7 +17,7 @@ namespace DAO
         public IBetDao BetDao { get; private set; }
         public IItemDao ItemDao { get; private set; }
 
-        public void SetAll(IMongoDatabase database)
+        public void SetAllDao(IMongoDatabase database)
         {
             SetTeamDao(new TeamDao(database));
             SetMatchDao(new MatchDao(database));
