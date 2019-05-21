@@ -33,6 +33,8 @@ build:
 
 test:
     stage: test
+    only:
+        - master
     script:
         - '"C:\Program Files (x86)\NUnit.org\nunit-console\nunit3-console.exe" "Test\bin\Release\Test.dll"'
     dependencies:
@@ -47,23 +49,17 @@ test:
 
 deploy:
     stage: deploy
+    only:
+        - master
     script:
         - 'ECHO Start Deploy'
         - 'C:\Tools\BismiAppRunner\BismiAppRunner.exe STOP 3wBetManager-API'
         - 'C:\Tools\BismiAppRunner\BismiAppRunner.exe START C:\GitLab-Runner\builds\Sns1WAaE\0\RomanLeichnig\backend-bet-manager-group2\3wBetManager-API\bin\Release\\ 3wBetManager-API.exe'
         - 'ECHO End Deploy'
-        - 'exit 0'
+        - 'ECHO Satrt integration test'
+        - '"C:\Users\Administrator\AppData\Roaming\npm\newman.cmd" run postman\3wbetManager.postman_collection.json -e postman\PROD.postman_environment.json'
+        - 'ECHO End integration test'
     dependencies:
         - test
 
 
-#================================
-# Integration Test
-#================================
-
-#integration:
-#    stage: integration
-#    script:
-#        - '"C:\Users\Administrator\AppData\Roaming\npm\newman.cmd" run postman\3wbetManager.postman_collection.json -e postman\PROD.postman_environment.json'
-#    dependencies:
-#        - deploy
