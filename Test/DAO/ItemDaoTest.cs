@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using DAO;
 using DAO.Interfaces;
@@ -14,8 +10,25 @@ using NUnit.Framework;
 
 namespace Test.DAO
 {
-    class ItemDaoTest
+    internal class ItemDaoTest
     {
+        private IMongoCollection<Item> _collectionItem;
+        private IMongoCollection<Match> _collectionMatch;
+        private IMongoDatabase _database;
+        public ExtraTime _extraTime;
+        private ExpressionFilterDefinition<Item> _filterExpression;
+        private FullTime _fullTime;
+        public HalfTime _halfTime;
+        private Item _item;
+        private IItemDao _itemDao;
+
+        private Match _match;
+        private IMatchDao _matchDao;
+        public Penalties _penalties;
+        private Score _score;
+        private Team _team1;
+        private Team _team2;
+
         [SetUp]
         public void SetUp()
         {
@@ -49,10 +62,10 @@ namespace Test.DAO
                 Colors = "test",
                 Venue = "test"
             };
-            _fullTime = new FullTime { AwayTeam = 1, HomeTeam = 1 };
-            _halfTime = new HalfTime { AwayTeam = 1, HomeTeam = 1 };
-            _extraTime = new ExtraTime { AwayTeam = 1, HomeTeam = 1 };
-            _penalties = new Penalties { AwayTeam = 1, HomeTeam = 1 };
+            _fullTime = new FullTime {AwayTeam = 1, HomeTeam = 1};
+            _halfTime = new HalfTime {AwayTeam = 1, HomeTeam = 1};
+            _extraTime = new ExtraTime {AwayTeam = 1, HomeTeam = 1};
+            _penalties = new Penalties {AwayTeam = 1, HomeTeam = 1};
             _score = new Score
             {
                 Winner = "test",
@@ -69,22 +82,6 @@ namespace Test.DAO
             _collectionMatch.ClearReceivedCalls();
             _collectionItem.ClearReceivedCalls();
         }
-
-        private Match _match;
-        private Item _item;
-        private IMongoCollection<Match> _collectionMatch;
-        private IMongoCollection<Item> _collectionItem;
-        private IMatchDao _matchDao;
-        private IItemDao _itemDao;
-        private Team _team1;
-        private Team _team2;
-        private Score _score;
-        private FullTime _fullTime;
-        public HalfTime _halfTime;
-        public ExtraTime _extraTime;
-        public Penalties _penalties;
-        private IMongoDatabase _database;
-        private ExpressionFilterDefinition<Item> _filterExpression;
 
         [Test]
         public void FindAllItemsTest()
@@ -122,6 +119,5 @@ namespace Test.DAO
             _collectionItem.Received().InsertManyAsync(items);
             // Assert.IsInstanceOf<Task<List<Item>>>(_itemDao.AddListItem(items));
         }
-
     }
 }

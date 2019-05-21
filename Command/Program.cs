@@ -14,36 +14,39 @@ namespace Command
         {
             var client = new MongoClient(ConfigurationManager.AppSettings["dbUrl"]);
             var database = client.GetDatabase(ConfigurationManager.AppSettings["dbName"]);
-            Singleton.Instance.SetAll(database);
+            SingletonDao.Instance.SetAllDao(database);
+            SetAllManager();
             if (args[0] == "REFRESH")
-                using (var footballDataManager = new FootballDataManager())
-                using (var userManager = new UserManager())
-                {
-                    Console.WriteLine("----- Begin Fetch football data ----- ");
-                    await footballDataManager.GetAllCompetitions();
-                    await footballDataManager.GetAllTeams();
-                    await footballDataManager.GetAllMatchForAWeek();
-                    Console.WriteLine("----- End Fetch football data ----- ");
-                    userManager.RecalculateUserPoints();
-                    Thread.Sleep(10000);
-                }
-
-            if (args[0] == "MONITORING")
-                using (var monitoringManager = new MonitoringManager())
-                {
-                    await monitoringManager.ResponseApi();
-                }
-
-            if (args[0] == "FIXTURE")
             {
-                using (var itemManager = new ItemManager())
-                {
-                await itemManager.CreateDefaultItems();
-
-                }
+                Console.WriteLine("----- Begin Fetch football data ----- ");
+                await SingletonManager.Instance.FootballDataManager.GetAllCompetitions();
+                await SingletonManager.Instance.FootballDataManager.GetAllTeams();
+                await SingletonManager.Instance.FootballDataManager.GetAllMatchForAWeek();
+                Console.WriteLine("----- End Fetch football data ----- ");
+                SingletonManager.Instance.UserManager.RecalculateUserPoints();
+                Thread.Sleep(10000);
             }
 
+
+            if (args[0] == "MONITORING") await SingletonManager.Instance.MonitoringManager.ResponseApi();
+
+
+            if (args[0] == "FIXTURE") await SingletonManager.Instance.ItemManager.CreateDefaultItems();
+
             Environment.Exit(0);
+        }
+
+        internal static void SetAllManager()
+        {
+            SingletonManager.Instance.SetAssignmentPointManager(new AssignmentPointManager());
+            SingletonManager.Instance.SetBetManager(new BetManager());
+            SingletonManager.Instance.SetEmailManager(new EmailManager());
+            SingletonManager.Instance.SetFootballDataManager(new FootballDataManager());
+            SingletonManager.Instance.SetItemManager(new ItemManager());
+            SingletonManager.Instance.SetMatchManager(new MatchManager());
+            SingletonManager.Instance.SetMonitoringManager(new MonitoringManager());
+            SingletonManager.Instance.SetTokenManager(new TokenManager());
+            SingletonManager.Instance.SetUserManager(new UserManager());
         }
     }
 }

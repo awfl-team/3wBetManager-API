@@ -1,14 +1,9 @@
-﻿using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Web.Http;
-using System.Web.Http.Results;
-using DAO;
+using _3wBetManager_API.Controllers;
 using DAO.Interfaces;
 using Models;
-using NSubstitute;
 using NUnit.Framework;
-using _3wBetManager_API.Controllers;
 
 namespace Test.Controller
 {

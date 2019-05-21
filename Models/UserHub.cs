@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Models
+﻿namespace Models
 {
-    public class UserHub: User
+    public class UserHub : User
     {
-        public string ConnectionId {get; set; }
+        public string ConnectionId { get; set; }
     }
 }

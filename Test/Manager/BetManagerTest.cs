@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using DAO;
 using DAO.Interfaces;
@@ -10,13 +9,12 @@ using Models;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using NSubstitute;
-using NSubstitute.Core.Arguments;
 using NUnit.Framework;
 
 namespace Test.Manager
 {
     [TestFixture]
-    class BetManagerTest
+    internal class BetManagerTest
     {
         [SetUp]
         public void SetUp()
@@ -71,52 +69,19 @@ namespace Test.Manager
         private ITeamDao _teamDao;
         private IMongoDatabase _database;
 
-
         [Test]
-        public void GetFinishBetsTest()
+        public void AddGuidListTest()
         {
-            var competitionId = 150;
-            var betsByUser =  _betDao.FindBetsByUser(_user);
-            Assert.IsInstanceOf<Task<List<Bet>>>(betsByUser);
-            Assert.IsTrue(betsByUser.Result.All(bet => bet.User != null));
+            var bets = new List<Bet>();
+            bets.Add(_bet);
+            foreach (var bet in bets)
+            {
+                bet.Guid = Guid.NewGuid().ToString();
+                bet.User = _user;
+            }
 
-            var betsByCompetition = betsByUser.Result.FindAll(bet => bet.Match.Competition.Id == competitionId);
-            var betsByMatchStatus = betsByCompetition.FindAll(bet => bet.Match.Status == Match.FinishedStatus);
-
-            Assert.IsTrue(betsByMatchStatus.All(bet => bet.Match.Status == Match.FinishedStatus));
-            Assert.IsInstanceOf<List<Bet>>(betsByCompetition);
-            Assert.IsInstanceOf<List<Bet>>(betsByMatchStatus);
-            Assert.IsNotNull(betsByCompetition);
-        }
-
-        [Test]
-        public void GetFinishBetsLimitedTest()
-        {
-            var betsByUser = _betDao.FindBetsByUser(_user);
-            Assert.IsInstanceOf<Task<List<Bet>>>(betsByUser);
-            Assert.IsTrue(betsByUser.Result.All(bet => bet.User != null));
-
-            var bets = betsByUser.Result.FindAll(bet => bet.Match.Status == Match.FinishedStatus).Take(Bet.DashboardMaxToShow)
-                .ToList();
-
-            Assert.IsTrue(bets.All(bet => bet.Match.Status == Match.FinishedStatus));
-            Assert.IsInstanceOf<List<Bet>>(bets);
-            Assert.IsTrue(bets.Count < Bet.DashboardMaxToShow);
-        }
-
-        [Test]
-        public void GetCurrentBetsLimitedTest()
-        {
-            var betsByUser = _betDao.FindBetsByUser(_user);
-            Assert.IsInstanceOf<Task<List<Bet>>>(betsByUser);
-            Assert.IsTrue(betsByUser.Result.All(bet => bet.User != null));
-
-            var bets = betsByUser.Result.FindAll(bet => bet.Match.Status == Match.ScheduledStatus).Take(Bet.DashboardMaxToShow)
-                .ToList();
-
-            Assert.IsTrue(bets.All(bet => bet.Match.Status == Match.ScheduledStatus));
-            Assert.IsInstanceOf<List<Bet>>(bets);
-            Assert.IsTrue(bets.Count < Bet.DashboardMaxToShow);
+            foreach (var bet in bets) Assert.IsTrue(bet.Guid != null);
+            Assert.IsInstanceOf<Bet>(bets[0]);
         }
 
         [Test]
@@ -131,7 +96,8 @@ namespace Test.Manager
             var betsByCompetition = betsByUser.Result.FindAll(bet => bet.Match.Competition.Id == competitionId);
             var betsByMatchStatus = betsByCompetition.FindAll(bet => bet.Match.Status == Match.ScheduledStatus);
             var matchByStatus = _matchDao.FindByStatus(Match.ScheduledStatus);
-            var matchesByCompetition = matchByStatus.Result.FindAll(m => m.Competition.Id == competitionId && now <= DateTimeOffset.Parse(m.UtcDate));
+            var matchesByCompetition = matchByStatus.Result.FindAll(m =>
+                m.Competition.Id == competitionId && now <= DateTimeOffset.Parse(m.UtcDate));
 
             dynamic betsAndMatches = new ExpandoObject();
             betsAndMatches.Bets = betsByMatchStatus;
@@ -146,36 +112,85 @@ namespace Test.Manager
         }
 
         [Test]
-        public void NumberCurrentMatchAndBetTest()
+        public void GetCurrentBetsLimitedTest()
         {
-            var competitionId = 150;
-            var now = DateTime.UtcNow;
             var betsByUser = _betDao.FindBetsByUser(_user);
             Assert.IsInstanceOf<Task<List<Bet>>>(betsByUser);
+            Assert.IsTrue(betsByUser.Result.All(bet => bet.User != null));
+
+            var bets = betsByUser.Result.FindAll(bet => bet.Match.Status == Match.ScheduledStatus)
+                .Take(Bet.DashboardMaxToShow)
+                .ToList();
+
+            Assert.IsTrue(bets.All(bet => bet.Match.Status == Match.ScheduledStatus));
+            Assert.IsInstanceOf<List<Bet>>(bets);
+            Assert.IsTrue(bets.Count < Bet.DashboardMaxToShow);
+        }
+
+        [Test]
+        public void GetFinishBetsLimitedTest()
+        {
+            var betsByUser = _betDao.FindBetsByUser(_user);
+            Assert.IsInstanceOf<Task<List<Bet>>>(betsByUser);
+            Assert.IsTrue(betsByUser.Result.All(bet => bet.User != null));
+
+            var bets = betsByUser.Result.FindAll(bet => bet.Match.Status == Match.FinishedStatus)
+                .Take(Bet.DashboardMaxToShow)
+                .ToList();
+
+            Assert.IsTrue(bets.All(bet => bet.Match.Status == Match.FinishedStatus));
+            Assert.IsInstanceOf<List<Bet>>(bets);
+            Assert.IsTrue(bets.Count < Bet.DashboardMaxToShow);
+        }
+
+
+        [Test]
+        public void GetFinishBetsTest()
+        {
+            var competitionId = 150;
+            var betsByUser = _betDao.FindBetsByUser(_user);
+            Assert.IsInstanceOf<Task<List<Bet>>>(betsByUser);
+            Assert.IsTrue(betsByUser.Result.All(bet => bet.User != null));
 
             var betsByCompetition = betsByUser.Result.FindAll(bet => bet.Match.Competition.Id == competitionId);
-            var betsByMatchStatus = betsByCompetition.FindAll(bet => bet.Match.Status == Match.ScheduledStatus);
-            var matchByStatus = _matchDao.FindByStatus(Match.ScheduledStatus);
-            var matchesByCompetition = matchByStatus.Result.FindAll(m => m.Competition.Id == competitionId && now <= DateTimeOffset.Parse(m.UtcDate));
+            var betsByMatchStatus = betsByCompetition.FindAll(bet => bet.Match.Status == Match.FinishedStatus);
 
-            Assert.IsTrue(betsByCompetition.All(bet => bet.Match.Competition.Id == competitionId));
-            Assert.IsTrue(matchesByCompetition.All(m => m.Competition.Id == competitionId));
-
+            Assert.IsTrue(betsByMatchStatus.All(bet => bet.Match.Status == Match.FinishedStatus));
             Assert.IsInstanceOf<List<Bet>>(betsByCompetition);
             Assert.IsInstanceOf<List<Bet>>(betsByMatchStatus);
-            Assert.IsInstanceOf<Task<List<Match>>>(matchByStatus);
-            Assert.IsInstanceOf<List<Match>>(matchesByCompetition);
-            dynamic betsAndMatches = new ExpandoObject();
-            betsAndMatches.Bets = betsByMatchStatus;
-            betsAndMatches.Matches = matchesByCompetition;
+            Assert.IsNotNull(betsByCompetition);
+        }
 
-            var currentBetsAndMatches = betsAndMatches;
+        [Test]
+        public void GetUserBetsEarningsPerTypeTest()
+        {
+            var userBets = _betDao.FindBetsByUser(_user);
+            Assert.IsInstanceOf<Task<List<Bet>>>(userBets);
 
-            dynamic numberCurrentMatchAndBet = new ExpandoObject();
-            numberCurrentMatchAndBet.NbBet = currentBetsAndMatches.Bets.Count;
-            numberCurrentMatchAndBet.NbMatch = currentBetsAndMatches.Matches.Count;
-            Assert.IsFalse(numberCurrentMatchAndBet.NbBet < 0);
-            Assert.IsFalse(numberCurrentMatchAndBet.NbMatch < 0);
+
+            var perfectBetsPoint = 0;
+            var okBetsPoint = 0;
+            foreach (var bet in userBets.Result)
+            {
+                switch (bet.Status)
+                {
+                    case Bet.PerfectStatus:
+                        perfectBetsPoint += bet.PointsWon;
+                        break;
+                    case Bet.OkStatus:
+                        okBetsPoint += bet.PointsWon;
+                        break;
+                }
+
+                Assert.IsTrue(bet.PointsWon >= okBetsPoint);
+            }
+
+            dynamic userBetsPerType = new ExpandoObject();
+            userBetsPerType.okBets = okBetsPoint;
+            userBetsPerType.perfectBets = perfectBetsPoint;
+
+            Assert.IsFalse(userBetsPerType.okBets < 0);
+            Assert.IsFalse(userBetsPerType.perfectBets < 0);
         }
 
         [Test]
@@ -235,34 +250,60 @@ namespace Test.Manager
         }
 
         [Test]
-        public void GetUserBetsEarningsPerTypeTest()
+        public void GetUserScheduledBetsPaginatedTest()
         {
-            var userBets = _betDao.FindBetsByUser(_user);
-            Assert.IsInstanceOf<Task<List<Bet>>>(userBets);
+            var betsByUser = _betDao.FindBetsByUser(_user, 1);
+            var page = 1;
+            var finishedBets = betsByUser.Result.FindAll(bet => bet.Match.Status == Match.ScheduledStatus);
+            var totalBets = finishedBets.Count();
+            var totalPages = totalBets / 10 + 1;
+            page = page - 1;
 
+            var betsToPass = 10 * page;
+            var betsPaginated = _betDao.PaginatedScheduledBets(betsToPass, _user);
+            dynamic obj = new ExpandoObject();
+            obj.Items = betsPaginated.Result;
+            obj.TotalPages = totalPages;
+            obj.TotalBets = totalBets;
+            obj.Page = page + 1;
 
-            var perfectBetsPoint = 0;
-            var okBetsPoint = 0;
-            foreach (var bet in userBets.Result)
-            {
-                switch (bet.Status)
-                {
-                    case Bet.PerfectStatus:
-                        perfectBetsPoint += bet.PointsWon;
-                        break;
-                    case Bet.OkStatus:
-                        okBetsPoint += bet.PointsWon;
-                        break;
-                }
-                Assert.IsTrue(bet.PointsWon >= okBetsPoint);
-            }
+            Assert.IsTrue(betsPaginated.Result.Count <= 10);
+            Assert.IsInstanceOf<List<Bet>>(betsPaginated.Result);
+            Assert.IsFalse(obj.Page < 0);
+        }
 
-            dynamic userBetsPerType = new ExpandoObject();
-            userBetsPerType.okBets = okBetsPoint;
-            userBetsPerType.perfectBets = perfectBetsPoint;
+        [Test]
+        public void NumberCurrentMatchAndBetTest()
+        {
+            var competitionId = 150;
+            var now = DateTime.UtcNow;
+            var betsByUser = _betDao.FindBetsByUser(_user);
+            Assert.IsInstanceOf<Task<List<Bet>>>(betsByUser);
 
-            Assert.IsFalse(userBetsPerType.okBets < 0);
-            Assert.IsFalse(userBetsPerType.perfectBets < 0);
+            var betsByCompetition = betsByUser.Result.FindAll(bet => bet.Match.Competition.Id == competitionId);
+            var betsByMatchStatus = betsByCompetition.FindAll(bet => bet.Match.Status == Match.ScheduledStatus);
+            var matchByStatus = _matchDao.FindByStatus(Match.ScheduledStatus);
+            var matchesByCompetition = matchByStatus.Result.FindAll(m =>
+                m.Competition.Id == competitionId && now <= DateTimeOffset.Parse(m.UtcDate));
+
+            Assert.IsTrue(betsByCompetition.All(bet => bet.Match.Competition.Id == competitionId));
+            Assert.IsTrue(matchesByCompetition.All(m => m.Competition.Id == competitionId));
+
+            Assert.IsInstanceOf<List<Bet>>(betsByCompetition);
+            Assert.IsInstanceOf<List<Bet>>(betsByMatchStatus);
+            Assert.IsInstanceOf<Task<List<Match>>>(matchByStatus);
+            Assert.IsInstanceOf<List<Match>>(matchesByCompetition);
+            dynamic betsAndMatches = new ExpandoObject();
+            betsAndMatches.Bets = betsByMatchStatus;
+            betsAndMatches.Matches = matchesByCompetition;
+
+            var currentBetsAndMatches = betsAndMatches;
+
+            dynamic numberCurrentMatchAndBet = new ExpandoObject();
+            numberCurrentMatchAndBet.NbBet = currentBetsAndMatches.Bets.Count;
+            numberCurrentMatchAndBet.NbMatch = currentBetsAndMatches.Matches.Count;
+            Assert.IsFalse(numberCurrentMatchAndBet.NbBet < 0);
+            Assert.IsFalse(numberCurrentMatchAndBet.NbMatch < 0);
         }
 
         [Test]
@@ -288,68 +329,27 @@ namespace Test.Manager
         }
 
         [Test]
-        public void AddGuidListTest()
-        {
-            var bets = new List<Bet>();
-            bets.Add(_bet);
-            foreach (var bet in bets)
-            {
-                bet.Guid = Guid.NewGuid().ToString();
-                bet.User = _user;
-            }
-
-            foreach (var bet in bets)
-            {
-            Assert.IsTrue(bet.Guid != null);
-            }
-            Assert.IsInstanceOf<Bet>(bets[0]);
-        }
-
-        [Test]
-        public void GetUserScheduledBetsPaginatedTest()
-        {
-            var betsByUser = _betDao.FindBetsByUser(_user, 1);
-            var page = 1;
-            var finishedBets = betsByUser.Result.FindAll(bet => bet.Match.Status == Match.ScheduledStatus);
-            var totalBets = finishedBets.Count();
-            var totalPages = totalBets / 10 + 1;
-            page = page - 1;
-
-            var betsToPass = 10 * page;
-            var betsPaginated = _betDao.PaginatedScheduledBets(betsToPass, _user);
-            dynamic obj = new ExpandoObject();
-            obj.Items = betsPaginated.Result;
-            obj.TotalPages = totalPages;
-            obj.TotalBets = totalBets;
-            obj.Page = page + 1;
-
-            Assert.IsTrue(betsPaginated.Result.Count <= 10);
-            Assert.IsInstanceOf<List<Bet>>(betsPaginated.Result);
-            Assert.IsFalse(obj.Page < 0);
-        }
-
-        [Test]
         public void ParseListBetTest()
         {
-         // TODO
-         /*   var initialBets = new List<Bet>();
-            var betsParsed = new List<Bet>();
-            initialBets.Add(_bet);
-            var now = DateTime.UtcNow;
-            foreach (var bet in initialBets)
-            {
-                if (now <= DateTimeOffset.Parse(bet.Match.UtcDate) && (bet.AwayTeamScore >= 0 || bet.HomeTeamScore >= 0))
-                {
-                    betsParsed.Add(bet);
-                }
-            }
-
-            Assert.IsTrue(initialBets.Count == betsParsed.Count);
-
-            foreach (var bet in betsParsed)
-            {
-                Assert.IsFalse(bet.AwayTeamScore < 0 || bet.HomeTeamScore < 0);
-            }*/
+            // TODO
+            /*   var initialBets = new List<Bet>();
+               var betsParsed = new List<Bet>();
+               initialBets.Add(_bet);
+               var now = DateTime.UtcNow;
+               foreach (var bet in initialBets)
+               {
+                   if (now <= DateTimeOffset.Parse(bet.Match.UtcDate) && (bet.AwayTeamScore >= 0 || bet.HomeTeamScore >= 0))
+                   {
+                       betsParsed.Add(bet);
+                   }
+               }
+   
+               Assert.IsTrue(initialBets.Count == betsParsed.Count);
+   
+               foreach (var bet in betsParsed)
+               {
+                   Assert.IsFalse(bet.AwayTeamScore < 0 || bet.HomeTeamScore < 0);
+               }*/
         }
     }
 }

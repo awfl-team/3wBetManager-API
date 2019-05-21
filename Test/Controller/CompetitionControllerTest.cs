@@ -1,10 +1,8 @@
-﻿using System.Threading.Tasks;
-using System.Web.Http;
+﻿using _3wBetManager_API.Controllers;
 using DAO;
 using DAO.Interfaces;
 using NSubstitute;
 using NUnit.Framework;
-using _3wBetManager_API.Controllers;
 
 namespace Test.Controller
 {
@@ -15,7 +13,7 @@ namespace Test.Controller
         public void SetUp()
         {
             _competitionController = new CompetitionController();
-            _competitionDao = Singleton.Instance.SetCompetitionDao(Substitute.For<ICompetitionDao>());
+            _competitionDao = SingletonDao.Instance.SetCompetitionDao(Substitute.For<ICompetitionDao>());
         }
 
         [TearDown]

@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
 namespace Test.Manager
 {
     [TestFixture]
-    class MonitoringManagerTest
+    internal class MonitoringManagerTest
     {
         [SetUp]
         public void SetUp()
@@ -18,7 +13,6 @@ namespace Test.Manager
         [TearDown]
         public void TearDown()
         {
-
         }
     }
 }

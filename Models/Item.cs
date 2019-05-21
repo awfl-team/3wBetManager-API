@@ -40,7 +40,9 @@ namespace Models
         public const float EpicDropChanceMin = CommonDropChance + RareDropChance;
         public const float EpicDropChanceMax = CommonDropChance + RareDropChance + EpicDropChance;
         public const float LegendaryDropChanceMin = CommonDropChance + RareDropChance + EpicDropChance;
-        public const float LegendaryDropChanceMax = CommonDropChance + RareDropChance + EpicDropChance + LegendaryDropChance;
+
+        public const float LegendaryDropChanceMax =
+            CommonDropChance + RareDropChance + EpicDropChance + LegendaryDropChance;
 
 
         /* MODEL */

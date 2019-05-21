@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DAO;
 using DAO.Interfaces;
 using Models;
@@ -14,7 +10,7 @@ using NUnit.Framework;
 namespace Test.Manager
 {
     [TestFixture]
-    class ItemManagerTest
+    internal class ItemManagerTest
     {
         [SetUp]
         public void SetUp()
@@ -53,17 +49,12 @@ namespace Test.Manager
                 User = _user,
                 Match = _match
             };
-            _item = new Item
-            {
-
-            };
-
+            _item = new Item();
         }
 
         [TearDown]
         public void TearDown()
         {
-
         }
 
         private IMongoCollection<Bet> _collectionBet;

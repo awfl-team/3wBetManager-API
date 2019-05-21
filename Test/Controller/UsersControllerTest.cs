@@ -1,12 +1,10 @@
-﻿using System.Threading.Tasks;
-using System.Web.Http;
+﻿using _3wBetManager_API.Controllers;
 using DAO;
 using DAO.Interfaces;
 using Manager;
 using Models;
 using NSubstitute;
 using NUnit.Framework;
-using _3wBetManager_API.Controllers;
 
 namespace Test.Controller
 {
@@ -17,7 +15,7 @@ namespace Test.Controller
         public void SetUp()
         {
             _usersController = new UsersController();
-            _userDao = Singleton.Instance.SetUserDao(Substitute.For<IUserDao>());
+            _userDao = SingletonDao.Instance.SetUserDao(Substitute.For<IUserDao>());
             _user = new User {Email = "test", Password = "test", Username = "test"};
             _tokenManager = Substitute.For<TokenManager>();
         }
