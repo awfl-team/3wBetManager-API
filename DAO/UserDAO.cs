@@ -17,7 +17,6 @@ namespace DAO
             _collection = collection ?? database.GetCollection<User>("user");
         }
 
-
         public async Task<List<User>> FindAllUser()
         {
             return await _collection.Find(new BsonDocument()).ToListAsync();
@@ -35,12 +34,10 @@ namespace DAO
             return await _collection.Find(new BsonDocument()).Limit(50).Sort("{Point: -1}").ToListAsync();
         }
 
-
         public async Task<List<User>> FindAllUserByPoint()
         {
             return await _collection.Find(new BsonDocument()).Sort("{Point: -1}").ToListAsync();
         }
-
 
         public async Task<User> FindUserByEmail(string email)
         {

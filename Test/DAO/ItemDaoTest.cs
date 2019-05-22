@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using DAO;
 using DAO.Interfaces;
@@ -33,9 +33,7 @@ namespace Test.DAO
         public void SetUp()
         {
             _database = Substitute.For<IMongoDatabase>();
-            _collectionMatch = Substitute.For<IMongoCollection<Match>>();
             _collectionItem = Substitute.For<IMongoCollection<Item>>();
-            _matchDao = new MatchDao(_database, _collectionMatch);
             _itemDao = new ItemDao(_database, _collectionItem);
 
             _team1 = new Team
@@ -79,36 +77,34 @@ namespace Test.DAO
         [TearDown]
         public void TearDown()
         {
-            _collectionMatch.ClearReceivedCalls();
             _collectionItem.ClearReceivedCalls();
         }
 
         [Test]
-        public void FindAllItemsTest()
+        public void AssertThatFindAllItemsIsCalled()
         {
             _itemDao.FindAllItems();
             _collectionItem.Received().Find(new BsonDocument());
             Assert.IsInstanceOf<Task<List<Item>>>(_itemDao.FindAllItems());
         }
 
-        [Test]
-        public void FindItemsFilteredTest()
+        [TestCase(Item.Bomb)]
+        [TestCase(Item.Key)]
+        [TestCase(Item.Life)]
+        public void AssertThatFindItemsFilteredIsCalled(string itemType)
         {
-            var itemType = "bomb";
             _itemDao.FindItemsFiltered(itemType);
             _filterExpression = new ExpressionFilterDefinition<Item>(item => item.Type != itemType);
             _collectionItem.Received().Find(_filterExpression);
-            Assert.IsInstanceOf<Task<List<Item>>>(_itemDao.FindItemsFiltered(itemType));
         }
 
         [Test]
-        public void FindItemTest()
+        public void AssertThatFindItemIsCalled()
         {
-            var id = Arg.Any<ObjectId>().ToString();
+            var id = "1";
             _itemDao.FindItem(id);
             _filterExpression = new ExpressionFilterDefinition<Item>(i => i.Id == ObjectId.Parse(id));
             _collectionItem.Received().Find(_filterExpression);
-            Assert.IsInstanceOf<Task<Item>>(_itemDao.FindItem(id));
         }
 
         /*[Test]
@@ -119,5 +115,35 @@ namespace Test.DAO
             _collectionItem.Received().InsertManyAsync(items);
             // Assert.IsInstanceOf<Task<List<Item>>>(_itemDao.AddListItem(items));
         }*/
+
+        [Test]
+        public void AssertThatAddListItemIsCalled()
+        {
+            var itemsToAdd = new List<Item>();
+            for (int i = 0; i < 3; i++)
+            {
+                itemsToAdd.Add(new Item());
+            }
+            _itemDao.AddListItem(itemsToAdd);
+            _collectionItem.Received().InsertManyAsync(itemsToAdd);
+        }
+
+        [Test]
+        public void AssertThatPurgeItemCollectionIsCalled()
+        {
+            _itemDao.PurgeItemCollection();
+            _collectionItem.Received().DeleteManyAsync(Arg.Any<ExpressionFilterDefinition<Item>>());
+        }
+
+        [Test]
+        public void AssertThatUpdateItemIsCalled()
+        {
+            var id = "1";
+            var item = new Item {Cost = 10, Rarity = Item.Legendary};
+
+            _itemDao.UpdateItem(id, new Item());
+            _collectionItem.Received().UpdateOneAsync(Arg.Any<ExpressionFilterDefinition<Item>>(), 
+                Arg.Any<UpdateDefinition<Item>>());
+        }
     }
 }
