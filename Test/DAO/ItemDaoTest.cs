@@ -29,8 +29,8 @@ namespace Test.DAO
         private Team _team1;
         private Team _team2;
 
-        [SetUp]
-        public void SetUp()
+        [OneTimeSetUp]
+        public void OneTimeSetUp()
         {
             _database = Substitute.For<IMongoDatabase>();
             _collectionItem = Substitute.For<IMongoCollection<Item>>();

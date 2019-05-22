@@ -29,8 +29,8 @@ namespace Test.DAO
         private ExpressionFilterDefinition<Match> _filterExpression;
 
 
-        [SetUp]
-        public void SetUp()
+        [OneTimeSetUp]
+        public void OneTimeSetUp()
         {
             _database = Substitute.For<IMongoDatabase>();
             _collection = Substitute.For<IMongoCollection<Match>>();

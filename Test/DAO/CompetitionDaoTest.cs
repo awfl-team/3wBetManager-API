@@ -21,8 +21,8 @@ namespace Test.DAO
         private IMongoDatabase _database;
         private ExpressionFilterDefinition<Competition> _filterExpression;
 
-        [SetUp]
-        public void SetUp()
+        [OneTimeSetUp]
+        public void OneTimeSetUp()
         {
             _database = Substitute.For<IMongoDatabase>();
             _collection = Substitute.For<IMongoCollection<Competition>>();
