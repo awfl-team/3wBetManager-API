@@ -8,12 +8,12 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Manager
 {
-    public class TokenManager
+    public class TokenManager : ITokenManager
     {
         private const string Secret =
             "XCAP05H6LoKvbRRa/QkqLNMI7cOHguaRyHzyg7n5qEkGjQmtBhz4SzYh4Fqwjyi3KJHlSXKPwVu2+bXr6CtpgQ==";
 
-        public static string GenerateEmailToken(string email, string role, string pseudo)
+        public string GenerateEmailToken(string email, string role, string pseudo)
         {
             var key = Convert.FromBase64String(Secret);
             var securityKey = new SymmetricSecurityKey(key);
@@ -35,7 +35,7 @@ namespace Manager
             return handler.WriteToken(token);
         }
 
-        public static string GenerateToken(string email, string role, string pseudo)
+        public string GenerateToken(string email, string role, string pseudo)
         {
             var key = Convert.FromBase64String(Secret);
             var securityKey = new SymmetricSecurityKey(key);
@@ -57,7 +57,7 @@ namespace Manager
             return handler.WriteToken(token);
         }
 
-        public static ClaimsPrincipal GetPrincipal(string token)
+        public ClaimsPrincipal GetPrincipal(string token)
         {
             try
             {
@@ -83,7 +83,7 @@ namespace Manager
             }
         }
 
-        public static IDictionary<string, string> ValidateToken(string token)
+        public IDictionary<string, string> ValidateToken(string token)
         {
             var principal = GetPrincipal(token);
             if (principal == null)
@@ -110,7 +110,7 @@ namespace Manager
             return tokenDictionary;
         }
 
-        public static string GetTokenFromRequest(HttpRequestMessage request)
+        public string GetTokenFromRequest(HttpRequestMessage request)
         {
             if (!request.Headers.TryGetValues("Authorization", out var authHeaders) ||
                 authHeaders.Count() > 1) return null;

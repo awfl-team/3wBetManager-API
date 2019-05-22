@@ -1,9 +1,7 @@
-﻿using System.Threading.Tasks;
-using System.Web.Http;
+﻿using _3wBetManager_API.Controllers;
 using Manager;
 using NSubstitute;
 using NUnit.Framework;
-using _3wBetManager_API.Controllers;
 
 namespace Test.Controller
 {

@@ -82,7 +82,8 @@ namespace DAO
 
         public async Task<List<Bet>> PaginatedScheduledBets(int betsToPass, User user)
         {
-            return await _collection.Find(bet => bet.Match.Status == Match.ScheduledStatus && bet.User.Id == user.Id).Skip(betsToPass).Limit(10)
+            return await _collection.Find(bet => bet.Match.Status == Match.ScheduledStatus && bet.User.Id == user.Id)
+                .Skip(betsToPass).Limit(10)
                 .ToListAsync();
         }
     }

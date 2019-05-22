@@ -27,7 +27,7 @@ namespace Hub
         {
             var connectionId = Context.ConnectionId;
             var userName = Context.QueryString["username"];
-            var user = new UserHub{Username = userName, ConnectionId = connectionId};
+            var user = new UserHub {Username = userName, ConnectionId = connectionId};
             var index = ConnectedUsers.FindIndex(u => u.ConnectionId == connectionId);
             if (index == -1)
             {
@@ -42,7 +42,6 @@ namespace Hub
 
         public override Task OnDisconnected(bool stopCalled)
         {
-
             var connectionId = Context.ConnectionId;
             var index = ConnectedUsers.FindIndex(u => u.ConnectionId == connectionId);
             ConnectedUsers.RemoveAt(index);

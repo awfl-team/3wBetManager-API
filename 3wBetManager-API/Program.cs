@@ -2,6 +2,7 @@
 using System.Configuration;
 using System.Runtime.InteropServices;
 using DAO;
+using Manager;
 using Microsoft.Owin.Hosting;
 using MongoDB.Driver;
 
@@ -25,7 +26,9 @@ namespace _3wBetManager_API
             var client = new MongoClient(ConfigurationManager.AppSettings["dbUrl"]);
             var database = client.GetDatabase(ConfigurationManager.AppSettings["dbName"]);
 
-            Singleton.Instance.SetAll(database);
+            SingletonDao.Instance.SetAllDao(database);
+            SetAllManager();
+
             var handle = GetConsoleWindow();
             //ShowWindow(handle, SW_HIDE);
 
@@ -34,6 +37,19 @@ namespace _3wBetManager_API
             {
                 Console.ReadLine();
             }
+        }
+
+        internal static void SetAllManager()
+        {
+            SingletonManager.Instance.SetAssignmentPointManager(new AssignmentPointManager());
+            SingletonManager.Instance.SetBetManager(new BetManager());
+            SingletonManager.Instance.SetEmailManager(new EmailManager());
+            SingletonManager.Instance.SetFootballDataManager(new FootballDataManager());
+            SingletonManager.Instance.SetItemManager(new ItemManager());
+            SingletonManager.Instance.SetMatchManager(new MatchManager());
+            SingletonManager.Instance.SetMonitoringManager(new MonitoringManager());
+            SingletonManager.Instance.SetTokenManager(new TokenManager());
+            SingletonManager.Instance.SetUserManager(new UserManager());
         }
     }
 }

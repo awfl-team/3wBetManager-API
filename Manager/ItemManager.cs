@@ -3,21 +3,22 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using DAO;
 using DAO.Interfaces;
+using Manager.Interfaces;
 using Models;
 
 namespace Manager
 {
-    public class ItemManager : IDisposable
+    public class ItemManager : IItemManager
     {
-        private IItemDao _itemDao;
-        private IUserDao _userDao;
-        private IBetDao _betDao;
+        private readonly IBetDao _betDao;
+        private readonly IItemDao _itemDao;
+        private readonly IUserDao _userDao;
 
         public ItemManager(IItemDao itemDao = null, IUserDao userDao = null, IBetDao betDao = null)
         {
-            _itemDao = itemDao ?? Singleton.Instance.ItemDao;
-            _userDao = userDao ?? Singleton.Instance.UserDao;
-            _betDao = betDao ?? Singleton.Instance.BetDao;
+            _itemDao = itemDao ?? SingletonDao.Instance.ItemDao;
+            _userDao = userDao ?? SingletonDao.Instance.UserDao;
+            _betDao = betDao ?? SingletonDao.Instance.BetDao;
         }
 
         public async Task BuyItemsToUser(List<Item> items, User user)
@@ -29,17 +30,14 @@ namespace Manager
                 totalCost += item.Cost;
             }
 
-            await _userDao.UpdateUserPoints(user, (user.Point - totalCost),
+            await _userDao.UpdateUserPoints(user, user.Point - totalCost,
                 user.TotalPointsUsedToBet);
         }
 
         public async Task<List<Item>> AddItemsToUser(User user)
         {
             var itemsLooted = await GenerateLoot(Item.LootBox);
-            foreach (var item in itemsLooted)
-            {
-                await _userDao.AddUserItem(item, user);
-            }
+            foreach (var item in itemsLooted) await _userDao.AddUserItem(item, user);
 
             return itemsLooted;
         }
@@ -58,7 +56,7 @@ namespace Manager
         public async Task<User> UseBomb(string userId)
         {
             var user = await _userDao.FindUser(userId);
-            await _userDao.UpdateUserPoints(user, (user.Point - 30),
+            await _userDao.UpdateUserPoints(user, user.Point - 30,
                 user.TotalPointsUsedToBet);
 
             return user;
@@ -88,21 +86,21 @@ namespace Manager
                 switch (lootDropChanceFactor)
                 {
                     case double dropFactor
-                        when (dropFactor > 0 && dropFactor <= Item.CommonDropChance && commonItems.Count > 0):
+                        when dropFactor > 0 && dropFactor <= Item.CommonDropChance && commonItems.Count > 0:
                         itemLooted.Add(commonItems[randomizer.Next(commonItems.Count)]);
                         break;
 
-                    case double dropFactor when (dropFactor > Item.RareDropChanceMin &&
-                                                 dropFactor <= Item.RareDropChanceMax && rareItems.Count > 0):
+                    case double dropFactor when dropFactor > Item.RareDropChanceMin &&
+                                                dropFactor <= Item.RareDropChanceMax && rareItems.Count > 0:
                         itemLooted.Add(rareItems[randomizer.Next(rareItems.Count)]);
                         break;
 
-                    case double dropFactor when (dropFactor > Item.EpicDropChanceMin &&
-                                                 dropFactor <= Item.EpicDropChanceMax && epicItems.Count > 0):
+                    case double dropFactor when dropFactor > Item.EpicDropChanceMin &&
+                                                dropFactor <= Item.EpicDropChanceMax && epicItems.Count > 0:
                         itemLooted.Add(epicItems[randomizer.Next(epicItems.Count)]);
                         break;
-                    case double dropFactor when (dropFactor > Item.LegendaryDropChanceMin &&
-                                                 dropFactor <= Item.LegendaryDropChanceMax && legendaryItems.Count > 0):
+                    case double dropFactor when dropFactor > Item.LegendaryDropChanceMin &&
+                                                dropFactor <= Item.LegendaryDropChanceMax && legendaryItems.Count > 0:
                         itemLooted.Add(legendaryItems[randomizer.Next(legendaryItems.Count)]);
                         break;
                 }
@@ -207,11 +205,14 @@ namespace Manager
             await _itemDao.AddListItem(items);
         }
 
-        public void Dispose()
+        public async Task<List<Item>> GetAllItems()
         {
-            _itemDao = null;
-            _betDao = null;
-            _userDao = null;
+            return await SingletonDao.Instance.ItemDao.FindAllItems();
+        }
+
+        public async Task ChangeItem(string id, Item item)
+        {
+            await SingletonDao.Instance.ItemDao.UpdateItem(id, item);
         }
     }
 }

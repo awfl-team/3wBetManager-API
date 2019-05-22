@@ -20,14 +20,14 @@ namespace _3wBetManager_API
 
         public override void OnAuthorization(HttpActionContext actionContext)
         {
-            var token = TokenManager.GetTokenFromRequest(actionContext.Request);
+            var token = SingletonManager.Instance.TokenManager.GetTokenFromRequest(actionContext.Request);
             if (token == null)
             {
                 actionContext.Response = new HttpResponseMessage(HttpStatusCode.Unauthorized);
                 return;
             }
 
-            var user = TokenManager.ValidateToken(token);
+            var user = SingletonManager.Instance.TokenManager.ValidateToken(token);
             if (user == null)
             {
                 actionContext.Response = new HttpResponseMessage(HttpStatusCode.Unauthorized);

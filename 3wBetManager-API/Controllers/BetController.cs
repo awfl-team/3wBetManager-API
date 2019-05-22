@@ -18,18 +18,13 @@ namespace _3wBetManager_API.Controllers
             return await HandleError(async () =>
             {
                 var user = await GetUserByToken(Request);
-                using (var betManager = new BetManager())
-                {
-                    var betsParsed = betManager.ParseListBet(bets);
-                    betsParsed = betManager.AddGuidList(user, betsParsed);
-                    await GetBetDao().AddListBet(betsParsed);
-                }
 
-                await GetUserDao().UpdateUserPoints(user, user.Point - (bets.Count * 10), (bets.Count * 10));
-                foreach (var bet in bets)
-                {
-                    new MatchManager().CalculateMatchRating(match: bet.Match);
-                }
+                var betsParsed = GetBetManager().ParseListBet(bets);
+                betsParsed = GetBetManager().AddGuidList(user, betsParsed);
+                await GetBetManager().AddBets(betsParsed);
+
+                await GetUserManager().ChangeUserPoint(user, user.Point - bets.Count * 10, bets.Count * 10);
+                foreach (var bet in bets) GetMatchManager().CalculateMatchRating(bet.Match);
 
                 return Created("", bets);
             });
@@ -43,17 +38,14 @@ namespace _3wBetManager_API.Controllers
             {
                 var user = await GetUserByToken(Request);
 
-                using (var betManager = new BetManager())
+                var betsParsed = GetBetManager().ParseListBet(bets);
+                foreach (var bet in betsParsed)
                 {
-                    var betsParsed = betManager.ParseListBet(bets);
-                    foreach (var bet in betsParsed)
-                    {
-                        await GetBetDao().UpdateBet(bet);
-                        new MatchManager().CalculateMatchRating(match: bet.Match);
-                    }
+                    await GetBetManager().ChangeBet(bet);
+                    GetMatchManager().CalculateMatchRating(bet.Match);
                 }
 
-                await GetUserDao().UpdateUserPoints(user, user.Point - bets.Count * 10, bets.Count * 10);
+                await GetUserManager().ChangeUserPoint(user, user.Point - bets.Count * 10, bets.Count * 10);
                 return Content(HttpStatusCode.NoContent, "");
             });
         }
@@ -65,10 +57,7 @@ namespace _3wBetManager_API.Controllers
             return await HandleError(async () =>
             {
                 var user = await GetUserByToken(Request);
-                using (var betManager = new BetManager())
-                {
-                    return Ok(await betManager.GetFinishBets(user, competitionId));
-                }
+                return Ok(await GetBetManager().GetFinishBets(user, competitionId));
             });
         }
 
@@ -79,10 +68,7 @@ namespace _3wBetManager_API.Controllers
             return await HandleError(async () =>
             {
                 var user = await GetUserByToken(Request);
-                using (var betManager = new BetManager())
-                {
-                    return Ok(await betManager.GetFinishBetsLimited(user));
-                }
+                return Ok(await GetBetManager().GetFinishBetsLimited(user));
             });
         }
 
@@ -93,10 +79,7 @@ namespace _3wBetManager_API.Controllers
             return await HandleError(async () =>
             {
                 var user = await GetUserByToken(Request);
-                using (var betManager = new BetManager())
-                {
-                    return Ok(await betManager.GetCurrentBetsLimited(user));
-                }
+                return Ok(await GetBetManager().GetCurrentBetsLimited(user));
             });
         }
 
@@ -106,11 +89,8 @@ namespace _3wBetManager_API.Controllers
         {
             return await HandleError(async () =>
             {
-                var user = await GetUserDao().FindUser(id);
-                using (var betManager = new BetManager())
-                {
-                    return Ok(await betManager.GetFinishBetsLimited(user));
-                }
+                var user = await GetUserManager().GetUser(id);
+                return Ok(await GetBetManager().GetFinishBetsLimited(user));
             });
         }
 
@@ -120,11 +100,8 @@ namespace _3wBetManager_API.Controllers
         {
             return await HandleError(async () =>
             {
-                var user = await GetUserDao().FindUser(id);
-                using (var betManager = new BetManager())
-                {
-                    return Ok(await betManager.GetCurrentBetsLimited(user));
-                }
+                var user = await GetUserManager().GetUser(id);
+                return Ok(await GetBetManager().GetCurrentBetsLimited(user));
             });
         }
 
@@ -135,10 +112,7 @@ namespace _3wBetManager_API.Controllers
             return await HandleError(async () =>
             {
                 var user = await GetUserByToken(Request);
-                using (var betManager = new BetManager())
-                {
-                    return Ok(await betManager.GetCurrentBetsAndScheduledMatches(user, competitionId));
-                }
+                return Ok(await GetBetManager().GetCurrentBetsAndScheduledMatches(user, competitionId));
             });
         }
 
@@ -149,10 +123,7 @@ namespace _3wBetManager_API.Controllers
             return await HandleError(async () =>
             {
                 var user = await GetUserByToken(Request);
-                using (var betManager = new BetManager())
-                {
-                    return Ok(await betManager.NumberCurrentMatchAndBet(user, competitionId));
-                }
+                return Ok(await GetBetManager().NumberCurrentMatchAndBet(user, competitionId));
             });
         }
 
@@ -163,10 +134,7 @@ namespace _3wBetManager_API.Controllers
             return await HandleError(async () =>
             {
                 var user = await GetUserByToken(Request);
-                using (var betManager = new BetManager())
-                {
-                    return Ok(await betManager.NumberFinishMatchAndBet(user, competitionId));
-                }
+                return Ok(await GetBetManager().NumberFinishMatchAndBet(user, competitionId));
             });
         }
 
@@ -177,10 +145,7 @@ namespace _3wBetManager_API.Controllers
             return await HandleError(async () =>
             {
                 var user = await GetUserByToken(Request);
-                using (var betManager = new BetManager())
-                {
-                    return Ok(await betManager.GetUserScheduledBetsPaginated(user, page));
-                }
+                return Ok(await GetBetManager().GetUserScheduledBetsPaginated(user, page));
             });
         }
     }

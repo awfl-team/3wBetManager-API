@@ -18,7 +18,7 @@ namespace _3wBetManager_API
             appBuilder.UseCors(CorsOptions.AllowAll);
             appBuilder.UseWebApi(config);
             GlobalHost.HubPipeline.AddModule(new ErrorHandlingPipelineModule());
-            appBuilder.MapSignalR("", new HubConfiguration()
+            appBuilder.MapSignalR("", new HubConfiguration
             {
                 EnableJSONP = true,
                 EnableJavaScriptProxies = true

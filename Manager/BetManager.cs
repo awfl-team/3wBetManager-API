@@ -5,28 +5,22 @@ using System.Linq;
 using System.Threading.Tasks;
 using DAO;
 using DAO.Interfaces;
+using Manager.Interfaces;
 using Models;
 
 namespace Manager
 {
-    public class BetManager: IDisposable
+    public class BetManager : IBetManager
     {
-        private ITeamDao _teamDao;
-        private IMatchDao _matchDao;
-        private IBetDao _betDao;
+        private readonly IBetDao _betDao;
+        private readonly IMatchDao _matchDao;
+        private readonly ITeamDao _teamDao;
 
         public BetManager(IBetDao betDao = null, ITeamDao teamDao = null, IMatchDao matchDao = null)
         {
-            _betDao = betDao ?? Singleton.Instance.BetDao;
-            _teamDao = teamDao ?? Singleton.Instance.TeamDao;
-            _matchDao = matchDao ?? Singleton.Instance.MatchDao;
-        }
-
-        public void Dispose()
-        {
-            _betDao = null;
-            _matchDao = null;
-            _teamDao = null;
+            _betDao = betDao ?? SingletonDao.Instance.BetDao;
+            _teamDao = teamDao ?? SingletonDao.Instance.TeamDao;
+            _matchDao = matchDao ?? SingletonDao.Instance.MatchDao;
         }
 
         public async Task<List<Bet>> GetFinishBets(User user, int competitionId)
@@ -67,7 +61,7 @@ namespace Manager
 
         public async Task<List<Bet>> GetCurrentBetsLimited(User user)
         {
-            var betsByUser = await Singleton.Instance.BetDao.FindBetsByUser(user, 1);
+            var betsByUser = await SingletonDao.Instance.BetDao.FindBetsByUser(user, 1);
             foreach (var bet in betsByUser)
             {
                 var matchInformation = await _matchDao.FindMatch(bet.Match.Id);
@@ -100,7 +94,8 @@ namespace Manager
             var betsByCompetition = betsByUser.FindAll(bet => bet.Match.Competition.Id == competitionId);
             var betsByMatchStatus = betsByCompetition.FindAll(bet => bet.Match.Status == Match.ScheduledStatus);
             var matchByStatus = await _matchDao.FindByStatus(Match.ScheduledStatus);
-            var matchesByCompetition = matchByStatus.FindAll(m => m.Competition.Id == competitionId && now <= DateTimeOffset.Parse(m.UtcDate));
+            var matchesByCompetition = matchByStatus.FindAll(m =>
+                m.Competition.Id == competitionId && now <= DateTimeOffset.Parse(m.UtcDate));
 
             foreach (var bet in betsByMatchStatus)
             {
@@ -192,7 +187,6 @@ namespace Manager
             var perfectBetsPoint = 0;
             var okBetsPoint = 0;
             foreach (var bet in userBets)
-            {
                 switch (bet.Status)
                 {
                     case Bet.PerfectStatus:
@@ -202,8 +196,7 @@ namespace Manager
                         okBetsPoint += bet.PointsWon;
                         break;
                 }
-            }
-   
+
             dynamic userBetsPerType = new ExpandoObject();
             userBetsPerType.okBets = okBetsPoint;
             userBetsPerType.perfectBets = perfectBetsPoint;
@@ -235,7 +228,7 @@ namespace Manager
         public async Task<dynamic> GetUserScheduledBetsPaginated(User user, int page)
         {
             var betsByUser = await _betDao.FindBetsByUser(user, 1);
-           
+
             foreach (var bet in betsByUser)
             {
                 var matchInformation = await _matchDao.FindMatch(bet.Match.Id);
@@ -250,7 +243,6 @@ namespace Manager
             var totalBets = finishedBets.Count();
             var totalPages = totalBets / 10 + 1;
             page = page - 1;
-           
 
             var betsToPass = 10 * page;
             var betsPaginated = await _betDao.PaginatedScheduledBets(betsToPass, user);
@@ -268,15 +260,21 @@ namespace Manager
             var betsParsed = new List<Bet>();
             var now = DateTime.UtcNow;
             foreach (var bet in bets)
-            {
-                if (now <= DateTimeOffset.Parse(bet.Match.UtcDate) && (bet.AwayTeamScore >= 0 || bet.HomeTeamScore >= 0))
-                {
+                if (now <= DateTimeOffset.Parse(bet.Match.UtcDate) &&
+                    (bet.AwayTeamScore >= 0 || bet.HomeTeamScore >= 0))
                     betsParsed.Add(bet);
-                }
-            }
 
             return betsParsed;
         }
 
+        public async Task AddBets(List<Bet> bets)
+        {
+            await SingletonDao.Instance.BetDao.AddListBet(bets);
+        }
+
+        public async Task ChangeBet(Bet bet)
+        {
+            await SingletonDao.Instance.BetDao.UpdateBet(bet);
+        }
     }
 }

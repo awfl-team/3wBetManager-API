@@ -17,7 +17,6 @@ namespace DAO
             _collection = collection ?? database.GetCollection<User>("user");
         }
 
-
         public async Task<List<User>> FindAllUser()
         {
             return await _collection.Find(new BsonDocument()).ToListAsync();
@@ -35,12 +34,10 @@ namespace DAO
             return await _collection.Find(new BsonDocument()).Limit(50).Sort("{Point: -1}").ToListAsync();
         }
 
-
         public async Task<List<User>> FindAllUserByPoint()
         {
             return await _collection.Find(new BsonDocument()).Sort("{Point: -1}").ToListAsync();
         }
-
 
         public async Task<User> FindUserByEmail(string email)
         {
@@ -65,9 +62,10 @@ namespace DAO
             user.Items = new List<Item>();
             for (var i = 0; i < User.DefaultLife; i++)
             {
-                var life = new Item{Name = "Life", Type = Item.Life};
+                var life = new Item {Name = "Life", Type = Item.Life};
                 user.Items.Add(life);
             }
+
             await _collection.InsertOneAsync(user);
         }
 
@@ -139,7 +137,7 @@ namespace DAO
         }
 
         public async Task UpdateUserLives(User user)
-        { 
+        {
             user.Items.Remove(user.Items.FirstOrDefault(i => i.Type == Item.Life));
 
             await _collection.UpdateOneAsync(
@@ -150,7 +148,7 @@ namespace DAO
 
         public async Task ResetUserItems(User user)
         {
-            var items = await Singleton.Instance.ItemDao.FindAllItems();
+            var items = await SingletonDao.Instance.ItemDao.FindAllItems();
             items = items.FindAll(i => i.Type != Item.Life);
             foreach (var item in items)
             {
@@ -178,7 +176,6 @@ namespace DAO
                 u => u.Id == user.Id,
                 Builders<User>.Update.Push(u => u.Items, item)
             );
-
         }
 
         public async Task RemoveUserItem(User user, string itemType)
@@ -198,7 +195,8 @@ namespace DAO
 
         public async Task<List<User>> PaginatedUsers(int usersToPass)
         {
-            return await _collection.Find(new BsonDocument()).Sort("{Point: -1}").Skip(usersToPass).Limit(10).ToListAsync();
+            return await _collection.Find(new BsonDocument()).Sort("{Point: -1}").Skip(usersToPass).Limit(10)
+                .ToListAsync();
         }
     }
 }

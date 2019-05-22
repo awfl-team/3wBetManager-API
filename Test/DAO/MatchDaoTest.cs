@@ -15,6 +15,20 @@ namespace Test.DAO
     [TestFixture]
     public class MatchDaoTest
     {
+        private Match _match;
+        private IMongoCollection<Match> _collection;
+        private IMatchDao _matchDao;
+        private Team _team1;
+        private Team _team2;
+        private Score _score;
+        private FullTime _fullTime;
+        public HalfTime _halfTime;
+        public ExtraTime _extraTime;
+        public Penalties _penalties;
+        private IMongoDatabase _database;
+        private ExpressionFilterDefinition<Match> _filterExpression;
+
+
         [SetUp]
         public void SetUp()
         {
@@ -54,19 +68,6 @@ namespace Test.DAO
             _collection.ClearReceivedCalls();
         }
 
-        private Match _match;
-        private IMongoCollection<Match> _collection;
-        private IMatchDao _matchDao;
-        private Team _team1;
-        private Team _team2;
-        private Score _score;
-        private FullTime _fullTime;
-        public HalfTime _halfTime;
-        public ExtraTime _extraTime;
-        public Penalties _penalties;
-        private IMongoDatabase _database;
-        private ExpressionFilterDefinition<Match> _filterExpression;
-
         [Test]
         public void AddMatchTest()
         {
@@ -75,33 +76,7 @@ namespace Test.DAO
         }
 
         [Test]
-        public void FindAllMatchByStatusTest()
-        {
-            _matchDao.FindByStatus(_match.Status);
-            _filterExpression = new ExpressionFilterDefinition<Match>(m => m.Status == _match.Status);
-            _collection.Received().Find(_filterExpression);
-            Assert.IsInstanceOf<Task<List<Match>>>(_matchDao.FindAll());
-        }
-
-        [Test]
-        public void FindAllMatchTest()
-        {
-            _matchDao.FindAll();
-            _collection.Received().Find(new BsonDocument());
-            Assert.IsInstanceOf<Task<List<Match>>>(_matchDao.FindAll());
-        }
-
-        [Test]
-        public void FindMatchTest()
-        {
-            _matchDao.FindMatch(1);
-            _filterExpression = new ExpressionFilterDefinition<Match>(match => match.Id == _match.Id);
-            _collection.Received().Find(_filterExpression);
-            Assert.IsInstanceOf<Task<Match>>(_matchDao.FindMatch(Arg.Any<int>()));
-        }
-
-        [Test]
-        public void ReplaceMatchTest()
+        public void AssertThatReplaceMatchIsCalled()
         {
             _matchDao.ReplaceMatch(1, _match);
             _collection.Received().ReplaceOneAsync(Arg.Any<ExpressionFilterDefinition<Match>>(),
@@ -109,9 +84,32 @@ namespace Test.DAO
             );
         }
 
-        // Need to find solution why when the name is "UpdateMatchTest" the test failed in run all 
         [Test]
-        public void UpdateMatchTest()
+        public void AssertThatFindMatchIsCalled()
+        {
+            _matchDao.FindMatch(1);
+            _filterExpression = new ExpressionFilterDefinition<Match>(match => match.Id == _match.Id);
+            _collection.Received().Find(_filterExpression);
+        }
+
+        [Test]
+        public void AssertThatFindAllIsCalled()
+        {
+            _matchDao.FindAll();
+            _collection.Received().Find(new BsonDocument());
+            Assert.IsInstanceOf<Task<List<Match>>>(_matchDao.FindAll());
+        }
+
+        [Test]
+        public void AssertThatFindByStatusIsCalled()
+        {
+            _matchDao.FindByStatus(_match.Status);
+            _filterExpression = new ExpressionFilterDefinition<Match>(m => m.Status == _match.Status);
+            _collection.Received().Find(_filterExpression);
+        }
+
+        [Test]
+        public void AssertThatUpdateMatchIsCalled()
         {
             _matchDao.UpdateMatch(1, _match);
             _collection.Received().UpdateOneAsync(Arg.Any<ExpressionFilterDefinition<Match>>(),

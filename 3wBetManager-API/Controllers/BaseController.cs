@@ -2,9 +2,8 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
-using DAO;
-using DAO.Interfaces;
 using Manager;
+using Manager.Interfaces;
 using Models;
 using Proxy;
 
@@ -12,31 +11,47 @@ namespace _3wBetManager_API.Controllers
 {
     public abstract class BaseController : ApiController
     {
-        protected IUserDao GetUserDao()
+        protected IUserManager GetUserManager()
         {
-            return Singleton.Instance.UserDao;
+            return SingletonManager.Instance.UserManager;
         }
 
-        protected IBetDao GetBetDao()
+        protected ITokenManager GetTokenManager()
         {
-            return Singleton.Instance.BetDao;
+            return SingletonManager.Instance.TokenManager;
         }
 
-        protected ICompetitionDao GetCompetitionDao()
+        protected IBetManager GetBetManager()
         {
-            return Singleton.Instance.CompetitionDao;
+            return SingletonManager.Instance.BetManager;
         }
 
-        protected IItemDao GetItemDao()
+        protected IMatchManager GetMatchManager()
         {
-            return Singleton.Instance.ItemDao;
+            return SingletonManager.Instance.MatchManager;
         }
 
-        protected static async Task<User> GetUserByToken(HttpRequestMessage request)
+        protected IFootballDataManager GetFootballDataManager()
         {
-            var token = TokenManager.GetTokenFromRequest(request);
-            var user = TokenManager.ValidateToken(token);
-            return await Singleton.Instance.UserDao.FindUserByEmail(user["email"]);
+            return SingletonManager.Instance.FootballDataManager;
+        }
+
+        protected IItemManager GetItemManager()
+        {
+            return SingletonManager.Instance.ItemManager;
+        }
+
+        protected IEmailManager GetEmailManager()
+        {
+            return SingletonManager.Instance.EmailManager;
+        }
+
+
+        protected async Task<User> GetUserByToken(HttpRequestMessage request)
+        {
+            var token = GetTokenManager().GetTokenFromRequest(request);
+            var user = GetTokenManager().ValidateToken(token);
+            return await SingletonManager.Instance.UserManager.GetUserByEmail(user["email"]);
         }
 
         protected async Task<IHttpActionResult> HandleError(Func<Task<IHttpActionResult>> getHttpActionResult)
@@ -57,17 +72,21 @@ namespace _3wBetManager_API.Controllers
 
         protected async Task<IHttpActionResult> HandleNotFound(Func<Task<IHttpActionResult>> getHttpActionResult)
         {
-            try
+            using (new ElasticsSearchControllerContext(Request.Method.Method,
+                Request.RequestUri.AbsolutePath, Request.GetOwinContext().Request.RemoteIpAddress))
             {
-                return await getHttpActionResult();
-            }
-            catch (FormatException)
-            {
-                return NotFound();
-            }
-            catch (Exception e)
-            {
-                return InternalServerError(e);
+                try
+                {
+                    return await getHttpActionResult();
+                }
+                catch (FormatException)
+                {
+                    return NotFound();
+                }
+                catch (Exception e)
+                {
+                    return InternalServerError(e);
+                }
             }
         }
     }

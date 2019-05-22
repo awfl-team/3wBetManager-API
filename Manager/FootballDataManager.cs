@@ -5,18 +5,19 @@ using System.Threading;
 using System.Threading.Tasks;
 using DAO;
 using DAO.Interfaces;
+using Manager.Interfaces;
 using Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace Manager
 {
-    public class FootballDataManager : IDisposable
+    public class FootballDataManager : IFootballDataManager
     {
-        private HttpClient _http;
-        private ITeamDao _teamDao;
-        private IMatchDao _matchDao;
-        private ICompetitionDao _competitionDao;
+        private readonly ICompetitionDao _competitionDao;
+        private readonly HttpClient _http;
+        private readonly IMatchDao _matchDao;
+        private readonly ITeamDao _teamDao;
 
 
         public FootballDataManager(HttpClient http = null, ITeamDao teamDao = null, IMatchDao matchDao = null,
@@ -25,18 +26,11 @@ namespace Manager
             _http = http ?? new HttpClient();
             _http.BaseAddress = new Uri("https://api.football-data.org/v2/");
             _http.DefaultRequestHeaders.Add("X-Auth-Token", "f74e0beb5501485895a1ebb03ba925db");
-            _teamDao = teamDao ?? Singleton.Instance.TeamDao;
-            _matchDao = matchDao ?? Singleton.Instance.MatchDao;
-            _competitionDao = competitionDao ?? Singleton.Instance.CompetitionDao;
+            _teamDao = teamDao ?? SingletonDao.Instance.TeamDao;
+            _matchDao = matchDao ?? SingletonDao.Instance.MatchDao;
+            _competitionDao = competitionDao ?? SingletonDao.Instance.CompetitionDao;
         }
 
-        public void Dispose()
-        {
-            _http = null;
-            _teamDao = null;
-            _matchDao = null;
-            _competitionDao = null;
-        }
 
         public async Task GetAllCompetitions()
         {
@@ -69,11 +63,7 @@ namespace Manager
             }
             catch (Exception e)
             {
-                using (var emailManager = new EmailManager())
-                {
-                    emailManager.SendWebMasterEmail(e);
-                }
-
+                SingletonManager.Instance.EmailManager.SendWebMasterEmail(e);
                 throw;
             }
         }
@@ -114,11 +104,7 @@ namespace Manager
             }
             catch (Exception e)
             {
-                using (var emailManager = new EmailManager())
-                {
-                    emailManager.SendWebMasterEmail(e);
-                }
-
+                SingletonManager.Instance.EmailManager.SendWebMasterEmail(e);
                 throw;
             }
         }
@@ -157,12 +143,7 @@ namespace Manager
                         match.DrawRating = findMatch.DrawRating;
                         _matchDao.UpdateMatch(findMatch.Id, match);
                         if (findMatch.Status == Match.ScheduledStatus && match.Status == Match.FinishedStatus)
-                        {
-                            using (var assignmentPointManager = new AssignmentPointManager())
-                            {
-                                assignmentPointManager.AddPointToBet(match);
-                            }
-                        }
+                            SingletonManager.Instance.AssignmentPointManager.AddPointToBet(match);
                     }
                 }
 
@@ -170,11 +151,7 @@ namespace Manager
             }
             catch (Exception e)
             {
-                using (var emailManager = new EmailManager())
-                {
-                    emailManager.SendWebMasterEmail(e);
-                }
-
+                SingletonManager.Instance.EmailManager.SendWebMasterEmail(e);
                 throw;
             }
         }
