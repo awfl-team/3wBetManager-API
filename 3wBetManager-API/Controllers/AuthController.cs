@@ -34,7 +34,7 @@ namespace _3wBetManager_API.Controllers
                 var fullUser = await GetUserManager().GetUserByEmail(user.Email);
                 if (fullUser == null) return Content(HttpStatusCode.BadRequest, errorMessage);
                 if (BCrypt.Net.BCrypt.Verify(user.Password, fullUser.Password))
-                    return Ok(SingletonManager.Instance.TokenManager.GenerateToken(fullUser.Email, fullUser.Role,
+                    return Ok(GetTokenManager().GenerateToken(fullUser.Email, fullUser.Role,
                         fullUser.Username));
                 return Content(HttpStatusCode.BadRequest, errorMessage);
             });
@@ -49,7 +49,7 @@ namespace _3wBetManager_API.Controllers
                 var user = await GetUserManager().GetUserByEmail(userParam.Email);
                 if (user == null) return NotFound();
 
-                SingletonManager.Instance.EmailManager.SendResetPasswordEmail(user);
+                GetEmailManager().SendResetPasswordEmail(user);
 
                 return Ok();
             });

@@ -42,7 +42,7 @@ namespace _3wBetManager_API.Controllers
                 foreach (var bet in betsParsed)
                 {
                     await GetBetManager().ChangeBet(bet);
-                    new MatchManager().CalculateMatchRating(bet.Match);
+                    GetMatchManager().CalculateMatchRating(bet.Match);
                 }
 
                 await GetUserManager().ChangeUserPoint(user, user.Point - bets.Count * 10, bets.Count * 10);

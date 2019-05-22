@@ -41,6 +41,12 @@ namespace _3wBetManager_API.Controllers
             return SingletonManager.Instance.ItemManager;
         }
 
+        protected IEmailManager GetEmailManager()
+        {
+            return SingletonManager.Instance.EmailManager;
+        }
+
+
         protected async Task<User> GetUserByToken(HttpRequestMessage request)
         {
             var token = GetTokenManager().GetTokenFromRequest(request);
