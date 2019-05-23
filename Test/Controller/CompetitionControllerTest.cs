@@ -9,14 +9,14 @@ namespace Test.Controller
     [TestFixture]
     public class CompetitionControllerTest
     {
-        [SetUp]
-        public void SetUp()
+        [OneTimeSetUp]
+        public void OneTimeSetUp()
         {
             _competitionController = new CompetitionController();
             _competitionDao = SingletonDao.Instance.SetCompetitionDao(Substitute.For<ICompetitionDao>());
         }
 
-        [TearDown]
+        [OneTimeTearDown]
         public void TearDown()
         {
             _competitionDao.ClearReceivedCalls();

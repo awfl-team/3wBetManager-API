@@ -56,7 +56,6 @@ namespace _3wBetManager_API.Controllers
 
         protected async Task<IHttpActionResult> HandleError(Func<Task<IHttpActionResult>> getHttpActionResult)
         {
-
            using (new ElasticsSearchControllerContext(Request.Method.Method,
                 Request.RequestUri.AbsolutePath, Request.GetOwinContext().Request.RemoteIpAddress))
             {

@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Results;
 using Manager;
@@ -22,100 +24,144 @@ namespace Test.Controller
         private StatController _statController;
         private IBetManager _betManager;
         private IUserManager _userManager;
-        private ITokenManager _tokenManager;
-        private User _user;
+        private Dictionary<string, object> _data;
+        private OwinContext _context;
+        private AuthenticationHeaderValue _authHeader;
+
+        private readonly string _ip = "127.0.0.1";
+        private readonly string _token =
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imx1Y2FzYm91cmdlb2lzNjBAaG90bWFpbC5mciIsInJvbGUiOiJBRE1JTiIsInVuaXF1ZV9uYW1lIjoibGJvIiwibmJmIjoxNTU4NTMyMDI3LCJleHAiOjE1OTAxNTQ0MjcsImlhdCI6MTU1ODUzMjAyN30.a3Co739HOGU5cBmziUdOt6-YuzLau0JVfW0gj5khonQ";
+
 
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
-            _statController = new StatController();
+            _data = new Dictionary<string, object>() {{"Authorization", _token}};
+            _statController = new StatController
+            {
+                Configuration = new HttpConfiguration(),
+                Request = new HttpRequestMessage(HttpMethod.Get, "http://localhost:9000/")
+            };
+            _context = new OwinContext(_data);
+            _authHeader = new AuthenticationHeaderValue(_token);
+            _statController.Request.SetOwinContext(_context);
+            _statController.Request.GetOwinContext().Request.RemoteIpAddress = _ip;
+            _statController.Request.Headers.Authorization = _authHeader;
             _betManager = SingletonManager.Instance.SetBetManager(Substitute.For<IBetManager>());
             _userManager = SingletonManager.Instance.SetUserManager(Substitute.For<IUserManager>());
-            _tokenManager = SingletonManager.Instance.SetTokenManager(Substitute.For<ITokenManager>());
-            _user = new User { Email = "test", Password = "test", Username = "test" };
+            SingletonManager.Instance.SetTokenManager(new TokenManager());
         }
 
         [TearDown]
         public void TearDown()
         {
             _betManager.ClearReceivedCalls();
+            _userManager.ClearReceivedCalls();
         }
 
         [Test]
-        public async Task AssertThatGetUserCoinStatsDoesNotReturnInternalServerErrorAndCallsManager()
+        public async Task AssertThatGetUserCoinStatsReturnsAValidResponseCodeAndCallsManager()
         {
-            _statController.Request = new HttpRequestMessage(HttpMethod.Get, "http://localhost:9000/stats/coin");
-            var data = new Dictionary<string, object>()
-            {
-                {"Authorization", "fake_token"} // fake whatever  you need here.
-            };
-            var context = new OwinContext(data);
-            _statController.Request.SetOwinContext(context);
-            _statController.Request.GetOwinContext().Request.RemoteIpAddress = "127.0.0.1";
-            _statController.Request.Headers.Authorization = new AuthenticationHeaderValue("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imx1Y2FzYm91cmdlb2lzNjBAaG90bWFpbC5mciIsInJvbGUiOiJBRE1JTiIsInVuaXF1ZV9uYW1lIjoibGJvIiwibmJmIjoxNTU4NTMyMDI3LCJleHAiOjE1OTAxNTQ0MjcsImlhdCI6MTU1ODUzMjAyN30.a3Co739HOGU5cBmziUdOt6-YuzLau0JVfW0gj5khonQ");
-
-            var response = await _statController.GetUserCoinStats();
-            var cuckloard = response;
-            var test = "cuck";
-            await _userManager.Received().GetUserCoinStats(_user);
-
-            Assert.Throws<Exception>(() => { _userManager.GetUserCoinStats(_user); });
-
-            Assert.DoesNotThrowAsync(async () => { await _statController.GetUserCoinStats(); });
+            var action = await _statController.GetUserCoinStats();
+            var response = await action.ExecuteAsync(new CancellationToken());
+            await _userManager.Received().GetUserCoinStats(Arg.Any<User>());
+            Assert.False(response.StatusCode == HttpStatusCode.InternalServerError, "InternalServerError is thrown");
+            Assert.IsTrue(response.IsSuccessStatusCode, "Status code is success");
         }
 
         [Test]
-        public void AssertThatGetUserIncomesPerMonthDoesNotReturnInternalServerErrorAndCallsManager()
+        public async Task AssertThatGetUserIncomesPerMonthReturnsAValidResponseCodeAndCallsManager()
         {
-
+            var action = await _statController.GetUserIncomesPerMonth();
+            var response = await action.ExecuteAsync(new CancellationToken());
+            await _betManager.Received().GetUserIncomesPerMonth(Arg.Any<User>());
+            Assert.False(response.StatusCode == HttpStatusCode.InternalServerError, "InternalServerError is thrown");
+            Assert.IsTrue(response.IsSuccessStatusCode, "Status code is success");
         }
 
         [Test]
-        public void AssertThatGetUserIncomesPerYearDoesNotReturnInternalServerErrorAndCallsManager()
+        public async Task AssertThatGetUserIncomesPerYearReturnsAValidResponseCodeAndCallsManager()
         {
-
+            var action = await _statController.GetUserIncomesPerYear();
+            var response = await action.ExecuteAsync(new CancellationToken());
+            await _betManager.Received().GetUserIncomesPerYear(Arg.Any<User>());
+            Assert.False(response.StatusCode == HttpStatusCode.InternalServerError, "InternalServerError is thrown");
+            Assert.IsTrue(response.IsSuccessStatusCode, "Status code is success");
         }
 
         [Test]
-        public void AssertThatGetUserBetsPerTypeDoesNotReturnInternalServerErrorAndCallsManager()
+        public async Task AssertThatGetUserBetsPerTypeReturnsAValidResponseCodeAndCallsManager()
         {
-
+            var action = await _statController.GetUserBetsPerType();
+            var response = await action.ExecuteAsync(new CancellationToken());
+            await _betManager.Received().GetUserBetsPerType(Arg.Any<User>());
+            Assert.False(response.StatusCode == HttpStatusCode.InternalServerError, "InternalServerError is thrown");
+            Assert.IsTrue(response.IsSuccessStatusCode, "Status code is success");
         }
 
         [Test]
-        public void AssertThatGetUserBetsEarningsPerTypeDoesNotReturnInternalServerErrorAndCallsManager()
+        public async Task AssertThatGetUserBetsEarningsPerTypeReturnsAValidResponseCodeAndCallsManager()
         {
-
+            var action = await _statController.GetUserBetsEarningsPerType();
+            var response = await action.ExecuteAsync(new CancellationToken());
+            await _betManager.Received().GetUserBetsEarningsPerType(Arg.Any<User>());
+            Assert.False(response.StatusCode == HttpStatusCode.InternalServerError, "InternalServerError is thrown");
+            Assert.IsTrue(response.IsSuccessStatusCode, "Status code is success");
         }
 
         [Test]
-        public void AssertThatGetUserBetsPerTypePublicDoesNotReturnInternalServerErrorAndCallsManager()
+        public async Task AssertThatGetUserBetsPerTypePublicReturnsAValidResponseCodeAndCallsManager()
         {
-
+            var action = await _statController.GetUserBetsPerTypePublic("1");
+            var response = await action.ExecuteAsync(new CancellationToken());
+            await _userManager.Received().GetUser(Arg.Any<string>());
+            await _betManager.Received().GetUserBetsPerType(Arg.Any<User>());
+            Assert.False(response.StatusCode == HttpStatusCode.InternalServerError, "InternalServerError is thrown");
+            Assert.IsTrue(response.IsSuccessStatusCode || response.StatusCode == HttpStatusCode.NotFound, "Status code is success or NotFound");
         }
 
         [Test]
-        public void AssertThatGetPublicUserCoinStatsDoesNotReturnInternalServerErrorAndCallsManager()
+        public async Task AssertThatGetPublicUserCoinStatsReturnsAValidResponseCodeAndCallsManager()
         {
-
+            var action = await _statController.GetPublicUserCoinStats("1");
+            var response = await action.ExecuteAsync(new CancellationToken());
+            await _userManager.Received().GetUser(Arg.Any<string>());
+            await _userManager.Received().GetUserCoinStats(Arg.Any<User>());
+            Assert.False(response.StatusCode == HttpStatusCode.InternalServerError, "InternalServerError is thrown");
+            Assert.IsTrue(response.IsSuccessStatusCode || response.StatusCode == HttpStatusCode.NotFound, "Status code is success or NotFound");
         }
 
         [Test]
-        public void AssertThatGetPublicUserIncomesPerMonthDoesNotReturnInternalServerErrorAndCallsManager()
+        public async Task AssertGetPucliUserIncomesPerMonthReturnsAValidResponseCodeAndCallsManager()
         {
-
+            var action = await _statController.GetPublicUserIncomesPerMonth("1");
+            var response = await action.ExecuteAsync(new CancellationToken());
+            await _userManager.Received().GetUser(Arg.Any<string>());
+            await _betManager.Received().GetUserIncomesPerMonth(Arg.Any<User>());
+            Assert.False(response.StatusCode == HttpStatusCode.InternalServerError, "InternalServerError is thrown");
+            Assert.IsTrue(response.IsSuccessStatusCode || response.StatusCode == HttpStatusCode.NotFound, "Status code is success or NotFound");
         }
 
         [Test]
-        public void AssertThatGetPublicUserIncomesPerYearDoesNotReturnInternalServerErrorAndCallsManager()
+        public async Task AssertThatGetPublicUserIncomesPerYearReturnsAValidResponseCodeAndCallsManager()
         {
-
+            var action = await _statController.GetPublicUserIncomesPerYear("1");
+            var response = await action.ExecuteAsync(new CancellationToken());
+            await _userManager.Received().GetUser(Arg.Any<string>());
+            await _betManager.Received().GetUserIncomesPerYear(Arg.Any<User>());
+            Assert.False(response.StatusCode == HttpStatusCode.InternalServerError, "InternalServerError is thrown");
+            Assert.IsTrue(response.IsSuccessStatusCode || response.StatusCode == HttpStatusCode.NotFound, "Status code is success or NotFound");
         }
 
         [Test]
-        public void AssertThatGetPublicUserBetsEarningsPerTypeDoesNotReturnInternalServerErrorAndCallManager()
+        public async Task AssertThatGetPublicUserBetsEarningsPerTypeReturnsAValidResponseCodeAndCallsManager()
         {
-
+            var action = await _statController.GetPublicUserBetsEarningsPerType("1");
+            var response = await action.ExecuteAsync(new CancellationToken());
+            await _userManager.Received().GetUser(Arg.Any<string>());
+            await _betManager.Received().GetUserBetsEarningsPerType(Arg.Any<User>());
+            Assert.False(response.StatusCode == HttpStatusCode.InternalServerError, "InternalServerError is thrown");
+            Assert.IsTrue(response.IsSuccessStatusCode || response.StatusCode == HttpStatusCode.NotFound, "Status code is success or NotFound");
         }
     }
 }

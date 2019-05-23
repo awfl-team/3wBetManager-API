@@ -18,8 +18,8 @@ namespace Test.DAO
         private IMongoDatabase _database;
         private ExpressionFilterDefinition<Team> _filterExpression;
 
-        [OneTimeSetUp]
-        public void OneTimeSetUp()
+        [SetUp]
+        public void SetUp()
         {
             _database = Substitute.For<IMongoDatabase>();
             _collection = Substitute.For<IMongoCollection<Team>>();

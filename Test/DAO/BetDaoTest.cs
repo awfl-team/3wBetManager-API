@@ -23,7 +23,7 @@ namespace Test.DAO
         private IMongoDatabase _database;
         private ExpressionFilterDefinition<Bet> _filterExpression;
 
-        [OneTimeSetUp]
+        [SetUp]
         public void OneTimeSetUp()
         {
             _collection = Substitute.For<IMongoCollection<Bet>>();
