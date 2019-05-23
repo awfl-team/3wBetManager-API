@@ -207,12 +207,12 @@ namespace Manager
 
         public async Task<List<Item>> GetAllItems()
         {
-            return await SingletonDao.Instance.ItemDao.FindAllItems();
+            return await _itemDao.FindAllItems();
         }
 
         public async Task ChangeItem(string id, Item item)
         {
-            await SingletonDao.Instance.ItemDao.UpdateItem(id, item);
+            await _itemDao.UpdateItem(id, item);
         }
     }
 }

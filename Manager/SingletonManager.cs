@@ -17,6 +17,7 @@ namespace Manager
         public IMonitoringManager MonitoringManager { get; private set; }
         public ITokenManager TokenManager { get; private set; }
         public IUserManager UserManager { get; private set; }
+        public ICompetitionManager CompetitionManager { get; private set; }
 
 
         public IAssignmentPointManager SetAssignmentPointManager(IAssignmentPointManager assignmentPointManager)
@@ -62,6 +63,11 @@ namespace Manager
         public IUserManager SetUserManager(IUserManager userManager)
         {
             return UserManager = userManager;
+        }
+
+        public ICompetitionManager SetCompetitionManager(ICompetitionManager competitionManager)
+        {
+            return CompetitionManager = competitionManager;
         }
     }
 }

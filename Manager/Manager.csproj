@@ -78,8 +78,10 @@
   <ItemGroup>
     <Compile Include="AssignmentPointManager.cs" />
     <Compile Include="BetManager.cs" />
+    <Compile Include="CompetitionManager.cs" />
     <Compile Include="EmailManager.cs" />
     <Compile Include="FootballDataManager.cs" />
+    <Compile Include="Interfaces\ICompetitionManager.cs" />
     <Compile Include="Interfaces\IAssignmentPointManager.cs" />
     <Compile Include="Interfaces\IBetManager.cs" />
     <Compile Include="Interfaces\IEmailManager.cs" />

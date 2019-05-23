@@ -227,42 +227,42 @@ namespace Manager
 
         public async Task<User> GetUser(string id)
         {
-            return await SingletonDao.Instance.UserDao.FindUser(id);
+            return await _userDao.FindUser(id);
         }
 
         public async Task DeleteUserItem(User user, string type)
         {
-            await SingletonDao.Instance.UserDao.RemoveUserItem(user, type);
+            await _userDao.RemoveUserItem(user, type);
         }
 
         public async Task<List<User>> GetAllUser()
         {
-            return await SingletonDao.Instance.UserDao.FindAllUser();
+            return await _userDao.FindAllUser();
         }
 
         public async Task ChangeUser(string id, User user)
         {
-            await SingletonDao.Instance.UserDao.UpdateUser(id, user);
+            await _userDao.UpdateUser(id, user);
         }
 
         public async Task ChangeUserIsPrivate(ObjectId id, bool isPrivate)
         {
-            await SingletonDao.Instance.UserDao.UpdateUserIsPrivate(id, isPrivate);
+            await _userDao.UpdateUserIsPrivate(id, isPrivate);
         }
 
         public async Task ChangeUserRole(string id, string role)
         {
-            await SingletonDao.Instance.UserDao.UpdateUserRole(id, role);
+            await _userDao.UpdateUserRole(id, role);
         }
 
         public async Task DeleteUser(string id)
         {
-            await SingletonDao.Instance.UserDao.DeleteUser(id);
+            await _userDao.DeleteUser(id);
         }
 
         public async Task<List<User>> SearchUser(string value)
         {
-            return await SingletonDao.Instance.UserDao.SearchUser(value);
+            return await _userDao.SearchUser(value);
         }
     }
 }

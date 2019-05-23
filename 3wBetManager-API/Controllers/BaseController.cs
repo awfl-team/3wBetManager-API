@@ -46,6 +46,11 @@ namespace _3wBetManager_API.Controllers
             return SingletonManager.Instance.EmailManager;
         }
 
+        protected ICompetitionManager GetCompetitionManager()
+        {
+            return SingletonManager.Instance.CompetitionManager;
+        }
+
 
         protected async Task<User> GetUserByToken(HttpRequestMessage request)
         {

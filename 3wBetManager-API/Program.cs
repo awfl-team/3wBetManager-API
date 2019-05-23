@@ -50,6 +50,7 @@ namespace _3wBetManager_API
             SingletonManager.Instance.SetMonitoringManager(new MonitoringManager());
             SingletonManager.Instance.SetTokenManager(new TokenManager());
             SingletonManager.Instance.SetUserManager(new UserManager());
+            SingletonManager.Instance.SetCompetitionManager(new CompetitionManager());
         }
     }
 }

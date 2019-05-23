@@ -269,12 +269,12 @@ namespace Manager
 
         public async Task AddBets(List<Bet> bets)
         {
-            await SingletonDao.Instance.BetDao.AddListBet(bets);
+            await _betDao.AddListBet(bets);
         }
 
         public async Task ChangeBet(Bet bet)
         {
-            await SingletonDao.Instance.BetDao.UpdateBet(bet);
+            await _betDao.UpdateBet(bet);
         }
     }
 }
