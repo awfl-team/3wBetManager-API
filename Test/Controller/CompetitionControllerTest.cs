@@ -21,7 +21,7 @@ namespace Test.Controller
     public class CompetitionControllerTest
     {
         private CompetitionController _competitionController;
-        private ICompetitionDao _competitionDao;
+        private ICompetitionManager _competitionManager;
         private Dictionary<string, object> _data;
         private OwinContext _context;
         private AuthenticationHeaderValue _authHeader;
@@ -44,23 +44,22 @@ namespace Test.Controller
             _competitionController.Request.SetOwinContext(_context);
             _competitionController.Request.GetOwinContext().Request.RemoteIpAddress = _ip;
             _competitionController.Request.Headers.Authorization = _authHeader;
-            _competitionDao = SingletonDao.Instance.SetCompetitionDao(Substitute.For<ICompetitionDao>());
-            _competitionDao = SingletonDao.Instance.CompetitionDao;
+            _competitionManager = SingletonManager.Instance.SetCompetitionManager(Substitute.For<ICompetitionManager>());
             SingletonManager.Instance.SetTokenManager(new TokenManager());
         }
 
         [TearDown]
         public void TearDown()
         {
-            _competitionDao.ClearReceivedCalls();
+            _competitionManager.ClearReceivedCalls();
         }
 
         [Test]
-        public async Task AssertThatGetUserCoinStatsReturnsAValidResponseCodeAndCallsManager()
+        public async Task AssertThatGetAllReturnsAValidResponseCodeAndCallsManager()
         {
             var action = await _competitionController.GetAll();
             var response = await action.ExecuteAsync(new CancellationToken());
-            await _competitionDao.Received().FindAllCompetitions();
+            await _competitionManager.Received().GetAllCompetition();
             Assert.False(response.StatusCode == HttpStatusCode.InternalServerError, "InternalServerError is thrown");
             Assert.IsTrue(response.IsSuccessStatusCode, "Status code is success");
         }
