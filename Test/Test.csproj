@@ -94,6 +94,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\AuthControllerTest.cs" />
+    <Compile Include="Controller\BetsControllerTest.cs" />
     <Compile Include="Controller\CompetitionControllerTest.cs" />
     <Compile Include="Controller\ItemControllerTest.cs" />
     <Compile Include="Controller\StatsControllerTest.cs" />

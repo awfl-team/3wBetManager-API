@@ -112,7 +112,7 @@ namespace _3wBetManager_API.Controllers
             return await HandleError(async () =>
             {
                 var user = await GetUserByToken(Request);
-                return Ok(await GetBetManager().GetCurrentBetsAndScheduledMatches(user, competitionId));
+                return Ok<dynamic>(await GetBetManager().GetCurrentBetsAndScheduledMatches(user, competitionId));
             });
         }
 
@@ -123,7 +123,7 @@ namespace _3wBetManager_API.Controllers
             return await HandleError(async () =>
             {
                 var user = await GetUserByToken(Request);
-                return Ok(await GetBetManager().NumberCurrentMatchAndBet(user, competitionId));
+                return Ok<dynamic>(await GetBetManager().NumberCurrentMatchAndBet(user, competitionId));
             });
         }
 
@@ -134,7 +134,7 @@ namespace _3wBetManager_API.Controllers
             return await HandleError(async () =>
             {
                 var user = await GetUserByToken(Request);
-                return Ok(await GetBetManager().NumberFinishMatchAndBet(user, competitionId));
+                return Ok<dynamic>(await GetBetManager().NumberFinishMatchAndBet(user, competitionId));
             });
         }
 
@@ -145,7 +145,7 @@ namespace _3wBetManager_API.Controllers
             return await HandleError(async () =>
             {
                 var user = await GetUserByToken(Request);
-                return Ok(await GetBetManager().GetUserScheduledBetsPaginated(user, page));
+                return Ok<dynamic>(await GetBetManager().GetUserScheduledBetsPaginated(user, page));
             });
         }
     }
