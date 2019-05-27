@@ -31,9 +31,9 @@ namespace Manager
                 var matchInformation = await _matchDao.FindMatch(bet.Match.Id);
                 bet.Match = matchInformation;
                 var awayTeamInformation = await _teamDao.FindTeam(bet.Match.AwayTeam.Id);
-                bet.Match.AwayTeam = awayTeamInformation;
+                if (awayTeamInformation != null) bet.Match.AwayTeam = awayTeamInformation;
                 var homeTeamInformation = await _teamDao.FindTeam(bet.Match.HomeTeam.Id);
-                bet.Match.HomeTeam = homeTeamInformation;
+                if (homeTeamInformation != null) bet.Match.HomeTeam = homeTeamInformation;
             }
 
             var betsByCompetition = betsByUser.FindAll(bet => bet.Match.Competition.Id == competitionId);
@@ -50,9 +50,9 @@ namespace Manager
                 var matchInformation = await _matchDao.FindMatch(bet.Match.Id);
                 bet.Match = matchInformation;
                 var awayTeamInformation = await _teamDao.FindTeam(bet.Match.AwayTeam.Id);
-                bet.Match.AwayTeam = awayTeamInformation;
+                if (awayTeamInformation != null) bet.Match.AwayTeam = awayTeamInformation;
                 var homeTeamInformation = await _teamDao.FindTeam(bet.Match.HomeTeam.Id);
-                bet.Match.HomeTeam = homeTeamInformation;
+                if (homeTeamInformation != null) bet.Match.HomeTeam = homeTeamInformation;
             }
 
             return betsByUser.FindAll(bet => bet.Match.Status == Match.FinishedStatus).Take(Bet.DashboardMaxToShow)
@@ -67,9 +67,9 @@ namespace Manager
                 var matchInformation = await _matchDao.FindMatch(bet.Match.Id);
                 bet.Match = matchInformation;
                 var awayTeamInformation = await _teamDao.FindTeam(bet.Match.AwayTeam.Id);
-                bet.Match.AwayTeam = awayTeamInformation;
+                if (awayTeamInformation != null) bet.Match.AwayTeam = awayTeamInformation;
                 var homeTeamInformation = await _teamDao.FindTeam(bet.Match.HomeTeam.Id);
-                bet.Match.HomeTeam = homeTeamInformation;
+                if (homeTeamInformation != null) bet.Match.HomeTeam = homeTeamInformation;
             }
 
             return betsByUser.FindAll(bet => bet.Match.Status == Match.ScheduledStatus).Take(Bet.DashboardMaxToShow)
@@ -84,9 +84,9 @@ namespace Manager
                 var matchInformation = await _matchDao.FindMatch(bet.Match.Id);
                 bet.Match = matchInformation;
                 var awayTeamInformation = await _teamDao.FindTeam(bet.Match.AwayTeam.Id);
-                bet.Match.AwayTeam = awayTeamInformation;
+                if (awayTeamInformation != null) bet.Match.AwayTeam = awayTeamInformation;
                 var homeTeamInformation = await _teamDao.FindTeam(bet.Match.HomeTeam.Id);
-                bet.Match.HomeTeam = homeTeamInformation;
+                if (homeTeamInformation != null) bet.Match.HomeTeam = homeTeamInformation;
             }
 
             var now = DateTime.UtcNow;
@@ -106,9 +106,9 @@ namespace Manager
             foreach (var match in matchesByCompetition)
             {
                 var awayTeamInformation = await _teamDao.FindTeam(match.AwayTeam.Id);
-                match.AwayTeam = awayTeamInformation;
+                if (awayTeamInformation != null) match.AwayTeam = awayTeamInformation;
                 var homeTeamInformation = await _teamDao.FindTeam(match.HomeTeam.Id);
-                match.HomeTeam = homeTeamInformation;
+                if (homeTeamInformation != null) match.HomeTeam = homeTeamInformation;
             }
 
             dynamic betsAndMatches = new ExpandoObject();
@@ -234,9 +234,9 @@ namespace Manager
                 var matchInformation = await _matchDao.FindMatch(bet.Match.Id);
                 bet.Match = matchInformation;
                 var awayTeamInformation = await _teamDao.FindTeam(bet.Match.AwayTeam.Id);
-                bet.Match.AwayTeam = awayTeamInformation;
+                if (awayTeamInformation != null) bet.Match.AwayTeam = awayTeamInformation;
                 var homeTeamInformation = await _teamDao.FindTeam(bet.Match.HomeTeam.Id);
-                bet.Match.HomeTeam = homeTeamInformation;
+                if (homeTeamInformation != null) bet.Match.HomeTeam = homeTeamInformation;
             }
 
             var finishedBets = betsByUser.FindAll(bet => bet.Match.Status == Match.ScheduledStatus);
