@@ -34,7 +34,7 @@ namespace Test.Controller
             "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imx1Y2FzYm91cmdlb2lzNjBAaG90bWFpbC5mciIsInJvbGUiOiJBRE1JTiIsInVuaXF1ZV9uYW1lIjoibGJvIiwibmJmIjoxNTU4NTMyMDI3LCJleHAiOjE1OTAxNTQ0MjcsImlhdCI6MTU1ODUzMjAyN30.a3Co739HOGU5cBmziUdOt6-YuzLau0JVfW0gj5khonQ";
 
 
-        [SetUp]
+        [OneTimeSetUp]
         public void OneTimeSetUp()
         {
             _data = new Dictionary<string, object>() { { "Authorization", _token } };
@@ -52,7 +52,7 @@ namespace Test.Controller
             }
         }
 
-        [TearDown]
+        [OneTimeTearDown]
         public void TearDown()
         {
             _userManager.ClearReceivedCalls();
@@ -97,6 +97,7 @@ namespace Test.Controller
         [Test]
         public async Task AssertThatUseBombReturnsAValidResponseCodeAndCallsManager()
         {
+            // Todo fix Notif Exception
             InitRequestHelper(HttpMethod.Put.Method);
             var action = await _itemController.UseBomb("1");
             var response = await action.ExecuteAsync(new CancellationToken());
@@ -106,28 +107,53 @@ namespace Test.Controller
             Assert.IsTrue(response.StatusCode == HttpStatusCode.NoContent, "Status code is valid");
         }
 
-        [Test]
-        public void AssertThatUseMultiplierReturnsAValidResponseCodeAndCallsManager()
+        [TestCase(10, Item.MultiplyByTen)]
+        [TestCase(5, Item.MultiplyByFive)]
+        [TestCase(2, Item.MultiplyByTwo)]
+        public async Task AssertThatUseMultiplierReturnsAValidResponseCodeAndCallsManager(int multiplierValue, string itemType)
         {
             InitRequestHelper(HttpMethod.Put.Method);
+            var action = await _itemController.UseMultiplier(multiplierValue, "1");
+            var response = await action.ExecuteAsync(new CancellationToken());
+            await _itemManager.Received().UseMultiplier(Arg.Any<string>(), Arg.Any<int>(), Arg.Any<User>());
+            await _userManager.Received().DeleteUserItem(Arg.Any<User>(), itemType);
+            Assert.False(response.StatusCode == HttpStatusCode.InternalServerError, "InternalServerError is thrown");
+            Assert.IsTrue(response.StatusCode == HttpStatusCode.NoContent, "Status code is valid");
         }
 
         [Test]
-        public void AssertThatUseKeyReturnsAValidResponseCodeAndCallsManager()
+        public async Task AssertThatUseKeyReturnsAValidResponseCodeAndCallsManager()
+        {
+            // Todo fix Notif Exception
+            InitRequestHelper(HttpMethod.Get.Method);
+            var action = await _itemController.UseKey("1");
+            var response = await action.ExecuteAsync(new CancellationToken());
+            await _userManager.Received().GetUser(Arg.Any<string>());
+            await _userManager.Received().DeleteUserItem(Arg.Any<User>(), Item.Key);
+            Assert.False(response.StatusCode == HttpStatusCode.InternalServerError, "InternalServerError is thrown");
+            Assert.IsTrue(response.StatusCode == HttpStatusCode.OK, "Status code is valid");
+        }
+
+        [Test]
+        public async Task AssertThatGetAllReturnsAValidResponseCodeAndCallsManager()
         {
             InitRequestHelper(HttpMethod.Get.Method);
+            var action = await _itemController.GetAll();
+            var response = await action.ExecuteAsync(new CancellationToken());
+            await _itemManager.Received().GetAllItems();
+            Assert.False(response.StatusCode == HttpStatusCode.InternalServerError, "InternalServerError is thrown");
+            Assert.IsTrue(response.StatusCode == HttpStatusCode.OK, "Status code is valid");
         }
 
         [Test]
-        public void AssertThatGetAllReturnsAValidResponseCodeAndCallsManager()
-        {
-            InitRequestHelper(HttpMethod.Get.Method);
-        }
-
-        [Test]
-        public void AssertThatUpdateItemReturnsAValidResponseCodeAndCallsManager()
+        public async Task AssertThatUpdateItemReturnsAValidResponseCodeAndCallsManager()
         {
             InitRequestHelper(HttpMethod.Put.Method);
+            var action = await _itemController.UpdateItem("1", _items[0]);
+            var response = await action.ExecuteAsync(new CancellationToken());
+            await _itemManager.Received().ChangeItem(Arg.Any<string>(), Arg.Any<Item>());
+            Assert.False(response.StatusCode == HttpStatusCode.InternalServerError, "InternalServerError is thrown");
+            Assert.IsTrue(response.StatusCode == HttpStatusCode.OK, "Status code is valid");
         }
 
         private void InitRequestHelper(string verb)

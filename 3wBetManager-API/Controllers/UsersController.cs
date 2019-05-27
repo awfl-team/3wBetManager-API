@@ -28,7 +28,7 @@ namespace _3wBetManager_API.Controllers
         [HttpGet]
         public async Task<IHttpActionResult> GetTop50()
         {
-            return await HandleError(async () => Ok(await GetUserManager().GetBestBetters()));
+            return await HandleError(async () => Ok<dynamic>(await GetUserManager().GetBestBetters()));
         }
 
 
@@ -40,7 +40,7 @@ namespace _3wBetManager_API.Controllers
             {
                 var user = await GetUserByToken(Request);
 
-                return Ok(await GetUserManager().GetUserPositionAmongSiblings(user));
+                return Ok<dynamic>(await GetUserManager().GetUserPositionAmongSiblings(user));
             });
         }
 
@@ -48,7 +48,7 @@ namespace _3wBetManager_API.Controllers
         [HttpGet]
         public async Task<IHttpActionResult> GetTop3()
         {
-            return await HandleError(async () => Ok(await GetUserManager().GetTop3()));
+            return await HandleError(async () => Ok<dynamic>(await GetUserManager().GetTop3()));
         }
 
         [Route("token")]
@@ -141,7 +141,7 @@ namespace _3wBetManager_API.Controllers
         [HttpGet]
         public async Task<IHttpActionResult> GetAllUsersPaginated(int page)
         {
-            return await HandleError(async () => Ok(await GetUserManager().GetAllUsersPaginated(page)));
+            return await HandleError(async () => Ok<dynamic>(await GetUserManager().GetAllUsersPaginated(page)));
         }
 
         [Route("")]
