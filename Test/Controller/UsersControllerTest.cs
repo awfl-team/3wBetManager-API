@@ -2,6 +2,7 @@
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -11,6 +12,7 @@ using Manager;
 using Manager.Interfaces;
 using Microsoft.Owin;
 using Models;
+using MongoDB.Bson;
 using NSubstitute;
 using NUnit.Framework;
 
@@ -21,6 +23,16 @@ namespace Test.Controller
     {
         private UsersController _usersController;
         private IUserManager _userManager;
+        private User _user = new User
+        {
+            Email = "test",
+            Password = "test",
+            Username = "test",
+            Id = new ObjectId("5c06f4b43cd1d72a48b44237"),
+            TotalPointsUsedToBet = 40,
+            Point = 100
+        };
+
         private static TokenManager _tokenManager;
         private Dictionary<string, object> _data;
         private OwinContext _context;
@@ -28,6 +40,7 @@ namespace Test.Controller
         private HttpRequestMessage _httpRequestGet = new HttpRequestMessage(HttpMethod.Get, "http://localhost:9000/");
         private HttpRequestMessage _httpRequestPost = new HttpRequestMessage(HttpMethod.Post, "http://localhost:9000/");
         private HttpRequestMessage _httpRequestPut = new HttpRequestMessage(HttpMethod.Put, "http://localhost:9000/");
+        private HttpRequestMessage _httpRequestDelete = new HttpRequestMessage(HttpMethod.Delete, "http://localhost:9000/");
 
         private readonly string _ip = "127.0.0.1";
         private readonly string _token =
@@ -41,7 +54,6 @@ namespace Test.Controller
             _usersController = new UsersController() { Configuration = new HttpConfiguration() };
             _context = new OwinContext(_data);
             _authHeader = new AuthenticationHeaderValue(_token);
-
             _userManager = SingletonManager.Instance.SetUserManager(Substitute.For<IUserManager>());
             SingletonManager.Instance.SetTokenManager(new TokenManager());
 
@@ -72,7 +84,9 @@ namespace Test.Controller
             var response = await action.ExecuteAsync(new CancellationToken());
             await _userManager.Received().GetUser(Arg.Any<string>());
             Assert.False(response.StatusCode == HttpStatusCode.InternalServerError, "InternalServerError is thrown");
-            Assert.IsTrue(response.StatusCode == HttpStatusCode.OK, "Status code is valid");
+            Assert.IsTrue(response.StatusCode == HttpStatusCode.OK
+                          || response.StatusCode == HttpStatusCode.NotFound
+                , "Status code is valid");
         }
 
         [Test]
@@ -83,7 +97,7 @@ namespace Test.Controller
             var response = await action.ExecuteAsync(new CancellationToken());
             await _userManager.Received().GetBestBetters();
             Assert.False(response.StatusCode == HttpStatusCode.InternalServerError, "InternalServerError is thrown");
-            Assert.IsTrue(response.StatusCode == HttpStatusCode.OK, "Status code is valid");
+            Assert.IsTrue(response.StatusCode == HttpStatusCode.OK , "Status code is valid");
         }
 
         [Test]
@@ -94,7 +108,9 @@ namespace Test.Controller
             var response = await action.ExecuteAsync(new CancellationToken());
             await _userManager.Received().GetUserPositionAmongSiblings(Arg.Any<User>());
             Assert.False(response.StatusCode == HttpStatusCode.InternalServerError, "InternalServerError is thrown");
-            Assert.IsTrue(response.StatusCode == HttpStatusCode.OK, "Status code is valid");
+            Assert.IsTrue(response.StatusCode == HttpStatusCode.OK
+                          || response.StatusCode == HttpStatusCode.NotFound
+                , "Status code is valid");
         }
 
         [Test]
@@ -122,24 +138,60 @@ namespace Test.Controller
         public async Task AssertThatPutReturnsAValidResponseCodeAndCallsManager()
         {
             InitRequestHelper(HttpMethod.Put.Method);
+            _usersController.Request.Content = new StringContent(_user.ToJson(), Encoding.UTF8, "application/json");
+            var action = await _usersController.Put("1", _user);
+            var response = await action.ExecuteAsync(new CancellationToken());
+            await _userManager.Received().CanUpdate(Arg.Any<string>(), Arg.Any<User>());
+            await _userManager.Received().ChangeUser(Arg.Any<string>(), Arg.Any<User>());
+            await _userManager.Received().GetUser(Arg.Any<string>());
+            Assert.False(response.StatusCode == HttpStatusCode.InternalServerError, "InternalServerError is thrown");
+            Assert.IsTrue(response.StatusCode == HttpStatusCode.OK 
+                || response.StatusCode == HttpStatusCode.BadRequest
+                || response.StatusCode == HttpStatusCode.NotFound
+                , "Status code is valid");
         }
 
-        [Test]
-        public async Task AssertThatPutIsPrivateReturnsAValidResponseCodeAndCallsManager()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task AssertThatPutIsPrivateReturnsAValidResponseCodeAndCallsManager(bool status)
         {
             InitRequestHelper(HttpMethod.Put.Method);
+            _user.IsPrivate = status;
+            _usersController.Request.Content = new StringContent(_user.ToJson(), Encoding.UTF8, "application/json");
+            var action = await _usersController.PutIsPrivate(_user);
+            var response = await action.ExecuteAsync(new CancellationToken());
+            await _userManager.Received().ChangeUserIsPrivate(Arg.Any<ObjectId>(), status);
+            Assert.False(response.StatusCode == HttpStatusCode.InternalServerError, "InternalServerError is thrown");
+            Assert.IsTrue(response.StatusCode == HttpStatusCode.OK
+                , "Status code is valid");
         }
 
-        [Test]
-        public async Task AssertThatPutRoleReturnsAValidResponseCodeAndCallsManager()
+        [TestCase(User.AdminRole)]
+        [TestCase(User.UserRole)]
+        public async Task AssertThatPutRoleReturnsAValidResponseCodeAndCallsManager(string role)
         {
             InitRequestHelper(HttpMethod.Put.Method);
+            _user.Role = role;
+            _usersController.Request.Content = new StringContent(_user.ToJson(), Encoding.UTF8, "application/json");
+            var action = await _usersController.PutRole("1", _user);
+            var response = await action.ExecuteAsync(new CancellationToken());
+            await _userManager.Received().ChangeUserRole(Arg.Any<string>(), role);
+            Assert.False(response.StatusCode == HttpStatusCode.InternalServerError, "InternalServerError is thrown");
+            Assert.IsTrue(response.StatusCode == HttpStatusCode.OK
+                          || response.StatusCode == HttpStatusCode.NotFound
+                , "Status code is valid");
         }
 
         [Test]
         public async Task AssertThatDeleteReturnsAValidResponseCodeAndCallsManager()
         {
-            InitRequestHelper(HttpMethod.Put.Method);
+            InitRequestHelper(HttpMethod.Delete.Method);
+            var action = await _usersController.Delete("1");
+            var response = await action.ExecuteAsync(new CancellationToken());
+            await _userManager.Received().DeleteUser(Arg.Any<string>());
+            Assert.False(response.StatusCode == HttpStatusCode.InternalServerError, "InternalServerError is thrown");
+            Assert.IsTrue(response.StatusCode == HttpStatusCode.OK
+                , "Status code is valid");
         }
 
         [Test]
@@ -168,6 +220,11 @@ namespace Test.Controller
         public async Task AssertThatAddUserReturnsAValidResponseCodeAndCallsManager()
         {
             InitRequestHelper(HttpMethod.Post.Method);
+            var action = await _usersController.AddUser(_user);
+            var response = await action.ExecuteAsync(new CancellationToken());
+            await _userManager.Received().AddUser(Arg.Any<User>(), Arg.Any<string>());
+            Assert.False(response.StatusCode == HttpStatusCode.InternalServerError, "InternalServerError is thrown");
+            Assert.IsTrue(response.StatusCode == HttpStatusCode.Created, "Status code is valid");
         }
 
 
@@ -183,6 +240,9 @@ namespace Test.Controller
                     break;
                 case "PUT":
                     _usersController.Request = _httpRequestPut;
+                    break;
+                case "DELETE":
+                    _usersController.Request = _httpRequestDelete;
                     break;
                 default:
                     _usersController.Request = _httpRequestGet;
