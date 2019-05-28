@@ -11,6 +11,7 @@ using Manager.Interfaces;
 using Microsoft.Owin;
 using Models;
 using MongoDB.Bson;
+using Newtonsoft.Json;
 using NSubstitute;
 using NUnit.Framework;
 using _3wBetManager_API.Controllers;
@@ -18,7 +19,7 @@ using _3wBetManager_API.Controllers;
 namespace Test.Controller
 {
     [TestFixture]
-    public class BetsControllerTest
+    internal class BetsControllerTest : BaseController
     {
         private BetController _betController;
         private IBetManager _betManager;
@@ -32,6 +33,8 @@ namespace Test.Controller
         private HttpRequestMessage _httpRequestPost = new HttpRequestMessage(HttpMethod.Post, "http://localhost:9000/");
         private HttpRequestMessage _httpRequestPut = new HttpRequestMessage(HttpMethod.Put, "http://localhost:9000/");
         private List<Bet> _bets = new List<Bet>();
+        private static List<User> _users = JsonConvert.DeserializeObject<List<User>>(TestHelper.GetDbResponseByCollectionAndFileName("user", "users"));
+        private User _user = _users[0];
 
         private readonly string _ip = "127.0.0.1";
 
@@ -69,6 +72,7 @@ namespace Test.Controller
         {
             InitRequestHelper(HttpMethod.Post.Method);
             _betController.Request.Content = new StringContent(_bets.ToJson(), Encoding.UTF8, "application/json");
+            GetUserByToken(_betController.Request).Returns(Task.FromResult(_user));
             var action = await _betController.Post(_bets);
             var response = await action.ExecuteAsync(new CancellationToken());
             _betManager.Received().ParseListBet(Arg.Any<List<Bet>>());
@@ -83,6 +87,8 @@ namespace Test.Controller
         {
             InitRequestHelper(HttpMethod.Put.Method);
             _betController.Request.Content = new StringContent(_bets.ToJson(), Encoding.UTF8, "application/json");
+            GetUserByToken(_betController.Request).Returns(Task.FromResult(_user));
+            _betManager.ParseListBet(_bets).Returns(_bets);
             var action = await _betController.Put(_bets);
             var response = await action.ExecuteAsync(new CancellationToken());
             _betManager.Received().ParseListBet(Arg.Any<List<Bet>>());

@@ -19,7 +19,7 @@ using _3wBetManager_API.Controllers;
 namespace Test.Controller
 {
     [TestFixture]
-    public class StatsControllerTest
+    internal class StatsControllerTest
     {
         private StatController _statController;
         private IBetManager _betManager;

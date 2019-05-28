@@ -18,7 +18,7 @@ using NUnit.Framework;
 namespace Test.Controller
 {
     [TestFixture]
-    public class CompetitionControllerTest
+    internal class CompetitionControllerTest
     {
         private CompetitionController _competitionController;
         private ICompetitionManager _competitionManager;

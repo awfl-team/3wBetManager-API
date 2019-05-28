@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using DAO;
 using DAO.Interfaces;
@@ -15,16 +16,16 @@ namespace Test.DAO
         private IMongoCollection<Item> _collectionItem;
         private IMongoCollection<Match> _collectionMatch;
         private IMongoDatabase _database;
-        public ExtraTime _extraTime;
+        private ExtraTime _extraTime;
         private ExpressionFilterDefinition<Item> _filterExpression;
         private FullTime _fullTime;
-        public HalfTime _halfTime;
+        private HalfTime _halfTime;
         private Item _item;
         private IItemDao _itemDao;
 
         private Match _match;
         private IMatchDao _matchDao;
-        public Penalties _penalties;
+        private Penalties _penalties;
         private Score _score;
         private Team _team1;
         private Team _team2;
@@ -107,14 +108,13 @@ namespace Test.DAO
             _collectionItem.Received().Find(_filterExpression);
         }
 
-        /*[Test]
-        public void AddListItemTest()
+        [Test]
+        public async Task AddListItemTest()
         {
-            var items = Arg.Any<List<Item>>();
-            _itemDao.AddListItem(items);
-            _collectionItem.Received().InsertManyAsync(items);
-            // Assert.IsInstanceOf<Task<List<Item>>>(_itemDao.AddListItem(items));
-        }*/
+            var items = new List<Item>();
+            await _itemDao.AddListItem(items);
+            await _collectionItem.Received().InsertManyAsync(Arg.Any<List<Item>>(), Arg.Any<InsertManyOptions>());
+        }
 
         [Test]
         public void AssertThatAddListItemIsCalled()

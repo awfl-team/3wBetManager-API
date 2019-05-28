@@ -12,7 +12,7 @@ using NUnit.Framework;
 namespace Test.DAO
 {
     [TestFixture]
-    public class BetDaoTest
+    internal class BetDaoTest
     {
         private Bet _bet;
         private IMongoCollection<Bet> _collection;

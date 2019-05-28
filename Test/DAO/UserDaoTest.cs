@@ -11,7 +11,7 @@ using NUnit.Framework;
 namespace Test.DAO
 {
     [TestFixture]
-    public class UserDaoTest
+    internal class UserDaoTest
     {
         private User _user;
         private List<Item> _items;
@@ -22,14 +22,14 @@ namespace Test.DAO
         private IMongoDatabase _database;
         private ExpressionFilterDefinition<User> _filterExpression;
 
-        [SetUp]
+        [OneTimeSetUp]
         public void SetUp()
         {
             _collection = Substitute.For<IMongoCollection<User>>();
             _collectionItem = Substitute.For<IMongoCollection<Item>>();
             _database = Substitute.For<IMongoDatabase>();
             _userDao = new UserDao(_database, _collection);
-            _itemDao = new ItemDao(_database, _collectionItem);
+            _itemDao = Substitute.For<IItemDao>();
             _user = new User
             {
                 Email = "test", Password = "test", Username = "test", Id = new ObjectId("5c06f4b43cd1d72a48b44237"),
@@ -40,23 +40,26 @@ namespace Test.DAO
             {
                 var item = new Item();
                 item.Type = Item.Life;
+                _items.Add(item);
             }
             for (int i = 0; i < 2; i++)
             {
                 var item = new Item();
                 item.Type = Item.Bomb;
+                _items.Add(item);
             }
             for (int i = 0; i < 2; i++)
             {
                 var item = new Item();
                 item.Type = Item.Key;
+                _items.Add(item);
             }
 
             _user.Items = _items;
 
         }
 
-        [TearDown]
+        [OneTimeTearDown]
         public void TearDown()
         {
             _collection.ClearReceivedCalls();
@@ -195,11 +198,15 @@ namespace Test.DAO
         }
 
         [Test]
-        public void AssertThatResetUserItemsIsCalled()
+        public async Task AssertThatResetUserItemsIsCalled()
         {
-            _itemDao.FindAllItems();
+            SingletonDao.Instance.SetItemDao(_itemDao);
+            _itemDao.FindAllItems().Returns(Task.FromResult(_items));
+            await _userDao.ResetUserItems(_user);
+           
             _collectionItem.Received().Find(new BsonDocument());
-            // Todo Foreach test if userDao is called
+            await _collection.Received().UpdateOneAsync(Arg.Any<ExpressionFilterDefinition<User>>(),
+                Arg.Any<UpdateDefinition<User>>());
         }
 
         [Test]

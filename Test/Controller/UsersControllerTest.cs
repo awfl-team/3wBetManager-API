@@ -13,34 +13,27 @@ using Manager.Interfaces;
 using Microsoft.Owin;
 using Models;
 using MongoDB.Bson;
+using Newtonsoft.Json;
 using NSubstitute;
 using NUnit.Framework;
 
 namespace Test.Controller
 {
     [TestFixture]
-    public class UsersControllerTest
+    internal class UsersControllerTest : BaseController
     {
         private UsersController _usersController;
         private IUserManager _userManager;
-        private User _user = new User
-        {
-            Email = "test",
-            Password = "test",
-            Username = "test",
-            Id = new ObjectId("5c06f4b43cd1d72a48b44237"),
-            TotalPointsUsedToBet = 40,
-            Point = 100
-        };
+        private static List<User> _users = JsonConvert.DeserializeObject<List<User>>(TestHelper.GetDbResponseByCollectionAndFileName("user", "users"));
+        private User _user = _users[0];
 
-        private static TokenManager _tokenManager;
         private Dictionary<string, object> _data;
         private OwinContext _context;
         private AuthenticationHeaderValue _authHeader;
-        private HttpRequestMessage _httpRequestGet = new HttpRequestMessage(HttpMethod.Get, "http://localhost:9000/");
-        private HttpRequestMessage _httpRequestPost = new HttpRequestMessage(HttpMethod.Post, "http://localhost:9000/");
-        private HttpRequestMessage _httpRequestPut = new HttpRequestMessage(HttpMethod.Put, "http://localhost:9000/");
-        private HttpRequestMessage _httpRequestDelete = new HttpRequestMessage(HttpMethod.Delete, "http://localhost:9000/");
+        private readonly HttpRequestMessage _httpRequestGet = new HttpRequestMessage(HttpMethod.Get, "http://localhost:9000/");
+        private readonly HttpRequestMessage _httpRequestPost = new HttpRequestMessage(HttpMethod.Post, "http://localhost:9000/");
+        private readonly HttpRequestMessage _httpRequestPut = new HttpRequestMessage(HttpMethod.Put, "http://localhost:9000/");
+        private readonly HttpRequestMessage _httpRequestDelete = new HttpRequestMessage(HttpMethod.Delete, "http://localhost:9000/");
 
         private readonly string _ip = "127.0.0.1";
         private readonly string _token =
@@ -55,8 +48,7 @@ namespace Test.Controller
             _context = new OwinContext(_data);
             _authHeader = new AuthenticationHeaderValue(_token);
             _userManager = SingletonManager.Instance.SetUserManager(Substitute.For<IUserManager>());
-            SingletonManager.Instance.SetTokenManager(new TokenManager());
-
+            SingletonManager.Instance.SetTokenManager(Substitute.For<ITokenManager>());
         }
 
         [OneTimeTearDown]
@@ -134,11 +126,14 @@ namespace Test.Controller
             Assert.IsTrue(response.StatusCode == HttpStatusCode.OK, "Status code is valid");
         }
 
-        [Test]
-        public async Task AssertThatPutReturnsAValidResponseCodeAndCallsManager()
+        [TestCase("")]
+        [TestCase("email already taken")]
+        public async Task AssertThatPutReturnsAValidResponseCodeAndCallsManager(string canUpdate)
         {
             InitRequestHelper(HttpMethod.Put.Method);
             _usersController.Request.Content = new StringContent(_user.ToJson(), Encoding.UTF8, "application/json");
+            _userManager.CanUpdate("1", _user).Returns(canUpdate);
+            _userManager.GetUser("1").Returns(_user);
             var action = await _usersController.Put("1", _user);
             var response = await action.ExecuteAsync(new CancellationToken());
             await _userManager.Received().CanUpdate(Arg.Any<string>(), Arg.Any<User>());
@@ -158,6 +153,8 @@ namespace Test.Controller
             InitRequestHelper(HttpMethod.Put.Method);
             _user.IsPrivate = status;
             _usersController.Request.Content = new StringContent(_user.ToJson(), Encoding.UTF8, "application/json");
+            GetUserByToken(_usersController.Request).Returns(Task.FromResult(_user));
+
             var action = await _usersController.PutIsPrivate(_user);
             var response = await action.ExecuteAsync(new CancellationToken());
             await _userManager.Received().ChangeUserIsPrivate(Arg.Any<ObjectId>(), status);
@@ -166,8 +163,8 @@ namespace Test.Controller
                 , "Status code is valid");
         }
 
-        [TestCase(User.AdminRole)]
-        [TestCase(User.UserRole)]
+        [TestCase(Models.User.AdminRole)]
+        [TestCase(Models.User.UserRole)]
         public async Task AssertThatPutRoleReturnsAValidResponseCodeAndCallsManager(string role)
         {
             InitRequestHelper(HttpMethod.Put.Method);
@@ -198,6 +195,7 @@ namespace Test.Controller
         public async Task AssertThatSearchReturnsAValidResponseCodeAndCallsManager()
         {
             InitRequestHelper(HttpMethod.Get.Method);
+            _userManager.SearchUser("test").Returns(_users);
             var action = await _usersController.Search("test");
             var response = await action.ExecuteAsync(new CancellationToken());
             await _userManager.Received().SearchUser(Arg.Any<string>());
@@ -218,7 +216,7 @@ namespace Test.Controller
 
         [Test]
         public async Task AssertThatAddUserReturnsAValidResponseCodeAndCallsManager()
-        {
+        {   
             InitRequestHelper(HttpMethod.Post.Method);
             var action = await _usersController.AddUser(_user);
             var response = await action.ExecuteAsync(new CancellationToken());

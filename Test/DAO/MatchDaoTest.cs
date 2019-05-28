@@ -13,7 +13,7 @@ using NUnit.Framework;
 namespace Test.DAO
 {
     [TestFixture]
-    public class MatchDaoTest
+    internal class MatchDaoTest
     {
         private Match _match;
         private IMongoCollection<Match> _collection;
@@ -22,9 +22,9 @@ namespace Test.DAO
         private Team _team2;
         private Score _score;
         private FullTime _fullTime;
-        public HalfTime _halfTime;
-        public ExtraTime _extraTime;
-        public Penalties _penalties;
+        private HalfTime _halfTime;
+        private ExtraTime _extraTime;
+        private Penalties _penalties;
         private IMongoDatabase _database;
         private ExpressionFilterDefinition<Match> _filterExpression;
 

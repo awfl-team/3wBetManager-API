@@ -9,6 +9,7 @@ using Manager;
 using Manager.Interfaces;
 using Microsoft.Owin;
 using Models;
+using Newtonsoft.Json;
 using NSubstitute;
 using NUnit.Framework;
 using _3wBetManager_API.Controllers;
@@ -16,7 +17,7 @@ using _3wBetManager_API.Controllers;
 namespace Test.Controller
 {
     [TestFixture]
-    public class ItemControllerTest
+    internal class ItemControllerTest : BaseController
     {
         private ItemController _itemController;
         private IItemManager _itemManager;
@@ -28,6 +29,8 @@ namespace Test.Controller
         private HttpRequestMessage _httpRequestPost = new HttpRequestMessage(HttpMethod.Post, "http://localhost:9000/");
         private HttpRequestMessage _httpRequestPut = new HttpRequestMessage(HttpMethod.Put, "http://localhost:9000/");
         private List<Item> _items = new List<Item>();
+        private static List<User> _users = JsonConvert.DeserializeObject<List<User>>(TestHelper.GetDbResponseByCollectionAndFileName("user", "users"));
+        private User _user = _users[0];
 
         private readonly string _ip = "127.0.0.1";
         private readonly string _token =
@@ -97,8 +100,9 @@ namespace Test.Controller
         [Test]
         public async Task AssertThatUseBombReturnsAValidResponseCodeAndCallsManager()
         {
-            // Todo fix Notif Exception
             InitRequestHelper(HttpMethod.Put.Method);
+            GetUserByToken(_itemController.Request).Returns(Task.FromResult(_user));
+            _itemManager.UseBomb("1").Returns(Task.FromResult(_user));
             var action = await _itemController.UseBomb("1");
             var response = await action.ExecuteAsync(new CancellationToken());
             await _itemManager.Received().UseBomb(Arg.Any<string>());
@@ -124,8 +128,9 @@ namespace Test.Controller
         [Test]
         public async Task AssertThatUseKeyReturnsAValidResponseCodeAndCallsManager()
         {
-            // Todo fix Notif Exception
             InitRequestHelper(HttpMethod.Get.Method);
+            GetUserByToken(_itemController.Request).Returns(Task.FromResult(_user));
+            _userManager.GetUser("1").Returns(Task.FromResult(_user));
             var action = await _itemController.UseKey("1");
             var response = await action.ExecuteAsync(new CancellationToken());
             await _userManager.Received().GetUser(Arg.Any<string>());

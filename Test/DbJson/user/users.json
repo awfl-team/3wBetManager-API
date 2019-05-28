@@ -1,0 +1,1722 @@
+[
+  {
+    "_id" : "5caf2df3a858b59514cf47f5",
+    "Point" : 97274.0,
+    "Role" : "ADMIN",
+    "TotalPointsUsedToBet" : 2375760,
+    "Password" : "$2a$11$VkbDm31m2.qfaoI05TGDMeLaItItzK7r51jTw.WsQb49qQTZMCIRK",
+    "Email" : "lucasbourgeois60@hotmail.fr",
+    "Username" : "lbo",
+    "IsPrivate" : false,
+    "Items" : [
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "MULTIPLY_BY_TWO",
+        "Name" : "2x Multiplier",
+        "Description" : "Double your incomes on a bet results.",
+        "Cost" : 125,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "MULTIPLY_BY_TWO",
+        "Name" : "2x Multiplier",
+        "Description" : "Double your incomes on a bet results.",
+        "Cost" : 125,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "MULTIPLY_BY_TWO",
+        "Name" : "2x Multiplier",
+        "Description" : "Double your incomes on a bet results.",
+        "Cost" : 125,
+        "Rarity" : "Rare"
+      }
+    ]
+  },
+  {
+    "_id" : "5cb0576ba858b534f4fd22d1",
+    "Point" : 29940.0,
+    "Role" : "USER",
+    "TotalPointsUsedToBet" : 5120,
+    "Password" : "$2a$11$/B7DSOdbtMWMeYB7gxSEle7RR.Vj68M5w3DiJIqyhVBr0rocGhnRK",
+    "Email" : "lbourge@aft-iftim.com",
+    "Username" : "Lbo2",
+    "IsPrivate" : false,
+    "Items" : [
+      {
+        "_id" : "5cb8368da858b563b0cdb1bc",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset your account.",
+        "Cost" : 150,
+        "Rarity" : "Legendary"
+      },
+      {
+        "_id" : "5cb8368da858b563b0cdb1ba",
+        "Type" : "MULTIPLY_BY_FIVE",
+        "Name" : "5x Multiplier",
+        "Description" : "Multiply the coins earned on a bet by 5.",
+        "Cost" : 100,
+        "Rarity" : "Epic"
+      }
+    ]
+  },
+  {
+    "_id" : "5ca208229922d514c8df71f0",
+    "Point" : 1,
+    "Role" : "ADMIN",
+    "TotalPointsUsedToBet" : 0,
+    "Password" : "$2a$11$Z/vutFmyPyu9I6dksxVsxu4ZN84zimUbL85Tz/EMCbWOov6v1wHNq",
+    "Email" : "florob95@gmail.com",
+    "Username" : "Flo",
+    "IsPrivate" : true,
+    "Items" : [
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "LOOT_BOXE",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 10,
+        "Rarity" : "Epic"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "LOOT_BOXE",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 10,
+        "Rarity" : "Epic"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "LOOT_BOXE",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 10,
+        "Rarity" : "Epic"
+      }
+    ]
+  },
+  {
+    "_id" : "5ca5c6ab9922d5030cd34969",
+    "Point" : 30.0,
+    "Role" : "ADMIN",
+    "TotalPointsUsedToBet" : 0,
+    "Password" : "$2a$11$STjbLP1dHEPXnY8RKH5HIu.eW/XW/gfPGElYQqFfA8TBwMYTs.SWq",
+    "Email" : "william@gmail.com",
+    "Username" : "Predou",
+    "IsPrivate" : false,
+    "Items" : [
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "LOOT_BOXE",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 10,
+        "Rarity" : "Epic"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "LOOT_BOXE",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 10,
+        "Rarity" : "Epic"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "LOOT_BOXE",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 10,
+        "Rarity" : "Epic"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "LOOT_BOXE",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 10,
+        "Rarity" : "Epic"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "LOOT_BOXE",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 10,
+        "Rarity" : "Epic"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "LOOT_BOXE",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 10,
+        "Rarity" : "Epic"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "KEY",
+        "Name" : "Key",
+        "Description" : "Watch on detail any profile even private ",
+        "Cost" : 75,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "KEY",
+        "Name" : "Key",
+        "Description" : "Watch on detail any profile even private ",
+        "Cost" : 75,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "KEY",
+        "Name" : "Key",
+        "Description" : "Watch on detail any profile even private ",
+        "Cost" : 75,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "LOOT_BOX",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 10,
+        "Rarity" : "Epic"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "LOOT_BOX",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 10,
+        "Rarity" : "Epic"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "LOOT_BOX",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 10,
+        "Rarity" : "Epic"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "LOOT_BOX",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 10,
+        "Rarity" : "Epic"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "LOOT_BOX",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 10,
+        "Rarity" : "Epic"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "LOOT_BOX",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 10,
+        "Rarity" : "Epic"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "LOOT_BOX",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 10,
+        "Rarity" : "Epic"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "LOOT_BOX",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 10,
+        "Rarity" : "Epic"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "LOOT_BOX",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 10,
+        "Rarity" : "Epic"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "LOOT_BOX",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 10,
+        "Rarity" : "Epic"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "LOOT_BOX",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 10,
+        "Rarity" : "Epic"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "LOOT_BOX",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 10,
+        "Rarity" : "Epic"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "LOOT_BOX",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 10,
+        "Rarity" : "Epic"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c962998",
+        "Type" : "LOOT_BOX",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 10,
+        "Rarity" : "Epic"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c962998",
+        "Type" : "LOOT_BOX",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 10,
+        "Rarity" : "Epic"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c962998",
+        "Type" : "LOOT_BOX",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 10,
+        "Rarity" : "Epic"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c962998",
+        "Type" : "LOOT_BOX",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 10,
+        "Rarity" : "Epic"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c962998",
+        "Type" : "LOOT_BOX",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 10,
+        "Rarity" : "Epic"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c962998",
+        "Type" : "LOOT_BOX",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 10,
+        "Rarity" : "Epic"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c962998",
+        "Type" : "LOOT_BOX",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 10,
+        "Rarity" : "Epic"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c962998",
+        "Type" : "LOOT_BOX",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 10,
+        "Rarity" : "Epic"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c962998",
+        "Type" : "LOOT_BOX",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 10,
+        "Rarity" : "Epic"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c962998",
+        "Type" : "LOOT_BOX",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 10,
+        "Rarity" : "Epic"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c962998",
+        "Type" : "LOOT_BOX",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 10,
+        "Rarity" : "Epic"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c962998",
+        "Type" : "LOOT_BOX",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 10,
+        "Rarity" : "Epic"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c962998",
+        "Type" : "LOOT_BOX",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 10,
+        "Rarity" : "Epic"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c962998",
+        "Type" : "LOOT_BOX",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 10,
+        "Rarity" : "Epic"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c962998",
+        "Type" : "LOOT_BOX",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 10,
+        "Rarity" : "Epic"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c962998",
+        "Type" : "LOOT_BOX",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 10,
+        "Rarity" : "Epic"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c962998",
+        "Type" : "LOOT_BOX",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 10,
+        "Rarity" : "Epic"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c962998",
+        "Type" : "LOOT_BOX",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 10,
+        "Rarity" : "Epic"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c962998",
+        "Type" : "LOOT_BOX",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 10,
+        "Rarity" : "Epic"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "LOOT_BOX",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 100,
+        "Rarity" : "Legendary"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "LOOT_BOX",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 100,
+        "Rarity" : "Legendary"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "LOOT_BOX",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 100,
+        "Rarity" : "Legendary"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "LOOT_BOX",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 100,
+        "Rarity" : "Legendary"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "LOOT_BOX",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 100,
+        "Rarity" : "Legendary"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "LOOT_BOX",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 100,
+        "Rarity" : "Legendary"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "LOOT_BOX",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 100,
+        "Rarity" : "Legendary"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "LOOT_BOX",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 100,
+        "Rarity" : "Legendary"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "LOOT_BOX",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 100,
+        "Rarity" : "Legendary"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "LOOT_BOX",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 100,
+        "Rarity" : "Legendary"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "LOOT_BOX",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 100,
+        "Rarity" : "Legendary"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "MULTIPLY_BY_TEN",
+        "Name" : "Multiplier",
+        "Description" : "Multiply the coins earned on a bet by 10",
+        "Cost" : 100,
+        "Rarity" : "Legendary"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "MULTIPLY_BY_TEN",
+        "Name" : "Multiplier",
+        "Description" : "Multiply the coins earned on a bet by 10",
+        "Cost" : 100,
+        "Rarity" : "Legendary"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "MULTIPLY_BY_TEN",
+        "Name" : "Multiplier",
+        "Description" : "Multiply the coins earned on a bet by 10",
+        "Cost" : 100,
+        "Rarity" : "Legendary"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "MULTIPLY_BY_TEN",
+        "Name" : "Multiplier",
+        "Description" : "Multiply the coins earned on a bet by 10",
+        "Cost" : 100,
+        "Rarity" : "Legendary"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "MULTIPLY_BY_TEN",
+        "Name" : "Multiplier",
+        "Description" : "Multiply the coins earned on a bet by 10",
+        "Cost" : 100,
+        "Rarity" : "Legendary"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "MULTIPLY_BY_TEN",
+        "Name" : "Multiplier",
+        "Description" : "Multiply the coins earned on a bet by 10",
+        "Cost" : 100,
+        "Rarity" : "Legendary"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "MULTIPLY_BY_TEN",
+        "Name" : "Multiplier",
+        "Description" : "Multiply the coins earned on a bet by 10",
+        "Cost" : 100,
+        "Rarity" : "Legendary"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Epic"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299a",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Epic"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "LOOT_BOX",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 100,
+        "Rarity" : "Legendary"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "LOOT_BOX",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 100,
+        "Rarity" : "Legendary"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "LOOT_BOX",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 100,
+        "Rarity" : "Legendary"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "LOOT_BOX",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 100,
+        "Rarity" : "Legendary"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "LOOT_BOX",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 100,
+        "Rarity" : "Legendary"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "LOOT_BOX",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 100,
+        "Rarity" : "Legendary"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "LOOT_BOX",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 100,
+        "Rarity" : "Legendary"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "LOOT_BOX",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 100,
+        "Rarity" : "Legendary"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "LOOT_BOX",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 100,
+        "Rarity" : "Legendary"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "LOOT_BOX",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 100,
+        "Rarity" : "Legendary"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "LOOT_BOX",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 100,
+        "Rarity" : "Legendary"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "LOOT_BOX",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 100,
+        "Rarity" : "Legendary"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "LOOT_BOX",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 100,
+        "Rarity" : "Legendary"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299b",
+        "Type" : "KEY",
+        "Name" : "Key",
+        "Description" : "Watch on detail any profile even private ",
+        "Cost" : 75,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299b",
+        "Type" : "KEY",
+        "Name" : "Key",
+        "Description" : "Watch on detail any profile even private ",
+        "Cost" : 75,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299b",
+        "Type" : "KEY",
+        "Name" : "Key",
+        "Description" : "Watch on detail any profile even private ",
+        "Cost" : 75,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299b",
+        "Type" : "KEY",
+        "Name" : "Key",
+        "Description" : "Watch on detail any profile even private ",
+        "Cost" : 75,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299b",
+        "Type" : "KEY",
+        "Name" : "Key",
+        "Description" : "Watch on detail any profile even private ",
+        "Cost" : 75,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299b",
+        "Type" : "KEY",
+        "Name" : "Key",
+        "Description" : "Watch on detail any profile even private ",
+        "Cost" : 75,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299b",
+        "Type" : "KEY",
+        "Name" : "Key",
+        "Description" : "Watch on detail any profile even private ",
+        "Cost" : 75,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299b",
+        "Type" : "KEY",
+        "Name" : "Key",
+        "Description" : "Watch on detail any profile even private ",
+        "Cost" : 75,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "LOOT_BOX",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 100,
+        "Rarity" : "Legendary"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299b",
+        "Type" : "KEY",
+        "Name" : "Key",
+        "Description" : "Watch on detail any profile even private ",
+        "Cost" : 75,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299b",
+        "Type" : "KEY",
+        "Name" : "Key",
+        "Description" : "Watch on detail any profile even private ",
+        "Cost" : 75,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299b",
+        "Type" : "KEY",
+        "Name" : "Key",
+        "Description" : "Watch on detail any profile even private ",
+        "Cost" : 75,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299b",
+        "Type" : "KEY",
+        "Name" : "Key",
+        "Description" : "Watch on detail any profile even private ",
+        "Cost" : 75,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299b",
+        "Type" : "KEY",
+        "Name" : "Key",
+        "Description" : "Watch on detail any profile even private ",
+        "Cost" : 75,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299b",
+        "Type" : "KEY",
+        "Name" : "Key",
+        "Description" : "Watch on detail any profile even private ",
+        "Cost" : 75,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299b",
+        "Type" : "KEY",
+        "Name" : "Key",
+        "Description" : "Watch on detail any profile even private ",
+        "Cost" : 75,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299b",
+        "Type" : "KEY",
+        "Name" : "Key",
+        "Description" : "Watch on detail any profile even private ",
+        "Cost" : 75,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299b",
+        "Type" : "KEY",
+        "Name" : "Key",
+        "Description" : "Watch on detail any profile even private ",
+        "Cost" : 75,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299b",
+        "Type" : "KEY",
+        "Name" : "Key",
+        "Description" : "Watch on detail any profile even private ",
+        "Cost" : 75,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299b",
+        "Type" : "KEY",
+        "Name" : "Key",
+        "Description" : "Watch on detail any profile even private ",
+        "Cost" : 75,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299b",
+        "Type" : "KEY",
+        "Name" : "Key",
+        "Description" : "Watch on detail any profile even private ",
+        "Cost" : 75,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299b",
+        "Type" : "KEY",
+        "Name" : "Key",
+        "Description" : "Watch on detail any profile even private ",
+        "Cost" : 75,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299b",
+        "Type" : "KEY",
+        "Name" : "Key",
+        "Description" : "Watch on detail any profile even private ",
+        "Cost" : 75,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299b",
+        "Type" : "KEY",
+        "Name" : "Key",
+        "Description" : "Watch on detail any profile even private ",
+        "Cost" : 75,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299b",
+        "Type" : "KEY",
+        "Name" : "Key",
+        "Description" : "Watch on detail any profile even private ",
+        "Cost" : 75,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5ca27ebc9922d50c3c96299b",
+        "Type" : "KEY",
+        "Name" : "Key",
+        "Description" : "Watch on detail any profile even private ",
+        "Cost" : 75,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "MYSTERY",
+        "Name" : "Mystery item",
+        "Description" : "Get a random item of any rarity",
+        "Cost" : 100,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "MYSTERY",
+        "Name" : "Mystery item",
+        "Description" : "Get a random item of any rarity",
+        "Cost" : 100,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "MYSTERY",
+        "Name" : "Mystery item",
+        "Description" : "Get a random item of any rarity",
+        "Cost" : 100,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "MYSTERY",
+        "Name" : "Mystery item",
+        "Description" : "Get a random item of any rarity",
+        "Cost" : 100,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "LOOT_BOX",
+        "Name" : "Loot Box",
+        "Description" : "Get random items of any rarity",
+        "Cost" : 175,
+        "Rarity" : "Legendary"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "LOOT_BOX",
+        "Name" : "Loot Box",
+        "Description" : "Get random items of any rarity",
+        "Cost" : 175,
+        "Rarity" : "Legendary"
+      },
+      {
+        "_id" : "5cc2a9ec9922d50c60e6d9aa",
+        "Type" : "KEY",
+        "Name" : "Key",
+        "Description" : "Allow you to spy any profile even private ones.",
+        "Cost" : 75,
+        "Rarity" : "Rare"
+      },
+      {
+        "_id" : "5cc2a9ec9922d50c60e6d9ab",
+        "Type" : "MULTIPLY_BY_TWO",
+        "Name" : "2x Multiplier",
+        "Description" : "Double your incomes on a bet results.",
+        "Cost" : 125,
+        "Rarity" : "Rare"
+      }
+    ]
+  }
+]

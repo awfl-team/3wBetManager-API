@@ -10,7 +10,7 @@ using NUnit.Framework;
 namespace Test.DAO
 {
     [TestFixture]
-    public class TeamDaoTest
+    internal class TeamDaoTest
     {
         private Team _team;
         private IMongoCollection<Team> _collection;

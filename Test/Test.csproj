@@ -94,10 +94,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\AuthControllerTest.cs" />
+    <Compile Include="Controller\BaseControllerTest.cs" />
     <Compile Include="Controller\BetsControllerTest.cs" />
     <Compile Include="Controller\CompetitionControllerTest.cs" />
+    <Compile Include="Controller\CronControllerTest.cs" />
     <Compile Include="Controller\ItemControllerTest.cs" />
     <Compile Include="Controller\StatsControllerTest.cs" />
+    <Compile Include="Controller\TestHelper.cs" />
     <Compile Include="DAO\BetDaoTest.cs" />
     <Compile Include="DAO\CompetitionDaoTest.cs" />
     <Compile Include="DAO\ItemDaoTest.cs" />
