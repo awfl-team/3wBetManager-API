@@ -1,0 +1,8 @@
+{
+  "_id": "5cc2a9ec9922d50c60e6d9a9",
+  "Type": "BOMB",
+  "Name": "Bomb",
+  "Description": "Can be used on players to make them lose 30 coins per bomb.",
+  "Cost": 50,
+  "Rarity": "Common"
+}
