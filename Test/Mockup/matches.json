@@ -2,9 +2,7 @@
     {
         "_id": 233323,
         "Status": "FINISHED",
-        "LastUpdated": {
-            "$date": "2019-04-24T23:43:13.000Z"
-        },
+        "LastUpdated": "2019-04-24T23:43:13.000Z",
         "HomeTeam": {
             "_id": 76,
             "Name": "Wolverhampton Wanderers FC",
@@ -65,9 +63,7 @@
     {
         "_id": 233327,
         "Status": "FINISHED",
-        "LastUpdated": {
-            "$date": "2019-04-24T23:58:13.000Z"
-        },
+        "LastUpdated": "2019-04-24T23:58:13.000Z",
         "HomeTeam": {
             "_id": 66,
             "Name": "Manchester United FC",
@@ -128,9 +124,7 @@
     {
         "_id": 233330,
         "Status": "FINISHED",
-        "LastUpdated": {
-            "$date": "2019-04-16T23:43:22.000Z"
-        },
+        "LastUpdated": "2019-04-16T23:43:22.000Z",
         "HomeTeam": {
             "_id": 397,
             "Name": "Brighton & Hove Albion FC",
@@ -191,9 +185,7 @@
     {
         "_id": 233331,
         "Status": "FINISHED",
-        "LastUpdated": {
-            "$date": "2019-04-24T21:45:03.000Z"
-        },
+        "LastUpdated": "2019-04-24T21:45:03.000Z",
         "HomeTeam": {
             "_id": 346,
             "Name": "Watford FC",
@@ -254,9 +246,7 @@
     {
         "_id": 233345,
         "Status": "FINISHED",
-        "LastUpdated": {
-            "$date": "2019-04-07T02:34:32.000Z"
-        },
+        "LastUpdated": "2019-04-07T02:34:32.000Z",
         "HomeTeam": {
             "_id": 67,
             "Name": "Newcastle United FC",
@@ -317,9 +307,7 @@
     {
         "_id": 233346,
         "Status": "FINISHED",
-        "LastUpdated": {
-            "$date": "2019-04-09T17:05:02.000Z"
-        },
+        "LastUpdated": "2019-04-09T17:05:02.000Z",
         "HomeTeam": {
             "_id": 61,
             "Name": "Chelsea FC",
@@ -380,9 +368,7 @@
     {
         "_id": 233347,
         "Status": "FINISHED",
-        "LastUpdated": {
-            "$date": "2019-04-24T21:45:03.000Z"
-        },
+        "LastUpdated": "2019-04-24T21:45:03.000Z",
         "HomeTeam": {
             "_id": 73,
             "Name": "Tottenham Hotspur FC",
@@ -443,9 +429,7 @@
     {
         "_id": 233348,
         "Status": "FINISHED",
-        "LastUpdated": {
-            "$date": "2019-04-07T18:45:30.000Z"
-        },
+        "LastUpdated": "2019-04-07T18:45:30.000Z",
         "HomeTeam": {
             "_id": 62,
             "Name": "Everton FC",
@@ -506,9 +490,7 @@
     {
         "_id": 233349,
         "Status": "FINISHED",
-        "LastUpdated": {
-            "$date": "2019-04-07T02:34:32.000Z"
-        },
+        "LastUpdated": "2019-04-07T02:34:32.000Z",
         "HomeTeam": {
             "_id": 394,
             "Name": "Huddersfield Town AFC",
@@ -569,9 +551,7 @@
     {
         "_id": 233352,
         "Status": "FINISHED",
-        "LastUpdated": {
-            "$date": "2019-04-07T02:34:32.000Z"
-        },
+        "LastUpdated": "2019-04-07T02:34:32.000Z",
         "HomeTeam": {
             "_id": 1044,
             "Name": "AFC Bournemouth",
@@ -632,9 +612,7 @@
     {
         "_id": 233353,
         "Status": "FINISHED",
-        "LastUpdated": {
-            "$date": "2019-04-14T14:34:24.000Z"
-        },
+        "LastUpdated": "2019-04-14T14:34:24.000Z",
         "HomeTeam": {
             "_id": 63,
             "Name": "Fulham FC",
@@ -695,9 +673,7 @@
     {
         "_id": 233354,
         "Status": "FINISHED",
-        "LastUpdated": {
-            "$date": "2019-04-15T15:55:10.000Z"
-        },
+        "LastUpdated": "2019-04-15T15:55:10.000Z",
         "HomeTeam": {
             "_id": 64,
             "Name": "Liverpool FC",
@@ -758,9 +734,7 @@
     {
         "_id": 233355,
         "Status": "FINISHED",
-        "LastUpdated": {
-            "$date": "2019-04-14T14:34:24.000Z"
-        },
+        "LastUpdated": "2019-04-14T14:34:24.000Z",
         "HomeTeam": {
             "_id": 73,
             "Name": "Tottenham Hotspur FC",
@@ -821,9 +795,7 @@
     {
         "_id": 233356,
         "Status": "FINISHED",
-        "LastUpdated": {
-            "$date": "2019-04-14T14:34:24.000Z"
-        },
+        "LastUpdated": "2019-04-14T14:34:24.000Z",
         "HomeTeam": {
             "_id": 66,
             "Name": "Manchester United FC",
@@ -884,9 +856,7 @@
     {
         "_id": 233357,
         "Status": "FINISHED",
-        "LastUpdated": {
-            "$date": "2019-04-13T20:30:07.000Z"
-        },
+        "LastUpdated": "2019-04-13T20:30:07.000Z",
         "HomeTeam": {
             "_id": 338,
             "Name": "Leicester City FC",
@@ -947,9 +917,7 @@
     {
         "_id": 233358,
         "Status": "FINISHED",
-        "LastUpdated": {
-            "$date": "2019-04-14T14:34:24.000Z"
-        },
+        "LastUpdated": "2019-04-14T14:34:24.000Z",
         "HomeTeam": {
             "_id": 328,
             "Name": "Burnley FC",
@@ -1010,9 +978,7 @@
     {
         "_id": 233359,
         "Status": "FINISHED",
-        "LastUpdated": {
-            "$date": "2019-04-14T14:34:24.000Z"
-        },
+        "LastUpdated": "2019-04-14T14:34:24.000Z",
         "HomeTeam": {
             "_id": 340,
             "Name": "Southampton FC",
@@ -1073,9 +1039,7 @@
     {
         "_id": 233360,
         "Status": "FINISHED",
-        "LastUpdated": {
-            "$date": "2019-04-14T18:58:05.000Z"
-        },
+        "LastUpdated": "2019-04-14T18:58:05.000Z",
         "HomeTeam": {
             "_id": 354,
             "Name": "Crystal Palace FC",
@@ -1136,9 +1100,7 @@
     {
         "_id": 233361,
         "Status": "FINISHED",
-        "LastUpdated": {
-            "$date": "2019-04-14T14:34:24.000Z"
-        },
+        "LastUpdated": "2019-04-14T14:34:24.000Z",
         "HomeTeam": {
             "_id": 397,
             "Name": "Brighton & Hove Albion FC",
@@ -1199,9 +1161,7 @@
     {
         "_id": 233362,
         "Status": "FINISHED",
-        "LastUpdated": {
-            "$date": "2019-04-16T21:20:02.000Z"
-        },
+        "LastUpdated": "2019-04-16T21:20:02.000Z",
         "HomeTeam": {
             "_id": 346,
             "Name": "Watford FC",
@@ -1262,9 +1222,7 @@
     {
         "_id": 233363,
         "Status": "FINISHED",
-        "LastUpdated": {
-            "$date": "2019-04-21T07:30:13.000Z"
-        },
+        "LastUpdated": "2019-04-21T07:30:13.000Z",
         "HomeTeam": {
             "_id": 76,
             "Name": "Wolverhampton Wanderers FC",
@@ -1325,9 +1283,7 @@
     {
         "_id": 233364,
         "Status": "FINISHED",
-        "LastUpdated": {
-            "$date": "2019-04-20T16:34:22.000Z"
-        },
+        "LastUpdated": "2019-04-20T16:34:22.000Z",
         "HomeTeam": {
             "_id": 65,
             "Name": "Manchester City FC",
@@ -1388,9 +1344,7 @@
     {
         "_id": 233365,
         "Status": "FINISHED",
-        "LastUpdated": {
-            "$date": "2019-04-20T22:04:14.000Z"
-        },
+        "LastUpdated": "2019-04-20T22:04:14.000Z",
         "HomeTeam": {
             "_id": 67,
             "Name": "Newcastle United FC",
@@ -1451,9 +1405,7 @@
     {
         "_id": 233366,
         "Status": "FINISHED",
-        "LastUpdated": {
-            "$date": "2019-04-22T14:20:06.000Z"
-        },
+        "LastUpdated": "2019-04-22T14:20:06.000Z",
         "HomeTeam": {
             "_id": 57,
             "Name": "Arsenal FC",
@@ -1514,9 +1466,7 @@
     {
         "_id": 233367,
         "Status": "FINISHED",
-        "LastUpdated": {
-            "$date": "2019-04-23T03:10:09.000Z"
-        },
+        "LastUpdated": "2019-04-23T03:10:09.000Z",
         "HomeTeam": {
             "_id": 61,
             "Name": "Chelsea FC",
@@ -1577,9 +1527,7 @@
     {
         "_id": 233368,
         "Status": "FINISHED",
-        "LastUpdated": {
-            "$date": "2019-04-21T17:29:28.000Z"
-        },
+        "LastUpdated": "2019-04-21T17:29:28.000Z",
         "HomeTeam": {
             "_id": 62,
             "Name": "Everton FC",
@@ -1640,9 +1588,7 @@
     {
         "_id": 233369,
         "Status": "FINISHED",
-        "LastUpdated": {
-            "$date": "2019-04-21T07:30:13.000Z"
-        },
+        "LastUpdated": "2019-04-21T07:30:13.000Z",
         "HomeTeam": {
             "_id": 394,
             "Name": "Huddersfield Town AFC",
@@ -1703,9 +1649,7 @@
     {
         "_id": 233370,
         "Status": "FINISHED",
-        "LastUpdated": {
-            "$date": "2019-04-22T14:20:06.000Z"
-        },
+        "LastUpdated": "2019-04-22T14:20:06.000Z",
         "HomeTeam": {
             "_id": 715,
             "Name": "Cardiff City FC",
@@ -1766,9 +1710,7 @@
     {
         "_id": 233371,
         "Status": "FINISHED",
-        "LastUpdated": {
-            "$date": "2019-04-21T07:30:13.000Z"
-        },
+        "LastUpdated": "2019-04-21T07:30:13.000Z",
         "HomeTeam": {
             "_id": 563,
             "Name": "West Ham United FC",
@@ -1829,9 +1771,7 @@
     {
         "_id": 233372,
         "Status": "FINISHED",
-        "LastUpdated": {
-            "$date": "2019-04-21T07:30:13.000Z"
-        },
+        "LastUpdated": "2019-04-21T07:30:13.000Z",
         "HomeTeam": {
             "_id": 1044,
             "Name": "AFC Bournemouth",

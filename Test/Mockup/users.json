@@ -1,661 +1,170 @@
 [
-    {
-        "_id": {
-            "$oid": "5c5b5d019922d50db047193e"
-        },
-        "Point": 30,
-        "Role": "ADMIN",
-        "Password": "$2a$11$B2rYvvBiRCT5PqlKsxiMyu9VO.STMpRfX6195gHBmV98j4JhY99I2",
-        "Email": "alexis-60@hotmail.fr",
-        "Username": "gubs",
-        "IsPrivate": false,
-        "TotalPointsUsedToBet": 20,
-        "Items": [
-            {
-                "_id": {
-                    "$oid": "000000000000000000000000"
-                },
-                "Type": "KEY",
-                "Name": "Key",
-                "Description": "Watch on detail any profile even private ",
-                "Cost": 75,
-                "Rarity": "Rare"
-            }
-        ]
-    },
-    {
-        "_id": {
-            "$oid": "5ca208229922d514c8df71f0"
-        },
-        "Point": 1,
-        "Role": "ADMIN",
-        "TotalPointsUsedToBet": 0,
-        "Password": "$2a$11$Z/vutFmyPyu9I6dksxVsxu4ZN84zimUbL85Tz/EMCbWOov6v1wHNq",
-        "Email": "florob95@gmail.com",
-        "Username": "Flo",
-        "IsPrivate": true,
-        "Items": [
-            {
-                "_id": {
-                    "$oid": "000000000000000000000000"
-                },
-                "Type": "LOOT_BOXE",
-                "Name": "Loot Boxe",
-                "Description": "Random item",
-                "Cost": 10,
-                "Rarity": "Epic"
-            },
-            {
-                "_id": {
-                    "$oid": "000000000000000000000000"
-                },
-                "Type": "LOOT_BOXE",
-                "Name": "Loot Boxe",
-                "Description": "Random item",
-                "Cost": 10,
-                "Rarity": "Epic"
-            }
-        ]
-    },
-    {
-        "_id": {
-            "$oid": "5ca3b79a9922d505387536f8"
-        },
-        "Point": 10000000000,
-        "Role": "ADMIN",
-        "TotalPointsUsedToBet": 0,
-        "Password": "$2a$11$qmBG.JZzp1aXTNPjHLHmXuszQnvQJzlojulBMLi5pnq2uvGDY1Dmi",
-        "Email": "lucasbourgeois60@hotmail.fr",
-        "Username": "LuluLaBidouille",
-        "IsPrivate": true,
-        "Items": [
-            {
-                "_id": {
-                    "$oid": "000000000000000000000000"
-                },
-                "Type": "LIFE",
-                "Name": "Life",
-                "Description": "Life for reset account",
-                "Cost": 25,
-                "Rarity": null
-            },
-            {
-                "_id": {
-                    "$oid": "000000000000000000000000"
-                },
-                "Type": "LIFE",
-                "Name": "Life",
-                "Description": "Life for reset account",
-                "Cost": 25,
-                "Rarity": null
-            },
-            {
-                "_id": {
-                    "$oid": "000000000000000000000000"
-                },
-                "Type": "LIFE",
-                "Name": "Life",
-                "Description": "Life for reset account",
-                "Cost": 25,
-                "Rarity": null
-            }
-        ]
-    },
-    {
-        "_id": {
-            "$oid": "5ca5c6ab9922d5030cd34969"
-        },
-        "Point": 83684,
-        "Role": "ADMIN",
-        "TotalPointsUsedToBet": 0,
-        "Password": "$2a$11$STjbLP1dHEPXnY8RKH5HIu.eW/XW/gfPGElYQqFfA8TBwMYTs.SWq",
-        "Email": "william@gmail.com",
-        "Username": "Predou",
-        "IsPrivate": false,
-        "Items": []
-    },
-    {
-        "_id": {
-            "$oid": "5cab7b289922d51520ac8561"
-        },
-        "Point": -4750,
-        "Role": "USER",
-        "TotalPointsUsedToBet": 0,
-        "Password": "$2a$11$H7sCTAhWvHb9hMSczxGqxeFNR/0ijg2EbXgzLVKqNtBL/1bE9X1ji",
-        "Email": "predou@gmail.com",
-        "Username": "Predouz",
-        "IsPrivate": false,
-        "Items": [
-            {
-                "_id": {
-                    "$oid": "000000000000000000000000"
-                },
-                "Type": "LIFE",
-                "Name": "Life",
-                "Description": null,
-                "Cost": 0
-            },
-            {
-                "_id": {
-                    "$oid": "000000000000000000000000"
-                },
-                "Type": "LIFE",
-                "Name": "Life",
-                "Description": null,
-                "Cost": 0
-            },
-            {
-                "_id": {
-                    "$oid": "000000000000000000000000"
-                },
-                "Type": "LIFE",
-                "Name": "Life",
-                "Description": null,
-                "Cost": 0
-            }
-        ]
-    },
-    {
-        "_id": {
-            "$oid": "5cab7c389922d51520ac8565"
-        },
-        "Point": -4880,
-        "Role": "USER",
-        "TotalPointsUsedToBet": 0,
-        "Password": "$2a$11$79Uvsd/QJswntnnz7JKeVuORNxT3xeSLpSFlH2PXCZEejp0SEJ/fu",
-        "Email": "william1@gmail.com",
-        "Username": "Predou1",
-        "IsPrivate": false,
-        "Items": [
-            {
-                "_id": {
-                    "$oid": "000000000000000000000000"
-                },
-                "Type": "LIFE",
-                "Name": "Life",
-                "Description": null,
-                "Cost": 0
-            },
-            {
-                "_id": {
-                    "$oid": "000000000000000000000000"
-                },
-                "Type": "LIFE",
-                "Name": "Life",
-                "Description": null,
-                "Cost": 0
-            },
-            {
-                "_id": {
-                    "$oid": "000000000000000000000000"
-                },
-                "Type": "LIFE",
-                "Name": "Life",
-                "Description": null,
-                "Cost": 0
-            }
-        ]
-    },
-    {
-        "_id": {
-            "$oid": "5cab7d6c9922d51520ac8593"
-        },
-        "Point": -5160,
-        "Role": "USER",
-        "TotalPointsUsedToBet": 0,
-        "Password": "$2a$11$qAznsu.wLBH8oXLcmvNOourFfvIHK.O3STq/XsGDn9f6XkF8RdVki",
-        "Email": "Predou2@gmail.com",
-        "Username": "Predou2",
-        "IsPrivate": false,
-        "Items": [
-            {
-                "_id": {
-                    "$oid": "000000000000000000000000"
-                },
-                "Type": "LIFE",
-                "Name": "Life",
-                "Description": null,
-                "Cost": 0
-            },
-            {
-                "_id": {
-                    "$oid": "000000000000000000000000"
-                },
-                "Type": "LIFE",
-                "Name": "Life",
-                "Description": null,
-                "Cost": 0
-            },
-            {
-                "_id": {
-                    "$oid": "000000000000000000000000"
-                },
-                "Type": "LIFE",
-                "Name": "Life",
-                "Description": null,
-                "Cost": 0
-            },
-            {
-                "_id": {
-                    "$oid": "000000000000000000000000"
-                },
-                "Type": "LOOT_BOXE",
-                "Name": "Loot Boxe",
-                "Description": "Random item",
-                "Cost": 10
-            },
-            {
-                "_id": {
-                    "$oid": "000000000000000000000000"
-                },
-                "Type": "LOOT_BOXE",
-                "Name": "Loot Boxe",
-                "Description": "Random item",
-                "Cost": 10
-            },
-            {
-                "_id": {
-                    "$oid": "000000000000000000000000"
-                },
-                "Type": "LOOT_BOXE",
-                "Name": "Loot Boxe",
-                "Description": "Random item",
-                "Cost": 10
-            },
-            {
-                "_id": {
-                    "$oid": "000000000000000000000000"
-                },
-                "Type": "LOOT_BOXE",
-                "Name": "Loot Boxe",
-                "Description": "Random item",
-                "Cost": 10
-            },
-            {
-                "_id": {
-                    "$oid": "000000000000000000000000"
-                },
-                "Type": "LOOT_BOXE",
-                "Name": "Loot Boxe",
-                "Description": "Random item",
-                "Cost": 10
-            },
-            {
-                "_id": {
-                    "$oid": "000000000000000000000000"
-                },
-                "Type": "LOOT_BOXE",
-                "Name": "Loot Boxe",
-                "Description": "Random item",
-                "Cost": 10
-            }
-        ]
-    },
-    {
-        "_id": {
-            "$oid": "5cb6d3f69922d50d38f3589f"
-        },
-        "Point": 175,
-        "Role": "USER",
-        "TotalPointsUsedToBet": 0,
-        "Password": "$2a$11$7h1CrCDrOgWNqnPDIIZ6d.ReUCt/ykn3R8gEoZJ3SaSggsfrLFipm",
-        "Email": "Williamwilliam@gmail.com",
-        "Username": "William1",
-        "IsPrivate": false,
-        "Items": []
-    },
-    {
-        "_id": {
-            "$oid": "5cbdfff69922d515bcfc0d72"
-        },
-        "Point": 350,
-        "Role": "USER",
-        "TotalPointsUsedToBet": 0,
-        "Password": "$2a$11$0H7AwYuiPEeH/OhZslvfy.HvwSEpDxi9NDafuI2.48am0Zkm0epc2",
-        "Email": "florian.robert@skillogs.com",
-        "Username": "Florian",
-        "IsPrivate": false,
-        "Items": [
-            {
-                "_id": {
-                    "$oid": "000000000000000000000000"
-                },
-                "Type": "LIFE",
-                "Name": "Life",
-                "Description": null,
-                "Cost": 0,
-                "Rarity": null
-            },
-            {
-                "_id": {
-                    "$oid": "000000000000000000000000"
-                },
-                "Type": "LIFE",
-                "Name": "Life",
-                "Description": null,
-                "Cost": 0,
-                "Rarity": null
-            },
-            {
-                "_id": {
-                    "$oid": "000000000000000000000000"
-                },
-                "Type": "LIFE",
-                "Name": "Life",
-                "Description": null,
-                "Cost": 0,
-                "Rarity": null
-            }
-        ]
-    },
-    {
-        "_id": {
-            "$oid": "5cc180149922d51724629f8e"
-        },
-        "Point": 4940,
-        "Role": "USER",
-        "TotalPointsUsedToBet": 0,
-        "Password": "$2a$11$tlhh.kvV/RMwSl.nwmfGduJUZwy6IYrAjbWIk9RSvNAy3rvMBQxlG",
-        "Email": "Dufaydylan60@gmail.com",
-        "Username": "Dylan",
-        "IsPrivate": false,
-        "Items": [
-            {
-                "_id": {
-                    "$oid": "000000000000000000000000"
-                },
-                "Type": "LIFE",
-                "Name": "Life",
-                "Description": null,
-                "Cost": 0,
-                "Rarity": null
-            },
-            {
-                "_id": {
-                    "$oid": "000000000000000000000000"
-                },
-                "Type": "LIFE",
-                "Name": "Life",
-                "Description": null,
-                "Cost": 0,
-                "Rarity": null
-            },
-            {
-                "_id": {
-                    "$oid": "000000000000000000000000"
-                },
-                "Type": "LIFE",
-                "Name": "Life",
-                "Description": null,
-                "Cost": 0,
-                "Rarity": null
-            }
-        ]
-    },
-    {
-        "_id": {
-            "$oid": "5cc1802f9922d51724629f8f"
-        },
-        "Point": 500,
-        "Role": "USER",
-        "TotalPointsUsedToBet": 0,
-        "Password": "$2a$11$x1xX2p/0uqzgLHnNKJMvd.rhduCODxdaRR4fXB6oNRHm0nK0cnzC2",
-        "Email": "Test@test.com",
-        "Username": "Vikotor",
-        "IsPrivate": false,
-        "Items": [
-            {
-                "_id": {
-                    "$oid": "000000000000000000000000"
-                },
-                "Type": "LIFE",
-                "Name": "Life",
-                "Description": null,
-                "Cost": 0,
-                "Rarity": null
-            },
-            {
-                "_id": {
-                    "$oid": "000000000000000000000000"
-                },
-                "Type": "LIFE",
-                "Name": "Life",
-                "Description": null,
-                "Cost": 0,
-                "Rarity": null
-            },
-            {
-                "_id": {
-                    "$oid": "000000000000000000000000"
-                },
-                "Type": "LIFE",
-                "Name": "Life",
-                "Description": null,
-                "Cost": 0,
-                "Rarity": null
-            }
-        ]
-    },
-    {
-        "_id": {
-            "$oid": "5cc1806e9922d51724629f90"
-        },
-        "Point": 130,
-        "Role": "USER",
-        "TotalPointsUsedToBet": 0,
-        "Password": "$2a$11$ZheStZWuxvwFXsNy6qlrXuDMQFgdUs97meRzUKTxtrZ8ZUP68.LCW",
-        "Email": "lbourge@aft-iftim.com",
-        "Username": "Lbo",
-        "IsPrivate": false,
-        "Items": [
-            {
-                "_id": {
-                    "$oid": "000000000000000000000000"
-                },
-                "Type": "LIFE",
-                "Name": "Life",
-                "Description": null,
-                "Cost": 0,
-                "Rarity": null
-            },
-            {
-                "_id": {
-                    "$oid": "000000000000000000000000"
-                },
-                "Type": "LIFE",
-                "Name": "Life",
-                "Description": null,
-                "Cost": 0,
-                "Rarity": null
-            },
-            {
-                "_id": {
-                    "$oid": "000000000000000000000000"
-                },
-                "Type": "LIFE",
-                "Name": "Life",
-                "Description": "Life for reset account",
-                "Cost": 25,
-                "Rarity": "Epic"
-            },
-            {
-                "_id": {
-                    "$oid": "000000000000000000000000"
-                },
-                "Type": "LIFE",
-                "Name": "Life",
-                "Description": "Life for reset account",
-                "Cost": 25,
-                "Rarity": "Epic"
-            },
-            {
-                "_id": {
-                    "$oid": "000000000000000000000000"
-                },
-                "Type": "BOMB",
-                "Name": "Bomb",
-                "Description": "Can be used on players to make them lose 30 coins per bomb.",
-                "Cost": 50,
-                "Rarity": "Common"
-            },
-            {
-                "_id": {
-                    "$oid": "000000000000000000000000"
-                },
-                "Type": "BOMB",
-                "Name": "Bomb",
-                "Description": "Can be used on players to make them lose 30 coins per bomb.",
-                "Cost": 50,
-                "Rarity": "Common"
-            }
-        ]
-    },
-    {
-        "_id": {
-            "$oid": "5cc89fdb9922d507603f36d8"
-        },
-        "Point": 500,
-        "Role": "USER",
-        "TotalPointsUsedToBet": 0,
-        "Password": "$2a$11$rWOzH3GCK/fh22nT1v.UIOZAkbb.LruaGL3.xXlBlvOY8sUlDVZ0m",
-        "Email": "texier.lisa@hotmail.fr",
-        "Username": "Lisa",
-        "IsPrivate": false,
-        "IsEnabled": false,
-        "Items": [
-            {
-                "_id": {
-                    "$oid": "000000000000000000000000"
-                },
-                "Type": "LIFE",
-                "Name": "Life",
-                "Description": null,
-                "Cost": 0,
-                "Rarity": null
-            },
-            {
-                "_id": {
-                    "$oid": "000000000000000000000000"
-                },
-                "Type": "LIFE",
-                "Name": "Life",
-                "Description": null,
-                "Cost": 0,
-                "Rarity": null
-            },
-            {
-                "_id": {
-                    "$oid": "000000000000000000000000"
-                },
-                "Type": "LIFE",
-                "Name": "Life",
-                "Description": null,
-                "Cost": 0,
-                "Rarity": null
-            }
-        ]
-    },
-    {
-        "_id": {
-            "$oid": "5ccabf859922d507603f36e3"
-        },
-        "Point": 225,
-        "Role": "USER",
-        "TotalPointsUsedToBet": 0,
-        "Password": "$2a$11$WdRkOIMcBhzqvy9ZeDjAoOM1Jqn2GcCsdAfLd0iz7Tzr/WwoDx0Ai",
-        "Email": "ddufay@nodevo.com",
-        "Username": "dylan",
-        "IsPrivate": false,
-        "IsEnabled": false,
-        "Items": [
-            {
-                "_id": {
-                    "$oid": "000000000000000000000000"
-                },
-                "Type": "LIFE",
-                "Name": "Life",
-                "Description": null,
-                "Cost": 0,
-                "Rarity": null
-            },
-            {
-                "_id": {
-                    "$oid": "000000000000000000000000"
-                },
-                "Type": "LIFE",
-                "Name": "Life",
-                "Description": null,
-                "Cost": 0,
-                "Rarity": null
-            },
-            {
-                "_id": {
-                    "$oid": "5cc2a9ec9922d50c60e6d9af"
-                },
-                "Type": "LIFE",
-                "Name": "Life",
-                "Description": "Life for reset your account.",
-                "Cost": 150,
-                "Rarity": "Epic"
-            },
-            {
-                "_id": {
-                    "$oid": "000000000000000000000000"
-                },
-                "Type": "BOMB",
-                "Name": "Bomb",
-                "Description": "Can be used on players to make them lose 30 coins per bomb.",
-                "Cost": 50,
-                "Rarity": "Common"
-            },
-            {
-                "_id": {
-                    "$oid": "000000000000000000000000"
-                },
-                "Type": "KEY",
-                "Name": "Key",
-                "Description": "Allow you to spy any profile even private ones.",
-                "Cost": 75,
-                "Rarity": "Rare"
-            },
-            {
-                "_id": {
-                    "$oid": "000000000000000000000000"
-                },
-                "Type": "LIFE",
-                "Name": "Life",
-                "Description": "Life for reset your account.",
-                "Cost": 150,
-                "Rarity": "Epic"
-            }
-        ]
-    },
-    {
-        "_id": {
-            "$oid": "5ccad67e9922d507603f36e5"
-        },
-        "Point": 40,
-        "Role": "USER",
-        "TotalPointsUsedToBet": 120,
-        "Password": "$2a$11$IH5PrLSkdjX0jbMq9/CIheADwpCXEPuWiGii3PNc6itiLFaperiie",
-        "Email": "test@yopmail.com",
-        "Username": "PCH",
-        "IsPrivate": false,
-        "IsEnabled": false,
-        "Items": []
-    },
-    {
-        "_id": {
-            "$oid": "5ccadd9b9922d507603f36e9"
-        },
-        "Point": 940,
-        "Role": "USER",
-        "TotalPointsUsedToBet": 40,
-        "Password": "$2a$11$0DpLlM1amshZQnszugiSSOlwZuTArdBv702mrgW40L9cG4FpOJYcq",
-        "Email": "thomas.focqueu@hotmail.fr",
-        "Username": "admin",
-        "IsPrivate": false,
-        "IsEnabled": false,
-        "Items": []
-    }
+  {
+    "_id" : "5caf2df3a858b59514cf47f5",
+    "Point" : 97274.0,
+    "Role" : "ADMIN",
+    "TotalPointsUsedToBet" : 2375760,
+    "Password" : "$2a$11$VkbDm31m2.qfaoI05TGDMeLaItItzK7r51jTw.WsQb49qQTZMCIRK",
+    "Email" : "lucasbourgeois60@hotmail.fr",
+    "Username" : "lbo",
+    "IsPrivate" : false,
+    "Items" : [
+      {
+        "_id": "5cc2a9ec9922d50c60e6d9a9",
+        "Type": "BOMB",
+        "Name": "Bomb",
+        "Description": "Can be used on players to make them lose 30 coins per bomb.",
+        "Cost": 50,
+        "Rarity": "Common"
+      },
+      {
+        "_id": "5cc2a9ec9922d50c60e6d9aa",
+        "Type": "KEY",
+        "Name": "Key",
+        "Description": "Allow you to spy any profile even private ones.",
+        "Cost": 75,
+        "Rarity": "Rare"
+      },
+      {
+        "_id": "5cc2a9ec9922d50c60e6d9ab",
+        "Type": "MULTIPLY_BY_TWO",
+        "Name": "2x Multiplier",
+        "Description": "Double your incomes on a bet results.",
+        "Cost": 125,
+        "Rarity": "Rare"
+      },
+      {
+        "_id": "5cc2a9ec9922d50c60e6d9ac",
+        "Type": "MYSTERY",
+        "Name": "Mystery item",
+        "Description": "Get a random item of any rarity",
+        "Cost": 100,
+        "Rarity": "Rare"
+      },
+      {
+        "_id": "5cc2a9ec9922d50c60e6d9ad",
+        "Type": "MULTIPLY_BY_FIVE",
+        "Name": "5x Multiplier",
+        "Description": "Multiply the coins earned on a bet by 5.",
+        "Cost": 250,
+        "Rarity": "Epic"
+      },
+      {
+        "_id": "5cc2a9ec9922d50c60e6d9ae",
+        "Type": "LOOT_BOX",
+        "Name": "Loot Box",
+        "Description": "Get random items of any rarity",
+        "Cost": 175,
+        "Rarity": "Legendary"
+      },
+      {
+        "_id": "5cc2a9ec9922d50c60e6d9af",
+        "Type": "LIFE",
+        "Name": "Life",
+        "Description": "Life for reset your account.",
+        "Cost": 150,
+        "Rarity": "Epic"
+      },
+      {
+        "_id": "5cc2a9ec9922d50c60e6d9b0",
+        "Type": "MULTIPLY_BY_TEN",
+        "Name": "x10 Multiplier",
+        "Description": "Multiply the coins earned on a bet by 10.",
+        "Cost": 500,
+        "Rarity": "Legendary"
+      }
+    ]
+  },
+  {
+    "_id" : "5cb0576ba858b534f4fd22d1",
+    "Point" : 29940.0,
+    "Role" : "USER",
+    "TotalPointsUsedToBet" : 5120,
+    "Password" : "$2a$11$/B7DSOdbtMWMeYB7gxSEle7RR.Vj68M5w3DiJIqyhVBr0rocGhnRK",
+    "Email" : "lbourge@aft-iftim.com",
+    "Username" : "Lbo2",
+    "IsPrivate" : false,
+    "Items" : [
+      {
+        "_id" : "5cb8368da858b563b0cdb1bc",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset your account.",
+        "Cost" : 150,
+        "Rarity" : "Legendary"
+      },
+      {
+        "_id" : "5cb8368da858b563b0cdb1ba",
+        "Type" : "MULTIPLY_BY_FIVE",
+        "Name" : "5x Multiplier",
+        "Description" : "Multiply the coins earned on a bet by 5.",
+        "Cost" : 100,
+        "Rarity" : "Epic"
+      }
+    ]
+  },
+  {
+    "_id" : "5ca208229922d514c8df71f0",
+    "Point" : 1,
+    "Role" : "ADMIN",
+    "TotalPointsUsedToBet" : 0,
+    "Password" : "$2a$11$Z/vutFmyPyu9I6dksxVsxu4ZN84zimUbL85Tz/EMCbWOov6v1wHNq",
+    "Email" : "florob95@gmail.com",
+    "Username" : "Flo",
+    "IsPrivate" : true,
+    "Items" : [
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "LOOT_BOXE",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 10,
+        "Rarity" : "Epic"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "LOOT_BOXE",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 10,
+        "Rarity" : "Epic"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "LOOT_BOXE",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 10,
+        "Rarity" : "Epic"
+      }
+    ]
+  },
+  {
+    "_id" : "5ca5c6ab9922d5030cd34969",
+    "Point" : 30.0,
+    "Role" : "ADMIN",
+    "TotalPointsUsedToBet" : 0,
+    "Password" : "$2a$11$STjbLP1dHEPXnY8RKH5HIu.eW/XW/gfPGElYQqFfA8TBwMYTs.SWq",
+    "Email" : "william@gmail.com",
+    "Username" : "Predou",
+    "IsPrivate" : false,
+    "Items" : [
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "LOOT_BOXE",
+        "Name" : "Loot Boxe",
+        "Description" : "Random item",
+        "Cost" : 10,
+        "Rarity" : "Epic"
+      },
+      {
+        "_id" : "000000000000000000000000",
+        "Type" : "LIFE",
+        "Name" : "Life",
+        "Description" : "Life for reset account",
+        "Cost" : 25,
+        "Rarity" : "Rare"
+      }
+    ]
+  }
 ]

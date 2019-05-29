@@ -24,7 +24,7 @@ namespace Test.Controller
     {
         private UsersController _usersController;
         private IUserManager _userManager;
-        private static List<User> _users = JsonConvert.DeserializeObject<List<User>>(TestHelper.GetDbResponseByCollectionAndFileName("user", "users"));
+        private static List<User> _users = JsonConvert.DeserializeObject<List<User>>(TestHelper.GetDbResponseByCollectionAndFileName("users"));
         private User _user = _users[0];
 
         private Dictionary<string, object> _data;
@@ -134,16 +134,49 @@ namespace Test.Controller
             _usersController.Request.Content = new StringContent(_user.ToJson(), Encoding.UTF8, "application/json");
             _userManager.CanUpdate("1", _user).Returns(canUpdate);
             _userManager.GetUser("1").Returns(_user);
+
             var action = await _usersController.Put("1", _user);
             var response = await action.ExecuteAsync(new CancellationToken());
             await _userManager.Received().CanUpdate(Arg.Any<string>(), Arg.Any<User>());
-            await _userManager.Received().ChangeUser(Arg.Any<string>(), Arg.Any<User>());
-            await _userManager.Received().GetUser(Arg.Any<string>());
             Assert.False(response.StatusCode == HttpStatusCode.InternalServerError, "InternalServerError is thrown");
-            Assert.IsTrue(response.StatusCode == HttpStatusCode.OK 
-                || response.StatusCode == HttpStatusCode.BadRequest
-                || response.StatusCode == HttpStatusCode.NotFound
-                , "Status code is valid");
+
+            if (canUpdate == "")
+            {
+                await _userManager.Received().ChangeUser(Arg.Any<string>(), Arg.Any<User>());
+                await _userManager.Received().GetUser(Arg.Any<string>());
+                Assert.IsTrue(response.StatusCode == HttpStatusCode.OK
+                              || response.StatusCode == HttpStatusCode.NotFound
+                    , "Status code is valid");
+            }
+            else
+            {
+                Assert.IsTrue( response.StatusCode == HttpStatusCode.BadRequest
+                              || response.StatusCode == HttpStatusCode.NotFound
+                    , "Status code is valid");
+            }
+        }
+
+        [Test]
+        public async Task AssertThatPutResetReturnsAValidResponseCodeAndCallsManager()
+        {
+            InitRequestHelper(HttpMethod.Put.Method);
+            _usersController.Request.Content = new StringContent(_user.ToJson(), Encoding.UTF8, "application/json");
+            GetUserByToken(_usersController.Request).Returns(Task.FromResult(_user));
+            var action = await _usersController.Put();
+            var response = await action.ExecuteAsync(new CancellationToken());
+            Assert.False(response.StatusCode == HttpStatusCode.InternalServerError, "InternalServerError is thrown");
+
+            if (_user.Items.FindAll(i => i.Type == Item.Life).Count == 0)
+            {
+                Assert.IsTrue(response.StatusCode == HttpStatusCode.BadRequest
+                    , "Status code is valid");
+            }
+            else
+            {
+                await _userManager.Received().ResetUser(Arg.Any<User>());
+                Assert.IsTrue(response.StatusCode == HttpStatusCode.OK
+                    , "Status code is valid");
+            }
         }
 
         [TestCase(true)]
@@ -214,15 +247,25 @@ namespace Test.Controller
             Assert.IsTrue(response.StatusCode == HttpStatusCode.OK || response.StatusCode == HttpStatusCode.NotFound, "Status code is valid");
         }
 
-        [Test]
-        public async Task AssertThatAddUserReturnsAValidResponseCodeAndCallsManager()
+        [TestCase("")]
+        [TestCase("email already taken")]
+        public async Task AssertThatAddUserReturnsAValidResponseCodeAndCallsManager(string userExist)
         {   
             InitRequestHelper(HttpMethod.Post.Method);
+            GetUserManager().UsernameAndEmailExist(_user).Returns(userExist);
+
             var action = await _usersController.AddUser(_user);
             var response = await action.ExecuteAsync(new CancellationToken());
-            await _userManager.Received().AddUser(Arg.Any<User>(), Arg.Any<string>());
             Assert.False(response.StatusCode == HttpStatusCode.InternalServerError, "InternalServerError is thrown");
-            Assert.IsTrue(response.StatusCode == HttpStatusCode.Created, "Status code is valid");
+            if (userExist.Length > 0)
+            {
+                Assert.IsTrue(response.StatusCode == HttpStatusCode.BadRequest, "Status code is valid");
+            }
+            else
+            {
+                await _userManager.Received().AddUser(Arg.Any<User>(), Arg.Any<string>());
+                Assert.IsTrue(response.StatusCode == HttpStatusCode.Created, "Status code is valid");
+            }
         }
 
 

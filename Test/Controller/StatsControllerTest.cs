@@ -132,7 +132,7 @@ namespace Test.Controller
         }
 
         [Test]
-        public async Task AssertGetPucliUserIncomesPerMonthReturnsAValidResponseCodeAndCallsManager()
+        public async Task AssertGetPublicUserIncomesPerMonthReturnsAValidResponseCodeAndCallsManager()
         {
             var action = await _statController.GetPublicUserIncomesPerMonth("1");
             var response = await action.ExecuteAsync(new CancellationToken());

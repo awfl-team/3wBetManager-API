@@ -33,7 +33,7 @@ namespace Test.Controller
         private HttpRequestMessage _httpRequestPost = new HttpRequestMessage(HttpMethod.Post, "http://localhost:9000/");
         private HttpRequestMessage _httpRequestPut = new HttpRequestMessage(HttpMethod.Put, "http://localhost:9000/");
         private List<Bet> _bets = new List<Bet>();
-        private static List<User> _users = JsonConvert.DeserializeObject<List<User>>(TestHelper.GetDbResponseByCollectionAndFileName("user", "users"));
+        private static List<User> _users = JsonConvert.DeserializeObject<List<User>>(TestHelper.GetDbResponseByCollectionAndFileName("users"));
         private User _user = _users[0];
 
         private readonly string _ip = "127.0.0.1";
@@ -125,9 +125,9 @@ namespace Test.Controller
         public async Task AssertThatGetBetsCurrentLimitReturnsAValidResponseCodeAndCallsManager()
         {
             InitRequestHelper(HttpMethod.Get.Method);
-            var action = await _betController.GetBetsResultLimit();
+            var action = await _betController.GetBetsCurrentLimit();
             var response = await action.ExecuteAsync(new CancellationToken());
-            await _betManager.Received().GetFinishBetsLimited(Arg.Any<User>());
+            await _betManager.Received().GetCurrentBetsLimited(Arg.Any<User>());
             Assert.False(response.StatusCode == HttpStatusCode.InternalServerError, "InternalServerError is thrown");
             Assert.IsTrue(response.StatusCode == HttpStatusCode.OK, "Status code is valid");
         }

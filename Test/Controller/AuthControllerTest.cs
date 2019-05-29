@@ -25,7 +25,7 @@ namespace Test.Controller
 
         private AuthController _authController;
         private IUserManager _userManager;
-        private static List<User> _users = JsonConvert.DeserializeObject<List<User>>(TestHelper.GetDbResponseByCollectionAndFileName("user", "users"));
+        private static List<User> _users = JsonConvert.DeserializeObject<List<User>>(TestHelper.GetDbResponseByCollectionAndFileName("users"));
         private User _user = _users[0];
 
         private static TokenManager _tokenManager;

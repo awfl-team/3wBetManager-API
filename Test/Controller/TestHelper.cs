@@ -12,9 +12,9 @@ namespace Test.Controller
             NormalizeAppDirectoryPath();
         }
 
-        public static string GetDbResponseByCollectionAndFileName(string collectionName, string fileName)
+        public static string GetDbResponseByCollectionAndFileName(string fileName)
         {
-            return File.ReadAllText(_appDirectory+"\\DbJson\\"+ collectionName+"\\"+fileName+".json");
+            return File.ReadAllText(_appDirectory+"\\Mockup\\"+ fileName +".json");
         }
 
         private static void NormalizeAppDirectoryPath()

@@ -1,9 +1,7 @@
 {
   "_id": 233323,
   "Status": "FINISHED",
-  "LastUpdated": {
-    "$date": "2019-04-24T23:43:13.000Z"
-  },
+  "LastUpdated": "2019-04-24T23:43:13.000Z",
   "HomeTeam": {
     "_id": 76,
     "Name": "Wolverhampton Wanderers FC",
