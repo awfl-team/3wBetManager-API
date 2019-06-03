@@ -12,7 +12,7 @@ using NUnit.Framework;
 namespace Test.DAO
 {
     [TestFixture]
-    public class CompetitionDaoTest
+    internal class CompetitionDaoTest
     {
 
         private Competition _competition;

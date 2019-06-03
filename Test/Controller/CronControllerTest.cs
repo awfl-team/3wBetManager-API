@@ -1,18 +1,48 @@
-﻿using _3wBetManager_API.Controllers;
+﻿using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Web.Http;
 using Manager;
+using Manager.Interfaces;
+using Microsoft.Owin;
+using Models;
 using NSubstitute;
 using NUnit.Framework;
+using _3wBetManager_API.Controllers;
 
 namespace Test.Controller
 {
     [TestFixture]
-    public class CronControllerTest
+    internal class CronControllerTest
     {
-        [SetUp]
-        public void SetUp()
+        private CronController _cronController;
+        private IFootballDataManager _footballDataManager;
+        private Dictionary<string, object> _data;
+        private OwinContext _context;
+        private AuthenticationHeaderValue _authHeader;
+
+        private readonly string _ip = "127.0.0.1";
+        private readonly string _token =
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imx1Y2FzYm91cmdlb2lzNjBAaG90bWFpbC5mciIsInJvbGUiOiJBRE1JTiIsInVuaXF1ZV9uYW1lIjoibGJvIiwibmJmIjoxNTU4NTMyMDI3LCJleHAiOjE1OTAxNTQ0MjcsImlhdCI6MTU1ODUzMjAyN30.a3Co739HOGU5cBmziUdOt6-YuzLau0JVfW0gj5khonQ";
+
+        [OneTimeSetUp]
+        public void OneTimeSetUp()
         {
-            _cronController = new CronController();
-            _footballDataManager = Substitute.For<FootballDataManager>();
+            _data = new Dictionary<string, object>() { { "Authorization", _token } };
+            _cronController = new CronController()
+            {
+                Configuration = new HttpConfiguration(),
+                Request = new HttpRequestMessage(HttpMethod.Get, "http://localhost:9000/")
+            };
+            _context = new OwinContext(_data);
+            _authHeader = new AuthenticationHeaderValue(_token);
+            _cronController.Request.SetOwinContext(_context);
+            _cronController.Request.GetOwinContext().Request.RemoteIpAddress = _ip;
+            _cronController.Request.Headers.Authorization = _authHeader;
+            _footballDataManager = SingletonManager.Instance.SetFootballDataManager(Substitute.For<IFootballDataManager>());
         }
 
         [TearDown]
@@ -21,31 +51,34 @@ namespace Test.Controller
             _footballDataManager.ClearReceivedCalls();
         }
 
-        private CronController _cronController;
-        private FootballDataManager _footballDataManager;
-
-        /*[Test]
-        public void RefreshCompetitionsTest()
+        [Test]
+        public async Task AssertThatRefreshCompetitionsReturnsAValidResponseCodeAndCallsManager()
         {
-            var refreshCompetitions = _cronController.RefreshCompetitions();
-            _footballDataManager.Received().GetAllCompetitions();
-            Assert.IsInstanceOf<Task<IHttpActionResult>>(refreshCompetitions);
+            var action = await _cronController.RefreshCompetitions();
+            var response = await action.ExecuteAsync(new CancellationToken());
+            await _footballDataManager.Received().GetAllCompetitions();
+            Assert.False(response.StatusCode == HttpStatusCode.InternalServerError, "InternalServerError is thrown");
+            Assert.IsTrue(response.IsSuccessStatusCode, "Status code is success");
         }
 
         [Test]
-        public void RefreshMatchTest()
+        public async Task AssertThatRefreshTeamsReturnsAValidResponseCodeAndCallsManager()
         {
-            var refreshMatch = _cronController.RefreshCompetitions();
-            _footballDataManager.Received().GetAllMatchForAWeek();
-            Assert.IsInstanceOf<Task<IHttpActionResult>>(refreshMatch);
+            var action = await _cronController.RefreshTeams();
+            var response = await action.ExecuteAsync(new CancellationToken());
+            await _footballDataManager.Received().GetAllTeams();
+            Assert.False(response.StatusCode == HttpStatusCode.InternalServerError, "InternalServerError is thrown");
+            Assert.IsTrue(response.IsSuccessStatusCode, "Status code is success");
         }
 
         [Test]
-        public void RefreshTeamTest()
+        public async Task AssertThatRefreshMatchesReturnsAValidResponseCodeAndCallsManager()
         {
-            var refreshTeam = _cronController.RefreshCompetitions();
-            _footballDataManager.Received().GetAllTeams();
-            Assert.IsInstanceOf<Task<IHttpActionResult>>(refreshTeam);
-        }*/
+            var action = await _cronController.RefreshMatches();
+            var response = await action.ExecuteAsync(new CancellationToken());
+            await _footballDataManager.Received().GetAllMatchForAWeek();
+            Assert.False(response.StatusCode == HttpStatusCode.InternalServerError, "InternalServerError is thrown");
+            Assert.IsTrue(response.IsSuccessStatusCode, "Status code is success");
+        }
     }
 }

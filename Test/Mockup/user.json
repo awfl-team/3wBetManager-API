@@ -1,0 +1,20 @@
+{
+    "_id": "5c5b5d019922d50db047193e",
+    "Point": 30,
+    "Role": "ADMIN",
+    "Password": "aaaaaaaaaaaaaaaa",
+    "Email": "alexis-60@hotmail.fr",
+    "Username": "gubs",
+    "IsPrivate": false,
+    "TotalPointsUsedToBet": 20,
+    "Items": [
+        {
+            "_id": "000000000000000000000000",
+            "Type": "KEY",
+            "Name": "Key",
+            "Description": "Watch on detail any profile even private ",
+            "Cost": 75,
+            "Rarity": "Rare"
+        }
+    ]
+}

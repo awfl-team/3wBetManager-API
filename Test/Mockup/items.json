@@ -1,0 +1,66 @@
+[
+    {
+        "_id": "5cc2a9ec9922d50c60e6d9a9",
+        "Type": "BOMB",
+        "Name": "Bomb",
+        "Description": "Can be used on players to make them lose 30 coins per bomb.",
+        "Cost": 50,
+        "Rarity": "Common"
+    },
+    {
+        "_id": "5cc2a9ec9922d50c60e6d9aa",
+        "Type": "KEY",
+        "Name": "Key",
+        "Description": "Allow you to spy any profile even private ones.",
+        "Cost": 75,
+        "Rarity": "Rare"
+    },
+    {
+        "_id": "5cc2a9ec9922d50c60e6d9ab",
+        "Type": "MULTIPLY_BY_TWO",
+        "Name": "2x Multiplier",
+        "Description": "Double your incomes on a bet results.",
+        "Cost": 125,
+        "Rarity": "Rare"
+    },
+    {
+        "_id": "5cc2a9ec9922d50c60e6d9ac",
+        "Type": "MYSTERY",
+        "Name": "Mystery item",
+        "Description": "Get a random item of any rarity",
+        "Cost": 100,
+        "Rarity": "Rare"
+    },
+    {
+        "_id": "5cc2a9ec9922d50c60e6d9ad",
+        "Type": "MULTIPLY_BY_FIVE",
+        "Name": "5x Multiplier",
+        "Description": "Multiply the coins earned on a bet by 5.",
+        "Cost": 250,
+        "Rarity": "Epic"
+    },
+    {
+        "_id": "5cc2a9ec9922d50c60e6d9ae",
+        "Type": "LOOT_BOX",
+        "Name": "Loot Box",
+        "Description": "Get random items of any rarity",
+        "Cost": 175,
+        "Rarity": "Legendary"
+    },
+    {
+        "_id": "5cc2a9ec9922d50c60e6d9af",
+        "Type": "LIFE",
+        "Name": "Life",
+        "Description": "Life for reset your account.",
+        "Cost": 150,
+        "Rarity": "Epic"
+    },
+    {
+        "_id": "5cc2a9ec9922d50c60e6d9b0",
+        "Type": "MULTIPLY_BY_TEN",
+        "Name": "x10 Multiplier",
+        "Description": "Multiply the coins earned on a bet by 10.",
+        "Cost": 500,
+        "Rarity": "Legendary"
+    }
+]

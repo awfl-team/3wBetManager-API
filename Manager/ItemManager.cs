@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using DAO;
 using DAO.Interfaces;
@@ -44,13 +45,11 @@ namespace Manager
 
         public async Task<Item> AddMysteryItemToUser(User user)
         {
-            var items = await _itemDao.FindItemsFiltered(Item.Mystery);
-            var randomizer = new Random();
-            var item = items[randomizer.Next(items.Count)];
+            var items = await GenerateLoot(Item.LootBox);
 
-            await _userDao.AddUserItem(item, user);
+            await _userDao.AddUserItem(items.First(), user);
 
-            return item;
+            return items.First();
         }
 
         public async Task<User> UseBomb(string userId)
@@ -78,8 +77,21 @@ namespace Manager
             var rareItems = items.FindAll(i => i.Rarity == Item.Rare);
             var epicItems = items.FindAll(i => i.Rarity == Item.Epic);
             var legendaryItems = items.FindAll(i => i.Rarity == Item.Legendary);
+            var maxItemToLoot = 0;
+            switch (itemType)
+            {
+                case Item.Mystery:
+                    maxItemToLoot = 1;
+                    break;
+                case Item.LootBox:
+                    maxItemToLoot = Item.MaxLoot;
+                    break;
+                default:
+                    maxItemToLoot = Item.MaxLoot;
+                    break;
+            }
 
-            while (itemLooted.Count < Item.MaxLoot)
+            while (itemLooted.Count < maxItemToLoot)
             {
                 var lootDropChanceFactor = randomizer.NextDouble() * 100;
 
@@ -207,12 +219,12 @@ namespace Manager
 
         public async Task<List<Item>> GetAllItems()
         {
-            return await SingletonDao.Instance.ItemDao.FindAllItems();
+            return await _itemDao.FindAllItems();
         }
 
         public async Task ChangeItem(string id, Item item)
         {
-            await SingletonDao.Instance.ItemDao.UpdateItem(id, item);
+            await _itemDao.UpdateItem(id, item);
         }
     }
 }

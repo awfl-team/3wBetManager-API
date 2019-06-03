@@ -12,7 +12,7 @@ namespace _3wBetManager_API.Controllers
         [HttpGet]
         public async Task<IHttpActionResult> GetAll()
         {
-            return await HandleError(async () => Ok(await SingletonDao.Instance.CompetitionDao.FindAllCompetitions()));
+            return await HandleError(async () => Ok(await GetCompetitionManager().GetAllCompetition()));
         }
     }
 }

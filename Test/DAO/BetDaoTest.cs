@@ -12,7 +12,7 @@ using NUnit.Framework;
 namespace Test.DAO
 {
     [TestFixture]
-    public class BetDaoTest
+    internal class BetDaoTest
     {
         private Bet _bet;
         private IMongoCollection<Bet> _collection;
@@ -24,7 +24,7 @@ namespace Test.DAO
         private ExpressionFilterDefinition<Bet> _filterExpression;
 
         [SetUp]
-        public void SetUp()
+        public void OneTimeSetUp()
         {
             _collection = Substitute.For<IMongoCollection<Bet>>();
             _database = Substitute.For<IMongoDatabase>();

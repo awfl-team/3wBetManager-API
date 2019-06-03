@@ -1,0 +1,98 @@
+[
+    {
+        "_id": 2000,
+        "Name": "FIFA World Cup",
+        "Code": "WC",
+        "EmblemUrl": null,
+        "Plan": "TIER_ONE",
+        "LastUpdated": "2018-08-23T12:16:17Z"
+    },
+    {
+        "_id": 2001,
+        "Name": "UEFA Champions League",
+        "Code": "CL",
+        "EmblemUrl": "https://upload.wikimedia.org/wikipedia/en/b/bf/UEFA_Champions_League_logo_2.svg",
+        "Plan": "TIER_ONE",
+        "LastUpdated": "2019-05-09T15:20:02Z"
+    },
+    {
+        "_id": 2002,
+        "Name": "Bundesliga",
+        "Code": "BL1",
+        "EmblemUrl": null,
+        "Plan": "TIER_ONE",
+        "LastUpdated": "2019-05-27T22:30:42Z"
+    },
+    {
+        "_id": 2003,
+        "Name": "Eredivisie",
+        "Code": "DED",
+        "EmblemUrl": null,
+        "Plan": "TIER_ONE",
+        "LastUpdated": "2019-05-25T22:31:06Z"
+    },
+    {
+        "_id": 2013,
+        "Name": "Série A",
+        "Code": "BSA",
+        "EmblemUrl": null,
+        "Plan": "TIER_ONE",
+        "LastUpdated": "2019-05-27T21:10:01Z"
+    },
+    {
+        "_id": 2014,
+        "Name": "Primera Division",
+        "Code": "PD",
+        "EmblemUrl": null,
+        "Plan": "TIER_ONE",
+        "LastUpdated": "2019-05-19T22:40:09Z"
+    },
+    {
+        "_id": 2015,
+        "Name": "Ligue 1",
+        "Code": "FL1",
+        "EmblemUrl": null,
+        "Plan": "TIER_ONE",
+        "LastUpdated": "2019-05-25T09:45:01Z"
+    },
+    {
+        "_id": 2016,
+        "Name": "Championship",
+        "Code": "ELC",
+        "EmblemUrl": null,
+        "Plan": "TIER_ONE",
+        "LastUpdated": "2019-05-27T22:51:02Z"
+    },
+    {
+        "_id": 2017,
+        "Name": "Primeira Liga",
+        "Code": "PPL",
+        "EmblemUrl": null,
+        "Plan": "TIER_ONE",
+        "LastUpdated": "2019-05-20T22:05:06Z"
+    },
+    {
+        "_id": 2018,
+        "Name": "European Championship",
+        "Code": "EC",
+        "EmblemUrl": null,
+        "Plan": "TIER_ONE",
+        "LastUpdated": "2018-08-23T12:16:01Z"
+    },
+    {
+        "_id": 2019,
+        "Name": "Serie A",
+        "Code": "SA",
+        "EmblemUrl": null,
+        "Plan": "TIER_ONE",
+        "LastUpdated": "2019-05-27T15:35:05Z"
+    },
+    {
+        "_id": 2021,
+        "Name": "Premier League",
+        "Code": "PL",
+        "EmblemUrl": null,
+        "Plan": "TIER_ONE",
+        "LastUpdated": "2019-05-12T20:05:45Z"
+    }
+]

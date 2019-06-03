@@ -15,7 +15,7 @@ namespace _3wBetManager_API.Controllers
             return await HandleError(async () =>
             {
                 var user = await GetUserByToken(Request);
-                return Ok(await GetUserManager().GetUserCoinStats(user));
+                return Ok<dynamic>(await GetUserManager().GetUserCoinStats(user));
             });
         }
 
@@ -26,7 +26,7 @@ namespace _3wBetManager_API.Controllers
             return await HandleError(async () =>
             {
                 var user = await GetUserByToken(Request);
-                return Ok(await GetBetManager().GetUserIncomesPerMonth(user));
+                return Ok<dynamic>(await GetBetManager().GetUserIncomesPerMonth(user));
             });
         }
 
@@ -38,7 +38,7 @@ namespace _3wBetManager_API.Controllers
             {
                 var user = await GetUserByToken(Request);
 
-                return Ok(await GetBetManager().GetUserIncomesPerYear(user));
+                return Ok<dynamic>(await GetBetManager().GetUserIncomesPerYear(user));
             });
         }
 
@@ -50,7 +50,7 @@ namespace _3wBetManager_API.Controllers
             {
                 var user = await GetUserByToken(Request);
 
-                return Ok(await GetBetManager().GetUserBetsPerType(user));
+                return Ok<dynamic>(await GetBetManager().GetUserBetsPerType(user));
             });
         }
 
@@ -61,7 +61,7 @@ namespace _3wBetManager_API.Controllers
             return await HandleError(async () =>
             {
                 var user = await GetUserByToken(Request);
-                return Ok(await GetBetManager().GetUserBetsEarningsPerType(user));
+                return Ok<dynamic>(await GetBetManager().GetUserBetsEarningsPerType(user));
             });
         }
 
@@ -73,7 +73,7 @@ namespace _3wBetManager_API.Controllers
             return await HandleNotFound(async () =>
             {
                 var user = await GetUserManager().GetUser(id);
-                return Ok(await GetBetManager().GetUserBetsPerType(user));
+                return Ok<dynamic>(await GetBetManager().GetUserBetsPerType(user));
             });
         }
 
@@ -84,7 +84,7 @@ namespace _3wBetManager_API.Controllers
             return await HandleNotFound(async () =>
             {
                 var user = await GetUserManager().GetUser(id);
-                return Ok(await GetUserManager().GetUserCoinStats(user));
+                return Ok<dynamic>(await GetUserManager().GetUserCoinStats(user));
             });
         }
 
@@ -95,7 +95,7 @@ namespace _3wBetManager_API.Controllers
             return await HandleNotFound(async () =>
             {
                 var user = await GetUserManager().GetUser(id);
-                return Ok(await GetBetManager().GetUserIncomesPerMonth(user));
+                return Ok<dynamic>(await GetBetManager().GetUserIncomesPerMonth(user));
             });
         }
 
@@ -106,7 +106,7 @@ namespace _3wBetManager_API.Controllers
             return await HandleNotFound(async () =>
             {
                 var user = await GetUserManager().GetUser(id);
-                return Ok(await GetBetManager().GetUserIncomesPerYear(user));
+                return Ok<dynamic>(await GetBetManager().GetUserIncomesPerYear(user));
             });
         }
 
@@ -117,7 +117,7 @@ namespace _3wBetManager_API.Controllers
             return await HandleNotFound(async () =>
             {
                 var user = await GetUserManager().GetUser(id);
-                return Ok(await GetBetManager().GetUserBetsEarningsPerType(user));
+                return Ok<dynamic>(await GetBetManager().GetUserBetsEarningsPerType(user));
             });
         }
     }
