@@ -17,7 +17,7 @@ namespace Test.Manager
         private IMatchDao _matchDao;
         private IBetDao _betDao;
         private IMatchManager _matchManager;
-        private static readonly List<Match> _matches = JsonConvert.DeserializeObject<List<Match>>(TestHelper.GetDbResponseByCollectionAndFileName("matches"));
+        private static readonly List<Match> _matches = JsonConvert.DeserializeObject<List<Match>>(TestHelper.GetDbResponseByCollectionAndFileName("betsByMatch262446"));
         private static readonly List<Bet> _bets = JsonConvert.DeserializeObject<List<Bet>>(TestHelper.GetDbResponseByCollectionAndFileName("bets"));
         private Match _match = _matches[0];
         private Bet _bet = _bets[0];
@@ -45,6 +45,16 @@ namespace Test.Manager
             _matchManager.CalculateMatchRating(_match);
             await _betDao.Received().FindBetsByMatch(Arg.Any<Match>());
             _matchDao.Received().UpdateMatch(Arg.Any<int>(), Arg.Any<Match>());
+        }
+
+        [Test]
+        public void AssertThatCalculateMatchRatingMakesGoodCalculations()
+        {
+            _betDao.FindBetsByMatch(_match).Returns(Task.FromResult(_bets));
+            _matchManager.CalculateMatchRating(_match);
+            Assert.IsTrue(_match.AwayTeamRating == 7d);
+            Assert.IsTrue(_match.HomeTeamRating == 1.75d);
+            Assert.IsTrue(_match.DrawRating == 3.5d);
         }
     }
 }
