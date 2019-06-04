@@ -57,7 +57,7 @@ namespace Manager
             var users = new List<dynamic>();
             var bestUser = await _userDao.OrderUserByPoint();
 
-            foreach (var user in bestUser)
+            foreach (var user in bestUser.Take(50))
             {
                 dynamic obj = new ExpandoObject();
                 var betsByUser = await _betDao.FindBetsByUser(user);
@@ -70,7 +70,7 @@ namespace Manager
                 obj.NbPerfectBets = betsByUser.FindAll(b => b.Status == Bet.PerfectStatus).Count;
                 obj.NbOkBets = betsByUser.FindAll(b => b.Status == Bet.OkStatus).Count;
                 obj.NbWrongBets = betsByUser.FindAll(b => b.Status == Bet.WrongStatus).Count;
-                if (obj.NbBets > 0) users.Add(obj);
+                users.Add(obj);
             }
 
             return users;
@@ -139,7 +139,7 @@ namespace Manager
                 obj.Username = user.Username;
                 obj.IsPrivate = user.IsPrivate;
                 obj.NbBets = betsByUser.Count;
-                if (obj.NbBets > 0) users.Add(obj);
+                users.Add(obj);
             }
 
             return users;
