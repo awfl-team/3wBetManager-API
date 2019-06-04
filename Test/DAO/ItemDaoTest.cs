@@ -14,21 +14,10 @@ namespace Test.DAO
     internal class ItemDaoTest
     {
         private IMongoCollection<Item> _collectionItem;
-        private IMongoCollection<Match> _collectionMatch;
         private IMongoDatabase _database;
-        private ExtraTime _extraTime;
         private ExpressionFilterDefinition<Item> _filterExpression;
-        private FullTime _fullTime;
-        private HalfTime _halfTime;
-        private Item _item;
-        private IItemDao _itemDao;
 
-        private Match _match;
-        private IMatchDao _matchDao;
-        private Penalties _penalties;
-        private Score _score;
-        private Team _team1;
-        private Team _team2;
+        private IItemDao _itemDao;
 
         [SetUp]
         public void SetUp()
@@ -36,43 +25,6 @@ namespace Test.DAO
             _database = Substitute.For<IMongoDatabase>();
             _collectionItem = Substitute.For<IMongoCollection<Item>>();
             _itemDao = new ItemDao(_database, _collectionItem);
-
-            _team1 = new Team
-            {
-                Name = "test",
-                Email = "test",
-                ShortName = "test",
-                Tla = "test",
-                CrestUrl = "test",
-                Address = "test",
-                Phone = "test",
-                Colors = "test",
-                Venue = "test"
-            };
-            _team2 = new Team
-            {
-                Name = "test",
-                Email = "test",
-                ShortName = "test",
-                Tla = "test",
-                CrestUrl = "test",
-                Address = "test",
-                Phone = "test",
-                Colors = "test",
-                Venue = "test"
-            };
-            _fullTime = new FullTime {AwayTeam = 1, HomeTeam = 1};
-            _halfTime = new HalfTime {AwayTeam = 1, HomeTeam = 1};
-            _extraTime = new ExtraTime {AwayTeam = 1, HomeTeam = 1};
-            _penalties = new Penalties {AwayTeam = 1, HomeTeam = 1};
-            _score = new Score
-            {
-                Winner = "test",
-                Duration = "test",
-                ExtraTime = _extraTime,
-                FullTime = _fullTime,
-                Penalties = _penalties
-            };
         }
 
         [TearDown]
@@ -139,7 +91,6 @@ namespace Test.DAO
         public void AssertThatUpdateItemIsCalled()
         {
             var id = "1";
-            var item = new Item {Cost = 10, Rarity = Item.Legendary};
 
             _itemDao.UpdateItem(id, new Item());
             _collectionItem.Received().UpdateOneAsync(Arg.Any<ExpressionFilterDefinition<Item>>(), 
