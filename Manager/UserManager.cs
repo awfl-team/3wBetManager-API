@@ -38,7 +38,7 @@ namespace Manager
         public async Task<string> CanUpdate(string id, User userParam)
         {
             var users = await _userDao.FindAllUser();
-            users.Remove(users.Single(user => user.Id == ObjectId.Parse(id)));
+            users = RemoveUserFromList(users, id);
             var userByEmail = users.Find(user => user.Email == userParam.Email);
             var userByUsername = users.Find(user => user.Username == userParam.Username);
 
@@ -50,6 +50,12 @@ namespace Manager
             if (userByUsername != null && userByEmail == null) return "username already taken";
 
             return "username and email already taken";
+        }
+
+        public List<User> RemoveUserFromList(List<User> userList, string userId)
+        {
+            userList.Remove(userList.Single(user => user.Id == ObjectId.Parse(userId)));
+            return userList;
         }
 
         public async Task<List<dynamic>> GetBestBetters()

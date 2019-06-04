@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using DAO.Interfaces;
 using Manager;
@@ -19,7 +21,14 @@ namespace Test.Manager
         private IBetDao _betDao;
         private IUserManager _userManager;
         private static readonly List<User> _users = JsonConvert.DeserializeObject<List<User>>(TestHelper.GetDbResponseByCollectionAndFileName("users"));
-        private User _user = _users[0];
+        private static User _user = _users[0];
+        private static readonly object[] UserEmailUsernameMessage =
+        {
+            new object[] { "", null, null},
+            new object[] { "email already taken", null, _user},
+            new object[] { "username already taken", _user, null},
+            new object[] { "username and email already taken", _user, _user},
+        };
 
         [OneTimeSetUp]
         public void SetUp()
@@ -37,39 +46,17 @@ namespace Test.Manager
             _betDao.ClearReceivedCalls();
         }
 
-        [TestCase("")]
-        [TestCase("email already taken")]
-        [TestCase("username already taken")]
-        [TestCase("username and email already taken")]
-        public async Task AssertThatUsernameAndEmailExistCallsFindUserByEmailFindUserByUsernameAndReturnMessage(string message)
+        [TestCaseSource("UserEmailUsernameMessage")]
+        public async Task AssertThatUsernameAndEmailExistCallsFindUserByEmailFindUserByUsernameAndReturnMessage(string message, User userFoundByUsername = null, User userFoundByEmail = null)
         {
-            if (message == "")
-            {
-                await _userDao.FindUserByEmail(_user.Email);
-                await _userDao.FindUserByUsername(_user.Email);
-            } else if (message == "email already taken")
-            {
-                _userDao.FindUserByEmail(_user.Email).Returns(Task.FromResult(_user));
-                await _userDao.FindUserByUsername(_user.Email);
+            _userDao.FindUserByEmail(_user.Email).Returns(Task.FromResult(userFoundByEmail));
+            _userDao.FindUserByUsername(_user.Username).Returns(Task.FromResult(userFoundByUsername));
 
-            } else if (message == "username already taken")
-            {
-                await _userDao.FindUserByEmail(_user.Email);
-                _userDao.FindUserByUsername(_user.Email).Returns(Task.FromResult(_user));
-            } else if (message == "username and email already taken")
-            {
-                _userDao.FindUserByEmail(_user.Email).Returns(Task.FromResult(_user));
-                _userDao.FindUserByUsername(_user.Email).Returns(Task.FromResult(_user));
-            }
-         
+            var userExists = await _userManager.UsernameAndEmailExist(_user);
 
-            var messageReturned = await _userManager.UsernameAndEmailExist(_user);
-            Assert.IsTrue(messageReturned == "email already taken"
-                          || messageReturned == "username already taken"
-                          || messageReturned == ""
-                          || messageReturned == "username and email already taken"
-                          );
+            Assert.IsTrue(message == userExists );
         }
+
 
         [Test]
         public async Task AssertThatCanUpdateCalls()
