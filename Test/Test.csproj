@@ -112,6 +112,7 @@
     <Compile Include="Manager\ItemManagerTest.cs" />
     <Compile Include="Manager\CompetitionManagerTest.cs" />
     <Compile Include="Manager\MatchManagerTest.cs" />
+    <Compile Include="Manager\UsersManagerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
