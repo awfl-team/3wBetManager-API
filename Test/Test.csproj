@@ -108,15 +108,10 @@
     <Compile Include="DAO\TeamDaoTest.cs" />
     <Compile Include="DAO\UserDaoTest.cs" />
     <Compile Include="Controller\UsersControllerTest.cs" />
-    <Compile Include="Manager\AssignmentPointManagerTest.cs" />
     <Compile Include="Manager\BetManagerTest.cs" />
-    <Compile Include="Manager\EmailManagerTest.cs" />
-    <Compile Include="Manager\FootballDataManagerTest.cs" />
     <Compile Include="Manager\ItemManagerTest.cs" />
+    <Compile Include="Manager\CompetitionManagerTest.cs" />
     <Compile Include="Manager\MatchManagerTest.cs" />
-    <Compile Include="Manager\MonitoringManagerTest.cs" />
-    <Compile Include="Manager\TokenManagerTest.cs" />
-    <Compile Include="Manager\UserManagerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

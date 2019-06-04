@@ -1,1832 +1,1397 @@
 [
-    {
-        "_id": 233323,
-        "Status": "FINISHED",
-        "LastUpdated": "2019-04-24T23:43:13.000Z",
-        "HomeTeam": {
-            "_id": 76,
-            "Name": "Wolverhampton Wanderers FC",
-            "ShortName": null,
-            "Tla": null,
-            "CrestUrl": null,
-            "Address": null,
-            "Phone": null,
-            "Email": null,
-            "Colors": null,
-            "Venue": null
-        },
-        "HomeTeamRating": 0,
-        "AwayTeam": {
-            "_id": 57,
-            "Name": "Arsenal FC",
-            "ShortName": null,
-            "Tla": null,
-            "CrestUrl": null,
-            "Address": null,
-            "Phone": null,
-            "Email": null,
-            "Colors": null,
-            "Venue": null
-        },
-        "AwayTeamRating": 0,
-        "DrawRating": 0,
-        "Score": {
-            "Winner": "HOME_TEAM",
-            "Duration": "REGULAR",
-            "FullTime": {
-                "HomeTeam": 3,
-                "AwayTeam": 1
-            },
-            "HalfTime": {
-                "HomeTeam": 3,
-                "AwayTeam": 0
-            },
-            "ExtraTime": {
-                "HomeTeam": null,
-                "AwayTeam": null
-            },
-            "Penalties": {
-                "HomeTeam": null,
-                "AwayTeam": null
-            }
-        },
-        "Competition": {
-            "_id": 2021,
-            "Name": "Premier League",
-            "Code": null,
-            "EmblemUrl": null,
-            "Plan": null,
-            "LastUpdated": null
-        },
-        "UtcDate": "2019-04-24T18:45:00Z"
+  {
+    "_id": 262468,
+    "Status": "SCHEDULED",
+    "LastUpdated": "2019-05-31T12:32:09.000Z",
+    "HomeTeam": {
+      "_id": 1769,
+      "Name": "SE Palmeiras",
+      "ShortName": "Palmeiras",
+      "Tla": "PAL",
+      "Address": "Rua Palestra Italia nº 214, Perdizes São Paulo, SP 05005-030",
+      "Phone": "+55 (11) 38746500",
+      "Venue": "Allianz Parque"
     },
-    {
-        "_id": 233327,
-        "Status": "FINISHED",
-        "LastUpdated": "2019-04-24T23:58:13.000Z",
-        "HomeTeam": {
-            "_id": 66,
-            "Name": "Manchester United FC",
-            "ShortName": null,
-            "Tla": null,
-            "CrestUrl": null,
-            "Address": null,
-            "Phone": null,
-            "Email": null,
-            "Colors": null,
-            "Venue": null
-        },
-        "HomeTeamRating": 0,
-        "AwayTeam": {
-            "_id": 65,
-            "Name": "Manchester City FC",
-            "ShortName": null,
-            "Tla": null,
-            "CrestUrl": null,
-            "Address": null,
-            "Phone": null,
-            "Email": null,
-            "Colors": null,
-            "Venue": null
-        },
-        "AwayTeamRating": 0,
-        "DrawRating": 0,
-        "Score": {
-            "Winner": "AWAY_TEAM",
-            "Duration": "REGULAR",
-            "FullTime": {
-                "HomeTeam": 0,
-                "AwayTeam": 2
-            },
-            "HalfTime": {
-                "HomeTeam": 0,
-                "AwayTeam": 0
-            },
-            "ExtraTime": {
-                "HomeTeam": null,
-                "AwayTeam": null
-            },
-            "Penalties": {
-                "HomeTeam": null,
-                "AwayTeam": null
-            }
-        },
-        "Competition": {
-            "_id": 2021,
-            "Name": "Premier League",
-            "Code": null,
-            "EmblemUrl": null,
-            "Plan": null,
-            "LastUpdated": null
-        },
-        "UtcDate": "2019-04-24T19:00:00Z"
+    "HomeTeamRating": 0.0,
+    "AwayTeam": {
+      "_id": 1768,
+      "Name": "CA Paranaense",
+      "ShortName": "Paranaense",
+      "Tla": "CAP",
+      "Address": "Estrada do Ganchinho 1451, Umbará Curitiba, PR 81930-160",
+      "Phone": "+55 (41) 21055500",
+      "Email": "redesocialcap@atleticopr.com.br",
+      "Venue": "Estádio Joaquim Américo Guimarães"
     },
-    {
-        "_id": 233330,
-        "Status": "FINISHED",
-        "LastUpdated": "2019-04-16T23:43:22.000Z",
-        "HomeTeam": {
-            "_id": 397,
-            "Name": "Brighton & Hove Albion FC",
-            "ShortName": null,
-            "Tla": null,
-            "CrestUrl": null,
-            "Address": null,
-            "Phone": null,
-            "Email": null,
-            "Colors": null,
-            "Venue": null
-        },
-        "HomeTeamRating": 0,
-        "AwayTeam": {
-            "_id": 715,
-            "Name": "Cardiff City FC",
-            "ShortName": null,
-            "Tla": null,
-            "CrestUrl": null,
-            "Address": null,
-            "Phone": null,
-            "Email": null,
-            "Colors": null,
-            "Venue": null
-        },
-        "AwayTeamRating": 0,
-        "DrawRating": 0,
-        "Score": {
-            "Winner": "AWAY_TEAM",
-            "Duration": "REGULAR",
-            "FullTime": {
-                "HomeTeam": 0,
-                "AwayTeam": 2
-            },
-            "HalfTime": {
-                "HomeTeam": 0,
-                "AwayTeam": 1
-            },
-            "ExtraTime": {
-                "HomeTeam": null,
-                "AwayTeam": null
-            },
-            "Penalties": {
-                "HomeTeam": null,
-                "AwayTeam": null
-            }
-        },
-        "Competition": {
-            "_id": 2021,
-            "Name": "Premier League",
-            "Code": null,
-            "EmblemUrl": null,
-            "Plan": null,
-            "LastUpdated": null
-        },
-        "UtcDate": "2019-04-16T18:45:00Z"
+    "AwayTeamRating": 0.0,
+    "DrawRating": 1.0,
+    "Score": {
+      "Duration": "REGULAR",
+      "FullTime": {},
+      "HalfTime": {},
+      "ExtraTime": {},
+      "Penalties": {}
     },
-    {
-        "_id": 233331,
-        "Status": "FINISHED",
-        "LastUpdated": "2019-04-24T21:45:03.000Z",
-        "HomeTeam": {
-            "_id": 346,
-            "Name": "Watford FC",
-            "ShortName": null,
-            "Tla": null,
-            "CrestUrl": null,
-            "Address": null,
-            "Phone": null,
-            "Email": null,
-            "Colors": null,
-            "Venue": null
-        },
-        "HomeTeamRating": 0,
-        "AwayTeam": {
-            "_id": 340,
-            "Name": "Southampton FC",
-            "ShortName": null,
-            "Tla": null,
-            "CrestUrl": null,
-            "Address": null,
-            "Phone": null,
-            "Email": null,
-            "Colors": null,
-            "Venue": null
-        },
-        "AwayTeamRating": 0,
-        "DrawRating": 0,
-        "Score": {
-            "Winner": "DRAW",
-            "Duration": "REGULAR",
-            "FullTime": {
-                "HomeTeam": 1,
-                "AwayTeam": 1
-            },
-            "HalfTime": {
-                "HomeTeam": 0,
-                "AwayTeam": 1
-            },
-            "ExtraTime": {
-                "HomeTeam": null,
-                "AwayTeam": null
-            },
-            "Penalties": {
-                "HomeTeam": null,
-                "AwayTeam": null
-            }
-        },
-        "Competition": {
-            "_id": 2021,
-            "Name": "Premier League",
-            "Code": null,
-            "EmblemUrl": null,
-            "Plan": null,
-            "LastUpdated": null
-        },
-        "UtcDate": "2019-04-23T18:45:00Z"
+    "Competition": {
+      "_id": 2013,
+      "Name": "Série A"
     },
-    {
-        "_id": 233345,
-        "Status": "FINISHED",
-        "LastUpdated": "2019-04-07T02:34:32.000Z",
-        "HomeTeam": {
-            "_id": 67,
-            "Name": "Newcastle United FC",
-            "ShortName": null,
-            "Tla": null,
-            "CrestUrl": null,
-            "Address": null,
-            "Phone": null,
-            "Email": null,
-            "Colors": null,
-            "Venue": null
-        },
-        "HomeTeamRating": 0,
-        "AwayTeam": {
-            "_id": 354,
-            "Name": "Crystal Palace FC",
-            "ShortName": null,
-            "Tla": null,
-            "CrestUrl": null,
-            "Address": null,
-            "Phone": null,
-            "Email": null,
-            "Colors": null,
-            "Venue": null
-        },
-        "AwayTeamRating": 0,
-        "DrawRating": 0,
-        "Score": {
-            "Winner": "AWAY_TEAM",
-            "Duration": "REGULAR",
-            "FullTime": {
-                "HomeTeam": 0,
-                "AwayTeam": 1
-            },
-            "HalfTime": {
-                "HomeTeam": 0,
-                "AwayTeam": 0
-            },
-            "ExtraTime": {
-                "HomeTeam": null,
-                "AwayTeam": null
-            },
-            "Penalties": {
-                "HomeTeam": null,
-                "AwayTeam": null
-            }
-        },
-        "Competition": {
-            "_id": 2021,
-            "Name": "Premier League",
-            "Code": null,
-            "EmblemUrl": null,
-            "Plan": null,
-            "LastUpdated": null
-        },
-        "UtcDate": "2019-04-06T14:00:00Z"
+    "UtcDate": "2019-06-08T19:30:00Z"
+  },
+  {
+    "_id": 262463,
+    "Status": "SCHEDULED",
+    "LastUpdated": "2019-05-27T18:32:14.000Z",
+    "HomeTeam": {
+      "_id": 1771,
+      "Name": "Cruzeiro EC",
+      "ShortName": "Cruzeiro",
+      "Tla": "CRU",
+      "Address": "Rua Timbiras 2903, Bairro Preto Belo Horizonte, MG 30140-062",
+      "Phone": "+55 (31) 33491502",
+      "Email": "assessoria@clube.cruzeiro.com.br",
+      "Venue": "Estádio Governador Magalhães Pinto"
     },
-    {
-        "_id": 233346,
-        "Status": "FINISHED",
-        "LastUpdated": "2019-04-09T17:05:02.000Z",
-        "HomeTeam": {
-            "_id": 61,
-            "Name": "Chelsea FC",
-            "ShortName": null,
-            "Tla": null,
-            "CrestUrl": null,
-            "Address": null,
-            "Phone": null,
-            "Email": null,
-            "Colors": null,
-            "Venue": null
-        },
-        "HomeTeamRating": 0,
-        "AwayTeam": {
-            "_id": 563,
-            "Name": "West Ham United FC",
-            "ShortName": null,
-            "Tla": null,
-            "CrestUrl": null,
-            "Address": null,
-            "Phone": null,
-            "Email": null,
-            "Colors": null,
-            "Venue": null
-        },
-        "AwayTeamRating": 0,
-        "DrawRating": 0,
-        "Score": {
-            "Winner": "HOME_TEAM",
-            "Duration": "REGULAR",
-            "FullTime": {
-                "HomeTeam": 2,
-                "AwayTeam": 0
-            },
-            "HalfTime": {
-                "HomeTeam": 1,
-                "AwayTeam": 0
-            },
-            "ExtraTime": {
-                "HomeTeam": null,
-                "AwayTeam": null
-            },
-            "Penalties": {
-                "HomeTeam": null,
-                "AwayTeam": null
-            }
-        },
-        "Competition": {
-            "_id": 2021,
-            "Name": "Premier League",
-            "Code": null,
-            "EmblemUrl": null,
-            "Plan": null,
-            "LastUpdated": null
-        },
-        "UtcDate": "2019-04-08T19:00:00Z"
+    "HomeTeamRating": 0.0,
+    "AwayTeam": {
+      "_id": 1779,
+      "Name": "SC Corinthians Paulista",
+      "ShortName": "Corinthians",
+      "Tla": "COR",
+      "Address": "Rua São Jorge 777, Tatuapé São Paulo, SP 03087-000",
+      "Phone": "+55 (11) 61953000",
+      "Email": "contato@corinthiansfutebol.com.br",
+      "Venue": "Arena Corinthians"
     },
-    {
-        "_id": 233347,
-        "Status": "FINISHED",
-        "LastUpdated": "2019-04-24T21:45:03.000Z",
-        "HomeTeam": {
-            "_id": 73,
-            "Name": "Tottenham Hotspur FC",
-            "ShortName": null,
-            "Tla": null,
-            "CrestUrl": null,
-            "Address": null,
-            "Phone": null,
-            "Email": null,
-            "Colors": null,
-            "Venue": null
-        },
-        "HomeTeamRating": 0,
-        "AwayTeam": {
-            "_id": 397,
-            "Name": "Brighton & Hove Albion FC",
-            "ShortName": null,
-            "Tla": null,
-            "CrestUrl": null,
-            "Address": null,
-            "Phone": null,
-            "Email": null,
-            "Colors": null,
-            "Venue": null
-        },
-        "AwayTeamRating": 0,
-        "DrawRating": 0,
-        "Score": {
-            "Winner": "HOME_TEAM",
-            "Duration": "REGULAR",
-            "FullTime": {
-                "HomeTeam": 1,
-                "AwayTeam": 0
-            },
-            "HalfTime": {
-                "HomeTeam": 0,
-                "AwayTeam": 0
-            },
-            "ExtraTime": {
-                "HomeTeam": null,
-                "AwayTeam": null
-            },
-            "Penalties": {
-                "HomeTeam": null,
-                "AwayTeam": null
-            }
-        },
-        "Competition": {
-            "_id": 2021,
-            "Name": "Premier League",
-            "Code": null,
-            "EmblemUrl": null,
-            "Plan": null,
-            "LastUpdated": null
-        },
-        "UtcDate": "2019-04-23T18:45:00Z"
+    "AwayTeamRating": 0.0,
+    "DrawRating": 1.0,
+    "Score": {
+      "Duration": "REGULAR",
+      "FullTime": {},
+      "HalfTime": {},
+      "ExtraTime": {},
+      "Penalties": {}
     },
-    {
-        "_id": 233348,
-        "Status": "FINISHED",
-        "LastUpdated": "2019-04-07T18:45:30.000Z",
-        "HomeTeam": {
-            "_id": 62,
-            "Name": "Everton FC",
-            "ShortName": null,
-            "Tla": null,
-            "CrestUrl": null,
-            "Address": null,
-            "Phone": null,
-            "Email": null,
-            "Colors": null,
-            "Venue": null
-        },
-        "HomeTeamRating": 0,
-        "AwayTeam": {
-            "_id": 57,
-            "Name": "Arsenal FC",
-            "ShortName": null,
-            "Tla": null,
-            "CrestUrl": null,
-            "Address": null,
-            "Phone": null,
-            "Email": null,
-            "Colors": null,
-            "Venue": null
-        },
-        "AwayTeamRating": 0,
-        "DrawRating": 0,
-        "Score": {
-            "Winner": "HOME_TEAM",
-            "Duration": "REGULAR",
-            "FullTime": {
-                "HomeTeam": 1,
-                "AwayTeam": 0
-            },
-            "HalfTime": {
-                "HomeTeam": 1,
-                "AwayTeam": 0
-            },
-            "ExtraTime": {
-                "HomeTeam": null,
-                "AwayTeam": null
-            },
-            "Penalties": {
-                "HomeTeam": null,
-                "AwayTeam": null
-            }
-        },
-        "Competition": {
-            "_id": 2021,
-            "Name": "Premier League",
-            "Code": null,
-            "EmblemUrl": null,
-            "Plan": null,
-            "LastUpdated": null
-        },
-        "UtcDate": "2019-04-07T13:05:00Z"
+    "Competition": {
+      "_id": 2013,
+      "Name": "Série A"
     },
-    {
-        "_id": 233349,
-        "Status": "FINISHED",
-        "LastUpdated": "2019-04-07T02:34:32.000Z",
-        "HomeTeam": {
-            "_id": 394,
-            "Name": "Huddersfield Town AFC",
-            "ShortName": null,
-            "Tla": null,
-            "CrestUrl": null,
-            "Address": null,
-            "Phone": null,
-            "Email": null,
-            "Colors": null,
-            "Venue": null
-        },
-        "HomeTeamRating": 0,
-        "AwayTeam": {
-            "_id": 338,
-            "Name": "Leicester City FC",
-            "ShortName": null,
-            "Tla": null,
-            "CrestUrl": null,
-            "Address": null,
-            "Phone": null,
-            "Email": null,
-            "Colors": null,
-            "Venue": null
-        },
-        "AwayTeamRating": 0,
-        "DrawRating": 0,
-        "Score": {
-            "Winner": "AWAY_TEAM",
-            "Duration": "REGULAR",
-            "FullTime": {
-                "HomeTeam": 1,
-                "AwayTeam": 4
-            },
-            "HalfTime": {
-                "HomeTeam": 0,
-                "AwayTeam": 1
-            },
-            "ExtraTime": {
-                "HomeTeam": null,
-                "AwayTeam": null
-            },
-            "Penalties": {
-                "HomeTeam": null,
-                "AwayTeam": null
-            }
-        },
-        "Competition": {
-            "_id": 2021,
-            "Name": "Premier League",
-            "Code": null,
-            "EmblemUrl": null,
-            "Plan": null,
-            "LastUpdated": null
-        },
-        "UtcDate": "2019-04-06T14:00:00Z"
+    "UtcDate": "2019-06-08T22:00:00Z"
+  },
+  {
+    "_id": 262464,
+    "Status": "SCHEDULED",
+    "LastUpdated": "2019-05-27T18:32:14.000Z",
+    "HomeTeam": {
+      "_id": 1767,
+      "Name": "Grêmio FBPA",
+      "ShortName": "Grêmio",
+      "Tla": "GRE",
+      "Address": "Avenida Padre Leopoldo Bretano, 110, Humaitá Porto Alegre, RS 90250-590",
+      "Venue": "Arena do Grêmio"
     },
-    {
-        "_id": 233352,
-        "Status": "FINISHED",
-        "LastUpdated": "2019-04-07T02:34:32.000Z",
-        "HomeTeam": {
-            "_id": 1044,
-            "Name": "AFC Bournemouth",
-            "ShortName": null,
-            "Tla": null,
-            "CrestUrl": null,
-            "Address": null,
-            "Phone": null,
-            "Email": null,
-            "Colors": null,
-            "Venue": null
-        },
-        "HomeTeamRating": 0,
-        "AwayTeam": {
-            "_id": 328,
-            "Name": "Burnley FC",
-            "ShortName": null,
-            "Tla": null,
-            "CrestUrl": null,
-            "Address": null,
-            "Phone": null,
-            "Email": null,
-            "Colors": null,
-            "Venue": null
-        },
-        "AwayTeamRating": 0,
-        "DrawRating": 0,
-        "Score": {
-            "Winner": "AWAY_TEAM",
-            "Duration": "REGULAR",
-            "FullTime": {
-                "HomeTeam": 1,
-                "AwayTeam": 3
-            },
-            "HalfTime": {
-                "HomeTeam": 1,
-                "AwayTeam": 2
-            },
-            "ExtraTime": {
-                "HomeTeam": null,
-                "AwayTeam": null
-            },
-            "Penalties": {
-                "HomeTeam": null,
-                "AwayTeam": null
-            }
-        },
-        "Competition": {
-            "_id": 2021,
-            "Name": "Premier League",
-            "Code": null,
-            "EmblemUrl": null,
-            "Plan": null,
-            "LastUpdated": null
-        },
-        "UtcDate": "2019-04-06T14:00:00Z"
+    "HomeTeamRating": 0.0,
+    "AwayTeam": {
+      "_id": 3984,
+      "Name": "Fortaleza EC",
+      "ShortName": "Fortaleza",
+      "Tla": "FEC",
+      "Address": "Avenida Senador Fernandes Távora 200, Pici Fortaleza, CE 60510-290",
+      "Phone": "+55 (85) 34962846",
+      "Email": "contato@fortalezaec.net",
+      "Venue": "Estádio Castelão"
     },
-    {
-        "_id": 233353,
-        "Status": "FINISHED",
-        "LastUpdated": "2019-04-14T14:34:24.000Z",
-        "HomeTeam": {
-            "_id": 63,
-            "Name": "Fulham FC",
-            "ShortName": null,
-            "Tla": null,
-            "CrestUrl": null,
-            "Address": null,
-            "Phone": null,
-            "Email": null,
-            "Colors": null,
-            "Venue": null
-        },
-        "HomeTeamRating": 0,
-        "AwayTeam": {
-            "_id": 62,
-            "Name": "Everton FC",
-            "ShortName": null,
-            "Tla": null,
-            "CrestUrl": null,
-            "Address": null,
-            "Phone": null,
-            "Email": null,
-            "Colors": null,
-            "Venue": null
-        },
-        "AwayTeamRating": 0,
-        "DrawRating": 0,
-        "Score": {
-            "Winner": "HOME_TEAM",
-            "Duration": "REGULAR",
-            "FullTime": {
-                "HomeTeam": 2,
-                "AwayTeam": 0
-            },
-            "HalfTime": {
-                "HomeTeam": 0,
-                "AwayTeam": 0
-            },
-            "ExtraTime": {
-                "HomeTeam": null,
-                "AwayTeam": null
-            },
-            "Penalties": {
-                "HomeTeam": null,
-                "AwayTeam": null
-            }
-        },
-        "Competition": {
-            "_id": 2021,
-            "Name": "Premier League",
-            "Code": null,
-            "EmblemUrl": null,
-            "Plan": null,
-            "LastUpdated": null
-        },
-        "UtcDate": "2019-04-13T14:00:00Z"
+    "AwayTeamRating": 0.0,
+    "DrawRating": 1.0,
+    "Score": {
+      "Duration": "REGULAR",
+      "FullTime": {},
+      "HalfTime": {},
+      "ExtraTime": {},
+      "Penalties": {}
     },
-    {
-        "_id": 233354,
-        "Status": "FINISHED",
-        "LastUpdated": "2019-04-15T15:55:10.000Z",
-        "HomeTeam": {
-            "_id": 64,
-            "Name": "Liverpool FC",
-            "ShortName": null,
-            "Tla": null,
-            "CrestUrl": null,
-            "Address": null,
-            "Phone": null,
-            "Email": null,
-            "Colors": null,
-            "Venue": null
-        },
-        "HomeTeamRating": 0,
-        "AwayTeam": {
-            "_id": 61,
-            "Name": "Chelsea FC",
-            "ShortName": null,
-            "Tla": null,
-            "CrestUrl": null,
-            "Address": null,
-            "Phone": null,
-            "Email": null,
-            "Colors": null,
-            "Venue": null
-        },
-        "AwayTeamRating": 0,
-        "DrawRating": 0,
-        "Score": {
-            "Winner": "HOME_TEAM",
-            "Duration": "REGULAR",
-            "FullTime": {
-                "HomeTeam": 2,
-                "AwayTeam": 0
-            },
-            "HalfTime": {
-                "HomeTeam": 0,
-                "AwayTeam": 0
-            },
-            "ExtraTime": {
-                "HomeTeam": null,
-                "AwayTeam": null
-            },
-            "Penalties": {
-                "HomeTeam": null,
-                "AwayTeam": null
-            }
-        },
-        "Competition": {
-            "_id": 2021,
-            "Name": "Premier League",
-            "Code": null,
-            "EmblemUrl": null,
-            "Plan": null,
-            "LastUpdated": null
-        },
-        "UtcDate": "2019-04-14T15:30:00Z"
+    "Competition": {
+      "_id": 2013,
+      "Name": "Série A"
     },
-    {
-        "_id": 233355,
-        "Status": "FINISHED",
-        "LastUpdated": "2019-04-14T14:34:24.000Z",
-        "HomeTeam": {
-            "_id": 73,
-            "Name": "Tottenham Hotspur FC",
-            "ShortName": null,
-            "Tla": null,
-            "CrestUrl": null,
-            "Address": null,
-            "Phone": null,
-            "Email": null,
-            "Colors": null,
-            "Venue": null
-        },
-        "HomeTeamRating": 0,
-        "AwayTeam": {
-            "_id": 394,
-            "Name": "Huddersfield Town AFC",
-            "ShortName": null,
-            "Tla": null,
-            "CrestUrl": null,
-            "Address": null,
-            "Phone": null,
-            "Email": null,
-            "Colors": null,
-            "Venue": null
-        },
-        "AwayTeamRating": 0,
-        "DrawRating": 0,
-        "Score": {
-            "Winner": "HOME_TEAM",
-            "Duration": "REGULAR",
-            "FullTime": {
-                "HomeTeam": 4,
-                "AwayTeam": 0
-            },
-            "HalfTime": {
-                "HomeTeam": 2,
-                "AwayTeam": 0
-            },
-            "ExtraTime": {
-                "HomeTeam": null,
-                "AwayTeam": null
-            },
-            "Penalties": {
-                "HomeTeam": null,
-                "AwayTeam": null
-            }
-        },
-        "Competition": {
-            "_id": 2021,
-            "Name": "Premier League",
-            "Code": null,
-            "EmblemUrl": null,
-            "Plan": null,
-            "LastUpdated": null
-        },
-        "UtcDate": "2019-04-13T11:30:00Z"
+    "UtcDate": "2019-06-08T22:00:00Z"
+  },
+  {
+    "_id": 262469,
+    "Status": "SCHEDULED",
+    "LastUpdated": "2019-06-01T18:32:11.000Z",
+    "HomeTeam": {
+      "_id": 1837,
+      "Name": "Ceará SC",
+      "ShortName": "Ceará",
+      "Tla": "CSC",
+      "Address": "Av. João Pessoa 3532, Porangabuçu Fortaleza, CE 60425-680",
+      "Phone": "+55 (85) 30239040",
+      "Email": "redessociais@cearasc.com",
+      "Venue": "Estádio Castelão"
     },
-    {
-        "_id": 233356,
-        "Status": "FINISHED",
-        "LastUpdated": "2019-04-14T14:34:24.000Z",
-        "HomeTeam": {
-            "_id": 66,
-            "Name": "Manchester United FC",
-            "ShortName": null,
-            "Tla": null,
-            "CrestUrl": null,
-            "Address": null,
-            "Phone": null,
-            "Email": null,
-            "Colors": null,
-            "Venue": null
-        },
-        "HomeTeamRating": 0,
-        "AwayTeam": {
-            "_id": 563,
-            "Name": "West Ham United FC",
-            "ShortName": null,
-            "Tla": null,
-            "CrestUrl": null,
-            "Address": null,
-            "Phone": null,
-            "Email": null,
-            "Colors": null,
-            "Venue": null
-        },
-        "AwayTeamRating": 0,
-        "DrawRating": 0,
-        "Score": {
-            "Winner": "HOME_TEAM",
-            "Duration": "REGULAR",
-            "FullTime": {
-                "HomeTeam": 2,
-                "AwayTeam": 1
-            },
-            "HalfTime": {
-                "HomeTeam": 1,
-                "AwayTeam": 0
-            },
-            "ExtraTime": {
-                "HomeTeam": null,
-                "AwayTeam": null
-            },
-            "Penalties": {
-                "HomeTeam": null,
-                "AwayTeam": null
-            }
-        },
-        "Competition": {
-            "_id": 2021,
-            "Name": "Premier League",
-            "Code": null,
-            "EmblemUrl": null,
-            "Plan": null,
-            "LastUpdated": null
-        },
-        "UtcDate": "2019-04-13T16:30:00Z"
+    "HomeTeamRating": 0.0,
+    "AwayTeam": {
+      "_id": 1777,
+      "Name": "EC Bahia",
+      "ShortName": "Bahia",
+      "Tla": "BAH",
+      "Address": "Rua Antônio Fernandes S/N, Jardim das Margaridas Salvador, BA 41502-590",
+      "Phone": "+55 (71) 22031931",
+      "Email": "contato@esporteclubebahia.com.br",
+      "Venue": "Itaipava Arena Fonte Nova"
     },
-    {
-        "_id": 233357,
-        "Status": "FINISHED",
-        "LastUpdated": "2019-04-13T20:30:07.000Z",
-        "HomeTeam": {
-            "_id": 338,
-            "Name": "Leicester City FC",
-            "ShortName": null,
-            "Tla": null,
-            "CrestUrl": null,
-            "Address": null,
-            "Phone": null,
-            "Email": null,
-            "Colors": null,
-            "Venue": null
-        },
-        "HomeTeamRating": 0,
-        "AwayTeam": {
-            "_id": 67,
-            "Name": "Newcastle United FC",
-            "ShortName": null,
-            "Tla": null,
-            "CrestUrl": null,
-            "Address": null,
-            "Phone": null,
-            "Email": null,
-            "Colors": null,
-            "Venue": null
-        },
-        "AwayTeamRating": 0,
-        "DrawRating": 0,
-        "Score": {
-            "Winner": "AWAY_TEAM",
-            "Duration": "REGULAR",
-            "FullTime": {
-                "HomeTeam": 0,
-                "AwayTeam": 1
-            },
-            "HalfTime": {
-                "HomeTeam": 0,
-                "AwayTeam": 1
-            },
-            "ExtraTime": {
-                "HomeTeam": null,
-                "AwayTeam": null
-            },
-            "Penalties": {
-                "HomeTeam": null,
-                "AwayTeam": null
-            }
-        },
-        "Competition": {
-            "_id": 2021,
-            "Name": "Premier League",
-            "Code": null,
-            "EmblemUrl": null,
-            "Plan": null,
-            "LastUpdated": null
-        },
-        "UtcDate": "2019-04-12T19:00:00Z"
+    "AwayTeamRating": 1.0,
+    "DrawRating": 0.0,
+    "Score": {
+      "Duration": "REGULAR",
+      "FullTime": {},
+      "HalfTime": {},
+      "ExtraTime": {},
+      "Penalties": {}
     },
-    {
-        "_id": 233358,
-        "Status": "FINISHED",
-        "LastUpdated": "2019-04-14T14:34:24.000Z",
-        "HomeTeam": {
-            "_id": 328,
-            "Name": "Burnley FC",
-            "ShortName": null,
-            "Tla": null,
-            "CrestUrl": null,
-            "Address": null,
-            "Phone": null,
-            "Email": null,
-            "Colors": null,
-            "Venue": null
-        },
-        "HomeTeamRating": 0,
-        "AwayTeam": {
-            "_id": 715,
-            "Name": "Cardiff City FC",
-            "ShortName": null,
-            "Tla": null,
-            "CrestUrl": null,
-            "Address": null,
-            "Phone": null,
-            "Email": null,
-            "Colors": null,
-            "Venue": null
-        },
-        "AwayTeamRating": 0,
-        "DrawRating": 0,
-        "Score": {
-            "Winner": "HOME_TEAM",
-            "Duration": "REGULAR",
-            "FullTime": {
-                "HomeTeam": 2,
-                "AwayTeam": 0
-            },
-            "HalfTime": {
-                "HomeTeam": 1,
-                "AwayTeam": 0
-            },
-            "ExtraTime": {
-                "HomeTeam": null,
-                "AwayTeam": null
-            },
-            "Penalties": {
-                "HomeTeam": null,
-                "AwayTeam": null
-            }
-        },
-        "Competition": {
-            "_id": 2021,
-            "Name": "Premier League",
-            "Code": null,
-            "EmblemUrl": null,
-            "Plan": null,
-            "LastUpdated": null
-        },
-        "UtcDate": "2019-04-13T14:00:00Z"
+    "Competition": {
+      "_id": 2013,
+      "Name": "Série A"
     },
-    {
-        "_id": 233359,
-        "Status": "FINISHED",
-        "LastUpdated": "2019-04-14T14:34:24.000Z",
-        "HomeTeam": {
-            "_id": 340,
-            "Name": "Southampton FC",
-            "ShortName": null,
-            "Tla": null,
-            "CrestUrl": null,
-            "Address": null,
-            "Phone": null,
-            "Email": null,
-            "Colors": null,
-            "Venue": null
-        },
-        "HomeTeamRating": 0,
-        "AwayTeam": {
-            "_id": 76,
-            "Name": "Wolverhampton Wanderers FC",
-            "ShortName": null,
-            "Tla": null,
-            "CrestUrl": null,
-            "Address": null,
-            "Phone": null,
-            "Email": null,
-            "Colors": null,
-            "Venue": null
-        },
-        "AwayTeamRating": 0,
-        "DrawRating": 0,
-        "Score": {
-            "Winner": "HOME_TEAM",
-            "Duration": "REGULAR",
-            "FullTime": {
-                "HomeTeam": 3,
-                "AwayTeam": 1
-            },
-            "HalfTime": {
-                "HomeTeam": 2,
-                "AwayTeam": 1
-            },
-            "ExtraTime": {
-                "HomeTeam": null,
-                "AwayTeam": null
-            },
-            "Penalties": {
-                "HomeTeam": null,
-                "AwayTeam": null
-            }
-        },
-        "Competition": {
-            "_id": 2021,
-            "Name": "Premier League",
-            "Code": null,
-            "EmblemUrl": null,
-            "Plan": null,
-            "LastUpdated": null
-        },
-        "UtcDate": "2019-04-13T14:00:00Z"
+    "UtcDate": "2019-06-08T22:30:00Z"
+  },
+  {
+    "_id": 262470,
+    "Status": "SCHEDULED",
+    "LastUpdated": "2019-05-27T18:32:14.000Z",
+    "HomeTeam": {
+      "_id": 1775,
+      "Name": "Avaí FC",
+      "ShortName": "Avaí",
+      "Tla": "AVA",
+      "Address": "Av. Deputado Diomício Freitas, nº 1000, Bairro Carianos Florianópolis 88047-400",
+      "Phone": "+55 (48) 32167300",
+      "Email": "avai@avai.com.br",
+      "Venue": "Estádio Aderbal Ramos da Silva"
     },
-    {
-        "_id": 233360,
-        "Status": "FINISHED",
-        "LastUpdated": "2019-04-14T18:58:05.000Z",
-        "HomeTeam": {
-            "_id": 354,
-            "Name": "Crystal Palace FC",
-            "ShortName": null,
-            "Tla": null,
-            "CrestUrl": null,
-            "Address": null,
-            "Phone": null,
-            "Email": null,
-            "Colors": null,
-            "Venue": null
-        },
-        "HomeTeamRating": 0,
-        "AwayTeam": {
-            "_id": 65,
-            "Name": "Manchester City FC",
-            "ShortName": null,
-            "Tla": null,
-            "CrestUrl": null,
-            "Address": null,
-            "Phone": null,
-            "Email": null,
-            "Colors": null,
-            "Venue": null
-        },
-        "AwayTeamRating": 0,
-        "DrawRating": 0,
-        "Score": {
-            "Winner": "AWAY_TEAM",
-            "Duration": "REGULAR",
-            "FullTime": {
-                "HomeTeam": 1,
-                "AwayTeam": 3
-            },
-            "HalfTime": {
-                "HomeTeam": 0,
-                "AwayTeam": 1
-            },
-            "ExtraTime": {
-                "HomeTeam": null,
-                "AwayTeam": null
-            },
-            "Penalties": {
-                "HomeTeam": null,
-                "AwayTeam": null
-            }
-        },
-        "Competition": {
-            "_id": 2021,
-            "Name": "Premier League",
-            "Code": null,
-            "EmblemUrl": null,
-            "Plan": null,
-            "LastUpdated": null
-        },
-        "UtcDate": "2019-04-14T13:05:00Z"
+    "HomeTeamRating": 1.0,
+    "AwayTeam": {
+      "_id": 1776,
+      "Name": "São Paulo FC",
+      "ShortName": "São Paulo",
+      "Tla": "SAO",
+      "Address": "null São Paulo, SP null",
+      "Phone": "+55 (11) 37498000",
+      "Email": "site@saopaulofc.net",
+      "Venue": "Estádio do Morumbi"
     },
-    {
-        "_id": 233361,
-        "Status": "FINISHED",
-        "LastUpdated": "2019-04-14T14:34:24.000Z",
-        "HomeTeam": {
-            "_id": 397,
-            "Name": "Brighton & Hove Albion FC",
-            "ShortName": null,
-            "Tla": null,
-            "CrestUrl": null,
-            "Address": null,
-            "Phone": null,
-            "Email": null,
-            "Colors": null,
-            "Venue": null
-        },
-        "HomeTeamRating": 0,
-        "AwayTeam": {
-            "_id": 1044,
-            "Name": "AFC Bournemouth",
-            "ShortName": null,
-            "Tla": null,
-            "CrestUrl": null,
-            "Address": null,
-            "Phone": null,
-            "Email": null,
-            "Colors": null,
-            "Venue": null
-        },
-        "AwayTeamRating": 0,
-        "DrawRating": 0,
-        "Score": {
-            "Winner": "AWAY_TEAM",
-            "Duration": "REGULAR",
-            "FullTime": {
-                "HomeTeam": 0,
-                "AwayTeam": 5
-            },
-            "HalfTime": {
-                "HomeTeam": 0,
-                "AwayTeam": 1
-            },
-            "ExtraTime": {
-                "HomeTeam": null,
-                "AwayTeam": null
-            },
-            "Penalties": {
-                "HomeTeam": null,
-                "AwayTeam": null
-            }
-        },
-        "Competition": {
-            "_id": 2021,
-            "Name": "Premier League",
-            "Code": null,
-            "EmblemUrl": null,
-            "Plan": null,
-            "LastUpdated": null
-        },
-        "UtcDate": "2019-04-13T14:00:00Z"
+    "AwayTeamRating": 0.0,
+    "DrawRating": 0.0,
+    "Score": {
+      "Duration": "REGULAR",
+      "FullTime": {},
+      "HalfTime": {},
+      "ExtraTime": {},
+      "Penalties": {}
     },
-    {
-        "_id": 233362,
-        "Status": "FINISHED",
-        "LastUpdated": "2019-04-16T21:20:02.000Z",
-        "HomeTeam": {
-            "_id": 346,
-            "Name": "Watford FC",
-            "ShortName": null,
-            "Tla": null,
-            "CrestUrl": null,
-            "Address": null,
-            "Phone": null,
-            "Email": null,
-            "Colors": null,
-            "Venue": null
-        },
-        "HomeTeamRating": 0,
-        "AwayTeam": {
-            "_id": 57,
-            "Name": "Arsenal FC",
-            "ShortName": null,
-            "Tla": null,
-            "CrestUrl": null,
-            "Address": null,
-            "Phone": null,
-            "Email": null,
-            "Colors": null,
-            "Venue": null
-        },
-        "AwayTeamRating": 0,
-        "DrawRating": 0,
-        "Score": {
-            "Winner": "AWAY_TEAM",
-            "Duration": "REGULAR",
-            "FullTime": {
-                "HomeTeam": 0,
-                "AwayTeam": 1
-            },
-            "HalfTime": {
-                "HomeTeam": 0,
-                "AwayTeam": 1
-            },
-            "ExtraTime": {
-                "HomeTeam": null,
-                "AwayTeam": null
-            },
-            "Penalties": {
-                "HomeTeam": null,
-                "AwayTeam": null
-            }
-        },
-        "Competition": {
-            "_id": 2021,
-            "Name": "Premier League",
-            "Code": null,
-            "EmblemUrl": null,
-            "Plan": null,
-            "LastUpdated": null
-        },
-        "UtcDate": "2019-04-15T19:00:00Z"
+    "Competition": {
+      "_id": 2013,
+      "Name": "Série A"
     },
-    {
-        "_id": 233363,
-        "Status": "FINISHED",
-        "LastUpdated": "2019-04-21T07:30:13.000Z",
-        "HomeTeam": {
-            "_id": 76,
-            "Name": "Wolverhampton Wanderers FC",
-            "ShortName": null,
-            "Tla": null,
-            "CrestUrl": null,
-            "Address": null,
-            "Phone": null,
-            "Email": null,
-            "Colors": null,
-            "Venue": null
-        },
-        "HomeTeamRating": 0,
-        "AwayTeam": {
-            "_id": 397,
-            "Name": "Brighton & Hove Albion FC",
-            "ShortName": null,
-            "Tla": null,
-            "CrestUrl": null,
-            "Address": null,
-            "Phone": null,
-            "Email": null,
-            "Colors": null,
-            "Venue": null
-        },
-        "AwayTeamRating": 0,
-        "DrawRating": 0,
-        "Score": {
-            "Winner": "DRAW",
-            "Duration": "REGULAR",
-            "FullTime": {
-                "HomeTeam": 0,
-                "AwayTeam": 0
-            },
-            "HalfTime": {
-                "HomeTeam": 0,
-                "AwayTeam": 0
-            },
-            "ExtraTime": {
-                "HomeTeam": null,
-                "AwayTeam": null
-            },
-            "Penalties": {
-                "HomeTeam": null,
-                "AwayTeam": null
-            }
-        },
-        "Competition": {
-            "_id": 2021,
-            "Name": "Premier League",
-            "Code": null,
-            "EmblemUrl": null,
-            "Plan": null,
-            "LastUpdated": null
-        },
-        "UtcDate": "2019-04-20T14:00:00Z"
+    "UtcDate": "2019-06-09T00:00:00Z"
+  },
+  {
+    "_id": 262465,
+    "Status": "SCHEDULED",
+    "LastUpdated": "2019-05-27T18:32:14.000Z",
+    "HomeTeam": {
+      "_id": 6685,
+      "Name": "Santos FC",
+      "ShortName": "Santos",
+      "Tla": "SAN",
+      "Address": "Rua Princesa Isabel S/N, Vila Belmiro Santos, SP 11075-501",
+      "Phone": "+55 (13) 32574000",
+      "Email": "imprensa@santosfc.com.br",
+      "Venue": "Estádio do Pacaembú"
     },
-    {
-        "_id": 233364,
-        "Status": "FINISHED",
-        "LastUpdated": "2019-04-20T16:34:22.000Z",
-        "HomeTeam": {
-            "_id": 65,
-            "Name": "Manchester City FC",
-            "ShortName": null,
-            "Tla": null,
-            "CrestUrl": null,
-            "Address": null,
-            "Phone": null,
-            "Email": null,
-            "Colors": null,
-            "Venue": null
-        },
-        "HomeTeamRating": 0,
-        "AwayTeam": {
-            "_id": 73,
-            "Name": "Tottenham Hotspur FC",
-            "ShortName": null,
-            "Tla": null,
-            "CrestUrl": null,
-            "Address": null,
-            "Phone": null,
-            "Email": null,
-            "Colors": null,
-            "Venue": null
-        },
-        "AwayTeamRating": 0,
-        "DrawRating": 0,
-        "Score": {
-            "Winner": "HOME_TEAM",
-            "Duration": "REGULAR",
-            "FullTime": {
-                "HomeTeam": 1,
-                "AwayTeam": 0
-            },
-            "HalfTime": {
-                "HomeTeam": 1,
-                "AwayTeam": 0
-            },
-            "ExtraTime": {
-                "HomeTeam": null,
-                "AwayTeam": null
-            },
-            "Penalties": {
-                "HomeTeam": null,
-                "AwayTeam": null
-            }
-        },
-        "Competition": {
-            "_id": 2021,
-            "Name": "Premier League",
-            "Code": null,
-            "EmblemUrl": null,
-            "Plan": null,
-            "LastUpdated": null
-        },
-        "UtcDate": "2019-04-20T11:30:00Z"
+    "HomeTeamRating": 0.0,
+    "AwayTeam": {
+      "_id": 1766,
+      "Name": "CA Mineiro",
+      "ShortName": "Mineiro",
+      "Tla": "CAM",
+      "Address": "Av. Olegário Maciel 1516, Lourdes Belo Horizonte, MG 30180-111",
+      "Phone": "+55 (31) 32901313",
+      "Email": "fut.base@galo.com.br",
+      "Venue": "Estádio Raimundo Sampaio"
     },
-    {
-        "_id": 233365,
-        "Status": "FINISHED",
-        "LastUpdated": "2019-04-20T22:04:14.000Z",
-        "HomeTeam": {
-            "_id": 67,
-            "Name": "Newcastle United FC",
-            "ShortName": null,
-            "Tla": null,
-            "CrestUrl": null,
-            "Address": null,
-            "Phone": null,
-            "Email": null,
-            "Colors": null,
-            "Venue": null
-        },
-        "HomeTeamRating": 0,
-        "AwayTeam": {
-            "_id": 340,
-            "Name": "Southampton FC",
-            "ShortName": null,
-            "Tla": null,
-            "CrestUrl": null,
-            "Address": null,
-            "Phone": null,
-            "Email": null,
-            "Colors": null,
-            "Venue": null
-        },
-        "AwayTeamRating": 0,
-        "DrawRating": 0,
-        "Score": {
-            "Winner": "HOME_TEAM",
-            "Duration": "REGULAR",
-            "FullTime": {
-                "HomeTeam": 3,
-                "AwayTeam": 1
-            },
-            "HalfTime": {
-                "HomeTeam": 2,
-                "AwayTeam": 0
-            },
-            "ExtraTime": {
-                "HomeTeam": null,
-                "AwayTeam": null
-            },
-            "Penalties": {
-                "HomeTeam": null,
-                "AwayTeam": null
-            }
-        },
-        "Competition": {
-            "_id": 2021,
-            "Name": "Premier League",
-            "Code": null,
-            "EmblemUrl": null,
-            "Plan": null,
-            "LastUpdated": null
-        },
-        "UtcDate": "2019-04-20T16:30:00Z"
+    "AwayTeamRating": 1.0,
+    "DrawRating": 0.0,
+    "Score": {
+      "Duration": "REGULAR",
+      "FullTime": {},
+      "HalfTime": {},
+      "ExtraTime": {},
+      "Penalties": {}
     },
-    {
-        "_id": 233366,
-        "Status": "FINISHED",
-        "LastUpdated": "2019-04-22T14:20:06.000Z",
-        "HomeTeam": {
-            "_id": 57,
-            "Name": "Arsenal FC",
-            "ShortName": null,
-            "Tla": null,
-            "CrestUrl": null,
-            "Address": null,
-            "Phone": null,
-            "Email": null,
-            "Colors": null,
-            "Venue": null
-        },
-        "HomeTeamRating": 0,
-        "AwayTeam": {
-            "_id": 354,
-            "Name": "Crystal Palace FC",
-            "ShortName": null,
-            "Tla": null,
-            "CrestUrl": null,
-            "Address": null,
-            "Phone": null,
-            "Email": null,
-            "Colors": null,
-            "Venue": null
-        },
-        "AwayTeamRating": 0,
-        "DrawRating": 0,
-        "Score": {
-            "Winner": "AWAY_TEAM",
-            "Duration": "REGULAR",
-            "FullTime": {
-                "HomeTeam": 2,
-                "AwayTeam": 3
-            },
-            "HalfTime": {
-                "HomeTeam": 0,
-                "AwayTeam": 1
-            },
-            "ExtraTime": {
-                "HomeTeam": null,
-                "AwayTeam": null
-            },
-            "Penalties": {
-                "HomeTeam": null,
-                "AwayTeam": null
-            }
-        },
-        "Competition": {
-            "_id": 2021,
-            "Name": "Premier League",
-            "Code": null,
-            "EmblemUrl": null,
-            "Plan": null,
-            "LastUpdated": null
-        },
-        "UtcDate": "2019-04-21T15:00:00Z"
+    "Competition": {
+      "_id": 2013,
+      "Name": "Série A"
     },
-    {
-        "_id": 233367,
-        "Status": "FINISHED",
-        "LastUpdated": "2019-04-23T03:10:09.000Z",
-        "HomeTeam": {
-            "_id": 61,
-            "Name": "Chelsea FC",
-            "ShortName": null,
-            "Tla": null,
-            "CrestUrl": null,
-            "Address": null,
-            "Phone": null,
-            "Email": null,
-            "Colors": null,
-            "Venue": null
-        },
-        "HomeTeamRating": 0,
-        "AwayTeam": {
-            "_id": 328,
-            "Name": "Burnley FC",
-            "ShortName": null,
-            "Tla": null,
-            "CrestUrl": null,
-            "Address": null,
-            "Phone": null,
-            "Email": null,
-            "Colors": null,
-            "Venue": null
-        },
-        "AwayTeamRating": 0,
-        "DrawRating": 0,
-        "Score": {
-            "Winner": "DRAW",
-            "Duration": "REGULAR",
-            "FullTime": {
-                "HomeTeam": 2,
-                "AwayTeam": 2
-            },
-            "HalfTime": {
-                "HomeTeam": 2,
-                "AwayTeam": 2
-            },
-            "ExtraTime": {
-                "HomeTeam": null,
-                "AwayTeam": null
-            },
-            "Penalties": {
-                "HomeTeam": null,
-                "AwayTeam": null
-            }
-        },
-        "Competition": {
-            "_id": 2021,
-            "Name": "Premier League",
-            "Code": null,
-            "EmblemUrl": null,
-            "Plan": null,
-            "LastUpdated": null
-        },
-        "UtcDate": "2019-04-22T19:00:00Z"
+    "UtcDate": "2019-06-09T22:00:00Z"
+  },
+  {
+    "_id": 262467,
+    "Status": "SCHEDULED",
+    "LastUpdated": "2019-05-27T18:32:14.000Z",
+    "HomeTeam": {
+      "_id": 1765,
+      "Name": "Fluminense FC",
+      "ShortName": "Fluminense",
+      "Tla": "FLU",
+      "Address": "Rua Álvaro Chaves 41, Bairro Laranjeiras Rio de Janeiro, RJ 22231-220",
+      "Phone": "+55 (21) 25537240",
+      "Email": "secretaria@fluminense.com.br",
+      "Venue": "Estadio Jornalista Mário Filho"
     },
-    {
-        "_id": 233368,
-        "Status": "FINISHED",
-        "LastUpdated": "2019-04-21T17:29:28.000Z",
-        "HomeTeam": {
-            "_id": 62,
-            "Name": "Everton FC",
-            "ShortName": null,
-            "Tla": null,
-            "CrestUrl": null,
-            "Address": null,
-            "Phone": null,
-            "Email": null,
-            "Colors": null,
-            "Venue": null
-        },
-        "HomeTeamRating": 0,
-        "AwayTeam": {
-            "_id": 66,
-            "Name": "Manchester United FC",
-            "ShortName": null,
-            "Tla": null,
-            "CrestUrl": null,
-            "Address": null,
-            "Phone": null,
-            "Email": null,
-            "Colors": null,
-            "Venue": null
-        },
-        "AwayTeamRating": 0,
-        "DrawRating": 0,
-        "Score": {
-            "Winner": "HOME_TEAM",
-            "Duration": "REGULAR",
-            "FullTime": {
-                "HomeTeam": 4,
-                "AwayTeam": 0
-            },
-            "HalfTime": {
-                "HomeTeam": 2,
-                "AwayTeam": 0
-            },
-            "ExtraTime": {
-                "HomeTeam": null,
-                "AwayTeam": null
-            },
-            "Penalties": {
-                "HomeTeam": null,
-                "AwayTeam": null
-            }
-        },
-        "Competition": {
-            "_id": 2021,
-            "Name": "Premier League",
-            "Code": null,
-            "EmblemUrl": null,
-            "Plan": null,
-            "LastUpdated": null
-        },
-        "UtcDate": "2019-04-21T12:30:00Z"
+    "HomeTeamRating": 0.0,
+    "AwayTeam": {
+      "_id": 1783,
+      "Name": "CR Flamengo",
+      "ShortName": "Flamengo",
+      "Tla": "FLA",
+      "CrestUrl": "",
+      "Address": "Av. Borges de Medeiros 997, Lagoa Rio de Janeiro, RJ 22430-041",
+      "Phone": "+55 (21) 25290100",
+      "Email": "flafutebol@flamengo.com.br",
+      "Venue": "Estadio Jornalista Mário Filho"
     },
-    {
-        "_id": 233369,
-        "Status": "FINISHED",
-        "LastUpdated": "2019-04-21T07:30:13.000Z",
-        "HomeTeam": {
-            "_id": 394,
-            "Name": "Huddersfield Town AFC",
-            "ShortName": null,
-            "Tla": null,
-            "CrestUrl": null,
-            "Address": null,
-            "Phone": null,
-            "Email": null,
-            "Colors": null,
-            "Venue": null
-        },
-        "HomeTeamRating": 0,
-        "AwayTeam": {
-            "_id": 346,
-            "Name": "Watford FC",
-            "ShortName": null,
-            "Tla": null,
-            "CrestUrl": null,
-            "Address": null,
-            "Phone": null,
-            "Email": null,
-            "Colors": null,
-            "Venue": null
-        },
-        "AwayTeamRating": 0,
-        "DrawRating": 0,
-        "Score": {
-            "Winner": "AWAY_TEAM",
-            "Duration": "REGULAR",
-            "FullTime": {
-                "HomeTeam": 1,
-                "AwayTeam": 2
-            },
-            "HalfTime": {
-                "HomeTeam": 0,
-                "AwayTeam": 1
-            },
-            "ExtraTime": {
-                "HomeTeam": null,
-                "AwayTeam": null
-            },
-            "Penalties": {
-                "HomeTeam": null,
-                "AwayTeam": null
-            }
-        },
-        "Competition": {
-            "_id": 2021,
-            "Name": "Premier League",
-            "Code": null,
-            "EmblemUrl": null,
-            "Plan": null,
-            "LastUpdated": null
-        },
-        "UtcDate": "2019-04-20T14:00:00Z"
+    "AwayTeamRating": 1.0,
+    "DrawRating": 0.0,
+    "Score": {
+      "Duration": "REGULAR",
+      "FullTime": {},
+      "HalfTime": {},
+      "ExtraTime": {},
+      "Penalties": {}
     },
-    {
-        "_id": 233370,
-        "Status": "FINISHED",
-        "LastUpdated": "2019-04-22T14:20:06.000Z",
-        "HomeTeam": {
-            "_id": 715,
-            "Name": "Cardiff City FC",
-            "ShortName": null,
-            "Tla": null,
-            "CrestUrl": null,
-            "Address": null,
-            "Phone": null,
-            "Email": null,
-            "Colors": null,
-            "Venue": null
-        },
-        "HomeTeamRating": 0,
-        "AwayTeam": {
-            "_id": 64,
-            "Name": "Liverpool FC",
-            "ShortName": null,
-            "Tla": null,
-            "CrestUrl": null,
-            "Address": null,
-            "Phone": null,
-            "Email": null,
-            "Colors": null,
-            "Venue": null
-        },
-        "AwayTeamRating": 0,
-        "DrawRating": 0,
-        "Score": {
-            "Winner": "AWAY_TEAM",
-            "Duration": "REGULAR",
-            "FullTime": {
-                "HomeTeam": 0,
-                "AwayTeam": 2
-            },
-            "HalfTime": {
-                "HomeTeam": 0,
-                "AwayTeam": 0
-            },
-            "ExtraTime": {
-                "HomeTeam": null,
-                "AwayTeam": null
-            },
-            "Penalties": {
-                "HomeTeam": null,
-                "AwayTeam": null
-            }
-        },
-        "Competition": {
-            "_id": 2021,
-            "Name": "Premier League",
-            "Code": null,
-            "EmblemUrl": null,
-            "Plan": null,
-            "LastUpdated": null
-        },
-        "UtcDate": "2019-04-21T15:00:00Z"
+    "Competition": {
+      "_id": 2013,
+      "Name": "Série A"
     },
-    {
-        "_id": 233371,
-        "Status": "FINISHED",
-        "LastUpdated": "2019-04-21T07:30:13.000Z",
-        "HomeTeam": {
-            "_id": 563,
-            "Name": "West Ham United FC",
-            "ShortName": null,
-            "Tla": null,
-            "CrestUrl": null,
-            "Address": null,
-            "Phone": null,
-            "Email": null,
-            "Colors": null,
-            "Venue": null
-        },
-        "HomeTeamRating": 0,
-        "AwayTeam": {
-            "_id": 338,
-            "Name": "Leicester City FC",
-            "ShortName": null,
-            "Tla": null,
-            "CrestUrl": null,
-            "Address": null,
-            "Phone": null,
-            "Email": null,
-            "Colors": null,
-            "Venue": null
-        },
-        "AwayTeamRating": 0,
-        "DrawRating": 0,
-        "Score": {
-            "Winner": "DRAW",
-            "Duration": "REGULAR",
-            "FullTime": {
-                "HomeTeam": 2,
-                "AwayTeam": 2
-            },
-            "HalfTime": {
-                "HomeTeam": 1,
-                "AwayTeam": 0
-            },
-            "ExtraTime": {
-                "HomeTeam": null,
-                "AwayTeam": null
-            },
-            "Penalties": {
-                "HomeTeam": null,
-                "AwayTeam": null
-            }
-        },
-        "Competition": {
-            "_id": 2021,
-            "Name": "Premier League",
-            "Code": null,
-            "EmblemUrl": null,
-            "Plan": null,
-            "LastUpdated": null
-        },
-        "UtcDate": "2019-04-20T14:00:00Z"
+    "UtcDate": "2019-06-09T22:00:00Z"
+  },
+  {
+    "_id": 262472,
+    "Status": "SCHEDULED",
+    "LastUpdated": "2019-05-27T18:32:14.000Z",
+    "HomeTeam": {
+      "_id": 4244,
+      "Name": "CS Alagoano",
+      "ShortName": "Alagoano",
+      "Tla": "CSA",
+      "Address": "Avenida Major Cícero de Goes Monteiro 2593, Mutange Maceió, AL 57030-320",
+      "Phone": "+55 (82) 33383698",
+      "Venue": "Estádio Rei Pelé"
     },
-    {
-        "_id": 233372,
-        "Status": "FINISHED",
-        "LastUpdated": "2019-04-21T07:30:13.000Z",
-        "HomeTeam": {
-            "_id": 1044,
-            "Name": "AFC Bournemouth",
-            "ShortName": null,
-            "Tla": null,
-            "CrestUrl": null,
-            "Address": null,
-            "Phone": null,
-            "Email": null,
-            "Colors": null,
-            "Venue": null
-        },
-        "HomeTeamRating": 0,
-        "AwayTeam": {
-            "_id": 63,
-            "Name": "Fulham FC",
-            "ShortName": null,
-            "Tla": null,
-            "CrestUrl": null,
-            "Address": null,
-            "Phone": null,
-            "Email": null,
-            "Colors": null,
-            "Venue": null
-        },
-        "AwayTeamRating": 0,
-        "DrawRating": 0,
-        "Score": {
-            "Winner": "AWAY_TEAM",
-            "Duration": "REGULAR",
-            "FullTime": {
-                "HomeTeam": 0,
-                "AwayTeam": 1
-            },
-            "HalfTime": {
-                "HomeTeam": 0,
-                "AwayTeam": 0
-            },
-            "ExtraTime": {
-                "HomeTeam": null,
-                "AwayTeam": null
-            },
-            "Penalties": {
-                "HomeTeam": null,
-                "AwayTeam": null
-            }
-        },
-        "Competition": {
-            "_id": 2021,
-            "Name": "Premier League",
-            "Code": null,
-            "EmblemUrl": null,
-            "Plan": null,
-            "LastUpdated": null
-        },
-        "UtcDate": "2019-04-20T14:00:00Z"
-    }
+    "HomeTeamRating": 1.0,
+    "AwayTeam": {
+      "_id": 1770,
+      "Name": "Botafogo FR",
+      "ShortName": "Botafogo",
+      "Tla": "BOT",
+      "Address": "Avenida Venceslau Brás 72, Bairro Botafago Rio de Janeiro, RJ 22290-140",
+      "Phone": "+55 (21) 25437272",
+      "Email": "ouvidoria@botafogo.com.br",
+      "Venue": "Estádio Nilton Santos"
+    },
+    "AwayTeamRating": 0.0,
+    "DrawRating": 0.0,
+    "Score": {
+      "Duration": "REGULAR",
+      "FullTime": {},
+      "HalfTime": {},
+      "ExtraTime": {},
+      "Penalties": {}
+    },
+    "Competition": {
+      "_id": 2013,
+      "Name": "Série A"
+    },
+    "UtcDate": "2019-06-09T22:00:00Z"
+  },
+  {
+    "_id": 262471,
+    "Status": "SCHEDULED",
+    "LastUpdated": "2019-05-27T18:32:14.000Z",
+    "HomeTeam": {
+      "_id": 4250,
+      "Name": "Goiás EC"
+    },
+    "HomeTeamRating": 0.0,
+    "AwayTeam": {
+      "_id": 1772,
+      "Name": "Chapecoense AF"
+    },
+    "AwayTeamRating": 0.0,
+    "DrawRating": 0.0,
+    "Score": {
+      "Duration": "REGULAR",
+      "FullTime": {},
+      "HalfTime": {},
+      "ExtraTime": {},
+      "Penalties": {}
+    },
+    "Competition": {
+      "_id": 2013,
+      "Name": "Série A"
+    },
+    "UtcDate": "2019-06-04T09:27:00Z"
+  },
+  {
+    "_id": 233323,
+    "Status": "FINISHED",
+    "LastUpdated": "2019-04-24T23:43:13.000Z",
+    "HomeTeam": {
+      "_id": 76,
+      "Name": "Wolverhampton Wanderers FC"
+    },
+    "HomeTeamRating": 0,
+    "AwayTeam": {
+      "_id": 57,
+      "Name": "Arsenal FC"
+    },
+    "AwayTeamRating": 0,
+    "DrawRating": 0,
+    "Score": {
+      "Winner": "HOME_TEAM",
+      "Duration": "REGULAR",
+      "FullTime": {
+        "HomeTeam": 3,
+        "AwayTeam": 1
+      },
+      "HalfTime": {
+        "HomeTeam": 3,
+        "AwayTeam": 0
+      },
+      "ExtraTime": {},
+      "Penalties": {}
+    },
+    "Competition": {
+      "_id": 2021,
+      "Name": "Premier League"
+    },
+    "UtcDate": "2019-04-24T18:45:00Z"
+  },
+  {
+    "_id": 233327,
+    "Status": "FINISHED",
+    "LastUpdated": "2019-04-24T23:58:13.000Z",
+    "HomeTeam": {
+      "_id": 66,
+      "Name": "Manchester United FC"
+    },
+    "HomeTeamRating": 0,
+    "AwayTeam": {
+      "_id": 65,
+      "Name": "Manchester City FC"
+    },
+    "AwayTeamRating": 0,
+    "DrawRating": 0,
+    "Score": {
+      "Winner": "AWAY_TEAM",
+      "Duration": "REGULAR",
+      "FullTime": {
+        "HomeTeam": 0,
+        "AwayTeam": 2
+      },
+      "HalfTime": {
+        "HomeTeam": 0,
+        "AwayTeam": 0
+      },
+      "ExtraTime": {},
+      "Penalties": {}
+    },
+    "Competition": {
+      "_id": 2021,
+      "Name": "Premier League"
+    },
+    "UtcDate": "2019-04-24T19:00:00Z"
+  },
+  {
+    "_id": 233330,
+    "Status": "FINISHED",
+    "LastUpdated": "2019-04-16T23:43:22.000Z",
+    "HomeTeam": {
+      "_id": 397,
+      "Name": "Brighton \u0026 Hove Albion FC"
+    },
+    "HomeTeamRating": 0,
+    "AwayTeam": {
+      "_id": 715,
+      "Name": "Cardiff City FC"
+    },
+    "AwayTeamRating": 0,
+    "DrawRating": 0,
+    "Score": {
+      "Winner": "AWAY_TEAM",
+      "Duration": "REGULAR",
+      "FullTime": {
+        "HomeTeam": 0,
+        "AwayTeam": 2
+      },
+      "HalfTime": {
+        "HomeTeam": 0,
+        "AwayTeam": 1
+      },
+      "ExtraTime": {},
+      "Penalties": {}
+    },
+    "Competition": {
+      "_id": 2021,
+      "Name": "Premier League"
+    },
+    "UtcDate": "2019-04-16T18:45:00Z"
+  },
+  {
+    "_id": 233331,
+    "Status": "FINISHED",
+    "LastUpdated": "2019-04-24T21:45:03.000Z",
+    "HomeTeam": {
+      "_id": 346,
+      "Name": "Watford FC"
+    },
+    "HomeTeamRating": 0,
+    "AwayTeam": {
+      "_id": 340,
+      "Name": "Southampton FC"
+    },
+    "AwayTeamRating": 0,
+    "DrawRating": 0,
+    "Score": {
+      "Winner": "DRAW",
+      "Duration": "REGULAR",
+      "FullTime": {
+        "HomeTeam": 1,
+        "AwayTeam": 1
+      },
+      "HalfTime": {
+        "HomeTeam": 0,
+        "AwayTeam": 1
+      },
+      "ExtraTime": {},
+      "Penalties": {}
+    },
+    "Competition": {
+      "_id": 2021,
+      "Name": "Premier League"
+    },
+    "UtcDate": "2019-04-23T18:45:00Z"
+  },
+  {
+    "_id": 233345,
+    "Status": "FINISHED",
+    "LastUpdated": "2019-04-07T02:34:32.000Z",
+    "HomeTeam": {
+      "_id": 67,
+      "Name": "Newcastle United FC"
+    },
+    "HomeTeamRating": 0,
+    "AwayTeam": {
+      "_id": 354,
+      "Name": "Crystal Palace FC"
+    },
+    "AwayTeamRating": 0,
+    "DrawRating": 0,
+    "Score": {
+      "Winner": "AWAY_TEAM",
+      "Duration": "REGULAR",
+      "FullTime": {
+        "HomeTeam": 0,
+        "AwayTeam": 1
+      },
+      "HalfTime": {
+        "HomeTeam": 0,
+        "AwayTeam": 0
+      },
+      "ExtraTime": {},
+      "Penalties": {}
+    },
+    "Competition": {
+      "_id": 2021,
+      "Name": "Premier League"
+    },
+    "UtcDate": "2019-04-06T14:00:00Z"
+  },
+  {
+    "_id": 233346,
+    "Status": "FINISHED",
+    "LastUpdated": "2019-04-09T17:05:02.000Z",
+    "HomeTeam": {
+      "_id": 61,
+      "Name": "Chelsea FC"
+    },
+    "HomeTeamRating": 0,
+    "AwayTeam": {
+      "_id": 563,
+      "Name": "West Ham United FC"
+    },
+    "AwayTeamRating": 0,
+    "DrawRating": 0,
+    "Score": {
+      "Winner": "HOME_TEAM",
+      "Duration": "REGULAR",
+      "FullTime": {
+        "HomeTeam": 2,
+        "AwayTeam": 0
+      },
+      "HalfTime": {
+        "HomeTeam": 1,
+        "AwayTeam": 0
+      },
+      "ExtraTime": {},
+      "Penalties": {}
+    },
+    "Competition": {
+      "_id": 2021,
+      "Name": "Premier League"
+    },
+    "UtcDate": "2019-04-08T19:00:00Z"
+  },
+  {
+    "_id": 233347,
+    "Status": "FINISHED",
+    "LastUpdated": "2019-04-24T21:45:03.000Z",
+    "HomeTeam": {
+      "_id": 73,
+      "Name": "Tottenham Hotspur FC"
+    },
+    "HomeTeamRating": 0,
+    "AwayTeam": {
+      "_id": 397,
+      "Name": "Brighton \u0026 Hove Albion FC"
+    },
+    "AwayTeamRating": 0,
+    "DrawRating": 0,
+    "Score": {
+      "Winner": "HOME_TEAM",
+      "Duration": "REGULAR",
+      "FullTime": {
+        "HomeTeam": 1,
+        "AwayTeam": 0
+      },
+      "HalfTime": {
+        "HomeTeam": 0,
+        "AwayTeam": 0
+      },
+      "ExtraTime": {},
+      "Penalties": {}
+    },
+    "Competition": {
+      "_id": 2021,
+      "Name": "Premier League"
+    },
+    "UtcDate": "2019-04-23T18:45:00Z"
+  },
+  {
+    "_id": 233348,
+    "Status": "FINISHED",
+    "LastUpdated": "2019-04-07T18:45:30.000Z",
+    "HomeTeam": {
+      "_id": 62,
+      "Name": "Everton FC"
+    },
+    "HomeTeamRating": 0,
+    "AwayTeam": {
+      "_id": 57,
+      "Name": "Arsenal FC"
+    },
+    "AwayTeamRating": 0,
+    "DrawRating": 0,
+    "Score": {
+      "Winner": "HOME_TEAM",
+      "Duration": "REGULAR",
+      "FullTime": {
+        "HomeTeam": 1,
+        "AwayTeam": 0
+      },
+      "HalfTime": {
+        "HomeTeam": 1,
+        "AwayTeam": 0
+      },
+      "ExtraTime": {},
+      "Penalties": {}
+    },
+    "Competition": {
+      "_id": 2021,
+      "Name": "Premier League"
+    },
+    "UtcDate": "2019-04-07T13:05:00Z"
+  },
+  {
+    "_id": 233349,
+    "Status": "FINISHED",
+    "LastUpdated": "2019-04-07T02:34:32.000Z",
+    "HomeTeam": {
+      "_id": 394,
+      "Name": "Huddersfield Town AFC"
+    },
+    "HomeTeamRating": 0,
+    "AwayTeam": {
+      "_id": 338,
+      "Name": "Leicester City FC"
+    },
+    "AwayTeamRating": 0,
+    "DrawRating": 0,
+    "Score": {
+      "Winner": "AWAY_TEAM",
+      "Duration": "REGULAR",
+      "FullTime": {
+        "HomeTeam": 1,
+        "AwayTeam": 4
+      },
+      "HalfTime": {
+        "HomeTeam": 0,
+        "AwayTeam": 1
+      },
+      "ExtraTime": {},
+      "Penalties": {}
+    },
+    "Competition": {
+      "_id": 2021,
+      "Name": "Premier League"
+    },
+    "UtcDate": "2019-04-06T14:00:00Z"
+  },
+  {
+    "_id": 233352,
+    "Status": "FINISHED",
+    "LastUpdated": "2019-04-07T02:34:32.000Z",
+    "HomeTeam": {
+      "_id": 1044,
+      "Name": "AFC Bournemouth"
+    },
+    "HomeTeamRating": 0,
+    "AwayTeam": {
+      "_id": 328,
+      "Name": "Burnley FC"
+    },
+    "AwayTeamRating": 0,
+    "DrawRating": 0,
+    "Score": {
+      "Winner": "AWAY_TEAM",
+      "Duration": "REGULAR",
+      "FullTime": {
+        "HomeTeam": 1,
+        "AwayTeam": 3
+      },
+      "HalfTime": {
+        "HomeTeam": 1,
+        "AwayTeam": 2
+      },
+      "ExtraTime": {},
+      "Penalties": {}
+    },
+    "Competition": {
+      "_id": 2021,
+      "Name": "Premier League"
+    },
+    "UtcDate": "2019-04-06T14:00:00Z"
+  },
+  {
+    "_id": 233353,
+    "Status": "FINISHED",
+    "LastUpdated": "2019-04-14T14:34:24.000Z",
+    "HomeTeam": {
+      "_id": 63,
+      "Name": "Fulham FC"
+    },
+    "HomeTeamRating": 0,
+    "AwayTeam": {
+      "_id": 62,
+      "Name": "Everton FC"
+    },
+    "AwayTeamRating": 0,
+    "DrawRating": 0,
+    "Score": {
+      "Winner": "HOME_TEAM",
+      "Duration": "REGULAR",
+      "FullTime": {
+        "HomeTeam": 2,
+        "AwayTeam": 0
+      },
+      "HalfTime": {
+        "HomeTeam": 0,
+        "AwayTeam": 0
+      },
+      "ExtraTime": {},
+      "Penalties": {}
+    },
+    "Competition": {
+      "_id": 2021,
+      "Name": "Premier League"
+    },
+    "UtcDate": "2019-04-13T14:00:00Z"
+  },
+  {
+    "_id": 233354,
+    "Status": "FINISHED",
+    "LastUpdated": "2019-04-15T15:55:10.000Z",
+    "HomeTeam": {
+      "_id": 64,
+      "Name": "Liverpool FC"
+    },
+    "HomeTeamRating": 0,
+    "AwayTeam": {
+      "_id": 61,
+      "Name": "Chelsea FC"
+    },
+    "AwayTeamRating": 0,
+    "DrawRating": 0,
+    "Score": {
+      "Winner": "HOME_TEAM",
+      "Duration": "REGULAR",
+      "FullTime": {
+        "HomeTeam": 2,
+        "AwayTeam": 0
+      },
+      "HalfTime": {
+        "HomeTeam": 0,
+        "AwayTeam": 0
+      },
+      "ExtraTime": {},
+      "Penalties": {}
+    },
+    "Competition": {
+      "_id": 2021,
+      "Name": "Premier League"
+    },
+    "UtcDate": "2019-04-14T15:30:00Z"
+  },
+  {
+    "_id": 233355,
+    "Status": "FINISHED",
+    "LastUpdated": "2019-04-14T14:34:24.000Z",
+    "HomeTeam": {
+      "_id": 73,
+      "Name": "Tottenham Hotspur FC"
+    },
+    "HomeTeamRating": 0,
+    "AwayTeam": {
+      "_id": 394,
+      "Name": "Huddersfield Town AFC"
+    },
+    "AwayTeamRating": 0,
+    "DrawRating": 0,
+    "Score": {
+      "Winner": "HOME_TEAM",
+      "Duration": "REGULAR",
+      "FullTime": {
+        "HomeTeam": 4,
+        "AwayTeam": 0
+      },
+      "HalfTime": {
+        "HomeTeam": 2,
+        "AwayTeam": 0
+      },
+      "ExtraTime": {},
+      "Penalties": {}
+    },
+    "Competition": {
+      "_id": 2021,
+      "Name": "Premier League"
+    },
+    "UtcDate": "2019-04-13T11:30:00Z"
+  },
+  {
+    "_id": 233356,
+    "Status": "FINISHED",
+    "LastUpdated": "2019-04-14T14:34:24.000Z",
+    "HomeTeam": {
+      "_id": 66,
+      "Name": "Manchester United FC"
+    },
+    "HomeTeamRating": 0,
+    "AwayTeam": {
+      "_id": 563,
+      "Name": "West Ham United FC"
+    },
+    "AwayTeamRating": 0,
+    "DrawRating": 0,
+    "Score": {
+      "Winner": "HOME_TEAM",
+      "Duration": "REGULAR",
+      "FullTime": {
+        "HomeTeam": 2,
+        "AwayTeam": 1
+      },
+      "HalfTime": {
+        "HomeTeam": 1,
+        "AwayTeam": 0
+      },
+      "ExtraTime": {},
+      "Penalties": {}
+    },
+    "Competition": {
+      "_id": 2021,
+      "Name": "Premier League"
+    },
+    "UtcDate": "2019-04-13T16:30:00Z"
+  },
+  {
+    "_id": 233357,
+    "Status": "FINISHED",
+    "LastUpdated": "2019-04-13T20:30:07.000Z",
+    "HomeTeam": {
+      "_id": 338,
+      "Name": "Leicester City FC"
+    },
+    "HomeTeamRating": 0,
+    "AwayTeam": {
+      "_id": 67,
+      "Name": "Newcastle United FC"
+    },
+    "AwayTeamRating": 0,
+    "DrawRating": 0,
+    "Score": {
+      "Winner": "AWAY_TEAM",
+      "Duration": "REGULAR",
+      "FullTime": {
+        "HomeTeam": 0,
+        "AwayTeam": 1
+      },
+      "HalfTime": {
+        "HomeTeam": 0,
+        "AwayTeam": 1
+      },
+      "ExtraTime": {},
+      "Penalties": {}
+    },
+    "Competition": {
+      "_id": 2021,
+      "Name": "Premier League"
+    },
+    "UtcDate": "2019-04-12T19:00:00Z"
+  },
+  {
+    "_id": 233358,
+    "Status": "FINISHED",
+    "LastUpdated": "2019-04-14T14:34:24.000Z",
+    "HomeTeam": {
+      "_id": 328,
+      "Name": "Burnley FC"
+    },
+    "HomeTeamRating": 0,
+    "AwayTeam": {
+      "_id": 715,
+      "Name": "Cardiff City FC"
+    },
+    "AwayTeamRating": 0,
+    "DrawRating": 0,
+    "Score": {
+      "Winner": "HOME_TEAM",
+      "Duration": "REGULAR",
+      "FullTime": {
+        "HomeTeam": 2,
+        "AwayTeam": 0
+      },
+      "HalfTime": {
+        "HomeTeam": 1,
+        "AwayTeam": 0
+      },
+      "ExtraTime": {},
+      "Penalties": {}
+    },
+    "Competition": {
+      "_id": 2021,
+      "Name": "Premier League"
+    },
+    "UtcDate": "2019-04-13T14:00:00Z"
+  },
+  {
+    "_id": 233359,
+    "Status": "FINISHED",
+    "LastUpdated": "2019-04-14T14:34:24.000Z",
+    "HomeTeam": {
+      "_id": 340,
+      "Name": "Southampton FC"
+    },
+    "HomeTeamRating": 0,
+    "AwayTeam": {
+      "_id": 76,
+      "Name": "Wolverhampton Wanderers FC"
+    },
+    "AwayTeamRating": 0,
+    "DrawRating": 0,
+    "Score": {
+      "Winner": "HOME_TEAM",
+      "Duration": "REGULAR",
+      "FullTime": {
+        "HomeTeam": 3,
+        "AwayTeam": 1
+      },
+      "HalfTime": {
+        "HomeTeam": 2,
+        "AwayTeam": 1
+      },
+      "ExtraTime": {},
+      "Penalties": {}
+    },
+    "Competition": {
+      "_id": 2021,
+      "Name": "Premier League"
+    },
+    "UtcDate": "2019-04-13T14:00:00Z"
+  },
+  {
+    "_id": 233360,
+    "Status": "FINISHED",
+    "LastUpdated": "2019-04-14T18:58:05.000Z",
+    "HomeTeam": {
+      "_id": 354,
+      "Name": "Crystal Palace FC"
+    },
+    "HomeTeamRating": 0,
+    "AwayTeam": {
+      "_id": 65,
+      "Name": "Manchester City FC"
+    },
+    "AwayTeamRating": 0,
+    "DrawRating": 0,
+    "Score": {
+      "Winner": "AWAY_TEAM",
+      "Duration": "REGULAR",
+      "FullTime": {
+        "HomeTeam": 1,
+        "AwayTeam": 3
+      },
+      "HalfTime": {
+        "HomeTeam": 0,
+        "AwayTeam": 1
+      },
+      "ExtraTime": {},
+      "Penalties": {}
+    },
+    "Competition": {
+      "_id": 2021,
+      "Name": "Premier League"
+    },
+    "UtcDate": "2019-04-14T13:05:00Z"
+  },
+  {
+    "_id": 233361,
+    "Status": "FINISHED",
+    "LastUpdated": "2019-04-14T14:34:24.000Z",
+    "HomeTeam": {
+      "_id": 397,
+      "Name": "Brighton \u0026 Hove Albion FC"
+    },
+    "HomeTeamRating": 0,
+    "AwayTeam": {
+      "_id": 1044,
+      "Name": "AFC Bournemouth"
+    },
+    "AwayTeamRating": 0,
+    "DrawRating": 0,
+    "Score": {
+      "Winner": "AWAY_TEAM",
+      "Duration": "REGULAR",
+      "FullTime": {
+        "HomeTeam": 0,
+        "AwayTeam": 5
+      },
+      "HalfTime": {
+        "HomeTeam": 0,
+        "AwayTeam": 1
+      },
+      "ExtraTime": {},
+      "Penalties": {}
+    },
+    "Competition": {
+      "_id": 2021,
+      "Name": "Premier League"
+    },
+    "UtcDate": "2019-04-13T14:00:00Z"
+  },
+  {
+    "_id": 233362,
+    "Status": "FINISHED",
+    "LastUpdated": "2019-04-16T21:20:02.000Z",
+    "HomeTeam": {
+      "_id": 346,
+      "Name": "Watford FC"
+    },
+    "HomeTeamRating": 0,
+    "AwayTeam": {
+      "_id": 57,
+      "Name": "Arsenal FC"
+    },
+    "AwayTeamRating": 0,
+    "DrawRating": 0,
+    "Score": {
+      "Winner": "AWAY_TEAM",
+      "Duration": "REGULAR",
+      "FullTime": {
+        "HomeTeam": 0,
+        "AwayTeam": 1
+      },
+      "HalfTime": {
+        "HomeTeam": 0,
+        "AwayTeam": 1
+      },
+      "ExtraTime": {},
+      "Penalties": {}
+    },
+    "Competition": {
+      "_id": 2021,
+      "Name": "Premier League"
+    },
+    "UtcDate": "2019-04-15T19:00:00Z"
+  },
+  {
+    "_id": 233363,
+    "Status": "FINISHED",
+    "LastUpdated": "2019-04-21T07:30:13.000Z",
+    "HomeTeam": {
+      "_id": 76,
+      "Name": "Wolverhampton Wanderers FC"
+    },
+    "HomeTeamRating": 0,
+    "AwayTeam": {
+      "_id": 397,
+      "Name": "Brighton \u0026 Hove Albion FC"
+    },
+    "AwayTeamRating": 0,
+    "DrawRating": 0,
+    "Score": {
+      "Winner": "DRAW",
+      "Duration": "REGULAR",
+      "FullTime": {
+        "HomeTeam": 0,
+        "AwayTeam": 0
+      },
+      "HalfTime": {
+        "HomeTeam": 0,
+        "AwayTeam": 0
+      },
+      "ExtraTime": {},
+      "Penalties": {}
+    },
+    "Competition": {
+      "_id": 2021,
+      "Name": "Premier League"
+    },
+    "UtcDate": "2019-04-20T14:00:00Z"
+  },
+  {
+    "_id": 233364,
+    "Status": "FINISHED",
+    "LastUpdated": "2019-04-20T16:34:22.000Z",
+    "HomeTeam": {
+      "_id": 65,
+      "Name": "Manchester City FC"
+    },
+    "HomeTeamRating": 0,
+    "AwayTeam": {
+      "_id": 73,
+      "Name": "Tottenham Hotspur FC"
+    },
+    "AwayTeamRating": 0,
+    "DrawRating": 0,
+    "Score": {
+      "Winner": "HOME_TEAM",
+      "Duration": "REGULAR",
+      "FullTime": {
+        "HomeTeam": 1,
+        "AwayTeam": 0
+      },
+      "HalfTime": {
+        "HomeTeam": 1,
+        "AwayTeam": 0
+      },
+      "ExtraTime": {},
+      "Penalties": {}
+    },
+    "Competition": {
+      "_id": 2021,
+      "Name": "Premier League"
+    },
+    "UtcDate": "2019-04-20T11:30:00Z"
+  },
+  {
+    "_id": 233365,
+    "Status": "FINISHED",
+    "LastUpdated": "2019-04-20T22:04:14.000Z",
+    "HomeTeam": {
+      "_id": 67,
+      "Name": "Newcastle United FC"
+    },
+    "HomeTeamRating": 0,
+    "AwayTeam": {
+      "_id": 340,
+      "Name": "Southampton FC"
+    },
+    "AwayTeamRating": 0,
+    "DrawRating": 0,
+    "Score": {
+      "Winner": "HOME_TEAM",
+      "Duration": "REGULAR",
+      "FullTime": {
+        "HomeTeam": 3,
+        "AwayTeam": 1
+      },
+      "HalfTime": {
+        "HomeTeam": 2,
+        "AwayTeam": 0
+      },
+      "ExtraTime": {},
+      "Penalties": {}
+    },
+    "Competition": {
+      "_id": 2021,
+      "Name": "Premier League"
+    },
+    "UtcDate": "2019-04-20T16:30:00Z"
+  },
+  {
+    "_id": 233366,
+    "Status": "FINISHED",
+    "LastUpdated": "2019-04-22T14:20:06.000Z",
+    "HomeTeam": {
+      "_id": 57,
+      "Name": "Arsenal FC"
+    },
+    "HomeTeamRating": 0,
+    "AwayTeam": {
+      "_id": 354,
+      "Name": "Crystal Palace FC"
+    },
+    "AwayTeamRating": 0,
+    "DrawRating": 0,
+    "Score": {
+      "Winner": "AWAY_TEAM",
+      "Duration": "REGULAR",
+      "FullTime": {
+        "HomeTeam": 2,
+        "AwayTeam": 3
+      },
+      "HalfTime": {
+        "HomeTeam": 0,
+        "AwayTeam": 1
+      },
+      "ExtraTime": {},
+      "Penalties": {}
+    },
+    "Competition": {
+      "_id": 2021,
+      "Name": "Premier League"
+    },
+    "UtcDate": "2019-04-21T15:00:00Z"
+  },
+  {
+    "_id": 233367,
+    "Status": "FINISHED",
+    "LastUpdated": "2019-04-23T03:10:09.000Z",
+    "HomeTeam": {
+      "_id": 61,
+      "Name": "Chelsea FC"
+    },
+    "HomeTeamRating": 0,
+    "AwayTeam": {
+      "_id": 328,
+      "Name": "Burnley FC"
+    },
+    "AwayTeamRating": 0,
+    "DrawRating": 0,
+    "Score": {
+      "Winner": "DRAW",
+      "Duration": "REGULAR",
+      "FullTime": {
+        "HomeTeam": 2,
+        "AwayTeam": 2
+      },
+      "HalfTime": {
+        "HomeTeam": 2,
+        "AwayTeam": 2
+      },
+      "ExtraTime": {},
+      "Penalties": {}
+    },
+    "Competition": {
+      "_id": 2021,
+      "Name": "Premier League"
+    },
+    "UtcDate": "2019-04-22T19:00:00Z"
+  },
+  {
+    "_id": 233368,
+    "Status": "FINISHED",
+    "LastUpdated": "2019-04-21T17:29:28.000Z",
+    "HomeTeam": {
+      "_id": 62,
+      "Name": "Everton FC"
+    },
+    "HomeTeamRating": 0,
+    "AwayTeam": {
+      "_id": 66,
+      "Name": "Manchester United FC"
+    },
+    "AwayTeamRating": 0,
+    "DrawRating": 0,
+    "Score": {
+      "Winner": "HOME_TEAM",
+      "Duration": "REGULAR",
+      "FullTime": {
+        "HomeTeam": 4,
+        "AwayTeam": 0
+      },
+      "HalfTime": {
+        "HomeTeam": 2,
+        "AwayTeam": 0
+      },
+      "ExtraTime": {},
+      "Penalties": {}
+    },
+    "Competition": {
+      "_id": 2021,
+      "Name": "Premier League"
+    },
+    "UtcDate": "2019-04-21T12:30:00Z"
+  },
+  {
+    "_id": 233369,
+    "Status": "FINISHED",
+    "LastUpdated": "2019-04-21T07:30:13.000Z",
+    "HomeTeam": {
+      "_id": 394,
+      "Name": "Huddersfield Town AFC"
+    },
+    "HomeTeamRating": 0,
+    "AwayTeam": {
+      "_id": 346,
+      "Name": "Watford FC"
+    },
+    "AwayTeamRating": 0,
+    "DrawRating": 0,
+    "Score": {
+      "Winner": "AWAY_TEAM",
+      "Duration": "REGULAR",
+      "FullTime": {
+        "HomeTeam": 1,
+        "AwayTeam": 2
+      },
+      "HalfTime": {
+        "HomeTeam": 0,
+        "AwayTeam": 1
+      },
+      "ExtraTime": {},
+      "Penalties": {}
+    },
+    "Competition": {
+      "_id": 2021,
+      "Name": "Premier League"
+    },
+    "UtcDate": "2019-04-20T14:00:00Z"
+  },
+  {
+    "_id": 233370,
+    "Status": "FINISHED",
+    "LastUpdated": "2019-04-22T14:20:06.000Z",
+    "HomeTeam": {
+      "_id": 715,
+      "Name": "Cardiff City FC"
+    },
+    "HomeTeamRating": 0,
+    "AwayTeam": {
+      "_id": 64,
+      "Name": "Liverpool FC"
+    },
+    "AwayTeamRating": 0,
+    "DrawRating": 0,
+    "Score": {
+      "Winner": "AWAY_TEAM",
+      "Duration": "REGULAR",
+      "FullTime": {
+        "HomeTeam": 0,
+        "AwayTeam": 2
+      },
+      "HalfTime": {
+        "HomeTeam": 0,
+        "AwayTeam": 0
+      },
+      "ExtraTime": {},
+      "Penalties": {}
+    },
+    "Competition": {
+      "_id": 2021,
+      "Name": "Premier League"
+    },
+    "UtcDate": "2019-04-21T15:00:00Z"
+  },
+  {
+    "_id": 233371,
+    "Status": "FINISHED",
+    "LastUpdated": "2019-04-21T07:30:13.000Z",
+    "HomeTeam": {
+      "_id": 563,
+      "Name": "West Ham United FC"
+    },
+    "HomeTeamRating": 0,
+    "AwayTeam": {
+      "_id": 338,
+      "Name": "Leicester City FC"
+    },
+    "AwayTeamRating": 0,
+    "DrawRating": 0,
+    "Score": {
+      "Winner": "DRAW",
+      "Duration": "REGULAR",
+      "FullTime": {
+        "HomeTeam": 2,
+        "AwayTeam": 2
+      },
+      "HalfTime": {
+        "HomeTeam": 1,
+        "AwayTeam": 0
+      },
+      "ExtraTime": {},
+      "Penalties": {}
+    },
+    "Competition": {
+      "_id": 2021,
+      "Name": "Premier League"
+    },
+    "UtcDate": "2019-04-20T14:00:00Z"
+  },
+  {
+    "_id": 233372,
+    "Status": "FINISHED",
+    "LastUpdated": "2019-04-21T07:30:13.000Z",
+    "HomeTeam": {
+      "_id": 1044,
+      "Name": "AFC Bournemouth"
+    },
+    "HomeTeamRating": 0,
+    "AwayTeam": {
+      "_id": 63,
+      "Name": "Fulham FC"
+    },
+    "AwayTeamRating": 0,
+    "DrawRating": 0,
+    "Score": {
+      "Winner": "AWAY_TEAM",
+      "Duration": "REGULAR",
+      "FullTime": {
+        "HomeTeam": 0,
+        "AwayTeam": 1
+      },
+      "HalfTime": {
+        "HomeTeam": 0,
+        "AwayTeam": 0
+      },
+      "ExtraTime": {},
+      "Penalties": {}
+    },
+    "Competition": {
+      "_id": 2021,
+      "Name": "Premier League"
+    },
+    "UtcDate": "2019-04-20T14:00:00Z"
+  }
 ]
