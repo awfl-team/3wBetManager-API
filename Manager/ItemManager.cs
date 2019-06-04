@@ -45,7 +45,7 @@ namespace Manager
 
         public async Task<Item> AddMysteryItemToUser(User user)
         {
-            var items = await GenerateLoot(Item.LootBox);
+            var items = await GenerateLoot(Item.Mystery);
 
             await _userDao.AddUserItem(items.First(), user);
 
