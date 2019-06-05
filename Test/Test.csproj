@@ -112,6 +112,8 @@
     <Compile Include="Manager\BetManagerTest.cs" />
     <Compile Include="Manager\ItemManagerTest.cs" />
     <Compile Include="Manager\CompetitionManagerTest.cs" />
+    <Compile Include="Manager\AssignmentPointManagerTest.cs" />
+    <Compile Include="Manager\MonitoringManagerTest.cs" />
     <Compile Include="Manager\MatchManagerTest.cs" />
     <Compile Include="Manager\UsersManagerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

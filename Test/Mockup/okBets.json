@@ -1,0 +1,254 @@
+[
+  {
+    "_id" : "5cda7762a858b542e43d4f1e",
+    "Guid" : "85c21385-aa43-4ebe-ae73-d7fcb53c4d76",
+    "Date" : "2019-05-14T08:07:57.366Z",
+    "PointsWon" : 0,
+    "Status" : null,
+    "Multiply" : 5,
+    "User" : {
+      "_id" : "5caf2df3a858b59514cf47f5",
+      "Point" : 1077891.0,
+      "Role" : "ADMIN",
+      "TotalPointsUsedToBet" : 240,
+      "Password" : "$2a$11$VkbDm31m2.qfaoI05TGDMeLaItItzK7r51jTw.WsQb49qQTZMCIRK",
+      "Email" : "lucasbourgeois60@hotmail.fr",
+      "Username" : "lbo",
+      "Rank" : 0,
+      "IsPrivate" : false,
+      "IsEnabled" : false,
+      "Items" : []
+    },
+    "HomeTeamScore" : 2,
+    "AwayTeamScore" : 1,
+    "Match" : {
+      "_id" : 262446,
+      "Status" : "FINISHED",
+      "LastUpdated" : "2019-05-07T18:33:22.000Z",
+      "HomeTeam" : {
+        "_id" : 74,
+        "Name" : "West Bromwich Albion FC",
+        "ShortName" : "West Brom",
+        "Tla" : "WBA",
+        "CrestUrl" : "http://upload.wikimedia.org/wikipedia/de/8/8b/West_Bromwich_Albion.svg",
+        "Address" : "The Hawthorns West Bromwich B71 4LF",
+        "Phone" : null,
+        "Email" : "enquiries@wbafc.co.uk",
+        "Colors" : null,
+        "Venue" : "The Hawthorns"
+      },
+      "HomeTeamRating" : 0.0,
+      "AwayTeam" : {
+        "_id" : 58,
+        "Name" : "Aston Villa FC",
+        "ShortName" : "Aston Villa",
+        "Tla" : "AST",
+        "CrestUrl" : "http://upload.wikimedia.org/wikipedia/de/9/9f/Aston_Villa_logo.svg",
+        "Address" : "Villa Park Birmingham B6 6HE",
+        "Phone" : "+44 (0121) 3272299",
+        "Email" : null,
+        "Colors" : null,
+        "Venue" : "Villa Park"
+      },
+      "AwayTeamRating" : 0.0,
+      "DrawRating" : 0.0,
+      "Score" : {
+        "Winner" : null,
+        "Duration" : "REGULAR",
+        "FullTime" : {
+          "HomeTeam" : null,
+          "AwayTeam" : null
+        },
+        "HalfTime" : {
+          "HomeTeam" : null,
+          "AwayTeam" : null
+        },
+        "ExtraTime" : {
+          "HomeTeam" : null,
+          "AwayTeam" : null
+        },
+        "Penalties" : {
+          "HomeTeam" : null,
+          "AwayTeam" : null
+        }
+      },
+      "Competition" : {
+        "_id" : 2016,
+        "Name" : "Championship",
+        "Code" : null,
+        "EmblemUrl" : null,
+        "Plan" : null,
+        "LastUpdated" : null
+      },
+      "UtcDate" : "2019-05-14T19:00:00Z"
+    }
+  },
+  {
+    "_id" : "5cda7762a858b542e43d4f1f",
+    "Guid" : "53fbbde0-3cde-422d-a64f-3525860927a7",
+    "Date" : "2019-05-14T08:07:59.626Z",
+    "PointsWon" : 0,
+    "Status" : null,
+    "Multiply" : 10,
+    "User" : {
+      "_id" : "5caf2df3a858b59514cf47f5",
+      "Point" : 1077891.0,
+      "Role" : "ADMIN",
+      "TotalPointsUsedToBet" : 240,
+      "Password" : "$2a$11$VkbDm31m2.qfaoI05TGDMeLaItItzK7r51jTw.WsQb49qQTZMCIRK",
+      "Email" : "lucasbourgeois60@hotmail.fr",
+      "Username" : "lbo",
+      "Rank" : 0,
+      "IsPrivate" : false,
+      "IsEnabled" : false,
+      "Items" : []
+    },
+    "HomeTeamScore" : 1,
+    "AwayTeamScore" : 2,
+    "Match": {
+      "_id": 262446,
+      "Status": "SCHEDULED",
+      "LastUpdated": "2019-05-07T18:33:22.000Z",
+      "HomeTeam": {
+        "_id": 341,
+        "Name": "Leeds United AFC",
+        "ShortName": "Leeds United",
+        "Tla": "LEE",
+        "CrestUrl": null,
+        "Address": "Elland Road Leeds LS11 0ES",
+        "Phone": "+44 (0871) 3341919",
+        "Email": "reception@leedsunited.com",
+        "Colors": null,
+        "Venue": "Elland Road"
+      },
+      "HomeTeamRating": 0.0,
+      "AwayTeam": {
+        "_id": 342,
+        "Name": "Derby County FC",
+        "ShortName": "Derby County",
+        "Tla": "DER",
+        "CrestUrl": "https://upload.wikimedia.org/wikipedia/en/4/4a/Derby_County_crest.svg",
+        "Address": "Pride Park Derby DE24 8XL",
+        "Phone": "+44 (0871) 4721884",
+        "Email": "derbycounty@dcfc.co.uk",
+        "Colors": null,
+        "Venue": "iPro Stadium"
+      },
+      "AwayTeamRating": 0.0,
+      "DrawRating": 0.0,
+      "Score": {
+        "Winner": null,
+        "Duration": "REGULAR",
+        "FullTime": {
+          "HomeTeam": null,
+          "AwayTeam": null
+        },
+        "HalfTime": {
+          "HomeTeam": null,
+          "AwayTeam": null
+        },
+        "ExtraTime": {
+          "HomeTeam": null,
+          "AwayTeam": null
+        },
+        "Penalties": {
+          "HomeTeam": null,
+          "AwayTeam": null
+        }
+      },
+      "Competition": {
+        "_id": 2016,
+        "Name": "Championship",
+        "Code": null,
+        "EmblemUrl": null,
+        "Plan": null,
+        "LastUpdated": null
+      },
+      "UtcDate": "2019-05-13T18:45:00Z"
+    }
+  },
+  {
+    "_id" : "5cdaa41da858b54bf807b13a",
+    "Guid" : "31ca2911-5e28-4543-8b1e-406cb4ce43d4",
+    "Date" : "2019-05-14T11:18:47.384Z",
+    "PointsWon" : 0,
+    "Status" : null,
+    "Multiply" : 10,
+    "User" : {
+      "_id" : "5caf2df3a858b59514cf47f5",
+      "Point" : 1077851.0,
+      "Role" : "ADMIN",
+      "TotalPointsUsedToBet" : 280,
+      "Password" : "$2a$11$VkbDm31m2.qfaoI05TGDMeLaItItzK7r51jTw.WsQb49qQTZMCIRK",
+      "Email" : "lucasbourgeois60@hotmail.fr",
+      "Username" : "lbo",
+      "Rank" : 0,
+      "IsPrivate" : false,
+      "IsEnabled" : false,
+      "Items" : []
+    },
+    "HomeTeamScore" : 1,
+    "AwayTeamScore" : 1,
+    "Match": {
+      "_id": 262446,
+      "Status": "SCHEDULED",
+      "LastUpdated": "2019-03-19T18:30:28.000Z",
+      "HomeTeam": {
+        "_id": 15,
+        "Name": "1. FSV Mainz 05",
+        "ShortName": "Mainz",
+        "Tla": "M05",
+        "CrestUrl": "https://upload.wikimedia.org/wikipedia/commons/9/9e/Logo_Mainz_05.svg",
+        "Address": "Dr.-Martin-Luther-King-Weg 20 Mainz 55122",
+        "Phone": "+49 (06131) 375500",
+        "Email": "info@mainz05.de",
+        "Colors": null,
+        "Venue": "Opel Arena"
+      },
+      "HomeTeamRating": 0.0,
+      "AwayTeam": {
+        "_id": 2,
+        "Name": "TSG 1899 Hoffenheim",
+        "ShortName": "Hoffenheim",
+        "Tla": "TSG",
+        "CrestUrl": "https://upload.wikimedia.org/wikipedia/commons/e/e7/Logo_TSG_Hoffenheim.svg",
+        "Address": "Horrenberger Straße 58 Zuzenhausen 74939",
+        "Phone": "+49 (07261) 94930",
+        "Email": "info@achtzehn99.de",
+        "Colors": null,
+        "Venue": "PreZero Arena"
+      },
+      "AwayTeamRating": 0.0,
+      "DrawRating": 0.0,
+      "Score": {
+        "Winner": null,
+        "Duration": "REGULAR",
+        "FullTime": {
+          "HomeTeam": null,
+          "AwayTeam": null
+        },
+        "HalfTime": {
+          "HomeTeam": null,
+          "AwayTeam": null
+        },
+        "ExtraTime": {
+          "HomeTeam": null,
+          "AwayTeam": null
+        },
+        "Penalties": {
+          "HomeTeam": null,
+          "AwayTeam": null
+        }
+      },
+      "Competition": {
+        "_id": 2002,
+        "Name": "Bundesliga",
+        "Code": null,
+        "EmblemUrl": null,
+        "Plan": null,
+        "LastUpdated": null
+      },
+      "UtcDate": "2019-05-18T13:30:00Z"
+    }
+  }
+]
