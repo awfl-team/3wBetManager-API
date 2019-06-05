@@ -6,6 +6,7 @@ using DAO.Interfaces;
 using Manager;
 using Manager.Interfaces;
 using Models;
+using MongoDB.Bson;
 using MongoDB.Bson.IO;
 using NSubstitute;
 using NUnit.Framework;
@@ -21,6 +22,8 @@ namespace Test.Manager
         private IBetDao _betDao;
         private IUserManager _userManager;
         private static readonly List<User> _users = JsonConvert.DeserializeObject<List<User>>(TestHelper.GetDbResponseByCollectionAndFileName("users"));
+        private static readonly List<User> _usersOrderedByPoints = JsonConvert.DeserializeObject<List<User>>(TestHelper.GetDbResponseByCollectionAndFileName("usersOrderedByPoints"));
+        private static readonly List<Bet> _betsByUser = JsonConvert.DeserializeObject<List<Bet>>(TestHelper.GetDbResponseByCollectionAndFileName("betsByUser"));
         private static User _user = _users[0];
         private static readonly object[] UserEmailUsernameMessage =
         {
@@ -65,6 +68,12 @@ namespace Test.Manager
         }
 
         [Test]
+        public void AssertThatRemoveUserFromListWorks()
+        {
+
+        }
+
+        [Test]
         public async Task AssertThatGetBestBettersCalls()
         {
 
@@ -77,111 +86,162 @@ namespace Test.Manager
         }
 
         [Test]
-        public async Task AssertThatGetTop3Calls()
+        public async Task AssertThatGetTop3CallsOrderUserByPointAndReturnsThreeValidDynamicUsers()
         {
+            /*_userDao.OrderUserByPoint().Returns(Task.FromResult(_usersOrderedByPoints));
+            _betDao.FindBetsByUser(_user).Returns(Task.FromResult(_betsByUser));
+
+            var top3 = await _userManager.GetTop3();
+            await _userDao.Received().OrderUserByPoint();
+            await _betDao.Received().FindBetsByUser(Arg.Any<User>(), Arg.Any<int>());
+            Assert.IsTrue(top3.Count <=3);
+            Assert.IsTrue(top3.All(t => Has.Property(t.Life)));*/
+        }
+
+        [Test]
+        public async Task AssertThatRecalculateUserPointsCallsFindAllUserFindBetsByUserAndUpdateUserPoints()
+        {
+            _userDao.FindAllUser().Returns(Task.FromResult(_users));
+            _betDao.FindBetsByUser(_user).Returns(Task.FromResult(_betsByUser));
+
+            _userManager.RecalculateUserPoints();
+            await _userDao.Received().FindAllUser();
+            await _betDao.Received().FindBetsByUser(Arg.Any<User>(), Arg.Any<int>());
+            await _userDao.Received().UpdateUserPoints(Arg.Any<User>(), Arg.Any<float>(), Arg.Any<int>());
 
         }
 
         [Test]
-        public async Task AssertThatRecalculateUserPointsCalls()
+        public async Task AssertThatGetAllUsersPaginatedCallsFindAllUserPaginatedUsersAndReturnsAValidObject()
         {
+            _userDao.FindAllUser().Returns(Task.FromResult(_users));
+
+            await _userManager.GetAllUsersPaginated(1);
+            await _userDao.Received().PaginatedUsers(Arg.Any<int>());
 
         }
 
         [Test]
-        public async Task AssertThatGetAllUsersPaginatedCalls()
+        public async Task AssertThatResetUserCallsResetUserPointsItemsLivesAndDeleteUsersBets()
         {
-
+            await _userManager.ResetUser(_user);
+            await _userDao.Received().ResetUserPoints(_user);
+            await _userDao.Received().ResetUserItems(_user);
+            await _userDao.Received().UpdateUserLives(_user);
+            _betDao.Received().DeleteBetsByUser(_user.Id);
         }
 
         [Test]
-        public async Task AssertThatResetUserCalls()
+        public async Task AssertThatGetUserCoinsStatsCallsFindBetsByUser()
         {
+            _betDao.FindBetsByUser(_user).Returns(Task.FromResult(_betsByUser));
 
+            await _userManager.GetUserCoinStats(_user);
+            await _betDao.Received().FindBetsByUser(Arg.Any<User>(), Arg.Any<int>());
         }
 
         [Test]
-        public async Task AssertThatGetUserCoinsStatsCalls()
+        public async Task AssertThatGetUserByEmailsCallsFindUserByEmail()
         {
-            //TODO -> MOVE TO StatsManagerTest
+            _userDao.FindUserByEmail(_user.Email).Returns(Task.FromResult(_user));
+            await _userManager.GetUserByEmail(_user.Email);
+            await _userDao.Received().FindUserByEmail(Arg.Any<string>());
+        }
+
+        [TestCase(User.UserRole)]
+        [TestCase(User.AdminRole)]
+        public async Task AssertThatAddUserCallsAddUserAndDefineRole(string userRole)
+        {
+            await _userManager.AddUser(_user, userRole);
+            await _userDao.Received().AddUser(Arg.Any<User>(), Arg.Any<string>());
         }
 
         [Test]
-        public async Task AssertThatGetUserByEmailsCallsFind()
+        public async Task AssertThatChangePasswordCallsUpdateUserPassword()
         {
+            await _userManager.ChangePassword(_user);
+            await _userDao.Received().UpdateUserPassword(Arg.Any<User>());
+        }
 
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task AssertThatChangeIsEnabledCallsUpdateUseIsEnabled(bool isEnable)
+        {
+            await _userManager.ChangeIsEnabled(_user.Id, isEnable);
+            await _userDao.Received().UpdateUserIsEnabled(Arg.Any<ObjectId>(), Arg.Any<bool>());
         }
 
         [Test]
-        public async Task AssertThatAddUserCalls()
+        public async Task AssertThatChangeUserPointsCallsUpdateUserPoints()
         {
-
+            await _userManager.ChangeUserPoint(_user, _user.Point, _user.TotalPointsUsedToBet);
+            await _userDao.Received().UpdateUserPoints(Arg.Any<User>(), Arg.Any<float>(), Arg.Any<int>());
         }
 
         [Test]
-        public async Task AssertThatChangePasswordCalls()
+        public async Task AssertThatGetUserCallsFindUser()
         {
+            await _userManager.GetUser(_user.Id.ToString());
+            await _userDao.Received().FindUser(Arg.Any<string>());
+        }
 
+        [TestCase(Item.Mystery)]
+        [TestCase(Item.LootBox)]
+        [TestCase(Item.Bomb)]
+        [TestCase(Item.Key)]
+        [TestCase(Item.MultiplyByFive)]
+        [TestCase(Item.MultiplyByTwo)]
+        [TestCase(Item.MultiplyByTen)]
+        [TestCase(Item.Life)]
+        public async Task AssertThatDeleteUserItemsCallsRemoveUserItem(string itemType)
+        {
+            await _userManager.DeleteUserItem(_user, itemType);
+            await _userDao.Received().RemoveUserItem(Arg.Any<User>(), Arg.Any<string>());
         }
 
         [Test]
-        public async Task AssertThatChangeIsEnabledCalls()
+        public async Task AssertThatGetAllUserCallsFindAllUser()
         {
-
+            await _userManager.GetAllUser();
+            await _userDao.Received().FindAllUser();
         }
 
         [Test]
-        public async Task AssertThatChangeUserPointsCalls()
+        public async Task AssertThatChangeUserCallsUpdateUser()
         {
+            await _userManager.ChangeUser(_user.Id.ToString(), _user);
+            await _userDao.Received().UpdateUser(Arg.Any<string>(), Arg.Any<User>());
+        }
 
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task AssertThatChangeUserIsPrivateCallsUpdateUserIsPrivate(bool isPrivate)
+        {
+            await _userManager.ChangeUserIsPrivate(_user.Id, isPrivate);
+            await _userDao.Received().UpdateUserIsPrivate(Arg.Any<ObjectId>(), Arg.Any<bool>());
+        }
+
+        [TestCase(User.AdminRole)]
+        [TestCase(User.UserRole)]
+        public async Task AssertThatChangeUserRoleCallsUpdateUserRole(string role)
+        {
+            await _userManager.ChangeUserRole(_user.Id.ToString(), role);
+            await _userDao.Received().UpdateUserRole(Arg.Any<string>(), Arg.Any<string>());
         }
 
         [Test]
-        public async Task AssertThatGetUserCalls()
+        public async Task AssertThatDeleteUserCallsDeleteUser()
         {
-
+            await _userManager.DeleteUser(_user.Id.ToString());
+            await _userDao.Received().DeleteUser(Arg.Any<string>());
         }
 
-        [Test]
-        public async Task AssertThatDeleteUserItemsCalls()
+        [TestCase("fake@email.fr")]
+        [TestCase("fakeUsername")]
+        public async Task AssertThatSearchUserCallsSearchUser(string value)
         {
-
-        }
-
-        [Test]
-        public async Task AssertThatGetAllUserCalls()
-        {
-
-        }
-
-        [Test]
-        public async Task AssertThatChangeUserCalls()
-        {
-
-        }
-
-        [Test]
-        public async Task AssertThatChangeUserIsPrivateCalls()
-        {
-
-        }
-
-        [Test]
-        public async Task AssertThatChangeUserRoleCalls()
-        {
-
-        }
-
-        [Test]
-        public async Task AssertThatDeleteUserCalls()
-        {
-
-        }
-
-        [Test]
-        public async Task AssertThatSearchUserCalls()
-        {
-
+            await _userManager.SearchUser(value);
+            await _userDao.Received().SearchUser(Arg.Any<string>());
         }
     }
 }
