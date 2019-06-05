@@ -22,7 +22,6 @@ namespace Test.Manager
         private IBetDao _betDao;
         private IUserManager _userManager;
         private static readonly List<User> _users = JsonConvert.DeserializeObject<List<User>>(TestHelper.GetDbResponseByCollectionAndFileName("users"));
-        private static readonly List<User> _usersOrderedByPoints = JsonConvert.DeserializeObject<List<User>>(TestHelper.GetDbResponseByCollectionAndFileName("usersOrderedByPoints"));
         private static readonly List<Bet> _betsByUser = JsonConvert.DeserializeObject<List<Bet>>(TestHelper.GetDbResponseByCollectionAndFileName("betsByUser"));
         private static User _user = _users[0];
         private static readonly object[] UserEmailUsernameMessage =

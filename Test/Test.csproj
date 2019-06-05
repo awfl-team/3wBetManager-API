@@ -105,6 +105,7 @@
     <Compile Include="DAO\CompetitionDaoTest.cs" />
     <Compile Include="DAO\ItemDaoTest.cs" />
     <Compile Include="DAO\MatchDaoTest.cs" />
+    <Compile Include="DAO\SingletonDaoTest.cs" />
     <Compile Include="DAO\TeamDaoTest.cs" />
     <Compile Include="DAO\UserDaoTest.cs" />
     <Compile Include="Controller\UsersControllerTest.cs" />
