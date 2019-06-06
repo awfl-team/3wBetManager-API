@@ -60,18 +60,36 @@ namespace Test.Controller
         }
 
         [Test]
-        public async Task AssertThatRegisterReturnsAValidResponseCodeAndCallsManager()
+        public async Task AssertThatRegisterCallsManager()
         {
             InitRequestHelper(HttpMethod.Post.Method);
             _authController.Request.Content = new StringContent(_user.ToJson(), Encoding.UTF8, "application/json");
             var action = await _authController.Register(_user);
-            var response = await action.ExecuteAsync(new CancellationToken());
             await _userManager.Received().UsernameAndEmailExist(Arg.Any<User>());
             await _userManager.Received().AddUser(Arg.Any<User>(), Models.User.UserRole);
+        }
+
+        [TestCase("email already taken")]
+        public async Task AssertThatRegisterReturnsValidError(string expectedMessage)
+        {
+            InitRequestHelper(HttpMethod.Post.Method);
+            _authController.Request.Content = new StringContent(_user.ToJson(), Encoding.UTF8, "application/json");
+            _userManager.UsernameAndEmailExist(_user).Returns(expectedMessage);
+            var action = await _authController.Register(_user);
+            var response = await action.ExecuteAsync(new CancellationToken());
             Assert.False(response.StatusCode == HttpStatusCode.InternalServerError, "InternalServerError is thrown");
-            Assert.IsTrue(response.StatusCode == HttpStatusCode.BadRequest
-                          || response.StatusCode == HttpStatusCode.Created
-                , "Status code is valid");
+            Assert.IsTrue(response.StatusCode == HttpStatusCode.BadRequest);
+        }
+
+        [TestCase("")]
+        public async Task AssertThatRegisterReturnsValidResponse(string expectedMessage)
+        {
+            InitRequestHelper(HttpMethod.Post.Method);
+            _authController.Request.Content = new StringContent(_user.ToJson(), Encoding.UTF8, "application/json");
+            _userManager.UsernameAndEmailExist(_user).Returns(expectedMessage);
+            var action = await _authController.Register(_user);
+            var response = await action.ExecuteAsync(new CancellationToken());
+            Assert.IsTrue(response.StatusCode == HttpStatusCode.Created, "Status code is valid");
         }
 
         [Test]

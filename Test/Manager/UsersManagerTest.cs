@@ -23,6 +23,7 @@ namespace Test.Manager
         private IUserManager _userManager;
         private static readonly List<User> _users = JsonConvert.DeserializeObject<List<User>>(TestHelper.GetDbResponseByCollectionAndFileName("users"));
         private static readonly List<Bet> _betsByUser = JsonConvert.DeserializeObject<List<Bet>>(TestHelper.GetDbResponseByCollectionAndFileName("betsByUser"));
+        private static readonly List<User> _usersOrderedByPoints = JsonConvert.DeserializeObject<List<User>>(TestHelper.GetDbResponseByCollectionAndFileName("users"));
         private static User _user = _users[0];
         private static readonly object[] UserEmailUsernameMessage =
         {
@@ -32,10 +33,35 @@ namespace Test.Manager
             new object[] { "username and email already taken", _user, _user},
         };
 
+        private static User _user1 = new User
+            {
+                Id = ObjectId.Parse("5c5b5d019922d50db047193e"),
+                Point = 30,
+                Role = "ADMIN",
+                Password = "aaaaaaaaaaaaaaaa",
+                Email = "alexis-60@hotmail.fr",
+                Username = "gubs",
+                IsPrivate = false,
+                TotalPointsUsedToBet = 20,
+                Items = new List<Item>()
+        };
+
+        private static User _user2 = new User
+        {
+            Id = ObjectId.Parse("5c5b5d019922220db047193e"),
+            Point = 30,
+            Role = "ADMIN",
+            Password = "aaaaaaaaaaaaaaaa",
+            Email = "alexis-60@hotmail.fr",
+            Username = "gubs",
+            IsPrivate = false,
+            TotalPointsUsedToBet = 20,
+            Items = new List<Item>()
+        };
+
         [OneTimeSetUp]
         public void SetUp()
         {
-
             _userDao = Substitute.For<IUserDao>();
             _betDao = Substitute.For<IBetDao>();
             _userManager = SingletonManager.Instance.SetUserManager(new UserManager(_userDao, _betDao));
@@ -48,8 +74,16 @@ namespace Test.Manager
             _betDao.ClearReceivedCalls();
         }
 
+        [Test]
+        public async Task AssertThatUsernameAndEmailExistCallsFindUserByEmailFindUserByUsername()
+        {
+            await _userManager.UsernameAndEmailExist(_user);
+            await _userDao.Received().FindUserByEmail(_user.Email);
+           await _userDao.Received().FindUserByUsername(_user.Username);
+        }
+
         [TestCaseSource("UserEmailUsernameMessage")]
-        public async Task AssertThatUsernameAndEmailExistCallsFindUserByEmailFindUserByUsernameAndReturnMessage(string message, User userFoundByUsername = null, User userFoundByEmail = null)
+        public async Task AssertThatUsernameAndEmailExistReturnsMessage(string message, User userFoundByUsername = null, User userFoundByEmail = null)
         {
             _userDao.FindUserByEmail(_user.Email).Returns(Task.FromResult(userFoundByEmail));
             _userDao.FindUserByUsername(_user.Username).Returns(Task.FromResult(userFoundByUsername));
@@ -59,42 +93,71 @@ namespace Test.Manager
             Assert.IsTrue(message == userExists );
         }
 
-
         [Test]
-        public async Task AssertThatCanUpdateCalls()
+        public async Task AssertThatCanUpdateCallsReturnsMessage()
         {
+            var message = "username and email already taken";
 
+            var listOfUsersWithId = new List<User>();
+            listOfUsersWithId.Add(_user1);
+            listOfUsersWithId.Add(_user2);
+            _userDao.FindAllUser().Returns(Task.FromResult(listOfUsersWithId));
+           var result = await _userManager.CanUpdate(_user1.Id.ToString(), _user1);
+           await _userDao.Received().FindAllUser();
+
+            Assert.IsTrue(message == result);
         }
 
         [Test]
         public void AssertThatRemoveUserFromListWorks()
         {
-
+            var listOfUsersWithId = new List<User>();
+            listOfUsersWithId.Add(_user1);
+            listOfUsersWithId.Add(_user2);
+            var result = _userManager.RemoveUserFromList(listOfUsersWithId, _user1.Id.ToString());
+            Assert.IsInstanceOf<List<User>>(result);
+            Assert.IsTrue(listOfUsersWithId.Count < 2);
         }
 
         [Test]
-        public async Task AssertThatGetBestBettersCalls()
+        public async Task AssertThatGetBestBettersReturnsLessThan50UsersAndWorkingProperly()
         {
-
+            var listOfUsersWithId = new List<User>();
+            listOfUsersWithId.Add(_user1);
+            listOfUsersWithId.Add(_user2);
+            _userDao.OrderUserByPoint().Returns(Task.FromResult(listOfUsersWithId));
+            _betDao.FindBetsByUser(Arg.Any<User>()).Returns(Task.FromResult(_betsByUser));
+            var result = await _userManager.GetBestBetters();
+            await _userDao.Received().OrderUserByPoint();
+            await _betDao.Received().FindBetsByUser(Arg.Any<User>());
+            Assert.IsTrue(result.Count < 50);
         }
 
         [Test]
         public async Task AssertThatGetUserPositionAmongSiblingsCalls()
         {
-
+            _userDao.FindAllUserByPoint().Returns(Task.FromResult(_users));
+            await _userManager.GetUserPositionAmongSiblings(_user);
+            await _userDao.Received().FindAllUserByPoint();
+            
         }
 
         [Test]
         public async Task AssertThatGetTop3CallsOrderUserByPointAndReturnsThreeValidDynamicUsers()
         {
-            /*_userDao.OrderUserByPoint().Returns(Task.FromResult(_usersOrderedByPoints));
-            _betDao.FindBetsByUser(_user).Returns(Task.FromResult(_betsByUser));
+            _userDao.OrderUserByPoint().Returns(Task.FromResult(_usersOrderedByPoints));
+            _betDao.FindBetsByUser(Arg.Any<User>()).Returns(Task.FromResult(_betsByUser));
 
             var top3 = await _userManager.GetTop3();
             await _userDao.Received().OrderUserByPoint();
             await _betDao.Received().FindBetsByUser(Arg.Any<User>(), Arg.Any<int>());
             Assert.IsTrue(top3.Count <=3);
-            Assert.IsTrue(top3.All(t => Has.Property(t.Life)));*/
+            Assert.IsTrue(top3.All(t => t.Life != null), "No life in top3");
+            Assert.IsTrue(top3.All(t => t.Id != null), "Id not valid in top3");
+            Assert.IsTrue(top3.All(t => t.Point != null), "Points not valid in top3");
+            Assert.IsTrue(top3.All(t => t.Username is string), "Username not valid in top3");
+            Assert.IsTrue(top3.All(t => t.IsPrivate is bool), "IsPrivate not valid in top3");
+            Assert.IsTrue(top3.All(t => t.NbBets != null), "Nb bets not Valid in in top3");
         }
 
         [Test]

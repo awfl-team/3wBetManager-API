@@ -37,6 +37,13 @@ namespace Test.Manager
             new object[] {_matchHomeAwayWin,  new List<Bet>{_PerfectBets[1]}}
         };
 
+        private static readonly object[] OkBetsTestCase =
+        {
+            new object[] {_matchHomeDraw, new List<Bet>{_OKBets[2]}},
+            new object[] {_matchHomeTeamWin,  new List<Bet>{_OKBets[0]}},
+            new object[] {_matchHomeAwayWin,  new List<Bet>{_OKBets[1]}}
+        };
+
         private static readonly object[] WrongBetsTestCase =
         {
             new object[] {_matchHomeDraw, new List<Bet>{_WrongBets[2]}},
@@ -70,14 +77,15 @@ namespace Test.Manager
         {
             var result = _assignmentPointManager.GetTeamNameWithTheBestHightScore(bet);
             Assert.IsTrue(result == expectedResult);
+            Assert.NotNull(result);
 
         }
 
         [TestCaseSource("WrongBetsTestCase")]
         public void AssertThatAddPointToBetCallsRightUpdateFunctionsForWrongBets(Match match, List<Bet> wrongBets)
         {
-            _betDao.FindBetsByMatch(_matchHomeDraw).Returns(Task.FromResult(wrongBets));
-            _assignmentPointManager.AddPointToBet(_matchHomeDraw);
+            _betDao.FindBetsByMatch(match).Returns(Task.FromResult(wrongBets));
+            _assignmentPointManager.AddPointToBet(match);
             foreach (var bet in wrongBets)
             {
                 _betDao.Received().UpdateBetPointsWon(bet, Bet.WrongBet);
@@ -95,10 +103,18 @@ namespace Test.Manager
                 _betDao.Received().UpdateBetPointsWon(bet,
                     Bet.PerfectBet * match.AwayTeamRating * 4);
                 _betDao.Received().UpdateBetStatus(bet, Bet.PerfectStatus);
+            }
+        }
 
-                _betDao.UpdateBetPointsWon(bet,
-                    Bet.OkBet * match.HomeTeamRating * bet.Multiply);
-                _betDao.UpdateBetStatus(bet, Bet.OkStatus);
+        [TestCaseSource("OkBetsTestCase")]
+        public void AssertThatAddPointToBetCallsRightUpdateFunctionsForOkBets(Match match, List<Bet> okBets)
+        {
+            _betDao.FindBetsByMatch(match).Returns(Task.FromResult(okBets));
+            _assignmentPointManager.AddPointToBet(match);
+            foreach (var bet in okBets)
+            {
+                _betDao.Received().UpdateBetPointsWon(bet, Bet.OkBet * match.HomeTeamRating * bet.Multiply);
+                _betDao.Received().UpdateBetStatus(bet, Bet.OkStatus);
             }
         }
     }
