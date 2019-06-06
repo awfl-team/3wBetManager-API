@@ -6,8 +6,10 @@ using DAO.Interfaces;
 using Models;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using Newtonsoft.Json;
 using NSubstitute;
 using NUnit.Framework;
+using Test.Controller;
 
 namespace Test.DAO
 {
@@ -28,7 +30,7 @@ namespace Test.DAO
         {
             _collection = Substitute.For<IMongoCollection<Bet>>();
             _database = Substitute.For<IMongoDatabase>();
-            _betDao = new BetDao(_database, _collection);
+            _betDao = SingletonDao.Instance.SetBetDao(new BetDao(_database, _collection));
             _user = new User {Email = "test", Password = "test", Username = "test"};
             _match = new Match
             {
