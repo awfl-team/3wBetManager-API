@@ -48,17 +48,24 @@ namespace Test.Manager
             _betDao.ClearReceivedCalls();
         }
 
-        [TestCaseSource("UserEmailUsernameMessage")]
-        public async Task AssertThatUsernameAndEmailExistCallsFindUserByEmailFindUserByUsernameAndReturnMessage(string message, User userFoundByUsername = null, User userFoundByEmail = null)
+        [Test]
+        public async Task AssertThatUsernameAndEmailExistCallsFindUserByEmailFindUserByUsername()
         {
-            _userDao.FindUserByEmail(_user.Email).Returns(Task.FromResult(userFoundByEmail));
+            await _userManager.UsernameAndEmailExist(_user);
+            await _userDao.Received().FindUserByEmail(_user.Email);
+           await _userDao.Received().FindUserByUsername(_user.Username);
+        }
+
+        [TestCaseSource("UserEmailUsernameMessage")]
+        public async Task AssertThatUsernameAndEmailExistReturnsMessage(string message, User userFoundByUsername = null, User userFoundByEmail = null)
+        {
+            _userDao.FindAllUser().Returns(Task.FromResult(_users));
             _userDao.FindUserByUsername(_user.Username).Returns(Task.FromResult(userFoundByUsername));
 
             var userExists = await _userManager.UsernameAndEmailExist(_user);
 
             Assert.IsTrue(message == userExists );
         }
-
 
         [Test]
         public async Task AssertThatCanUpdateCalls()
