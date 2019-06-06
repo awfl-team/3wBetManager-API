@@ -43,7 +43,7 @@ namespace Test.Manager
                 Username = "gubs",
                 IsPrivate = false,
                 TotalPointsUsedToBet = 20,
-                Items = null
+                Items = new List<Item>()
         };
 
         private static User _user2 = new User
@@ -56,13 +56,12 @@ namespace Test.Manager
             Username = "gubs",
             IsPrivate = false,
             TotalPointsUsedToBet = 20,
-            Items = null
+            Items = new List<Item>()
         };
 
         [OneTimeSetUp]
         public void SetUp()
         {
-
             _userDao = Substitute.For<IUserDao>();
             _betDao = Substitute.For<IBetDao>();
             _userManager = SingletonManager.Instance.SetUserManager(new UserManager(_userDao, _betDao));
@@ -121,12 +120,17 @@ namespace Test.Manager
         }
 
         [Test]
-        public async Task AssertThatGetBestBettersCalls()
+        public async Task AssertThatGetBestBettersReturnsLessThan50UsersAndWorkingProperly()
         {
-            _userDao.OrderUserByPoint().Returns(Task.FromResult(_users));
-            var result = _userManager.GetBestBetters().Result;
+            var listOfUsersWithId = new List<User>();
+            listOfUsersWithId.Add(_user1);
+            listOfUsersWithId.Add(_user2);
+            _userDao.OrderUserByPoint().Returns(Task.FromResult(listOfUsersWithId));
+            _betDao.FindBetsByUser(Arg.Any<User>()).Returns(Task.FromResult(_betsByUser));
+            var result = await _userManager.GetBestBetters();
             await _userDao.Received().OrderUserByPoint();
-            Assert.IsTrue(result is List<dynamic>);
+            await _betDao.Received().FindBetsByUser(Arg.Any<User>());
+            Assert.IsTrue(result.Count < 50);
         }
 
         [Test]
