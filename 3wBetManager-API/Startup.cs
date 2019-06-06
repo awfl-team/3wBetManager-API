@@ -1,5 +1,4 @@
 ﻿using System.Web.Http;
-using Hub;
 using Microsoft.AspNet.SignalR;
 using Microsoft.Owin.Cors;
 using Owin;

@@ -16,13 +16,24 @@ namespace Test.Manager
     {
         private IBetDao _betDao;
         private IAssignmentPointManager _assignmentPointManager;
-        private static readonly List<Match> _matches = JsonConvert.DeserializeObject<List<Match>>(TestHelper.GetDbResponseByCollectionAndFileName("matchesHomeAwayAndDraw"));
-        private static readonly List<Bet> _PerfectBets = JsonConvert.DeserializeObject<List<Bet>>(TestHelper.GetDbResponseByCollectionAndFileName("perfectBets"));
-        private static readonly List<Bet> _OKBets = JsonConvert.DeserializeObject<List<Bet>>(TestHelper.GetDbResponseByCollectionAndFileName("okBets"));
-        private static readonly List<Bet> _WrongBets = JsonConvert.DeserializeObject<List<Bet>>(TestHelper.GetDbResponseByCollectionAndFileName("wrongBets"));
+
+        private static readonly List<Match> _matches =
+            JsonConvert.DeserializeObject<List<Match>>(
+                TestHelper.GetDbResponseByCollectionAndFileName("matchesHomeAwayAndDraw"));
+
+        private static readonly List<Bet> _PerfectBets =
+            JsonConvert.DeserializeObject<List<Bet>>(TestHelper.GetDbResponseByCollectionAndFileName("perfectBets"));
+
+        private static readonly List<Bet> _OKBets =
+            JsonConvert.DeserializeObject<List<Bet>>(TestHelper.GetDbResponseByCollectionAndFileName("okBets"));
+
+        private static readonly List<Bet> _WrongBets =
+            JsonConvert.DeserializeObject<List<Bet>>(TestHelper.GetDbResponseByCollectionAndFileName("wrongBets"));
+
         private static readonly Match _matchHomeTeamWin = _matches[0];
         private static readonly Match _matchHomeAwayWin = _matches[1];
         private static readonly Match _matchHomeDraw = _matches[2];
+
         private static readonly object[] BetsTestCase =
         {
             new object[] {_PerfectBets[2], "DRAW"},
@@ -32,30 +43,31 @@ namespace Test.Manager
 
         private static readonly object[] PerfectBetsTestCase =
         {
-            new object[] {_matchHomeDraw, new List<Bet>{_PerfectBets[2]}},
-            new object[] {_matchHomeTeamWin,  new List<Bet>{_PerfectBets[0]}},
-            new object[] {_matchHomeAwayWin,  new List<Bet>{_PerfectBets[1]}}
+            new object[] {_matchHomeDraw, new List<Bet> {_PerfectBets[2]}},
+            new object[] {_matchHomeTeamWin, new List<Bet> {_PerfectBets[0]}},
+            new object[] {_matchHomeAwayWin, new List<Bet> {_PerfectBets[1]}}
         };
 
         private static readonly object[] OkBetsTestCase =
         {
-            new object[] {_matchHomeDraw, new List<Bet>{_OKBets[2]}},
-            new object[] {_matchHomeTeamWin,  new List<Bet>{_OKBets[0]}},
-            new object[] {_matchHomeAwayWin,  new List<Bet>{_OKBets[1]}}
+            new object[] {_matchHomeDraw, new List<Bet> {_OKBets[2]}},
+            new object[] {_matchHomeTeamWin, new List<Bet> {_OKBets[0]}},
+            new object[] {_matchHomeAwayWin, new List<Bet> {_OKBets[1]}}
         };
 
         private static readonly object[] WrongBetsTestCase =
         {
-            new object[] {_matchHomeDraw, new List<Bet>{_WrongBets[2]}},
-            new object[] {_matchHomeTeamWin,  new List<Bet>{_WrongBets[0]}},
-            new object[] {_matchHomeAwayWin,  new List<Bet>{_WrongBets[1]}}
+            new object[] {_matchHomeDraw, new List<Bet> {_WrongBets[2]}},
+            new object[] {_matchHomeTeamWin, new List<Bet> {_WrongBets[0]}},
+            new object[] {_matchHomeAwayWin, new List<Bet> {_WrongBets[1]}}
         };
 
         [OneTimeSetUp]
         public void SetUp()
         {
             _betDao = Substitute.For<IBetDao>();
-            _assignmentPointManager = SingletonManager.Instance.SetAssignmentPointManager(new AssignmentPointManager(_betDao));
+            _assignmentPointManager =
+                SingletonManager.Instance.SetAssignmentPointManager(new AssignmentPointManager(_betDao));
         }
 
         [OneTimeTearDown]
@@ -64,21 +76,12 @@ namespace Test.Manager
             _betDao.ClearReceivedCalls();
         }
 
-        [Test]
-        public void AssertThatAddPointToBetCallsFindBet()
-        {
-            _assignmentPointManager.AddPointToBet(_matchHomeDraw);
-            _betDao.Received().FindBetsByMatch(_matchHomeDraw);
-            
-        }
-
         [TestCaseSource("BetsTestCase")]
         public void AssertThatGetTeamNameWithTheBestHightScoreReturnsTheRighValue(Bet bet, string expectedResult)
         {
             var result = _assignmentPointManager.GetTeamNameWithTheBestHightScore(bet);
             Assert.IsTrue(result == expectedResult);
             Assert.NotNull(result);
-
         }
 
         [TestCaseSource("WrongBetsTestCase")]
@@ -116,6 +119,13 @@ namespace Test.Manager
                 _betDao.Received().UpdateBetPointsWon(bet, Bet.OkBet * match.HomeTeamRating * bet.Multiply);
                 _betDao.Received().UpdateBetStatus(bet, Bet.OkStatus);
             }
+        }
+
+        [Test]
+        public void AssertThatAddPointToBetCallsFindBet()
+        {
+            _assignmentPointManager.AddPointToBet(_matchHomeDraw);
+            _betDao.Received().FindBetsByMatch(_matchHomeDraw);
         }
     }
 }

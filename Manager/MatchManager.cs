@@ -27,8 +27,12 @@ namespace Manager
 
 
             match.DrawRating = drawCount == 0d ? 0d : 1d / (Convert.ToDouble(drawCount) / Convert.ToDouble(bets.Count));
-            match.HomeTeamRating = homeTeamCount == 0d ? 0d : 1d / (Convert.ToDouble(homeTeamCount) / Convert.ToDouble(bets.Count));
-            match.AwayTeamRating = awayTeamCount == 0d ? 0d : 1d / (Convert.ToDouble(awayTeamCount) / Convert.ToDouble(bets.Count));
+            match.HomeTeamRating = homeTeamCount == 0d
+                ? 0d
+                : 1d / (Convert.ToDouble(homeTeamCount) / Convert.ToDouble(bets.Count));
+            match.AwayTeamRating = awayTeamCount == 0d
+                ? 0d
+                : 1d / (Convert.ToDouble(awayTeamCount) / Convert.ToDouble(bets.Count));
 
             _matchDao.UpdateMatch(match.Id, match);
         }

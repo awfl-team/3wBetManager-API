@@ -16,9 +16,9 @@ namespace Test.Manager
         [OneTimeSetUp]
         public void SetUp()
         {
-           
             _competitionDao = Substitute.For<ICompetitionDao>();
-            _competitionManager = SingletonManager.Instance.SetCompetitionManager(new CompetitionManager(_competitionDao));
+            _competitionManager =
+                SingletonManager.Instance.SetCompetitionManager(new CompetitionManager(_competitionDao));
         }
 
         [OneTimeTearDown]

@@ -17,15 +17,20 @@ namespace Test.Manager
         private IMatchDao _matchDao;
         private IBetDao _betDao;
         private IMatchManager _matchManager;
-        private static readonly List<Match> _matches = JsonConvert.DeserializeObject<List<Match>>(TestHelper.GetDbResponseByCollectionAndFileName("betsByMatch262446"));
-        private static readonly List<Bet> _bets = JsonConvert.DeserializeObject<List<Bet>>(TestHelper.GetDbResponseByCollectionAndFileName("bets"));
-        private Match _match = _matches[0];
+
+        private static readonly List<Match> _matches =
+            JsonConvert.DeserializeObject<List<Match>>(
+                TestHelper.GetDbResponseByCollectionAndFileName("betsByMatch262446"));
+
+        private static readonly List<Bet> _bets =
+            JsonConvert.DeserializeObject<List<Bet>>(TestHelper.GetDbResponseByCollectionAndFileName("bets"));
+
+        private readonly Match _match = _matches[0];
         private Bet _bet = _bets[0];
 
         [OneTimeSetUp]
         public void SetUp()
         {
-
             _matchDao = Substitute.For<IMatchDao>();
             _betDao = Substitute.For<IBetDao>();
             _matchManager = SingletonManager.Instance.SetMatchManager(new MatchManager(_betDao, _matchDao));

@@ -1,15 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
-using DAO.Interfaces;
+﻿using System.Net.Http;
 using Manager;
 using Manager.Interfaces;
-using Models;
-using Newtonsoft.Json;
 using NSubstitute;
 using NUnit.Framework;
-using Test.Controller;
 
 namespace Test.Manager
 {
@@ -24,13 +17,12 @@ namespace Test.Manager
         public void SetUp()
         {
             _httpClient = Substitute.For<HttpClient>();
-           _monitoringManager = SingletonManager.Instance.SetMonitoringManager(new MonitoringManager(_httpClient));
+            _monitoringManager = SingletonManager.Instance.SetMonitoringManager(new MonitoringManager(_httpClient));
         }
 
         [OneTimeTearDown]
         public void TearDown()
         {
-
         }
 
         [Test]

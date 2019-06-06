@@ -14,11 +14,11 @@ namespace Manager
 {
     public class FootballDataManager : IFootballDataManager
     {
+        private readonly IAssignmentPointManager _assignmentPointManager;
         private readonly ICompetitionDao _competitionDao;
         private readonly HttpClient _http;
         private readonly IMatchDao _matchDao;
         private readonly ITeamDao _teamDao;
-        private readonly IAssignmentPointManager _assignmentPointManager;
 
 
         public FootballDataManager(HttpClient http = null, ITeamDao teamDao = null, IMatchDao matchDao = null,

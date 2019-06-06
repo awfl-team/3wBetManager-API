@@ -1,7 +1,6 @@
 ﻿using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
-using Manager;
 using Models;
 
 namespace _3wBetManager_API.Controllers

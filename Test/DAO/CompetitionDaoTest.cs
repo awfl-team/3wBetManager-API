@@ -1,6 +1,4 @@
-using System.Collections.Generic;
 using System.Threading;
-using System.Threading.Tasks;
 using DAO;
 using DAO.Interfaces;
 using Models;
@@ -14,13 +12,6 @@ namespace Test.DAO
     [TestFixture]
     internal class CompetitionDaoTest
     {
-
-        private Competition _competition;
-        private IMongoCollection<Competition> _collection;
-        private ICompetitionDao _competitionDao;
-        private IMongoDatabase _database;
-        private ExpressionFilterDefinition<Competition> _filterExpression;
-
         [SetUp]
         public void SetUp()
         {
@@ -40,18 +31,26 @@ namespace Test.DAO
             _collection.ClearReceivedCalls();
         }
 
-        [Test]
-        public void FindAllCompetitionTest()
-        {
-            _competitionDao.FindAllCompetitions();
-            _collection.Received().Find(new BsonDocument());
-        }
+        private Competition _competition;
+        private IMongoCollection<Competition> _collection;
+        private ICompetitionDao _competitionDao;
+        private IMongoDatabase _database;
+        private ExpressionFilterDefinition<Competition> _filterExpression;
 
         [Test]
         public void AssertThatAddCompetitionIsCalled()
         {
             _competitionDao.AddCompetition(_competition);
             _collection.Received().InsertOneAsync(Arg.Any<Competition>());
+        }
+
+        [Test]
+        public void AssertThatFindCompetitionIsCalled()
+        {
+            _competitionDao.FindCompetition(_competition.Id);
+            _filterExpression =
+                new ExpressionFilterDefinition<Competition>(competition => competition.Id == _competition.Id);
+            _collection.Received().Find(_filterExpression);
         }
 
         [Test]
@@ -64,12 +63,10 @@ namespace Test.DAO
         }
 
         [Test]
-        public void AssertThatFindCompetitionIsCalled()
+        public void FindAllCompetitionTest()
         {
-            _competitionDao.FindCompetition(_competition.Id);
-            _filterExpression =
-                new ExpressionFilterDefinition<Competition>(competition => competition.Id == _competition.Id);
-            _collection.Received().Find(_filterExpression);
+            _competitionDao.FindAllCompetitions();
+            _collection.Received().Find(new BsonDocument());
         }
     }
 }

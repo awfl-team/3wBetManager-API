@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
 using DAO;
 using DAO.Interfaces;
@@ -72,10 +71,7 @@ namespace Test.DAO
         public void AssertThatAddListItemIsCalled()
         {
             var itemsToAdd = new List<Item>();
-            for (int i = 0; i < 3; i++)
-            {
-                itemsToAdd.Add(new Item());
-            }
+            for (var i = 0; i < 3; i++) itemsToAdd.Add(new Item());
             _itemDao.AddListItem(itemsToAdd);
             _collectionItem.Received().InsertManyAsync(itemsToAdd);
         }
@@ -93,7 +89,7 @@ namespace Test.DAO
             var id = "1";
 
             _itemDao.UpdateItem(id, new Item());
-            _collectionItem.Received().UpdateOneAsync(Arg.Any<ExpressionFilterDefinition<Item>>(), 
+            _collectionItem.Received().UpdateOneAsync(Arg.Any<ExpressionFilterDefinition<Item>>(),
                 Arg.Any<UpdateDefinition<Item>>());
         }
     }
