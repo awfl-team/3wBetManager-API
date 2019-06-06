@@ -19,7 +19,7 @@ namespace Test.DAO
         {
             _collection = Substitute.For<IMongoCollection<Bet>>();
             _database = Substitute.For<IMongoDatabase>();
-            _betDao = SingletonDao.Instance.SetBetDao(new BetDao(_database, _collection));
+            _betDao = new BetDao(_database, _collection);
             _user = new User {Email = "test", Password = "test", Username = "test"};
             _match = new Match
             {
