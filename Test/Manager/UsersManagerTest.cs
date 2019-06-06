@@ -23,6 +23,7 @@ namespace Test.Manager
         private IUserManager _userManager;
         private static readonly List<User> _users = JsonConvert.DeserializeObject<List<User>>(TestHelper.GetDbResponseByCollectionAndFileName("users"));
         private static readonly List<Bet> _betsByUser = JsonConvert.DeserializeObject<List<Bet>>(TestHelper.GetDbResponseByCollectionAndFileName("betsByUser"));
+        private static readonly List<User> _usersOrderedByPoints = JsonConvert.DeserializeObject<List<User>>(TestHelper.GetDbResponseByCollectionAndFileName("users"));
         private static User _user = _users[0];
         private static readonly object[] UserEmailUsernameMessage =
         {
@@ -67,10 +68,14 @@ namespace Test.Manager
             Assert.IsTrue(message == userExists );
         }
 
-        [Test]
-        public async Task AssertThatCanUpdateCalls()
+        [TestCaseSource("UserEmailUsernameMessage")]
+        public async Task AssertThatCanUpdateCallsReturnsMessage(string message, User userFoundByUsername = null, User userFoundByEmail = null)
         {
+           _userDao.FindAllUser().Returns(Task.FromResult(_users));
+           var result = await _userManager.CanUpdate(_user.Id.ToString(), _user);
+           await _userDao.Received().FindAllUser();
 
+            Assert.IsTrue(message == result);
         }
 
         [Test]
@@ -100,14 +105,19 @@ namespace Test.Manager
         [Test]
         public async Task AssertThatGetTop3CallsOrderUserByPointAndReturnsThreeValidDynamicUsers()
         {
-            /*_userDao.OrderUserByPoint().Returns(Task.FromResult(_usersOrderedByPoints));
-            _betDao.FindBetsByUser(_user).Returns(Task.FromResult(_betsByUser));
+            _userDao.OrderUserByPoint().Returns(Task.FromResult(_usersOrderedByPoints));
+            _betDao.FindBetsByUser(Arg.Any<User>()).Returns(Task.FromResult(_betsByUser));
 
             var top3 = await _userManager.GetTop3();
             await _userDao.Received().OrderUserByPoint();
             await _betDao.Received().FindBetsByUser(Arg.Any<User>(), Arg.Any<int>());
             Assert.IsTrue(top3.Count <=3);
-            Assert.IsTrue(top3.All(t => Has.Property(t.Life)));*/
+            Assert.IsTrue(top3.All(t => t.Life != null), "No life in top3");
+            Assert.IsTrue(top3.All(t => t.Id != null), "Id not valid in top3");
+            Assert.IsTrue(top3.All(t => t.Point != null), "Points not valid in top3");
+            Assert.IsTrue(top3.All(t => t.Username is string), "Username not valid in top3");
+            Assert.IsTrue(top3.All(t => t.IsPrivate is bool), "IsPrivate not valid in top3");
+            Assert.IsTrue(top3.All(t => t.NbBets != null), "Nb bets not Valid in in top3");
         }
 
         [Test]
