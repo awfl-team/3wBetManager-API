@@ -85,7 +85,7 @@ namespace Test.Manager
         [TestCaseSource("UserEmailUsernameMessage")]
         public async Task AssertThatUsernameAndEmailExistReturnsMessage(string message, User userFoundByUsername = null, User userFoundByEmail = null)
         {
-            _userDao.FindAllUser().Returns(Task.FromResult(_users));
+            _userDao.FindUserByEmail(_user.Email).Returns(Task.FromResult(userFoundByEmail));
             _userDao.FindUserByUsername(_user.Username).Returns(Task.FromResult(userFoundByUsername));
 
             var userExists = await _userManager.UsernameAndEmailExist(_user);
