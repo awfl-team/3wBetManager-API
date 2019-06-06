@@ -82,13 +82,19 @@ namespace Test.Manager
         [Test]
         public async Task AssertThatGetBestBettersCalls()
         {
+            _userDao.OrderUserByPoint().Returns(Task.FromResult(_users));
 
+            await _userManager.GetBestBetters();
+            await _userDao.Received().OrderUserByPoint();
         }
 
         [Test]
         public async Task AssertThatGetUserPositionAmongSiblingsCalls()
         {
+            _userDao.FindAllUserByPoint().Returns(Task.FromResult(_users));
 
+            await _userManager.GetUserPositionAmongSiblings(_user);
+            await _userDao.Received().FindAllUserByPoint();
         }
 
         [Test]
