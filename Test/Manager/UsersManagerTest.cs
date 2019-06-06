@@ -33,6 +33,32 @@ namespace Test.Manager
             new object[] { "username and email already taken", _user, _user},
         };
 
+        private static User _user1 = new User
+            {
+                Id = ObjectId.Parse("5c5b5d019922d50db047193e"),
+                Point = 30,
+                Role = "ADMIN",
+                Password = "aaaaaaaaaaaaaaaa",
+                Email = "alexis-60@hotmail.fr",
+                Username = "gubs",
+                IsPrivate = false,
+                TotalPointsUsedToBet = 20,
+                Items = null
+        };
+
+        private static User _user2 = new User
+        {
+            Id = ObjectId.Parse("5c5b5d019922220db047193e"),
+            Point = 30,
+            Role = "ADMIN",
+            Password = "aaaaaaaaaaaaaaaa",
+            Email = "alexis-60@hotmail.fr",
+            Username = "gubs",
+            IsPrivate = false,
+            TotalPointsUsedToBet = 20,
+            Items = null
+        };
+
         [OneTimeSetUp]
         public void SetUp()
         {
@@ -68,11 +94,16 @@ namespace Test.Manager
             Assert.IsTrue(message == userExists );
         }
 
-        [TestCaseSource("UserEmailUsernameMessage")]
-        public async Task AssertThatCanUpdateCallsReturnsMessage(string message, User userFoundByUsername = null, User userFoundByEmail = null)
+        [Test]
+        public async Task AssertThatCanUpdateCallsReturnsMessage()
         {
-           _userDao.FindAllUser().Returns(Task.FromResult(_users));
-           var result = await _userManager.CanUpdate(_user.Id.ToString(), _user);
+            var message = "username and email already taken";
+
+            var listOfUsersWithId = new List<User>();
+            listOfUsersWithId.Add(_user1);
+            listOfUsersWithId.Add(_user2);
+            _userDao.FindAllUser().Returns(Task.FromResult(listOfUsersWithId));
+           var result = await _userManager.CanUpdate(_user1.Id.ToString(), _user1);
            await _userDao.Received().FindAllUser();
 
             Assert.IsTrue(message == result);
@@ -81,25 +112,30 @@ namespace Test.Manager
         [Test]
         public void AssertThatRemoveUserFromListWorks()
         {
-
+            var listOfUsersWithId = new List<User>();
+            listOfUsersWithId.Add(_user1);
+            listOfUsersWithId.Add(_user2);
+            var result = _userManager.RemoveUserFromList(listOfUsersWithId, _user1.Id.ToString());
+            Assert.IsInstanceOf<List<User>>(result);
+            Assert.IsTrue(listOfUsersWithId.Count < 2);
         }
 
         [Test]
         public async Task AssertThatGetBestBettersCalls()
         {
             _userDao.OrderUserByPoint().Returns(Task.FromResult(_users));
-
-            await _userManager.GetBestBetters();
+            var result = _userManager.GetBestBetters().Result;
             await _userDao.Received().OrderUserByPoint();
+            Assert.IsTrue(result is List<dynamic>);
         }
 
         [Test]
         public async Task AssertThatGetUserPositionAmongSiblingsCalls()
         {
             _userDao.FindAllUserByPoint().Returns(Task.FromResult(_users));
-
             await _userManager.GetUserPositionAmongSiblings(_user);
             await _userDao.Received().FindAllUserByPoint();
+            
         }
 
         [Test]
