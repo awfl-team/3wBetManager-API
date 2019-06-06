@@ -7,7 +7,7 @@ using Models;
 
 namespace Manager
 {
-    public class CompetitionManager: ICompetitionManager
+    public class CompetitionManager : ICompetitionManager
     {
         private readonly ICompetitionDao _competitionDao;
 
@@ -15,6 +15,7 @@ namespace Manager
         {
             _competitionDao = competitionDao ?? SingletonDao.Instance.CompetitionDao;
         }
+
         public async Task<List<Competition>> GetAllCompetition()
         {
             return await _competitionDao.FindAllCompetitions();

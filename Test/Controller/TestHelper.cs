@@ -5,7 +5,7 @@ namespace Test.Controller
 {
     public static class TestHelper
     {
-        private static string _appDirectory = System.AppContext.BaseDirectory;
+        private static string _appDirectory = AppContext.BaseDirectory;
 
         static TestHelper()
         {
@@ -14,7 +14,7 @@ namespace Test.Controller
 
         public static string GetDbResponseByCollectionAndFileName(string fileName)
         {
-            return File.ReadAllText(_appDirectory+"\\Mockup\\"+ fileName +".json");
+            return File.ReadAllText(_appDirectory + "\\Mockup\\" + fileName + ".json");
         }
 
         private static void NormalizeAppDirectoryPath()

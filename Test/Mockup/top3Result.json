@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "5caf2df3a858b59514cf47f5",
+    "Point": 97094.0,
+    "Life": 4,
+    "Username": "lbo",
+    "IsPrivate": false,
+    "NbBets": 17
+  },
+  {
+    "Id": "5cb0576ba858b534f4fd22d1",
+    "Point": 29940.0,
+    "Life": 3,
+    "Username": "Lbo2",
+    "IsPrivate": false,
+    "NbBets": 0
+  },
+  {
+    "Id": "5cc180149922d51724629f8e",
+    "Point": 4820.0,
+    "Life": 3,
+    "Username": "Dylan",
+    "IsPrivate": false,
+    "NbBets": 0
+  }
+]

@@ -14,21 +14,12 @@ namespace Test.DAO
     [TestFixture]
     internal class BetDaoTest
     {
-        private Bet _bet;
-        private IMongoCollection<Bet> _collection;
-        private IBetDao _betDao;
-        private User _user;
-        private Match _match;
-        private readonly List<Bet> _bets = new List<Bet>();
-        private IMongoDatabase _database;
-        private ExpressionFilterDefinition<Bet> _filterExpression;
-
         [SetUp]
         public void OneTimeSetUp()
         {
             _collection = Substitute.For<IMongoCollection<Bet>>();
             _database = Substitute.For<IMongoDatabase>();
-            _betDao = new BetDao(_database, _collection);
+            _betDao = SingletonDao.Instance.SetBetDao(new BetDao(_database, _collection));
             _user = new User {Email = "test", Password = "test", Username = "test"};
             _match = new Match
             {
@@ -52,6 +43,36 @@ namespace Test.DAO
             _collection.ClearReceivedCalls();
         }
 
+        private Bet _bet;
+        private IMongoCollection<Bet> _collection;
+        private IBetDao _betDao;
+        private User _user;
+        private Match _match;
+        private readonly List<Bet> _bets = new List<Bet>();
+        private IMongoDatabase _database;
+        private ExpressionFilterDefinition<Bet> _filterExpression;
+
+        [Test]
+        public void AssertThatAddBetIsCalled()
+        {
+            _betDao.AddBet(_bet);
+            _collection.Received().InsertOneAsync(Arg.Any<Bet>());
+        }
+
+        [Test]
+        public void AssertThatAddListBetIsCalled()
+        {
+            _betDao.AddListBet(_bets);
+            _collection.Received().InsertManyAsync(Arg.Any<List<Bet>>());
+        }
+
+        [Test]
+        public void AssertThatDeleteBetByUserIsCalled()
+        {
+            _betDao.DeleteBetsByUser(new ObjectId("5c06f4b43cd1d72a48b44237"));
+            _collection.Received().DeleteManyAsync(Arg.Any<ExpressionFilterDefinition<Bet>>());
+        }
+
         [Test]
         public void AssertThatFindAllIsCalled()
         {
@@ -70,6 +91,14 @@ namespace Test.DAO
         }
 
         [Test]
+        public void AssertThatFindBetsByMatchIsCalled()
+        {
+            _betDao.FindBetsByMatch(_match);
+            _filterExpression = new ExpressionFilterDefinition<Bet>(b => b.Match.Id == _match.Id);
+            _collection.Received().Find(_filterExpression);
+        }
+
+        [Test]
         public void AssertThatFindBetsByUserIsCalled()
         {
             _betDao.FindBetsByUser(_user);
@@ -79,25 +108,11 @@ namespace Test.DAO
         }
 
         [Test]
-        public void AssertThatFindBetsByMatchIsCalled()
+        public void AssertThatPaginatedScheduledBetsIsCalled()
         {
-            _betDao.FindBetsByMatch(_match);
+            _betDao.PaginatedScheduledBets(10, _user);
             _filterExpression = new ExpressionFilterDefinition<Bet>(b => b.Match.Id == _match.Id);
             _collection.Received().Find(_filterExpression);
-        }
-
-        [Test]
-        public void AssertThatAddBetIsCalled()
-        {
-            _betDao.AddBet(_bet);
-            _collection.Received().InsertOneAsync(Arg.Any<Bet>());
-        }
-
-        [Test]
-        public void AssertThatAddListBetIsCalled()
-        {
-            _betDao.AddListBet(_bets);
-            _collection.Received().InsertManyAsync(Arg.Any<List<Bet>>());
         }
 
         [Test]
@@ -110,10 +125,12 @@ namespace Test.DAO
         }
 
         [Test]
-        public void AssertThatDeleteBetByUserIsCalled()
+        public void AssertThatUpdateBetMultiplyIsCalled()
         {
-            _betDao.DeleteBetsByUser(new ObjectId("5c06f4b43cd1d72a48b44237"));
-            _collection.Received().DeleteManyAsync(Arg.Any<ExpressionFilterDefinition<Bet>>());
+            _betDao.UpdateBetMultiply(_bet.Id.ToString(), 10);
+            _collection.Received().UpdateOneAsync(Arg.Any<ExpressionFilterDefinition<Bet>>(),
+                Arg.Any<UpdateDefinition<Bet>>()
+            );
         }
 
         [Test]
@@ -132,23 +149,6 @@ namespace Test.DAO
             _collection.Received().UpdateOneAsync(Arg.Any<ExpressionFilterDefinition<Bet>>(),
                 Arg.Any<UpdateDefinition<Bet>>()
             );
-        }
-
-        [Test]
-        public void AssertThatUpdateBetMultiplyIsCalled()
-        {
-            _betDao.UpdateBetMultiply(_bet.Id.ToString(), 10);
-            _collection.Received().UpdateOneAsync(Arg.Any<ExpressionFilterDefinition<Bet>>(),
-                Arg.Any<UpdateDefinition<Bet>>()
-            );
-        }
-
-        [Test]
-        public void AssertThatPaginatedScheduledBetsIsCalled()
-        {
-            _betDao.PaginatedScheduledBets(10, _user);
-            _filterExpression = new ExpressionFilterDefinition<Bet>(b => b.Match.Id == _match.Id);
-            _collection.Received().Find(_filterExpression);
         }
     }
 }

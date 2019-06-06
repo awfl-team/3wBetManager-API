@@ -61,7 +61,7 @@ namespace Manager
 
         public async Task<List<Bet>> GetCurrentBetsLimited(User user)
         {
-            var betsByUser = await SingletonDao.Instance.BetDao.FindBetsByUser(user, 1);
+            var betsByUser = await _betDao.FindBetsByUser(user, 1);
             foreach (var bet in betsByUser)
             {
                 var matchInformation = await _matchDao.FindMatch(bet.Match.Id);

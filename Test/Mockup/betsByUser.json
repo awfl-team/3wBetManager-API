@@ -1,0 +1,1100 @@
+[
+  {
+    "_id" : "5cda7762a858b542e43d4f1e",
+    "Guid" : "85c21385-aa43-4ebe-ae73-d7fcb53c4d76",
+    "Date" : "2019-05-14T08:07:57.366Z",
+    "PointsWon" : 0,
+    "Status" : null,
+    "Multiply" : 5,
+    "User" : {
+      "_id" : "5caf2df3a858b59514cf47f5",
+      "Point" : 1077891.0,
+      "Role" : "ADMIN",
+      "TotalPointsUsedToBet" : 240,
+      "Password" : "$2a$11$VkbDm31m2.qfaoI05TGDMeLaItItzK7r51jTw.WsQb49qQTZMCIRK",
+      "Email" : "lucasbourgeois60@hotmail.fr",
+      "Username" : "lbo",
+      "Rank" : 0,
+      "IsPrivate" : false,
+      "IsEnabled" : false,
+      "Items" : [
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "MULTIPLY_BY_TWO",
+          "Name" : "2x Multiplier",
+          "Description" : "Double your incomes on a bet results.",
+          "Cost" : 125,
+          "Rarity" : "Rare"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "MULTIPLY_BY_TWO",
+          "Name" : "2x Multiplier",
+          "Description" : "Double your incomes on a bet results.",
+          "Cost" : 125,
+          "Rarity" : "Rare"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "MULTIPLY_BY_TWO",
+          "Name" : "2x Multiplier",
+          "Description" : "Double your incomes on a bet results.",
+          "Cost" : 125,
+          "Rarity" : "Rare"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "MULTIPLY_BY_TWO",
+          "Name" : "2x Multiplier",
+          "Description" : "Double your incomes on a bet results.",
+          "Cost" : 125,
+          "Rarity" : "Rare"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "MULTIPLY_BY_TWO",
+          "Name" : "2x Multiplier",
+          "Description" : "Double your incomes on a bet results.",
+          "Cost" : 125,
+          "Rarity" : "Rare"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "MULTIPLY_BY_TWO",
+          "Name" : "2x Multiplier",
+          "Description" : "Double your incomes on a bet results.",
+          "Cost" : 125,
+          "Rarity" : "Rare"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "MULTIPLY_BY_TWO",
+          "Name" : "2x Multiplier",
+          "Description" : "Double your incomes on a bet results.",
+          "Cost" : 125,
+          "Rarity" : "Rare"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "MULTIPLY_BY_FIVE",
+          "Name" : "5x Multiplier",
+          "Description" : "Multiply the coins earned on a bet by 5.",
+          "Cost" : 100,
+          "Rarity" : "Epic"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "MULTIPLY_BY_FIVE",
+          "Name" : "5x Multiplier",
+          "Description" : "Multiply the coins earned on a bet by 5.",
+          "Cost" : 100,
+          "Rarity" : "Epic"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "MULTIPLY_BY_FIVE",
+          "Name" : "5x Multiplier",
+          "Description" : "Multiply the coins earned on a bet by 5.",
+          "Cost" : 100,
+          "Rarity" : "Epic"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "MULTIPLY_BY_FIVE",
+          "Name" : "5x Multiplier",
+          "Description" : "Multiply the coins earned on a bet by 5.",
+          "Cost" : 100,
+          "Rarity" : "Epic"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "MULTIPLY_BY_FIVE",
+          "Name" : "5x Multiplier",
+          "Description" : "Multiply the coins earned on a bet by 5.",
+          "Cost" : 100,
+          "Rarity" : "Epic"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "MULTIPLY_BY_FIVE",
+          "Name" : "5x Multiplier",
+          "Description" : "Multiply the coins earned on a bet by 5.",
+          "Cost" : 100,
+          "Rarity" : "Epic"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "MULTIPLY_BY_TEN",
+          "Name" : "x10 Multiplier",
+          "Description" : "Multiply the coins earned on a bet by 10.",
+          "Cost" : 250,
+          "Rarity" : "Legendary"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "MULTIPLY_BY_TEN",
+          "Name" : "x10 Multiplier",
+          "Description" : "Multiply the coins earned on a bet by 10.",
+          "Cost" : 250,
+          "Rarity" : "Legendary"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "MULTIPLY_BY_TEN",
+          "Name" : "x10 Multiplier",
+          "Description" : "Multiply the coins earned on a bet by 10.",
+          "Cost" : 250,
+          "Rarity" : "Legendary"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "MULTIPLY_BY_TEN",
+          "Name" : "x10 Multiplier",
+          "Description" : "Multiply the coins earned on a bet by 10.",
+          "Cost" : 250,
+          "Rarity" : "Legendary"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "MULTIPLY_BY_TEN",
+          "Name" : "x10 Multiplier",
+          "Description" : "Multiply the coins earned on a bet by 10.",
+          "Cost" : 250,
+          "Rarity" : "Legendary"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "MULTIPLY_BY_TEN",
+          "Name" : "x10 Multiplier",
+          "Description" : "Multiply the coins earned on a bet by 10.",
+          "Cost" : 250,
+          "Rarity" : "Legendary"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "MULTIPLY_BY_TEN",
+          "Name" : "x10 Multiplier",
+          "Description" : "Multiply the coins earned on a bet by 10.",
+          "Cost" : 250,
+          "Rarity" : "Legendary"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "MULTIPLY_BY_TEN",
+          "Name" : "x10 Multiplier",
+          "Description" : "Multiply the coins earned on a bet by 10.",
+          "Cost" : 250,
+          "Rarity" : "Legendary"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "BOMB",
+          "Name" : "Bomb",
+          "Description" : "Can be used on players to make them lose 30 coins per bomb.",
+          "Cost" : 50,
+          "Rarity" : "Common"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "BOMB",
+          "Name" : "Bomb",
+          "Description" : "Can be used on players to make them lose 30 coins per bomb.",
+          "Cost" : 50,
+          "Rarity" : "Common"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "BOMB",
+          "Name" : "Bomb",
+          "Description" : "Can be used on players to make them lose 30 coins per bomb.",
+          "Cost" : 50,
+          "Rarity" : "Common"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "BOMB",
+          "Name" : "Bomb",
+          "Description" : "Can be used on players to make them lose 30 coins per bomb.",
+          "Cost" : 50,
+          "Rarity" : "Common"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "BOMB",
+          "Name" : "Bomb",
+          "Description" : "Can be used on players to make them lose 30 coins per bomb.",
+          "Cost" : 50,
+          "Rarity" : "Common"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "BOMB",
+          "Name" : "Bomb",
+          "Description" : "Can be used on players to make them lose 30 coins per bomb.",
+          "Cost" : 50,
+          "Rarity" : "Common"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "BOMB",
+          "Name" : "Bomb",
+          "Description" : "Can be used on players to make them lose 30 coins per bomb.",
+          "Cost" : 50,
+          "Rarity" : "Common"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "BOMB",
+          "Name" : "Bomb",
+          "Description" : "Can be used on players to make them lose 30 coins per bomb.",
+          "Cost" : 50,
+          "Rarity" : "Common"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "BOMB",
+          "Name" : "Bomb",
+          "Description" : "Can be used on players to make them lose 30 coins per bomb.",
+          "Cost" : 50,
+          "Rarity" : "Common"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "BOMB",
+          "Name" : "Bomb",
+          "Description" : "Can be used on players to make them lose 30 coins per bomb.",
+          "Cost" : 50,
+          "Rarity" : "Common"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "BOMB",
+          "Name" : "Bomb",
+          "Description" : "Can be used on players to make them lose 30 coins per bomb.",
+          "Cost" : 50,
+          "Rarity" : "Common"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "BOMB",
+          "Name" : "Bomb",
+          "Description" : "Can be used on players to make them lose 30 coins per bomb.",
+          "Cost" : 50,
+          "Rarity" : "Common"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "BOMB",
+          "Name" : "Bomb",
+          "Description" : "Can be used on players to make them lose 30 coins per bomb.",
+          "Cost" : 50,
+          "Rarity" : "Common"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "BOMB",
+          "Name" : "Bomb",
+          "Description" : "Can be used on players to make them lose 30 coins per bomb.",
+          "Cost" : 50,
+          "Rarity" : "Common"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "BOMB",
+          "Name" : "Bomb",
+          "Description" : "Can be used on players to make them lose 30 coins per bomb.",
+          "Cost" : 50,
+          "Rarity" : "Common"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "BOMB",
+          "Name" : "Bomb",
+          "Description" : "Can be used on players to make them lose 30 coins per bomb.",
+          "Cost" : 50,
+          "Rarity" : "Common"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "BOMB",
+          "Name" : "Bomb",
+          "Description" : "Can be used on players to make them lose 30 coins per bomb.",
+          "Cost" : 50,
+          "Rarity" : "Common"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "BOMB",
+          "Name" : "Bomb",
+          "Description" : "Can be used on players to make them lose 30 coins per bomb.",
+          "Cost" : 50,
+          "Rarity" : "Common"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "BOMB",
+          "Name" : "Bomb",
+          "Description" : "Can be used on players to make them lose 30 coins per bomb.",
+          "Cost" : 50,
+          "Rarity" : "Common"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "BOMB",
+          "Name" : "Bomb",
+          "Description" : "Can be used on players to make them lose 30 coins per bomb.",
+          "Cost" : 50,
+          "Rarity" : "Common"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "BOMB",
+          "Name" : "Bomb",
+          "Description" : "Can be used on players to make them lose 30 coins per bomb.",
+          "Cost" : 50,
+          "Rarity" : "Common"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "KEY",
+          "Name" : "Key",
+          "Description" : "Allow you to spy any profile even private ones.",
+          "Cost" : 75,
+          "Rarity" : "Rare"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "KEY",
+          "Name" : "Key",
+          "Description" : "Allow you to spy any profile even private ones.",
+          "Cost" : 75,
+          "Rarity" : "Rare"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "KEY",
+          "Name" : "Key",
+          "Description" : "Allow you to spy any profile even private ones.",
+          "Cost" : 75,
+          "Rarity" : "Rare"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "KEY",
+          "Name" : "Key",
+          "Description" : "Allow you to spy any profile even private ones.",
+          "Cost" : 75,
+          "Rarity" : "Rare"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "KEY",
+          "Name" : "Key",
+          "Description" : "Allow you to spy any profile even private ones.",
+          "Cost" : 75,
+          "Rarity" : "Rare"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "KEY",
+          "Name" : "Key",
+          "Description" : "Allow you to spy any profile even private ones.",
+          "Cost" : 75,
+          "Rarity" : "Rare"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "KEY",
+          "Name" : "Key",
+          "Description" : "Allow you to spy any profile even private ones.",
+          "Cost" : 75,
+          "Rarity" : "Rare"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "KEY",
+          "Name" : "Key",
+          "Description" : "Allow you to spy any profile even private ones.",
+          "Cost" : 75,
+          "Rarity" : "Rare"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "KEY",
+          "Name" : "Key",
+          "Description" : "Allow you to spy any profile even private ones.",
+          "Cost" : 75,
+          "Rarity" : "Rare"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "KEY",
+          "Name" : "Key",
+          "Description" : "Allow you to spy any profile even private ones.",
+          "Cost" : 75,
+          "Rarity" : "Rare"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "KEY",
+          "Name" : "Key",
+          "Description" : "Allow you to spy any profile even private ones.",
+          "Cost" : 75,
+          "Rarity" : "Rare"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "KEY",
+          "Name" : "Key",
+          "Description" : "Allow you to spy any profile even private ones.",
+          "Cost" : 75,
+          "Rarity" : "Rare"
+        },
+        {
+          "_id" : "5cb8368da858b563b0cdb1b8",
+          "Type" : "MULTIPLY_BY_TWO",
+          "Name" : "2x Multiplier",
+          "Description" : "Double your incomes on a bet results.",
+          "Cost" : 125,
+          "Rarity" : "Rare"
+        },
+        {
+          "_id" : "5cb8368da858b563b0cdb1b6",
+          "Type" : "BOMB",
+          "Name" : "Bomb",
+          "Description" : "Can be used on players to make them lose 30 coins per bomb.",
+          "Cost" : 50,
+          "Rarity" : "Common"
+        },
+        {
+          "_id" : "5cb8368da858b563b0cdb1b6",
+          "Type" : "BOMB",
+          "Name" : "Bomb",
+          "Description" : "Can be used on players to make them lose 30 coins per bomb.",
+          "Cost" : 50,
+          "Rarity" : "Common"
+        },
+        {
+          "_id" : "5cb8368da858b563b0cdb1b6",
+          "Type" : "BOMB",
+          "Name" : "Bomb",
+          "Description" : "Can be used on players to make them lose 30 coins per bomb.",
+          "Cost" : 50,
+          "Rarity" : "Common"
+        }
+      ]
+    },
+    "HomeTeamScore" : 1,
+    "AwayTeamScore" : 1,
+    "Match" : {
+      "_id" : 263754,
+      "Status" : "FINISHED",
+      "LastUpdated" : "2019-05-07T18:33:22.000Z",
+      "HomeTeam" : {
+        "_id" : 74,
+        "Name" : "West Bromwich Albion FC",
+        "ShortName" : "West Brom",
+        "Tla" : "WBA",
+        "CrestUrl" : "http://upload.wikimedia.org/wikipedia/de/8/8b/West_Bromwich_Albion.svg",
+        "Address" : "The Hawthorns West Bromwich B71 4LF",
+        "Phone" : null,
+        "Email" : "enquiries@wbafc.co.uk",
+        "Colors" : null,
+        "Venue" : "The Hawthorns"
+      },
+      "HomeTeamRating" : 0.0,
+      "AwayTeam" : {
+        "_id" : 58,
+        "Name" : "Aston Villa FC",
+        "ShortName" : "Aston Villa",
+        "Tla" : "AST",
+        "CrestUrl" : "http://upload.wikimedia.org/wikipedia/de/9/9f/Aston_Villa_logo.svg",
+        "Address" : "Villa Park Birmingham B6 6HE",
+        "Phone" : "+44 (0121) 3272299",
+        "Email" : null,
+        "Colors" : null,
+        "Venue" : "Villa Park"
+      },
+      "AwayTeamRating" : 0.0,
+      "DrawRating" : 0.0,
+      "Score" : {
+        "Winner" : null,
+        "Duration" : "REGULAR",
+        "FullTime" : {
+          "HomeTeam" : null,
+          "AwayTeam" : null
+        },
+        "HalfTime" : {
+          "HomeTeam" : null,
+          "AwayTeam" : null
+        },
+        "ExtraTime" : {
+          "HomeTeam" : null,
+          "AwayTeam" : null
+        },
+        "Penalties" : {
+          "HomeTeam" : null,
+          "AwayTeam" : null
+        }
+      },
+      "Competition" : {
+        "id" : 2000,
+        "Name" : "Championship",
+        "Code" : null,
+        "EmblemUrl" : null,
+        "Plan" : null,
+        "LastUpdated" : null
+      },
+      "UtcDate" : "2019-05-14T19:00:00Z"
+    }
+  },
+    {
+    "_id" : "5cda7762a858b542e43d4f1e",
+    "Guid" : "85c21385-aa43-4ebe-ae73-d7fcb53c4d76",
+    "Date" : "2019-05-14T08:07:57.366Z",
+    "PointsWon" : 0,
+    "Status" : null,
+    "Multiply" : 5,
+    "User" : {
+      "_id" : "5caf2df3a858b59514cf47f5",
+      "Point" : 1077891.0,
+      "Role" : "ADMIN",
+      "TotalPointsUsedToBet" : 240,
+      "Password" : "$2a$11$VkbDm31m2.qfaoI05TGDMeLaItItzK7r51jTw.WsQb49qQTZMCIRK",
+      "Email" : "lucasbourgeois60@hotmail.fr",
+      "Username" : "lbo",
+      "Rank" : 0,
+      "IsPrivate" : false,
+      "IsEnabled" : false,
+      "Items" : [
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "MULTIPLY_BY_TWO",
+          "Name" : "2x Multiplier",
+          "Description" : "Double your incomes on a bet results.",
+          "Cost" : 125,
+          "Rarity" : "Rare"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "MULTIPLY_BY_TWO",
+          "Name" : "2x Multiplier",
+          "Description" : "Double your incomes on a bet results.",
+          "Cost" : 125,
+          "Rarity" : "Rare"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "MULTIPLY_BY_TWO",
+          "Name" : "2x Multiplier",
+          "Description" : "Double your incomes on a bet results.",
+          "Cost" : 125,
+          "Rarity" : "Rare"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "MULTIPLY_BY_TWO",
+          "Name" : "2x Multiplier",
+          "Description" : "Double your incomes on a bet results.",
+          "Cost" : 125,
+          "Rarity" : "Rare"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "MULTIPLY_BY_TWO",
+          "Name" : "2x Multiplier",
+          "Description" : "Double your incomes on a bet results.",
+          "Cost" : 125,
+          "Rarity" : "Rare"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "MULTIPLY_BY_TWO",
+          "Name" : "2x Multiplier",
+          "Description" : "Double your incomes on a bet results.",
+          "Cost" : 125,
+          "Rarity" : "Rare"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "MULTIPLY_BY_TWO",
+          "Name" : "2x Multiplier",
+          "Description" : "Double your incomes on a bet results.",
+          "Cost" : 125,
+          "Rarity" : "Rare"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "MULTIPLY_BY_FIVE",
+          "Name" : "5x Multiplier",
+          "Description" : "Multiply the coins earned on a bet by 5.",
+          "Cost" : 100,
+          "Rarity" : "Epic"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "MULTIPLY_BY_FIVE",
+          "Name" : "5x Multiplier",
+          "Description" : "Multiply the coins earned on a bet by 5.",
+          "Cost" : 100,
+          "Rarity" : "Epic"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "MULTIPLY_BY_FIVE",
+          "Name" : "5x Multiplier",
+          "Description" : "Multiply the coins earned on a bet by 5.",
+          "Cost" : 100,
+          "Rarity" : "Epic"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "MULTIPLY_BY_FIVE",
+          "Name" : "5x Multiplier",
+          "Description" : "Multiply the coins earned on a bet by 5.",
+          "Cost" : 100,
+          "Rarity" : "Epic"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "MULTIPLY_BY_FIVE",
+          "Name" : "5x Multiplier",
+          "Description" : "Multiply the coins earned on a bet by 5.",
+          "Cost" : 100,
+          "Rarity" : "Epic"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "MULTIPLY_BY_FIVE",
+          "Name" : "5x Multiplier",
+          "Description" : "Multiply the coins earned on a bet by 5.",
+          "Cost" : 100,
+          "Rarity" : "Epic"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "MULTIPLY_BY_TEN",
+          "Name" : "x10 Multiplier",
+          "Description" : "Multiply the coins earned on a bet by 10.",
+          "Cost" : 250,
+          "Rarity" : "Legendary"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "MULTIPLY_BY_TEN",
+          "Name" : "x10 Multiplier",
+          "Description" : "Multiply the coins earned on a bet by 10.",
+          "Cost" : 250,
+          "Rarity" : "Legendary"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "MULTIPLY_BY_TEN",
+          "Name" : "x10 Multiplier",
+          "Description" : "Multiply the coins earned on a bet by 10.",
+          "Cost" : 250,
+          "Rarity" : "Legendary"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "MULTIPLY_BY_TEN",
+          "Name" : "x10 Multiplier",
+          "Description" : "Multiply the coins earned on a bet by 10.",
+          "Cost" : 250,
+          "Rarity" : "Legendary"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "MULTIPLY_BY_TEN",
+          "Name" : "x10 Multiplier",
+          "Description" : "Multiply the coins earned on a bet by 10.",
+          "Cost" : 250,
+          "Rarity" : "Legendary"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "MULTIPLY_BY_TEN",
+          "Name" : "x10 Multiplier",
+          "Description" : "Multiply the coins earned on a bet by 10.",
+          "Cost" : 250,
+          "Rarity" : "Legendary"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "MULTIPLY_BY_TEN",
+          "Name" : "x10 Multiplier",
+          "Description" : "Multiply the coins earned on a bet by 10.",
+          "Cost" : 250,
+          "Rarity" : "Legendary"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "MULTIPLY_BY_TEN",
+          "Name" : "x10 Multiplier",
+          "Description" : "Multiply the coins earned on a bet by 10.",
+          "Cost" : 250,
+          "Rarity" : "Legendary"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "BOMB",
+          "Name" : "Bomb",
+          "Description" : "Can be used on players to make them lose 30 coins per bomb.",
+          "Cost" : 50,
+          "Rarity" : "Common"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "BOMB",
+          "Name" : "Bomb",
+          "Description" : "Can be used on players to make them lose 30 coins per bomb.",
+          "Cost" : 50,
+          "Rarity" : "Common"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "BOMB",
+          "Name" : "Bomb",
+          "Description" : "Can be used on players to make them lose 30 coins per bomb.",
+          "Cost" : 50,
+          "Rarity" : "Common"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "BOMB",
+          "Name" : "Bomb",
+          "Description" : "Can be used on players to make them lose 30 coins per bomb.",
+          "Cost" : 50,
+          "Rarity" : "Common"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "BOMB",
+          "Name" : "Bomb",
+          "Description" : "Can be used on players to make them lose 30 coins per bomb.",
+          "Cost" : 50,
+          "Rarity" : "Common"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "BOMB",
+          "Name" : "Bomb",
+          "Description" : "Can be used on players to make them lose 30 coins per bomb.",
+          "Cost" : 50,
+          "Rarity" : "Common"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "BOMB",
+          "Name" : "Bomb",
+          "Description" : "Can be used on players to make them lose 30 coins per bomb.",
+          "Cost" : 50,
+          "Rarity" : "Common"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "BOMB",
+          "Name" : "Bomb",
+          "Description" : "Can be used on players to make them lose 30 coins per bomb.",
+          "Cost" : 50,
+          "Rarity" : "Common"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "BOMB",
+          "Name" : "Bomb",
+          "Description" : "Can be used on players to make them lose 30 coins per bomb.",
+          "Cost" : 50,
+          "Rarity" : "Common"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "BOMB",
+          "Name" : "Bomb",
+          "Description" : "Can be used on players to make them lose 30 coins per bomb.",
+          "Cost" : 50,
+          "Rarity" : "Common"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "BOMB",
+          "Name" : "Bomb",
+          "Description" : "Can be used on players to make them lose 30 coins per bomb.",
+          "Cost" : 50,
+          "Rarity" : "Common"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "BOMB",
+          "Name" : "Bomb",
+          "Description" : "Can be used on players to make them lose 30 coins per bomb.",
+          "Cost" : 50,
+          "Rarity" : "Common"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "BOMB",
+          "Name" : "Bomb",
+          "Description" : "Can be used on players to make them lose 30 coins per bomb.",
+          "Cost" : 50,
+          "Rarity" : "Common"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "BOMB",
+          "Name" : "Bomb",
+          "Description" : "Can be used on players to make them lose 30 coins per bomb.",
+          "Cost" : 50,
+          "Rarity" : "Common"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "BOMB",
+          "Name" : "Bomb",
+          "Description" : "Can be used on players to make them lose 30 coins per bomb.",
+          "Cost" : 50,
+          "Rarity" : "Common"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "BOMB",
+          "Name" : "Bomb",
+          "Description" : "Can be used on players to make them lose 30 coins per bomb.",
+          "Cost" : 50,
+          "Rarity" : "Common"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "BOMB",
+          "Name" : "Bomb",
+          "Description" : "Can be used on players to make them lose 30 coins per bomb.",
+          "Cost" : 50,
+          "Rarity" : "Common"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "BOMB",
+          "Name" : "Bomb",
+          "Description" : "Can be used on players to make them lose 30 coins per bomb.",
+          "Cost" : 50,
+          "Rarity" : "Common"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "BOMB",
+          "Name" : "Bomb",
+          "Description" : "Can be used on players to make them lose 30 coins per bomb.",
+          "Cost" : 50,
+          "Rarity" : "Common"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "BOMB",
+          "Name" : "Bomb",
+          "Description" : "Can be used on players to make them lose 30 coins per bomb.",
+          "Cost" : 50,
+          "Rarity" : "Common"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "BOMB",
+          "Name" : "Bomb",
+          "Description" : "Can be used on players to make them lose 30 coins per bomb.",
+          "Cost" : 50,
+          "Rarity" : "Common"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "KEY",
+          "Name" : "Key",
+          "Description" : "Allow you to spy any profile even private ones.",
+          "Cost" : 75,
+          "Rarity" : "Rare"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "KEY",
+          "Name" : "Key",
+          "Description" : "Allow you to spy any profile even private ones.",
+          "Cost" : 75,
+          "Rarity" : "Rare"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "KEY",
+          "Name" : "Key",
+          "Description" : "Allow you to spy any profile even private ones.",
+          "Cost" : 75,
+          "Rarity" : "Rare"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "KEY",
+          "Name" : "Key",
+          "Description" : "Allow you to spy any profile even private ones.",
+          "Cost" : 75,
+          "Rarity" : "Rare"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "KEY",
+          "Name" : "Key",
+          "Description" : "Allow you to spy any profile even private ones.",
+          "Cost" : 75,
+          "Rarity" : "Rare"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "KEY",
+          "Name" : "Key",
+          "Description" : "Allow you to spy any profile even private ones.",
+          "Cost" : 75,
+          "Rarity" : "Rare"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "KEY",
+          "Name" : "Key",
+          "Description" : "Allow you to spy any profile even private ones.",
+          "Cost" : 75,
+          "Rarity" : "Rare"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "KEY",
+          "Name" : "Key",
+          "Description" : "Allow you to spy any profile even private ones.",
+          "Cost" : 75,
+          "Rarity" : "Rare"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "KEY",
+          "Name" : "Key",
+          "Description" : "Allow you to spy any profile even private ones.",
+          "Cost" : 75,
+          "Rarity" : "Rare"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "KEY",
+          "Name" : "Key",
+          "Description" : "Allow you to spy any profile even private ones.",
+          "Cost" : 75,
+          "Rarity" : "Rare"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "KEY",
+          "Name" : "Key",
+          "Description" : "Allow you to spy any profile even private ones.",
+          "Cost" : 75,
+          "Rarity" : "Rare"
+        },
+        {
+          "_id" : "000000000000000000000000",
+          "Type" : "KEY",
+          "Name" : "Key",
+          "Description" : "Allow you to spy any profile even private ones.",
+          "Cost" : 75,
+          "Rarity" : "Rare"
+        },
+        {
+          "_id" : "5cb8368da858b563b0cdb1b8",
+          "Type" : "MULTIPLY_BY_TWO",
+          "Name" : "2x Multiplier",
+          "Description" : "Double your incomes on a bet results.",
+          "Cost" : 125,
+          "Rarity" : "Rare"
+        },
+        {
+          "_id" : "5cb8368da858b563b0cdb1b6",
+          "Type" : "BOMB",
+          "Name" : "Bomb",
+          "Description" : "Can be used on players to make them lose 30 coins per bomb.",
+          "Cost" : 50,
+          "Rarity" : "Common"
+        },
+        {
+          "_id" : "5cb8368da858b563b0cdb1b6",
+          "Type" : "BOMB",
+          "Name" : "Bomb",
+          "Description" : "Can be used on players to make them lose 30 coins per bomb.",
+          "Cost" : 50,
+          "Rarity" : "Common"
+        },
+        {
+          "_id" : "5cb8368da858b563b0cdb1b6",
+          "Type" : "BOMB",
+          "Name" : "Bomb",
+          "Description" : "Can be used on players to make them lose 30 coins per bomb.",
+          "Cost" : 50,
+          "Rarity" : "Common"
+        }
+      ]
+    },
+    "HomeTeamScore" : 1,
+    "AwayTeamScore" : 1,
+    "Match" : {
+      "_id" : 263754,
+      "Status" : "FINISHED",
+      "LastUpdated" : "2019-05-07T18:33:22.000Z",
+      "HomeTeam" : {
+        "_id" : 74,
+        "Name" : "West Bromwich Albion FC",
+        "ShortName" : "West Brom",
+        "Tla" : "WBA",
+        "CrestUrl" : "http://upload.wikimedia.org/wikipedia/de/8/8b/West_Bromwich_Albion.svg",
+        "Address" : "The Hawthorns West Bromwich B71 4LF",
+        "Phone" : null,
+        "Email" : "enquiries@wbafc.co.uk",
+        "Colors" : null,
+        "Venue" : "The Hawthorns"
+      },
+      "HomeTeamRating" : 0.0,
+      "AwayTeam" : {
+        "_id" : 58,
+        "Name" : "Aston Villa FC",
+        "ShortName" : "Aston Villa",
+        "Tla" : "AST",
+        "CrestUrl" : "http://upload.wikimedia.org/wikipedia/de/9/9f/Aston_Villa_logo.svg",
+        "Address" : "Villa Park Birmingham B6 6HE",
+        "Phone" : "+44 (0121) 3272299",
+        "Email" : null,
+        "Colors" : null,
+        "Venue" : "Villa Park"
+      },
+      "AwayTeamRating" : 0.0,
+      "DrawRating" : 0.0,
+      "Score" : {
+        "Winner" : null,
+        "Duration" : "REGULAR",
+        "FullTime" : {
+          "HomeTeam" : null,
+          "AwayTeam" : null
+        },
+        "HalfTime" : {
+          "HomeTeam" : null,
+          "AwayTeam" : null
+        },
+        "ExtraTime" : {
+          "HomeTeam" : null,
+          "AwayTeam" : null
+        },
+        "Penalties" : {
+          "HomeTeam" : null,
+          "AwayTeam" : null
+        }
+      },
+      "Competition" : {
+        "id" : 2002,
+        "Name" : "Championship",
+        "Code" : null,
+        "EmblemUrl" : null,
+        "Plan" : null,
+        "LastUpdated" : null
+      },
+      "UtcDate" : "2019-05-14T19:00:00Z"
+    }
+  }
+]

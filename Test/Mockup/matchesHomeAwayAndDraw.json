@@ -1,0 +1,185 @@
+[
+  {
+    "_id": 262446,
+    "Status": "FINISHED",
+    "LastUpdated": "2019-04-24T23:43:13.000Z",
+    "HomeTeam": {
+      "_id": 76,
+      "Name": "Wolverhampton Wanderers FC",
+      "ShortName": null,
+      "Tla": null,
+      "CrestUrl": null,
+      "Address": null,
+      "Phone": null,
+      "Email": null,
+      "Colors": null,
+      "Venue": null
+    },
+    "HomeTeamRating": 0,
+    "AwayTeam": {
+      "_id": 57,
+      "Name": "Arsenal FC",
+      "ShortName": null,
+      "Tla": null,
+      "CrestUrl": null,
+      "Address": null,
+      "Phone": null,
+      "Email": null,
+      "Colors": null,
+      "Venue": null
+    },
+    "AwayTeamRating": 0,
+    "DrawRating": 0,
+    "Score": {
+      "Winner": "HOME_TEAM",
+      "Duration": "REGULAR",
+      "FullTime": {
+        "HomeTeam": 3,
+        "AwayTeam": 1
+      },
+      "HalfTime": {
+        "HomeTeam": 3,
+        "AwayTeam": 0
+      },
+      "ExtraTime": {
+        "HomeTeam": null,
+        "AwayTeam": null
+      },
+      "Penalties": {
+        "HomeTeam": null,
+        "AwayTeam": null
+      }
+    },
+    "Competition": {
+      "_id": 2021,
+      "Name": "Premier League",
+      "Code": null,
+      "EmblemUrl": null,
+      "Plan": null,
+      "LastUpdated": null
+    },
+    "UtcDate": "2019-04-24T18:45:00Z"
+  },
+  {
+    "_id": 262446,
+    "Status": "FINISHED",
+    "LastUpdated": "2019-04-24T23:43:13.000Z",
+    "HomeTeam": {
+      "_id": 76,
+      "Name": "Wolverhampton Wanderers FC",
+      "ShortName": null,
+      "Tla": null,
+      "CrestUrl": null,
+      "Address": null,
+      "Phone": null,
+      "Email": null,
+      "Colors": null,
+      "Venue": null
+    },
+    "HomeTeamRating": 0,
+    "AwayTeam": {
+      "_id": 57,
+      "Name": "Arsenal FC",
+      "ShortName": null,
+      "Tla": null,
+      "CrestUrl": null,
+      "Address": null,
+      "Phone": null,
+      "Email": null,
+      "Colors": null,
+      "Venue": null
+    },
+    "AwayTeamRating": 0,
+    "DrawRating": 0,
+    "Score": {
+      "Winner": "AWAY_TEAM",
+      "Duration": "REGULAR",
+      "FullTime": {
+        "HomeTeam": 1,
+        "AwayTeam": 3
+      },
+      "HalfTime": {
+        "HomeTeam": 1,
+        "AwayTeam": 3
+      },
+      "ExtraTime": {
+        "HomeTeam": null,
+        "AwayTeam": null
+      },
+      "Penalties": {
+        "HomeTeam": null,
+        "AwayTeam": null
+      }
+    },
+    "Competition": {
+      "_id": 2021,
+      "Name": "Premier League",
+      "Code": null,
+      "EmblemUrl": null,
+      "Plan": null,
+      "LastUpdated": null
+    },
+    "UtcDate": "2019-04-24T18:45:00Z"
+  },
+  {
+    "_id": 262446,
+    "Status": "FINISHED",
+    "LastUpdated": "2019-04-24T23:43:13.000Z",
+    "HomeTeam": {
+      "_id": 76,
+      "Name": "Wolverhampton Wanderers FC",
+      "ShortName": null,
+      "Tla": null,
+      "CrestUrl": null,
+      "Address": null,
+      "Phone": null,
+      "Email": null,
+      "Colors": null,
+      "Venue": null
+    },
+    "HomeTeamRating": 0,
+    "AwayTeam": {
+      "_id": 57,
+      "Name": "Arsenal FC",
+      "ShortName": null,
+      "Tla": null,
+      "CrestUrl": null,
+      "Address": null,
+      "Phone": null,
+      "Email": null,
+      "Colors": null,
+      "Venue": null
+    },
+    "AwayTeamRating": 0,
+    "DrawRating": 0,
+    "Score": {
+      "Winner": "DRAW",
+      "Duration": "REGULAR",
+      "FullTime": {
+        "HomeTeam": 3,
+        "AwayTeam": 3
+      },
+      "HalfTime": {
+        "HomeTeam": 3,
+        "AwayTeam": 0
+      },
+      "ExtraTime": {
+        "HomeTeam": null,
+        "AwayTeam": null
+      },
+      "Penalties": {
+        "HomeTeam": null,
+        "AwayTeam": null
+      }
+    },
+    "Competition": {
+      "_id": 2021,
+      "Name": "Premier League",
+      "Code": null,
+      "EmblemUrl": null,
+      "Plan": null,
+      "LastUpdated": null
+    },
+    "UtcDate": "2019-04-24T18:45:00Z"
+  }
+]

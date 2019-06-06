@@ -38,7 +38,7 @@ namespace Manager
         public async Task<string> CanUpdate(string id, User userParam)
         {
             var users = await _userDao.FindAllUser();
-            users.Remove(users.Single(user => user.Id == ObjectId.Parse(id)));
+            users = RemoveUserFromList(users, id);
             var userByEmail = users.Find(user => user.Email == userParam.Email);
             var userByUsername = users.Find(user => user.Username == userParam.Username);
 
@@ -50,6 +50,12 @@ namespace Manager
             if (userByUsername != null && userByEmail == null) return "username already taken";
 
             return "username and email already taken";
+        }
+
+        public List<User> RemoveUserFromList(List<User> userList, string userId)
+        {
+            userList.Remove(userList.Single(user => user.Id == ObjectId.Parse(userId)));
+            return userList;
         }
 
         public async Task<List<dynamic>> GetBestBetters()
@@ -202,27 +208,27 @@ namespace Manager
 
         public async Task<User> GetUserByEmail(string email)
         {
-            return await SingletonDao.Instance.UserDao.FindUserByEmail(email);
+            return await _userDao.FindUserByEmail(email);
         }
 
         public async Task AddUser(User user, string role)
         {
-            await SingletonDao.Instance.UserDao.AddUser(user, role);
+            await _userDao.AddUser(user, role);
         }
 
         public async Task ChangePassword(User user)
         {
-            await SingletonDao.Instance.UserDao.UpdateUserPassword(user);
+            await _userDao.UpdateUserPassword(user);
         }
 
         public async Task ChangeIsEnabled(ObjectId id, bool isEnable)
         {
-            await SingletonDao.Instance.UserDao.UpdateUserIsEnabled(id, isEnable);
+            await _userDao.UpdateUserIsEnabled(id, isEnable);
         }
 
         public async Task ChangeUserPoint(User user, float point, int pointUsedToBet)
         {
-            await SingletonDao.Instance.UserDao.UpdateUserPoints(user, point, pointUsedToBet);
+            await _userDao.UpdateUserPoints(user, point, pointUsedToBet);
         }
 
         public async Task<User> GetUser(string id)

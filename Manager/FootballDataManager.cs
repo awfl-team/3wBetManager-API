@@ -14,6 +14,7 @@ namespace Manager
 {
     public class FootballDataManager : IFootballDataManager
     {
+        private readonly IAssignmentPointManager _assignmentPointManager;
         private readonly ICompetitionDao _competitionDao;
         private readonly HttpClient _http;
         private readonly IMatchDao _matchDao;
@@ -21,7 +22,7 @@ namespace Manager
 
 
         public FootballDataManager(HttpClient http = null, ITeamDao teamDao = null, IMatchDao matchDao = null,
-            ICompetitionDao competitionDao = null)
+            ICompetitionDao competitionDao = null, IAssignmentPointManager assignmentPointManager = null)
         {
             _http = http ?? new HttpClient();
             _http.BaseAddress = new Uri("https://api.football-data.org/v2/");
@@ -29,6 +30,7 @@ namespace Manager
             _teamDao = teamDao ?? SingletonDao.Instance.TeamDao;
             _matchDao = matchDao ?? SingletonDao.Instance.MatchDao;
             _competitionDao = competitionDao ?? SingletonDao.Instance.CompetitionDao;
+            _assignmentPointManager = assignmentPointManager ?? SingletonManager.Instance.AssignmentPointManager;
         }
 
 
@@ -143,7 +145,7 @@ namespace Manager
                         match.DrawRating = findMatch.DrawRating;
                         _matchDao.UpdateMatch(findMatch.Id, match);
                         if (findMatch.Status == Match.ScheduledStatus && match.Status == Match.FinishedStatus)
-                            SingletonManager.Instance.AssignmentPointManager.AddPointToBet(match);
+                            _assignmentPointManager.AddPointToBet(match);
                     }
                 }
 

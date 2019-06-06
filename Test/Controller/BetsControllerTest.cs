@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
+using _3wBetManager_API.Controllers;
 using Manager;
 using Manager.Interfaces;
 using Microsoft.Owin;
@@ -14,7 +15,6 @@ using MongoDB.Bson;
 using Newtonsoft.Json;
 using NSubstitute;
 using NUnit.Framework;
-using _3wBetManager_API.Controllers;
 
 namespace Test.Controller
 {
@@ -29,12 +29,22 @@ namespace Test.Controller
         private Dictionary<string, object> _data;
         private OwinContext _context;
         private AuthenticationHeaderValue _authHeader;
-        private HttpRequestMessage _httpRequestGet = new HttpRequestMessage(HttpMethod.Get, "http://localhost:9000/");
-        private HttpRequestMessage _httpRequestPost = new HttpRequestMessage(HttpMethod.Post, "http://localhost:9000/");
-        private HttpRequestMessage _httpRequestPut = new HttpRequestMessage(HttpMethod.Put, "http://localhost:9000/");
-        private List<Bet> _bets = new List<Bet>();
-        private static List<User> _users = JsonConvert.DeserializeObject<List<User>>(TestHelper.GetDbResponseByCollectionAndFileName("users"));
-        private User _user = _users[0];
+
+        private readonly HttpRequestMessage _httpRequestGet =
+            new HttpRequestMessage(HttpMethod.Get, "http://localhost:9000/");
+
+        private readonly HttpRequestMessage _httpRequestPost =
+            new HttpRequestMessage(HttpMethod.Post, "http://localhost:9000/");
+
+        private readonly HttpRequestMessage _httpRequestPut =
+            new HttpRequestMessage(HttpMethod.Put, "http://localhost:9000/");
+
+        private readonly List<Bet> _bets = new List<Bet>();
+
+        private static readonly List<User> _users =
+            JsonConvert.DeserializeObject<List<User>>(TestHelper.GetDbResponseByCollectionAndFileName("users"));
+
+        private readonly User _user = _users[0];
 
         private readonly string _ip = "127.0.0.1";
 
@@ -45,8 +55,8 @@ namespace Test.Controller
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
-            _data = new Dictionary<string, object>() { { "Authorization", _token } };
-            _betController = new BetController() { Configuration = new HttpConfiguration() };
+            _data = new Dictionary<string, object> {{"Authorization", _token}};
+            _betController = new BetController {Configuration = new HttpConfiguration()};
             _context = new OwinContext(_data);
             _authHeader = new AuthenticationHeaderValue(_token);
             _userManager = SingletonManager.Instance.SetUserManager(Substitute.For<IUserManager>());
@@ -54,10 +64,7 @@ namespace Test.Controller
             _matchManager = SingletonManager.Instance.SetMatchManager(Substitute.For<IMatchManager>());
             SingletonManager.Instance.SetTokenManager(new TokenManager());
 
-            for (int i = 0; i < 3; i++)
-            {
-                _bets.Add(new Bet());
-            }
+            for (var i = 0; i < 3; i++) _bets.Add(new Bet());
         }
 
         [OneTimeTearDown]
@@ -67,56 +74,36 @@ namespace Test.Controller
             _userManager.ClearReceivedCalls();
         }
 
-        [Test]
-        public async Task AssertThatPostReturnsAValidResponseCodeAndCallsManager()
+        private void InitRequestHelper(string verb)
         {
-            InitRequestHelper(HttpMethod.Post.Method);
-            _betController.Request.Content = new StringContent(_bets.ToJson(), Encoding.UTF8, "application/json");
-            GetUserByToken(_betController.Request).Returns(Task.FromResult(_user));
-            var action = await _betController.Post(_bets);
-            var response = await action.ExecuteAsync(new CancellationToken());
-            _betManager.Received().ParseListBet(Arg.Any<List<Bet>>());
-            _betManager.Received().AddGuidList(Arg.Any<User>(), Arg.Any<List<Bet>>());
-            await _betManager.Received().AddBets(Arg.Any<List<Bet>>());
-            Assert.False(response.StatusCode == HttpStatusCode.InternalServerError, "InternalServerError is thrown");
-            Assert.IsTrue(response.StatusCode == HttpStatusCode.Created, "Status code is valid");
+            switch (verb)
+            {
+                case "GET":
+                    _betController.Request = _httpRequestGet;
+                    break;
+                case "POST":
+                    _betController.Request = _httpRequestPost;
+                    break;
+                case "PUT":
+                    _betController.Request = _httpRequestPut;
+                    break;
+                default:
+                    _betController.Request = _httpRequestGet;
+                    break;
+            }
+
+            _betController.Request.SetOwinContext(_context);
+            _betController.Request.GetOwinContext().Request.RemoteIpAddress = _ip;
+            _betController.Request.Headers.Authorization = _authHeader;
         }
 
         [Test]
-        public async Task AssertThatPutReturnsAValidResponseCodeAndCallsManager()
-        {
-            InitRequestHelper(HttpMethod.Put.Method);
-            _betController.Request.Content = new StringContent(_bets.ToJson(), Encoding.UTF8, "application/json");
-            GetUserByToken(_betController.Request).Returns(Task.FromResult(_user));
-            _betManager.ParseListBet(_bets).Returns(_bets);
-            var action = await _betController.Put(_bets);
-            var response = await action.ExecuteAsync(new CancellationToken());
-            _betManager.Received().ParseListBet(Arg.Any<List<Bet>>());
-            await _betManager.Received().ChangeBet(Arg.Any<Bet>());
-            _matchManager.Received().CalculateMatchRating(Arg.Any<Match>());
-            await _userManager.Received().ChangeUserPoint(Arg.Any<User>(), Arg.Any<float>(), Arg.Any<int>());
-            Assert.False(response.StatusCode == HttpStatusCode.InternalServerError, "InternalServerError is thrown");
-            Assert.IsTrue(response.StatusCode == HttpStatusCode.NoContent, "Status code is valid");
-        }
-
-        [Test]
-        public async Task AssertThatGetBetsResultsReturnsAValidResponseCodeAndCallsManager()
+        public async Task AssertThatGetBetsAndMatchesReturnsAValidResponseCodeAndCallsManager()
         {
             InitRequestHelper(HttpMethod.Get.Method);
-            var action = await _betController.GetBetsResult(2000);
+            var action = await _betController.GetBetsAndMatches(1);
             var response = await action.ExecuteAsync(new CancellationToken());
-            await _betManager.Received().GetFinishBets(Arg.Any<User>(), Arg.Any<int>());
-            Assert.False(response.StatusCode == HttpStatusCode.InternalServerError, "InternalServerError is thrown");
-            Assert.IsTrue(response.StatusCode == HttpStatusCode.OK, "Status code is valid");
-        }
-
-        [Test]
-        public async Task AssertThatGetBetsResultLimitReturnsAValidResponseCodeAndCallsManager()
-        {
-            InitRequestHelper(HttpMethod.Get.Method);
-            var action = await _betController.GetBetsResultLimit();
-            var response = await action.ExecuteAsync(new CancellationToken());
-            await _betManager.Received().GetFinishBetsLimited(Arg.Any<User>());
+            await _betManager.Received().GetCurrentBetsAndScheduledMatches(Arg.Any<User>(), Arg.Any<int>());
             Assert.False(response.StatusCode == HttpStatusCode.InternalServerError, "InternalServerError is thrown");
             Assert.IsTrue(response.StatusCode == HttpStatusCode.OK, "Status code is valid");
         }
@@ -133,17 +120,6 @@ namespace Test.Controller
         }
 
         [Test]
-        public async Task AssertThatGetBetsResultLimitWithKeyReturnsAValidResponseCodeAndCallsManager()
-        {
-            InitRequestHelper(HttpMethod.Get.Method);
-            var action = await _betController.GetBetsResultLimitWithKey("1");
-            var response = await action.ExecuteAsync(new CancellationToken());
-            await _betManager.Received().GetFinishBetsLimited(Arg.Any<User>());
-            Assert.False(response.StatusCode == HttpStatusCode.InternalServerError, "InternalServerError is thrown");
-            Assert.IsTrue(response.StatusCode == HttpStatusCode.OK, "Status code is valid");
-        }
-
-        [Test]
         public async Task AssertThatGetBetsCurrentLimitWithKeyReturnsAValidResponseCodeAndCallsManager()
         {
             InitRequestHelper(HttpMethod.Get.Method);
@@ -155,12 +131,34 @@ namespace Test.Controller
         }
 
         [Test]
-        public async Task AssertThatGetBetsAndMatchesReturnsAValidResponseCodeAndCallsManager()
+        public async Task AssertThatGetBetsResultLimitReturnsAValidResponseCodeAndCallsManager()
         {
             InitRequestHelper(HttpMethod.Get.Method);
-            var action = await _betController.GetBetsAndMatches(1);
+            var action = await _betController.GetBetsResultLimit();
             var response = await action.ExecuteAsync(new CancellationToken());
-            await _betManager.Received().GetCurrentBetsAndScheduledMatches(Arg.Any<User>(), Arg.Any<int>());
+            await _betManager.Received().GetFinishBetsLimited(Arg.Any<User>());
+            Assert.False(response.StatusCode == HttpStatusCode.InternalServerError, "InternalServerError is thrown");
+            Assert.IsTrue(response.StatusCode == HttpStatusCode.OK, "Status code is valid");
+        }
+
+        [Test]
+        public async Task AssertThatGetBetsResultLimitWithKeyReturnsAValidResponseCodeAndCallsManager()
+        {
+            InitRequestHelper(HttpMethod.Get.Method);
+            var action = await _betController.GetBetsResultLimitWithKey("1");
+            var response = await action.ExecuteAsync(new CancellationToken());
+            await _betManager.Received().GetFinishBetsLimited(Arg.Any<User>());
+            Assert.False(response.StatusCode == HttpStatusCode.InternalServerError, "InternalServerError is thrown");
+            Assert.IsTrue(response.StatusCode == HttpStatusCode.OK, "Status code is valid");
+        }
+
+        [Test]
+        public async Task AssertThatGetBetsResultsReturnsAValidResponseCodeAndCallsManager()
+        {
+            InitRequestHelper(HttpMethod.Get.Method);
+            var action = await _betController.GetBetsResult(2000);
+            var response = await action.ExecuteAsync(new CancellationToken());
+            await _betManager.Received().GetFinishBets(Arg.Any<User>(), Arg.Any<int>());
             Assert.False(response.StatusCode == HttpStatusCode.InternalServerError, "InternalServerError is thrown");
             Assert.IsTrue(response.StatusCode == HttpStatusCode.OK, "Status code is valid");
         }
@@ -198,27 +196,36 @@ namespace Test.Controller
             Assert.IsTrue(response.StatusCode == HttpStatusCode.OK, "Status code is valid");
         }
 
-        private void InitRequestHelper(string verb)
+        [Test]
+        public async Task AssertThatPostReturnsAValidResponseCodeAndCallsManager()
         {
-            switch (verb)
-            {
-                case "GET":
-                    _betController.Request = _httpRequestGet;
-                    break;
-                case "POST":
-                    _betController.Request = _httpRequestPost;
-                    break;
-                case "PUT":
-                    _betController.Request = _httpRequestPut;
-                    break;
-                default:
-                    _betController.Request = _httpRequestGet;
-                    break;
-            }
+            InitRequestHelper(HttpMethod.Post.Method);
+            _betController.Request.Content = new StringContent(_bets.ToJson(), Encoding.UTF8, "application/json");
+            GetUserByToken(_betController.Request).Returns(Task.FromResult(_user));
+            var action = await _betController.Post(_bets);
+            var response = await action.ExecuteAsync(new CancellationToken());
+            _betManager.Received().ParseListBet(Arg.Any<List<Bet>>());
+            _betManager.Received().AddGuidList(Arg.Any<User>(), Arg.Any<List<Bet>>());
+            await _betManager.Received().AddBets(Arg.Any<List<Bet>>());
+            Assert.False(response.StatusCode == HttpStatusCode.InternalServerError, "InternalServerError is thrown");
+            Assert.IsTrue(response.StatusCode == HttpStatusCode.Created, "Status code is valid");
+        }
 
-            _betController.Request.SetOwinContext(_context);
-            _betController.Request.GetOwinContext().Request.RemoteIpAddress = _ip;
-            _betController.Request.Headers.Authorization = _authHeader;
+        [Test]
+        public async Task AssertThatPutReturnsAValidResponseCodeAndCallsManager()
+        {
+            InitRequestHelper(HttpMethod.Put.Method);
+            _betController.Request.Content = new StringContent(_bets.ToJson(), Encoding.UTF8, "application/json");
+            GetUserByToken(_betController.Request).Returns(Task.FromResult(_user));
+            _betManager.ParseListBet(_bets).Returns(_bets);
+            var action = await _betController.Put(_bets);
+            var response = await action.ExecuteAsync(new CancellationToken());
+            _betManager.Received().ParseListBet(Arg.Any<List<Bet>>());
+            await _betManager.Received().ChangeBet(Arg.Any<Bet>());
+            _matchManager.Received().CalculateMatchRating(Arg.Any<Match>());
+            await _userManager.Received().ChangeUserPoint(Arg.Any<User>(), Arg.Any<float>(), Arg.Any<int>());
+            Assert.False(response.StatusCode == HttpStatusCode.InternalServerError, "InternalServerError is thrown");
+            Assert.IsTrue(response.StatusCode == HttpStatusCode.NoContent, "Status code is valid");
         }
     }
 }

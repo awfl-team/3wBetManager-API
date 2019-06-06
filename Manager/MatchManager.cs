@@ -1,4 +1,5 @@
-﻿using DAO;
+﻿using System;
+using DAO;
 using DAO.Interfaces;
 using Manager.Interfaces;
 using Models;
@@ -25,9 +26,13 @@ namespace Manager
             var drawCount = bets.FindAll(bet => bet.AwayTeamScore == bet.HomeTeamScore).Count;
 
 
-            match.DrawRating = drawCount == 0d ? 0d : 1d / (drawCount / bets.Count);
-            match.HomeTeamRating = homeTeamCount == 0d ? 0d : 1d / (homeTeamCount / bets.Count);
-            match.AwayTeamRating = awayTeamCount == 0d ? 0d : 1d / (awayTeamCount / bets.Count);
+            match.DrawRating = drawCount == 0d ? 0d : 1d / (Convert.ToDouble(drawCount) / Convert.ToDouble(bets.Count));
+            match.HomeTeamRating = homeTeamCount == 0d
+                ? 0d
+                : 1d / (Convert.ToDouble(homeTeamCount) / Convert.ToDouble(bets.Count));
+            match.AwayTeamRating = awayTeamCount == 0d
+                ? 0d
+                : 1d / (Convert.ToDouble(awayTeamCount) / Convert.ToDouble(bets.Count));
 
             _matchDao.UpdateMatch(match.Id, match);
         }

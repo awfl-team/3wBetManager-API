@@ -1,5 +1,4 @@
 ﻿using System.Web.Http;
-using Hub;
 using Microsoft.AspNet.SignalR;
 using Microsoft.Owin.Cors;
 using Owin;
@@ -17,7 +16,6 @@ namespace _3wBetManager_API
             config.MapHttpAttributeRoutes();
             appBuilder.UseCors(CorsOptions.AllowAll);
             appBuilder.UseWebApi(config);
-            GlobalHost.HubPipeline.AddModule(new ErrorHandlingPipelineModule());
             appBuilder.MapSignalR("", new HubConfiguration
             {
                 EnableJSONP = true,

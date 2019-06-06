@@ -9,6 +9,7 @@ namespace Manager.Interfaces
     {
         Task<string> UsernameAndEmailExist(User user);
         Task<string> CanUpdate(string id, User userParam);
+        List<User> RemoveUserFromList(List<User> users, string userId);
         Task<List<dynamic>> GetBestBetters();
         Task<List<dynamic>> GetUserPositionAmongSiblings(User userParam);
         Task<List<dynamic>> GetTop3();

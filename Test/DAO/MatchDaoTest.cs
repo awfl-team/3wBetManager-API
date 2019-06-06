@@ -15,20 +15,6 @@ namespace Test.DAO
     [TestFixture]
     internal class MatchDaoTest
     {
-        private Match _match;
-        private IMongoCollection<Match> _collection;
-        private IMatchDao _matchDao;
-        private Team _team1;
-        private Team _team2;
-        private Score _score;
-        private FullTime _fullTime;
-        private HalfTime _halfTime;
-        private ExtraTime _extraTime;
-        private Penalties _penalties;
-        private IMongoDatabase _database;
-        private ExpressionFilterDefinition<Match> _filterExpression;
-
-
         [SetUp]
         public void SetUp()
         {
@@ -68,28 +54,24 @@ namespace Test.DAO
             _collection.ClearReceivedCalls();
         }
 
+        private Match _match;
+        private IMongoCollection<Match> _collection;
+        private IMatchDao _matchDao;
+        private Team _team1;
+        private Team _team2;
+        private Score _score;
+        private FullTime _fullTime;
+        private HalfTime _halfTime;
+        private ExtraTime _extraTime;
+        private Penalties _penalties;
+        private IMongoDatabase _database;
+        private ExpressionFilterDefinition<Match> _filterExpression;
+
         [Test]
         public void AddMatchTest()
         {
             _matchDao.AddMatch(_match);
             _collection.Received().InsertOneAsync(Arg.Any<Match>());
-        }
-
-        [Test]
-        public void AssertThatReplaceMatchIsCalled()
-        {
-            _matchDao.ReplaceMatch(1, _match);
-            _collection.Received().ReplaceOneAsync(Arg.Any<ExpressionFilterDefinition<Match>>(),
-                Arg.Any<Match>(), Arg.Any<UpdateOptions>(), Arg.Any<CancellationToken>()
-            );
-        }
-
-        [Test]
-        public void AssertThatFindMatchIsCalled()
-        {
-            _matchDao.FindMatch(1);
-            _filterExpression = new ExpressionFilterDefinition<Match>(match => match.Id == _match.Id);
-            _collection.Received().Find(_filterExpression);
         }
 
         [Test]
@@ -106,6 +88,23 @@ namespace Test.DAO
             _matchDao.FindByStatus(_match.Status);
             _filterExpression = new ExpressionFilterDefinition<Match>(m => m.Status == _match.Status);
             _collection.Received().Find(_filterExpression);
+        }
+
+        [Test]
+        public void AssertThatFindMatchIsCalled()
+        {
+            _matchDao.FindMatch(1);
+            _filterExpression = new ExpressionFilterDefinition<Match>(match => match.Id == _match.Id);
+            _collection.Received().Find(_filterExpression);
+        }
+
+        [Test]
+        public void AssertThatReplaceMatchIsCalled()
+        {
+            _matchDao.ReplaceMatch(1, _match);
+            _collection.Received().ReplaceOneAsync(Arg.Any<ExpressionFilterDefinition<Match>>(),
+                Arg.Any<Match>(), Arg.Any<UpdateOptions>(), Arg.Any<CancellationToken>()
+            );
         }
 
         [Test]

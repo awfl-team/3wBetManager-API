@@ -1,5 +1,5 @@
 {
-  "_id": 233323,
+  "_id": 262446,
   "Status": "FINISHED",
   "LastUpdated": "2019-04-24T23:43:13.000Z",
   "HomeTeam": {
@@ -50,7 +50,7 @@
     }
   },
   "Competition": {
-    "_id": 2021,
+    "id": 2000,
     "Name": "Premier League",
     "Code": null,
     "EmblemUrl": null,

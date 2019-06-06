@@ -36,19 +36,21 @@ namespace Test.DAO
                 TotalPointsUsedToBet = 40, Point = 100
             };
             _items = new List<Item>();
-            for (int i = 0; i < 2; i++)
+            for (var i = 0; i < 2; i++)
             {
                 var item = new Item();
                 item.Type = Item.Life;
                 _items.Add(item);
             }
-            for (int i = 0; i < 2; i++)
+
+            for (var i = 0; i < 2; i++)
             {
                 var item = new Item();
                 item.Type = Item.Bomb;
                 _items.Add(item);
             }
-            for (int i = 0; i < 2; i++)
+
+            for (var i = 0; i < 2; i++)
             {
                 var item = new Item();
                 item.Type = Item.Key;
@@ -56,7 +58,6 @@ namespace Test.DAO
             }
 
             _user.Items = _items;
-
         }
 
         [OneTimeTearDown]
@@ -66,25 +67,43 @@ namespace Test.DAO
             _collectionItem.ClearReceivedCalls();
         }
 
+        [TestCase(Item.Bomb)]
+        [TestCase(Item.Key)]
+        [TestCase(Item.Life)]
+        public void AssertThatRemoveUserItemIsCalled(string itemType)
+        {
+            _userDao.RemoveUserItem(_user, itemType);
+            _collection.Received().UpdateOneAsync(Arg.Any<ExpressionFilterDefinition<User>>(),
+                Arg.Any<UpdateDefinition<User>>());
+        }
+
+        [Test]
+        public void AssertThatAddUserIsCalled()
+        {
+            _userDao.AddUser(_user, User.UserRole);
+            _collection.Received().InsertOneAsync(Arg.Any<User>());
+        }
+
+        [Test]
+        public void AssertThatAddUserItemIsCalled()
+        {
+            _userDao.AddUserItem(new Item(), _user);
+            _collection.Received().UpdateOneAsync(Arg.Any<ExpressionFilterDefinition<User>>(),
+                Arg.Any<UpdateDefinition<User>>());
+        }
+
+        [Test]
+        public void AssertThatDeleteUserIsCalled()
+        {
+            _userDao.DeleteUser("5c06f4b43cd1d72a48b44237");
+            _collection.Received()
+                .DeleteOneAsync(Arg.Any<ExpressionFilterDefinition<User>>());
+        }
+
         [Test]
         public void AssertThatFindAllUserIsCalled()
         {
             _userDao.FindAllUser();
-            _collection.Received().Find(new BsonDocument());
-        }
-
-        [Test]
-        public void AssertThatFindUserIsCalled()
-        {
-            _userDao.FindUser("5c06f4b43cd1d72a48b44237");
-            _filterExpression = new ExpressionFilterDefinition<User>(user => user.Id == _user.Id);
-            _collection.Received().Find(_filterExpression);
-        }
-
-        [Test]
-        public void AssertThatOrderUserByPointsIsCalled()
-        {
-            _userDao.OrderUserByPoint();
             _collection.Received().Find(new BsonDocument());
         }
 
@@ -112,24 +131,79 @@ namespace Test.DAO
         }
 
         [Test]
-        public void AssertThatAddUserIsCalled()
+        public void AssertThatFindUserIsCalled()
         {
-            _userDao.AddUser(_user, User.UserRole);
-            _collection.Received().InsertOneAsync(Arg.Any<User>());
+            _userDao.FindUser("5c06f4b43cd1d72a48b44237");
+            _filterExpression = new ExpressionFilterDefinition<User>(user => user.Id == _user.Id);
+            _collection.Received().Find(_filterExpression);
         }
 
         [Test]
-        public void AssertThatDeleteUserIsCalled()
+        public void AssertThatOrderUserByPointsIsCalled()
         {
-            _userDao.DeleteUser("5c06f4b43cd1d72a48b44237");
-            _collection.Received()
-                .DeleteOneAsync(Arg.Any<ExpressionFilterDefinition<User>>());
+            _userDao.OrderUserByPoint();
+            _collection.Received().Find(new BsonDocument());
+        }
+
+        [Test]
+        public void AssertThatPaginatedUsersIsCalled()
+        {
+            _userDao.PaginatedUsers(10);
+            _collection.Received().Find(new BsonDocument());
+        }
+
+        [Test]
+        public async Task AssertThatResetUserItemsIsCalled()
+        {
+            SingletonDao.Instance.SetItemDao(_itemDao);
+            _itemDao.FindAllItems().Returns(Task.FromResult(_items));
+            await _userDao.ResetUserItems(_user);
+
+            _collectionItem.Received().Find(new BsonDocument());
+            await _collection.Received().UpdateOneAsync(Arg.Any<ExpressionFilterDefinition<User>>(),
+                Arg.Any<UpdateDefinition<User>>());
+        }
+
+        [Test]
+        public void AssertThatResetUserPointsIsCalled()
+        {
+            _userDao.ResetUserPoints(_user);
+            _collection.Received().UpdateOneAsync(Arg.Any<ExpressionFilterDefinition<User>>(),
+                Arg.Any<UpdateDefinition<User>>()
+            );
+        }
+
+        [Test]
+        public void AssertThatSearchUserIsCalled()
+        {
+            _userDao.SearchUser("test");
+            _filterExpression =
+                new ExpressionFilterDefinition<User>(u => u.Email.Contains("test") || u.Username.Contains("test"));
+            _collection.Received().Find(_filterExpression);
+        }
+
+        [Test]
+        public void AssertThatUpdateUserAfterBombIsCalled()
+        {
+            _userDao.UpdateUserPointsAfterBomb(_user);
+            _collection.Received().UpdateOneAsync(Arg.Any<ExpressionFilterDefinition<User>>(),
+                Arg.Any<UpdateDefinition<User>>()
+            );
         }
 
         [Test]
         public void AssertThatUpdateUserIsCalled()
         {
             _userDao.UpdateUser("5c06f4b43cd1d72a48b44237", _user);
+            _collection.Received().UpdateOneAsync(Arg.Any<ExpressionFilterDefinition<User>>(),
+                Arg.Any<UpdateDefinition<User>>()
+            );
+        }
+
+        [Test]
+        public void AssertThatUpdateUserIsEnabledIsCalled()
+        {
+            _userDao.UpdateUserIsEnabled(ObjectId.Parse("5c06f4b43cd1d72a48b44237"), false);
             _collection.Received().UpdateOneAsync(Arg.Any<ExpressionFilterDefinition<User>>(),
                 Arg.Any<UpdateDefinition<User>>()
             );
@@ -145,67 +219,10 @@ namespace Test.DAO
         }
 
         [Test]
-        public void AssertThatUpdateUserRoleIsCalled()
-        {
-            _userDao.UpdateUserRole("5c06f4b43cd1d72a48b44237", "ROLE");
-            _collection.Received().UpdateOneAsync(Arg.Any<ExpressionFilterDefinition<User>>(),
-                Arg.Any<UpdateDefinition<User>>()
-            );
-        }
-
-        [Test]
-        public void AssertThatUpdateUserIsEnabledIsCalled()
-        {
-            _userDao.UpdateUserIsEnabled(ObjectId.Parse( "5c06f4b43cd1d72a48b44237"), false);
-            _collection.Received().UpdateOneAsync(Arg.Any<ExpressionFilterDefinition<User>>(),
-                Arg.Any<UpdateDefinition<User>>()
-            );
-        }
-
-        [Test]
-        public void AssertThatUpdateUserPointsIsCalled()
-        {
-            _userDao.UpdateUserPoints(_user, _user.Point, _user.TotalPointsUsedToBet);
-            _collection.Received().UpdateOneAsync(Arg.Any<ExpressionFilterDefinition<User>>(),
-                Arg.Any<UpdateDefinition<User>>()
-            );
-        }
-
-        [Test]
-        public void AssertThatUpdateUserAfterBombIsCalled()
-        {
-            _userDao.UpdateUserPointsAfterBomb(_user);
-            _collection.Received().UpdateOneAsync(Arg.Any<ExpressionFilterDefinition<User>>(),
-                Arg.Any<UpdateDefinition<User>>()
-            );
-        }
-
-        [Test]
-        public void AssertThatResetUserPointsIsCalled()
-        {
-            _userDao.ResetUserPoints(_user);
-            _collection.Received().UpdateOneAsync(Arg.Any<ExpressionFilterDefinition<User>>(),
-                Arg.Any<UpdateDefinition<User>>()
-            );
-        }
-
-        [Test]
         public void AssertThatUpdateUserLivesIsCalled()
         {
             _userDao.UpdateUserLives(_user);
             _collection.Received().UpdateOneAsync(Arg.Any<ExpressionFilterDefinition<User>>(),
-                    Arg.Any<UpdateDefinition<User>>());
-        }
-
-        [Test]
-        public async Task AssertThatResetUserItemsIsCalled()
-        {
-            SingletonDao.Instance.SetItemDao(_itemDao);
-            _itemDao.FindAllItems().Returns(Task.FromResult(_items));
-            await _userDao.ResetUserItems(_user);
-           
-            _collectionItem.Received().Find(new BsonDocument());
-            await _collection.Received().UpdateOneAsync(Arg.Any<ExpressionFilterDefinition<User>>(),
                 Arg.Any<UpdateDefinition<User>>());
         }
 
@@ -218,39 +235,21 @@ namespace Test.DAO
         }
 
         [Test]
-        public void AssertThatAddUserItemIsCalled()
+        public void AssertThatUpdateUserPointsIsCalled()
         {
-            _userDao.AddUserItem(new Item(), _user);
+            _userDao.UpdateUserPoints(_user, _user.Point, _user.TotalPointsUsedToBet);
             _collection.Received().UpdateOneAsync(Arg.Any<ExpressionFilterDefinition<User>>(),
-                Arg.Any<UpdateDefinition<User>>());
-        }
-
-        [TestCase(Item.Bomb)]
-        [TestCase(Item.Key)]
-        [TestCase(Item.Life)]
-        public void AssertThatRemoveUserItemIsCalled(string itemType)
-        {
-            _userDao.RemoveUserItem(_user, itemType);
-            _collection.Received().UpdateOneAsync(Arg.Any<ExpressionFilterDefinition<User>>(),
-                Arg.Any<UpdateDefinition<User>>());
+                Arg.Any<UpdateDefinition<User>>()
+            );
         }
 
         [Test]
-        public void AssertThatSearchUserIsCalled()
+        public void AssertThatUpdateUserRoleIsCalled()
         {
-            _userDao.SearchUser("test");
-            _filterExpression =
-                new ExpressionFilterDefinition<User>(u => u.Email.Contains("test") || u.Username.Contains("test"));
-            _collection.Received().Find(_filterExpression);
+            _userDao.UpdateUserRole("5c06f4b43cd1d72a48b44237", "ROLE");
+            _collection.Received().UpdateOneAsync(Arg.Any<ExpressionFilterDefinition<User>>(),
+                Arg.Any<UpdateDefinition<User>>()
+            );
         }
-
-        [Test]
-        public void AssertThatPaginatedUsersIsCalled()
-        {
-            _userDao.PaginatedUsers(10);
-            _collection.Received().Find(new BsonDocument());
-        }
-
-
     }
 }
