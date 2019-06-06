@@ -36,7 +36,6 @@ namespace Manager
                 if (homeTeamInformation != null) bet.Match.HomeTeam = homeTeamInformation;
             }
 
-            var test = betsByUser[0].Match.Competition.Id;
             var betsByCompetition = betsByUser.FindAll(bet => bet.Match.Competition.Id == competitionId);
             var betsByMatchStatus = betsByCompetition.FindAll(bet => bet.Match.Status == Match.FinishedStatus);
 
