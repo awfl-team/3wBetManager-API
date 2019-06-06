@@ -1,0 +1,61 @@
+{
+  "id": 11111,
+  "Status": "SCHEDULED",
+  "LastUpdated": "2019-04-24T23:43:13.000Z",
+  "HomeTeam": {
+    "_id": 76,
+    "Name": "Wolverhampton Wanderers FC",
+    "ShortName": null,
+    "Tla": null,
+    "CrestUrl": null,
+    "Address": null,
+    "Phone": null,
+    "Email": null,
+    "Colors": null,
+    "Venue": null
+  },
+  "HomeTeamRating": 0,
+  "AwayTeam": {
+    "_id": 57,
+    "Name": "Arsenal FC",
+    "ShortName": null,
+    "Tla": null,
+    "CrestUrl": null,
+    "Address": null,
+    "Phone": null,
+    "Email": null,
+    "Colors": null,
+    "Venue": null
+  },
+  "AwayTeamRating": 0,
+  "DrawRating": 0,
+  "Score": {
+    "Winner": "HOME_TEAM",
+    "Duration": "REGULAR",
+    "FullTime": {
+      "HomeTeam": 3,
+      "AwayTeam": 1
+    },
+    "HalfTime": {
+      "HomeTeam": 3,
+      "AwayTeam": 0
+    },
+    "ExtraTime": {
+      "HomeTeam": null,
+      "AwayTeam": null
+    },
+    "Penalties": {
+      "HomeTeam": null,
+      "AwayTeam": null
+    }
+  },
+  "Competition": {
+    "id": 2001,
+    "Name": "Premier League",
+    "Code": null,
+    "EmblemUrl": null,
+    "Plan": null,
+    "LastUpdated": null
+  },
+  "UtcDate": "2019-10-24T18:45:00Z"
+}

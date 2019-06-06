@@ -50,7 +50,7 @@
     }
   },
   "Competition": {
-    "_id": 2021,
+    "id": 2000,
     "Name": "Premier League",
     "Code": null,
     "EmblemUrl": null,
