@@ -225,7 +225,7 @@ namespace Test.Controller
             _matchManager.Received().CalculateMatchRating(Arg.Any<Match>());
             await _userManager.Received().ChangeUserPoint(Arg.Any<User>(), Arg.Any<float>(), Arg.Any<int>());
             Assert.False(response.StatusCode == HttpStatusCode.InternalServerError, "InternalServerError is thrown");
-            Assert.IsTrue(response.StatusCode == HttpStatusCode.NoContent, "Status code is valid");
+            Assert.IsTrue(response.StatusCode == HttpStatusCode.OK, "Status code is valid");
         }
     }
 }

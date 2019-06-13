@@ -45,7 +45,7 @@ namespace _3wBetManager_API.Controllers
                 }
 
                 await GetUserManager().ChangeUserPoint(user, user.Point - bets.Count * 10, bets.Count * 10);
-                return Content(HttpStatusCode.NoContent, "");
+                return Ok(betsParsed);
             });
         }
 
